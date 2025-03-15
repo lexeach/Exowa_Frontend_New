@@ -22,32 +22,24 @@ const options = [
     label: "25",
   },
   {
-    value: 30,
-    label: "6",
+    value: 6,
+    label: "30",
   },
   {
-    value: 35,
-    label: "7",
+    value: 7,
+    label: "35",
   },
   {
     value: 8,
-    label: "8",
+    label: "40",
   },
   {
     value: 9,
-    label: "9",
+    label: "45",
   },
   {
     value: 10,
-    label: "10",
-  },
-  {
-    value: 11,
-    label: "11",
-  },
-  {
-    value: 12,
-    label: "12",
+    label: "50",
   },
 ];
 export const fields = (
