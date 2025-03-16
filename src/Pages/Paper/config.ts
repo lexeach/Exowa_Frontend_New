@@ -40,31 +40,31 @@ export default function ClassSelectionForm() {
   useEffect(() => {
     if (selectedClass === 6) {
       setChapterOptions(
-        Array.from({ length: 8 }, (_, i) => ({ value: i + 1, label: `Class 6 - Chapter ${i + 1}` }))
+        Array.from({ length: 8 }, (_, i) => ({ value: i + 1, label: `6 - Chapter ${i + 1}` }))
       );
     } else if (selectedClass === 7) {
       setChapterOptions(
-        Array.from({ length: 9 }, (_, i) => ({ value: i + 1, label: `Class 7 - Chapter ${i + 1}` }))
+        Array.from({ length: 9 }, (_, i) => ({ value: i + 1, label: `7 - Chapter ${i + 1}` }))
       );
     } else if (selectedClass === 8) {
       setChapterOptions(
-        Array.from({ length: 10 }, (_, i) => ({ value: i + 1, label: `Class 8 - Chapter ${i + 1}` }))
+        Array.from({ length: 10 }, (_, i) => ({ value: i + 1, label: `8 - Chapter ${i + 1}` }))
       );
     } else if (selectedClass === 9) {
       setChapterOptions(
-        Array.from({ length: 10 }, (_, i) => ({ value: i + 1, label: `Class 9 - Chapter ${i + 1}` }))
+        Array.from({ length: 10 }, (_, i) => ({ value: i + 1, label: `9 - Chapter ${i + 1}` }))
       );
     } else if (selectedClass === 10) {
       setChapterOptions(
-        Array.from({ length: 15 }, (_, i) => ({ value: i + 1, label: `Class 10 - Chapter ${i + 1}` }))
+        Array.from({ length: 15 }, (_, i) => ({ value: i + 1, label: `10 - Chapter ${i + 1}` }))
       );
     } else if (selectedClass === 11) {
       setChapterOptions(
-        Array.from({ length: 9 }, (_, i) => ({ value: i + 1, label: `Class 11 - Chapter ${i + 1}` }))
+        Array.from({ length: 9 }, (_, i) => ({ value: i + 1, label: `11 - Chapter ${i + 1}` }))
       );
     } else if (selectedClass === 12) {
       setChapterOptions(
-        Array.from({ length: 10 }, (_, i) => ({ value: i + 1, label: `Class 12 - Chapter ${i + 1}` }))
+        Array.from({ length: 10 }, (_, i) => ({ value: i + 1, label: `12 - Chapter ${i + 1}` }))
       );
     } else {
       setChapterOptions([]);
