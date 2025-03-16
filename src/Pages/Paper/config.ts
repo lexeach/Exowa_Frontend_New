@@ -73,8 +73,8 @@ const classoptions = [
     label: "12",
   },
   {
-    value: "B Sc",
-    label: "B Sc",
+    value: "B Sc (1st year)",
+    label: "B Sc (1st year)",
   },
 ];
 
