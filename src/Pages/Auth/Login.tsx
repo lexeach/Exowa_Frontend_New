@@ -1,16 +1,20 @@
 import * as yup from "yup";
-
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { loginSuccess } from "@/slice/authSlice";
+import { useLoginMutation } from "@/service/apiSlice";
+import { ErrorToaster } from "@/UI/Elements/Toast";
 import AuthWrapper from "./Wrapper";
 import DynamicForm from "@/UI/Form/DynamicForm";
 import UIButton from "@/UI/Elements/Button";
-import { loginSuccess } from "@/slice/authSlice";
-import { useDispatch } from "react-redux";
-import { useLoginMutation } from "@/service/apiSlice";
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
-import { ErrorToaster, SuccessToaster } from "@/UI/Elements/Toast";
-import { Spinner } from "@/UI/Elements/Spinner"; // Import a spinner component
 
+// Spinner Component
+const Spinner = () => (
+  <div className="w-5 h-5 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
+);
+
+// Form Fields
 const fields = [
   {
     name: "email",
@@ -42,53 +46,39 @@ export default function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const buttonConfig = {
-    label: isLoading ? "Processing..." : "Sign In",
-    type: "submit",
-    className: `w-full h-[50px] ${isLoading ? "opacity-50 cursor-not-allowed" : ""}`,
-    disabled: isLoading, // Disable button while processing
-  };
-
   const onSubmit = async (data: LoginFormValues) => {
+    const { email, password } = data;
     try {
-      const response = await login(data).unwrap();
-      console.log("Login Response", response);
+      const response = await login({ email, password }).unwrap();
+      console.log("Login response:", response);
       
-      localStorage.setItem("email", data.email);
+      localStorage.setItem("email", email);
       dispatch(loginSuccess(response.token));
       localStorage.setItem("role", response?.user.role);
       navigate("/");
     } catch (err) {
-      ErrorToaster(err.data.message);
-      setApiErrors(err.data.message);
+      ErrorToaster(err.data?.message || "Login failed!");
+      setApiErrors({ login: err.data?.message || "Invalid credentials" });
     }
   };
 
   return (
-    <AuthWrapper title={"Sign In"}>
+    <AuthWrapper title="Sign In">
       <DynamicForm<LoginFormValues>
         fields={fields}
         onSubmit={onSubmit}
-        buttonConfig={buttonConfig}
-        loading={isLoading}
         apiErrors={apiErrors}
+        buttonConfig={{
+          label: isLoading ? <Spinner /> : "Sign In",
+          type: "submit",
+          className: "w-full h-[50px] flex items-center justify-center",
+          disabled: isLoading,
+        }}
       />
-      
-      {/* Show a spinner when logging in */}
-      {isLoading && (
-        <div className="flex justify-center mt-4">
-          <Spinner className="w-6 h-6 text-blue-500" /> 
-        </div>
-      )}
-
       <p className="mt-6">
-        {"Don't Have an Account?"}
-        <UIButton
-          variant="link"
-          className="p-0"
-          onClick={() => navigate("/auth/register")}
-        >
-          {"Sign Up"}
+        Don't Have an Account?{" "}
+        <UIButton variant="link" className="p-0" onClick={() => navigate("/auth/register")}>
+          Sign Up
         </UIButton>
       </p>
     </AuthWrapper>
