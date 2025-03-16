@@ -33,43 +33,43 @@ const languageOptions = [
 ];
 
 export default function ClassSelectionForm() {
-  const [selectedClass, setSelectedClass] = useState<number | null>(null);
+  const [Class, setSelectedClass] = useState<number | null>(null);
   const [chapterOptions, setChapterOptions] = useState<{ value: number; label: string }[]>([]);
 
   // Update chapter options based on selected class
   useEffect(() => {
-    if (selectedClass === 6) {
+    if (Class === 6) {
       setChapterOptions(
         Array.from({ length: 8 }, (_, i) => ({ value: i + 1, label: `6 - Chapter ${i + 1}` }))
       );
-    } else if (selectedClass === 7) {
+    } else if (Class === 7) {
       setChapterOptions(
         Array.from({ length: 9 }, (_, i) => ({ value: i + 1, label: `7 - Chapter ${i + 1}` }))
       );
-    } else if (selectedClass === 8) {
+    } else if (Class === 8) {
       setChapterOptions(
         Array.from({ length: 10 }, (_, i) => ({ value: i + 1, label: `8 - Chapter ${i + 1}` }))
       );
-    } else if (selectedClass === 9) {
+    } else if (Class === 9) {
       setChapterOptions(
         Array.from({ length: 10 }, (_, i) => ({ value: i + 1, label: `9 - Chapter ${i + 1}` }))
       );
-    } else if (selectedClass === 10) {
+    } else if (Class === 10) {
       setChapterOptions(
         Array.from({ length: 15 }, (_, i) => ({ value: i + 1, label: `10 - Chapter ${i + 1}` }))
       );
-    } else if (selectedClass === 11) {
+    } else if (Class === 11) {
       setChapterOptions(
         Array.from({ length: 9 }, (_, i) => ({ value: i + 1, label: `11 - Chapter ${i + 1}` }))
       );
-    } else if (selectedClass === 12) {
+    } else if (Class === 12) {
       setChapterOptions(
         Array.from({ length: 10 }, (_, i) => ({ value: i + 1, label: `12 - Chapter ${i + 1}` }))
       );
     } else {
       setChapterOptions([]);
     }
-  }, [selectedClass]);
+  }, [Class]);
 
   return (
     <div className="p-4 max-w-md mx-auto bg-white shadow-md rounded-lg">
