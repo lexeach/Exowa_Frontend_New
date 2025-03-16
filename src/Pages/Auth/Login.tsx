@@ -9,24 +9,24 @@ import { useLoginMutation } from "@/service/apiSlice";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { ErrorToaster, SuccessToaster } from "@/UI/Elements/Toast";
-
+import { Spinner } from "@/UI/Elements/Spinner"; // Import a spinner component
 
 const fields = [
   {
     name: "email",
-    label: "email",
-    placeholder: "email",
+    label: "Email",
+    placeholder: "Enter your email",
     type: "text",
     wrapperClassName: "mb-6",
-    validation: yup.string().email("invalid_email").required("email_required"),
+    validation: yup.string().email("Invalid email").required("Email is required"),
     fieldWrapperClassName: "col-span-6",
   },
   {
     name: "password",
-    label: "password",
-    placeholder: "password",
+    label: "Password",
+    placeholder: "Enter your password",
     type: "password",
-    validation: yup.string().required("password_required"),
+    validation: yup.string().required("Password is required"),
     fieldWrapperClassName: "col-span-6",
   },
 ];
@@ -41,22 +41,22 @@ export default function Login() {
   const [login, { isLoading }] = useLoginMutation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const buttonConfig = {
-    label: "Sign In",
+    label: isLoading ? "Processing..." : "Sign In",
     type: "submit",
-    className: "w-full h-[50px]",
+    className: `w-full h-[50px] ${isLoading ? "opacity-50 cursor-not-allowed" : ""}`,
+    disabled: isLoading, // Disable button while processing
   };
 
-
-  const onSubmit = async (data) => {
-    const { email, password } = data;
+  const onSubmit = async (data: LoginFormValues) => {
     try {
-      const response = await login({ email, password }).unwrap();
-      console.log('login response', response);
+      const response = await login(data).unwrap();
+      console.log("Login Response", response);
       
-      localStorage.setItem('email', email);
+      localStorage.setItem("email", data.email);
       dispatch(loginSuccess(response.token));
-      localStorage.setItem('role', response?.user.role);
+      localStorage.setItem("role", response?.user.role);
       navigate("/");
     } catch (err) {
       ErrorToaster(err.data.message);
@@ -73,8 +73,16 @@ export default function Login() {
         loading={isLoading}
         apiErrors={apiErrors}
       />
+      
+      {/* Show a spinner when logging in */}
+      {isLoading && (
+        <div className="flex justify-center mt-4">
+          <Spinner className="w-6 h-6 text-blue-500" /> 
+        </div>
+      )}
+
       <p className="mt-6">
-        {"Don't Have an Account"}
+        {"Don't Have an Account?"}
         <UIButton
           variant="link"
           className="p-0"
