@@ -14,26 +14,26 @@ const options = [
   { value: 50, label: "50" },
 ];
 
-// Class options dropdown
+// Class selection options
 const classoptions = Array.from({ length: 12 }, (_, i) => ({
   value: i + 1,
-  label: i + 1,
+  label: `Class ${i + 1}`,
 }));
 
-// Unique chapters for each class
+// Define unique chapters for each class
 const chapterOptionsMap = {
-  1: Array.from({ length: 8 }, (_, i) => ({ value: i + 1, label: `1 - Chapter ${i + 1}` })),
-  2: Array.from({ length: 9 }, (_, i) => ({ value: i + 1, label: `2 - Chapter ${i + 1}` })),
-  3: Array.from({ length: 10 }, (_, i) => ({ value: i + 1, label: `3 - Chapter ${i + 1}` })),
-  4: Array.from({ length: 7 }, (_, i) => ({ value: i + 1, label: `4 - Chapter ${i + 1}` })),
-  5: Array.from({ length: 11 }, (_, i) => ({ value: i + 1, label: `5 - Chapter ${i + 1}` })),
-  6: Array.from({ length: 12 }, (_, i) => ({ value: i + 1, label: `6 - Chapter ${i + 1}` })),
-  7: Array.from({ length: 13 }, (_, i) => ({ value: i + 1, label: `7 - Chapter ${i + 1}` })),
-  8: Array.from({ length: 14 }, (_, i) => ({ value: i + 1, label: `8 - Chapter ${i + 1}` })),
-  9: Array.from({ length: 10 }, (_, i) => ({ value: i + 1, label: `9 - Chapter ${i + 1}` })),
-  10: Array.from({ length: 15 }, (_, i) => ({ value: i + 1, label: `10 - Chapter ${i + 1}` })), // Class 10 has 15 chapters
-  11: Array.from({ length: 9 }, (_, i) => ({ value: i + 1, label: `11 - Chapter ${i + 1}` })),
-  12: Array.from({ length: 10 }, (_, i) => ({ value: i + 1, label: `12 - Chapter ${i + 1}` })),
+  1: Array.from({ length: 8 }, (_, i) => ({ value: i + 1, label: `Class 1 - Chapter ${i + 1}` })),
+  2: Array.from({ length: 9 }, (_, i) => ({ value: i + 1, label: `Class 2 - Chapter ${i + 1}` })),
+  3: Array.from({ length: 10 }, (_, i) => ({ value: i + 1, label: `Class 3 - Chapter ${i + 1}` })),
+  4: Array.from({ length: 7 }, (_, i) => ({ value: i + 1, label: `Class 4 - Chapter ${i + 1}` })),
+  5: Array.from({ length: 11 }, (_, i) => ({ value: i + 1, label: `Class 5 - Chapter ${i + 1}` })),
+  6: Array.from({ length: 12 }, (_, i) => ({ value: i + 1, label: `Class 6 - Chapter ${i + 1}` })),
+  7: Array.from({ length: 13 }, (_, i) => ({ value: i + 1, label: `Class 7 - Chapter ${i + 1}` })),
+  8: Array.from({ length: 14 }, (_, i) => ({ value: i + 1, label: `Class 8 - Chapter ${i + 1}` })),
+  9: Array.from({ length: 10 }, (_, i) => ({ value: i + 1, label: `Class 9 - Chapter ${i + 1}` })),
+  10: Array.from({ length: 15 }, (_, i) => ({ value: i + 1, label: `Class 10 - Chapter ${i + 1}` })),
+  11: Array.from({ length: 9 }, (_, i) => ({ value: i + 1, label: `Class 11 - Chapter ${i + 1}` })),
+  12: Array.from({ length: 10 }, (_, i) => ({ value: i + 1, label: `Class 12 - Chapter ${i + 1}` })),
 };
 
 export const fields = (
@@ -43,12 +43,14 @@ export const fields = (
   const [selectedClass, setSelectedClass] = useState(null);
   const [chapterOptions, setChapterOptions] = useState([]);
 
-  // Update chapter options dynamically when class is selected
+  // Ensure chapter options update when class is selected
   useEffect(() => {
+    console.log("Selected Class:", selectedClass);
     if (selectedClass && chapterOptionsMap[selectedClass]) {
+      console.log("Chapters Available:", chapterOptionsMap[selectedClass]);
       setChapterOptions(chapterOptionsMap[selectedClass]);
     } else {
-      setChapterOptions([]); // Default to empty if no class is selected
+      setChapterOptions([]);
     }
   }, [selectedClass]);
 
@@ -81,6 +83,7 @@ export const fields = (
       fieldWrapperClassName: "col-span-12",
       onChange: (e) => {
         const selectedValue = Number(e.target.value);
+        console.log("Class Selected:", selectedValue);
         if (!isNaN(selectedValue)) {
           setSelectedClass(selectedValue);
         }
