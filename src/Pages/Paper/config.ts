@@ -1,7 +1,6 @@
 import * as yup from "yup";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
-// Number of questions options
 const options = [
   { value: 5, label: "5" },
   { value: 10, label: "10" },
@@ -13,70 +12,73 @@ const options = [
 
 // Class selection options
 const classoptions = [
-  { value: 6, label: "6" },
-  { value: 7, label: "7" },
-  { value: 8, label: "8" },
-  { value: 9, label: "9" },
-  { value: 10, label: "10" },
-  { value: 11, label: "11" },
-  { value: 12, label: "12" },
+  { value: 1, label: "Class 1" },
+  { value: 2, label: "Class 2" },
+  { value: 3, label: "Class 3" },
 ];
 
-// Language options
-const languageOptions = [
-  { value: "English", label: "English" },
-  { value: "Hindi", label: "Hindi" },
-  { value: "Urdu", label: "Urdu" },
-  { value: "Marathi", label: "Marathi" },
-  { value: "Tamil", label: "Tamil" },
-  { value: "Telugu", label: "Telugu" },
+// Chapter options for each class
+const chapteroptions1 = [
+  { value: 1, label: "Class 1 - Chapter 1" },
+  { value: 2, label: "Class 1 - Chapter 2" },
+];
+
+const chapteroptions2 = [
+  { value: 1, label: "Class 2 - Chapter 1" },
+  { value: 2, label: "Class 2 - Chapter 2" },
+  { value: 3, label: "Class 2 - Chapter 3" },
+];
+
+const chapteroptions3 = [
+  { value: 1, label: "Class 3 - Chapter 1" },
+  { value: 2, label: "Class 3 - Chapter 2" },
+  { value: 3, label: "Class 3 - Chapter 3" },
+  { value: 4, label: "Class 3 - Chapter 4" },
 ];
 
 export default function ClassSelectionForm() {
-  const [Class, setSelectedClass] = useState<number | null>(null);
+  const [selectedClass, setSelectedClass] = useState<number | null>(null);
   const [chapterOptions, setChapterOptions] = useState<{ value: number; label: string }[]>([]);
 
-  // Update chapter options based on selected class
-  useEffect(() => {
-    if (Class === 6) {
-      setChapterOptions(
-        Array.from({ length: 8 }, (_, i) => ({ value: i + 1, label: `6 - Chapter ${i + 1}` }))
-      );
-    } else if (Class === 7) {
-      setChapterOptions(
-        Array.from({ length: 9 }, (_, i) => ({ value: i + 1, label: `7 - Chapter ${i + 1}` }))
-      );
-    } else if (Class === 8) {
-      setChapterOptions(
-        Array.from({ length: 10 }, (_, i) => ({ value: i + 1, label: `8 - Chapter ${i + 1}` }))
-      );
-    } else if (Class === 9) {
-      setChapterOptions(
-        Array.from({ length: 10 }, (_, i) => ({ value: i + 1, label: `9 - Chapter ${i + 1}` }))
-      );
-    } else if (Class === 10) {
-      setChapterOptions(
-        Array.from({ length: 15 }, (_, i) => ({ value: i + 1, label: `10 - Chapter ${i + 1}` }))
-      );
-    } else if (Class === 11) {
-      setChapterOptions(
-        Array.from({ length: 9 }, (_, i) => ({ value: i + 1, label: `11 - Chapter ${i + 1}` }))
-      );
-    } else if (Class === 12) {
-      setChapterOptions(
-        Array.from({ length: 10 }, (_, i) => ({ value: i + 1, label: `12 - Chapter ${i + 1}` }))
-      );
+  // Handle class selection and update chapter options
+  const handleClassChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedValue = Number(e.target.value);
+    setSelectedClass(selectedValue);
+
+    // Assign the correct chapter options based on class selection
+    if (selectedValue === 1) {
+      setChapterOptions(chapteroptions1);
+    } else if (selectedValue === 2) {
+      setChapterOptions(chapteroptions2);
+    } else if (selectedValue === 3) {
+      setChapterOptions(chapteroptions3);
     } else {
       setChapterOptions([]);
     }
-  }, [Class]);
+  };
 
   return (
     <div className="p-4 max-w-md mx-auto bg-white shadow-md rounded-lg">
+      {/* Subject Selection */}
+      <label className="block text-sm font-medium text-gray-700">Subject</label>
+      <select className="mt-1 block w-full p-2 border border-gray-300 rounded-md">
+        <option value="">Select Subject...</option>
+        <option value="Math">Math</option>
+        <option value="Science">Science</option>
+      </select>
+
+      {/* Syllabus Selection */}
+      <label className="block text-sm font-medium text-gray-700 mt-4">Syllabus</label>
+      <select className="mt-1 block w-full p-2 border border-gray-300 rounded-md">
+        <option value="">Select Syllabus...</option>
+        <option value="CBSE">CBSE</option>
+        <option value="ICSE">ICSE</option>
+      </select>
+
       {/* Class Selection */}
-      <label className="block text-sm font-medium text-gray-700">Class</label>
+      <label className="block text-sm font-medium text-gray-700 mt-4">Class</label>
       <select
-        onChange={(e) => setSelectedClass(Number(e.target.value))}
+        onChange={handleClassChange}
         className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
       >
         <option value="">Select a Class</option>
@@ -87,7 +89,7 @@ export default function ClassSelectionForm() {
         ))}
       </select>
 
-      {/* Chapter From */}
+      {/* Chapter From Selection */}
       <label className="block text-sm font-medium text-gray-700 mt-4">Chapter From</label>
       <select className="mt-1 block w-full p-2 border border-gray-300 rounded-md">
         {chapterOptions.length > 0 ? (
@@ -101,7 +103,7 @@ export default function ClassSelectionForm() {
         )}
       </select>
 
-      {/* Chapter To */}
+      {/* Chapter To Selection */}
       <label className="block text-sm font-medium text-gray-700 mt-4">Chapter To</label>
       <select className="mt-1 block w-full p-2 border border-gray-300 rounded-md">
         {chapterOptions.length > 0 ? (
@@ -115,7 +117,7 @@ export default function ClassSelectionForm() {
         )}
       </select>
 
-      {/* Number Of Questions */}
+      {/* Number of Questions */}
       <label className="block text-sm font-medium text-gray-700 mt-4">Number Of Questions</label>
       <select className="mt-1 block w-full p-2 border border-gray-300 rounded-md">
         {options.map((opt) => (
@@ -128,11 +130,9 @@ export default function ClassSelectionForm() {
       {/* Language Selection */}
       <label className="block text-sm font-medium text-gray-700 mt-4">Language</label>
       <select className="mt-1 block w-full p-2 border border-gray-300 rounded-md">
-        {languageOptions.map((lang) => (
-          <option key={lang.value} value={lang.value}>
-            {lang.label}
-          </option>
-        ))}
+        <option value="">Select Language...</option>
+        <option value="English">English</option>
+        <option value="Hindi">Hindi</option>
       </select>
     </div>
   );
