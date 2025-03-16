@@ -71,12 +71,7 @@ const classoptions = [
   {
     value: 12,
     label: "12",
-  },
-  {
-    value: BSc,
-    label: "BSc",
-  },
-  
+  }, 
 ];
 
 export const fields = (
