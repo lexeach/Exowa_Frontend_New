@@ -16,11 +16,12 @@ const options = [
 
 const classoptions = Array.from({ length: 12 }, (_, i) => ({
   value: i + 1,
-  label: `${i + 1}`,
+  label: `Class ${i + 1}`,
 }));
 
+// Map of chapters per class
 const chapterOptionsMap = {
-  1: Array.from({ length: 10 }, (_, i) => ({ value: i + 1, label: `Chapter ${i + 1}` })), // 10 chapters
+  1: Array.from({ length: 10 }, (_, i) => ({ value: i + 1, label: `Chapter ${i + 1}` })),
   2: Array.from({ length: 10 }, (_, i) => ({ value: i + 1, label: `Chapter ${i + 1}` })),
   3: Array.from({ length: 10 }, (_, i) => ({ value: i + 1, label: `Chapter ${i + 1}` })),
   4: Array.from({ length: 10 }, (_, i) => ({ value: i + 1, label: `Chapter ${i + 1}` })),
@@ -29,7 +30,7 @@ const chapterOptionsMap = {
   7: Array.from({ length: 10 }, (_, i) => ({ value: i + 1, label: `Chapter ${i + 1}` })),
   8: Array.from({ length: 10 }, (_, i) => ({ value: i + 1, label: `Chapter ${i + 1}` })),
   9: Array.from({ length: 10 }, (_, i) => ({ value: i + 1, label: `Chapter ${i + 1}` })),
-  10: Array.from({ length: 15 }, (_, i) => ({ value: i + 1, label: `Chapter ${i + 1}` })), // Class 10 now has 15 chapters
+  10: Array.from({ length: 15 }, (_, i) => ({ value: i + 1, label: `Chapter ${i + 1}` })), // Class 10 has 15 chapters
   11: Array.from({ length: 10 }, (_, i) => ({ value: i + 1, label: `Chapter ${i + 1}` })),
   12: Array.from({ length: 10 }, (_, i) => ({ value: i + 1, label: `Chapter ${i + 1}` })),
 };
@@ -40,15 +41,14 @@ export const fields = (
 ) => {
   const [selectedClass, setSelectedClass] = useState(null);
 
-  const chapteroptions = selectedClass
-    ? chapterOptionsMap[selectedClass] || []
-    : [];
+  // Get the correct chapter options based on the selected class
+  const chapteroptions = selectedClass ? chapterOptionsMap[selectedClass] || [] : [];
 
   return [
     {
       name: "subject",
       label: "Subject",
-      placeholder: "Select Subject ...",
+      placeholder: "Select Subject...",
       type: "select",
       fetchData: useGetSubjectOptionsMutation,
       wrapperClassName: "mb-6",
@@ -57,7 +57,7 @@ export const fields = (
     {
       name: "syllabus",
       label: "Syllabus",
-      placeholder: "Syllabus Subject ...",
+      placeholder: "Select Syllabus...",
       type: "select",
       fetchData: useGetSyllabusOptionsMutation,
       wrapperClassName: "mb-6",
@@ -66,35 +66,35 @@ export const fields = (
     {
       name: "class",
       label: "Class",
-      placeholder: "Class ...",
+      placeholder: "Select Class...",
       type: "select",
       options: classoptions,
       wrapperClassName: "mb-6",
       fieldWrapperClassName: "col-span-12",
-      onChange: (e) => setSelectedClass(e.target.value),
+      onChange: (e) => setSelectedClass(Number(e.target.value)),
     },
     {
       name: "chapter_from",
       label: "Chapter From",
-      placeholder: "Select Chapter ...",
+      placeholder: "Select Chapter...",
       type: "select",
-      options: chapteroptions,
+      options: chapteroptions.length > 0 ? chapteroptions : [{ value: "", label: "No Record Found" }],
       wrapperClassName: "mb-6",
       fieldWrapperClassName: "col-span-6",
     },
     {
       name: "chapter_to",
       label: "Chapter To",
-      placeholder: "Select Chapter ...",
+      placeholder: "Select Chapter...",
       type: "select",
-      options: chapteroptions,
+      options: chapteroptions.length > 0 ? chapteroptions : [{ value: "", label: "No Record Found" }],
       wrapperClassName: "mb-6",
       fieldWrapperClassName: "col-span-6",
     },
     {
       name: "language",
       label: "Language",
-      placeholder: "Chapter Language ...",
+      placeholder: "Select Language...",
       type: "select",
       options: [
         { value: "English", label: "English" },
@@ -109,8 +109,8 @@ export const fields = (
     },
     {
       name: "no_of_question",
-      label: "Number Of Question",
-      placeholder: "Select Number ...",
+      label: "Number Of Questions",
+      placeholder: "Select Number...",
       type: "select",
       options: options,
       wrapperClassName: "mb-6",
@@ -122,12 +122,12 @@ export const fields = (
 export const schema = yup
   .object()
   .shape({
-    language: yup.string().required("this_field_required"),
-    chapter_to: yup.string().required("this_field_required"),
-    chapter_from: yup.string().required("this_field_required"),
-    syllabus: yup.string().required("this_field_required"),
-    subject: yup.string().required("this_field_required"),
-    no_of_question: yup.string().required("this_field_required"),
-    class: yup.string().required("this_field_required"),
+    language: yup.string().required("This field is required"),
+    chapter_to: yup.string().required("This field is required"),
+    chapter_from: yup.string().required("This field is required"),
+    syllabus: yup.string().required("This field is required"),
+    subject: yup.string().required("This field is required"),
+    no_of_question: yup.string().required("This field is required"),
+    class: yup.string().required("This field is required"),
   })
   .required();
