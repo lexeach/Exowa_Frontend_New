@@ -1,6 +1,7 @@
 import * as yup from "yup";
 import { useState, useEffect } from "react";
 
+// Number of questions options
 const options = [
   { value: 5, label: "5" },
   { value: 10, label: "10" },
@@ -31,7 +32,7 @@ const chapterOptionsMap = {
   7: Array.from({ length: 13 }, (_, i) => ({ value: i + 1, label: `Class 7 - Chapter ${i + 1}` })),
   8: Array.from({ length: 14 }, (_, i) => ({ value: i + 1, label: `Class 8 - Chapter ${i + 1}` })),
   9: Array.from({ length: 10 }, (_, i) => ({ value: i + 1, label: `Class 9 - Chapter ${i + 1}` })),
-  10: Array.from({ length: 15 }, (_, i) => ({ value: i + 1, label: `Class 10 - Chapter ${i + 1}` })), // Class 10 has 15 chapters
+  10: Array.from({ length: 15 }, (_, i) => ({ value: i + 1, label: `Class 10 - Chapter ${i + 1}` })),
   11: Array.from({ length: 9 }, (_, i) => ({ value: i + 1, label: `Class 11 - Chapter ${i + 1}` })),
   12: Array.from({ length: 10 }, (_, i) => ({ value: i + 1, label: `Class 12 - Chapter ${i + 1}` })),
 };
@@ -42,12 +43,9 @@ export default function ClassSelectionForm() {
 
   useEffect(() => {
     console.log("Selected Class:", selectedClass);
-
     if (selectedClass !== null && chapterOptionsMap[selectedClass]) {
-      console.log("Chapters Available:", chapterOptionsMap[selectedClass]);
       setChapterOptions(chapterOptionsMap[selectedClass]);
     } else {
-      console.log("No chapters found for selected class");
       setChapterOptions([]);
     }
   }, [selectedClass]);
@@ -58,10 +56,7 @@ export default function ClassSelectionForm() {
       <select
         onChange={(e) => {
           const selectedValue = Number(e.target.value);
-          console.log("Class Selected:", selectedValue);
-          if (!isNaN(selectedValue)) {
-            setSelectedClass(selectedValue);
-          }
+          setSelectedClass(selectedValue);
         }}
         className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
       >
@@ -98,117 +93,33 @@ export default function ClassSelectionForm() {
           <option value="">No Record Found</option>
         )}
       </select>
+
+      <label className="block text-sm font-medium text-gray-700 mt-4">Number Of Questions</label>
+      <select className="mt-1 block w-full p-2 border border-gray-300 rounded-md">
+        {options.map((opt) => (
+          <option key={opt.value} value={opt.value}>
+            {opt.label}
+          </option>
+        ))}
+      </select>
+
+      <label className="block text-sm font-medium text-gray-700 mt-4">Language</label>
+      <select className="mt-1 block w-full p-2 border border-gray-300 rounded-md">
+        {["English", "Hindi", "Urdu", "Marathi", "Tamil", "Telugu"].map((lang) => (
+          <option key={lang} value={lang}>
+            {lang}
+          </option>
+        ))}
+      </select>
     </div>
   );
 }
-export const fields = (
-  useGetSubjectOptionsMutation,
-  useGetSyllabusOptionsMutation
-) => {
-  const [selectedClass, setSelectedClass] = useState(null);
-  const [chapterOptions, setChapterOptions] = useState([]);
 
-  // Ensure chapter options update when class is selected
-  useEffect(() => {
-    console.log("Selected Class:", selectedClass);
-    if (selectedClass && chapterOptionsMap[selectedClass]) {
-      console.log("Chapters Available:", chapterOptionsMap[selectedClass]);
-      setChapterOptions(chapterOptionsMap[selectedClass]);
-    } else {
-      setChapterOptions([]);
-    }
-  }, [selectedClass]);
-
-  return [
-    {
-      name: "subject",
-      label: "Subject",
-      placeholder: "Select Subject...",
-      type: "select",
-      fetchData: useGetSubjectOptionsMutation,
-      wrapperClassName: "mb-6",
-      fieldWrapperClassName: "col-span-12",
-    },
-    {
-      name: "syllabus",
-      label: "Syllabus",
-      placeholder: "Select Syllabus...",
-      type: "select",
-      fetchData: useGetSyllabusOptionsMutation,
-      wrapperClassName: "mb-6",
-      fieldWrapperClassName: "col-span-12",
-    },
-    {
-      name: "class",
-      label: "Class",
-      placeholder: "Select Class...",
-      type: "select",
-      options: classoptions,
-      wrapperClassName: "mb-6",
-      fieldWrapperClassName: "col-span-12",
-      onChange: (e) => {
-        const selectedValue = Number(e.target.value);
-        console.log("Class Selected:", selectedValue);
-        if (!isNaN(selectedValue)) {
-          setSelectedClass(selectedValue);
-        }
-      },
-    },
-    {
-      name: "chapter_from",
-      label: "Chapter From",
-      placeholder: "Select Chapter...",
-      type: "select",
-      options: chapterOptions.length > 0 ? chapterOptions : [{ value: "", label: "No Record Found" }],
-      wrapperClassName: "mb-6",
-      fieldWrapperClassName: "col-span-6",
-    },
-    {
-      name: "chapter_to",
-      label: "Chapter To",
-      placeholder: "Select Chapter...",
-      type: "select",
-      options: chapterOptions.length > 0 ? chapterOptions : [{ value: "", label: "No Record Found" }],
-      wrapperClassName: "mb-6",
-      fieldWrapperClassName: "col-span-6",
-    },
-    {
-      name: "language",
-      label: "Language",
-      placeholder: "Select Language...",
-      type: "select",
-      options: [
-        { value: "English", label: "English" },
-        { value: "Hindi", label: "Hindi" },
-        { value: "Urdu", label: "Urdu" },
-        { value: "Marathi", label: "Marathi" },
-        { value: "Tamil", label: "Tamil" },
-        { value: "Telugu", label: "Telugu" },
-      ],
-      wrapperClassName: "mb-6",
-      fieldWrapperClassName: "col-span-6",
-    },
-    {
-      name: "no_of_question",
-      label: "Number Of Questions",
-      placeholder: "Select Number...",
-      type: "select",
-      options: options,
-      wrapperClassName: "mb-6",
-      fieldWrapperClassName: "col-span-6 mb-[400px] sm:mb-5",
-    },
-  ];
-};
-
-export const schema = yup
-  .object()
-  .shape({
-    language: yup.string().required("This field is required"),
-    chapter_to: yup.string().required("This field is required"),
-    chapter_from: yup.string().required("This field is required"),
-    syllabus: yup.string().required("This field is required"),
-    subject: yup.string().required("This field is required"),
-    no_of_question: yup.string().required("This field is required"),
-    class: yup.string().required("This field is required"),
-  })
-  .required();
+// Form Validation Schema
+export const schema = yup.object().shape({
+  class: yup.string().required("Class is required"),
+  chapter_from: yup.string().required("Chapter From is required"),
+  chapter_to: yup.string().required("Chapter To is required"),
+  language: yup.string().required("Language is required"),
+  no_of_question: yup.string().required("Number of questions is required"),
+});
