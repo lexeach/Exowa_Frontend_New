@@ -1,5 +1,5 @@
 import * as yup from "yup";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const options = [
   { value: 5, label: "5" },
@@ -40,29 +40,18 @@ export const fields = (
   useGetSyllabusOptionsMutation
 ) => {
   const [selectedClass, setSelectedClass] = useState(null);
+  const [chapteroptions, setChapterOptions] = useState([]);
 
-  // Get the correct chapter options based on the selected class
-  const chapteroptions = selectedClass ? chapterOptionsMap[selectedClass] || [] : [];
+  // Update chapteroptions when selectedClass changes
+  useEffect(() => {
+    if (selectedClass && chapterOptionsMap[selectedClass]) {
+      setChapterOptions(chapterOptionsMap[selectedClass]);
+    } else {
+      setChapterOptions([]); // Default to empty if no class is selected
+    }
+  }, [selectedClass]);
 
   return [
-    {
-      name: "subject",
-      label: "Subject",
-      placeholder: "Select Subject...",
-      type: "select",
-      fetchData: useGetSubjectOptionsMutation,
-      wrapperClassName: "mb-6",
-      fieldWrapperClassName: "col-span-12",
-    },
-    {
-      name: "syllabus",
-      label: "Syllabus",
-      placeholder: "Select Syllabus...",
-      type: "select",
-      fetchData: useGetSyllabusOptionsMutation,
-      wrapperClassName: "mb-6",
-      fieldWrapperClassName: "col-span-12",
-    },
     {
       name: "class",
       label: "Class",
@@ -71,7 +60,10 @@ export const fields = (
       options: classoptions,
       wrapperClassName: "mb-6",
       fieldWrapperClassName: "col-span-12",
-      onChange: (e) => setSelectedClass(Number(e.target.value)),
+      onChange: (e) => {
+        const selectedValue = Number(e.target.value);
+        setSelectedClass(selectedValue);
+      },
     },
     {
       name: "chapter_from",
@@ -91,43 +83,5 @@ export const fields = (
       wrapperClassName: "mb-6",
       fieldWrapperClassName: "col-span-6",
     },
-    {
-      name: "language",
-      label: "Language",
-      placeholder: "Select Language...",
-      type: "select",
-      options: [
-        { value: "English", label: "English" },
-        { value: "Hindi", label: "Hindi" },
-        { value: "Urdu", label: "Urdu" },
-        { value: "Marathi", label: "Marathi" },
-        { value: "Tamil", label: "Tamil" },
-        { value: "Telugu", label: "Telugu" },
-      ],
-      wrapperClassName: "mb-6",
-      fieldWrapperClassName: "col-span-6",
-    },
-    {
-      name: "no_of_question",
-      label: "Number Of Questions",
-      placeholder: "Select Number...",
-      type: "select",
-      options: options,
-      wrapperClassName: "mb-6",
-      fieldWrapperClassName: "col-span-6 mb-[400px] sm:mb-5",
-    },
   ];
 };
-
-export const schema = yup
-  .object()
-  .shape({
-    language: yup.string().required("This field is required"),
-    chapter_to: yup.string().required("This field is required"),
-    chapter_from: yup.string().required("This field is required"),
-    syllabus: yup.string().required("This field is required"),
-    subject: yup.string().required("This field is required"),
-    no_of_question: yup.string().required("This field is required"),
-    class: yup.string().required("This field is required"),
-  })
-  .required();
