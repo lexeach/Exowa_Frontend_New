@@ -54,6 +54,24 @@ export const fields = (
 
   return [
     {
+      name: "subject",
+      label: "Subject",
+      placeholder: "Select Subject...",
+      type: "select",
+      fetchData: useGetSubjectOptionsMutation,
+      wrapperClassName: "mb-6",
+      fieldWrapperClassName: "col-span-12",
+    },
+    {
+      name: "syllabus",
+      label: "Syllabus",
+      placeholder: "Select Syllabus...",
+      type: "select",
+      fetchData: useGetSyllabusOptionsMutation,
+      wrapperClassName: "mb-6",
+      fieldWrapperClassName: "col-span-12",
+    },
+    {
       name: "class",
       label: "Class",
       placeholder: "Select Class...",
