@@ -20,18 +20,18 @@ const classoptions = Array.from({ length: 12 }, (_, i) => ({
 }));
 
 const chapterOptionsMap = {
-  1: [{ value: 1, label: "Chapter 1" }, { value: 2, label: "Chapter 2" }],
-  2: [{ value: 1, label: "Chapter 1" }, { value: 2, label: "Chapter 2" }],
-  3: [{ value: 1, label: "Chapter 1" }, { value: 2, label: "Chapter 2" }],
-  4: [{ value: 1, label: "Chapter 1" }, { value: 2, label: "Chapter 2" }],
-  5: [{ value: 1, label: "Chapter 1" }, { value: 2, label: "Chapter 2" }],
-  6: [{ value: 1, label: "Chapter 1" }, { value: 2, label: "Chapter 2" }],
-  7: [{ value: 1, label: "Chapter 1" }, { value: 2, label: "Chapter 2" }],
-  8: [{ value: 1, label: "Chapter 1" }, { value: 2, label: "Chapter 2" }],
-  9: [{ value: 1, label: "Chapter 1" }, { value: 2, label: "Chapter 2" }],
-  10: [{ value: 1, label: "Chapter 1" }, { value: 15, label: "Chapter 15" }],
-  11: [{ value: 1, label: "Chapter 1" }, { value: 2, label: "Chapter 2" }],
-  12: [{ value: 1, label: "Chapter 1" }, { value: 2, label: "Chapter 2" }],
+  1: Array.from({ length: 10 }, (_, i) => ({ value: i + 1, label: `Chapter ${i + 1}` })), // 10 chapters
+  2: Array.from({ length: 10 }, (_, i) => ({ value: i + 1, label: `Chapter ${i + 1}` })),
+  3: Array.from({ length: 10 }, (_, i) => ({ value: i + 1, label: `Chapter ${i + 1}` })),
+  4: Array.from({ length: 10 }, (_, i) => ({ value: i + 1, label: `Chapter ${i + 1}` })),
+  5: Array.from({ length: 10 }, (_, i) => ({ value: i + 1, label: `Chapter ${i + 1}` })),
+  6: Array.from({ length: 10 }, (_, i) => ({ value: i + 1, label: `Chapter ${i + 1}` })),
+  7: Array.from({ length: 10 }, (_, i) => ({ value: i + 1, label: `Chapter ${i + 1}` })),
+  8: Array.from({ length: 10 }, (_, i) => ({ value: i + 1, label: `Chapter ${i + 1}` })),
+  9: Array.from({ length: 10 }, (_, i) => ({ value: i + 1, label: `Chapter ${i + 1}` })),
+  10: Array.from({ length: 15 }, (_, i) => ({ value: i + 1, label: `Chapter ${i + 1}` })), // Class 10 now has 15 chapters
+  11: Array.from({ length: 10 }, (_, i) => ({ value: i + 1, label: `Chapter ${i + 1}` })),
+  12: Array.from({ length: 10 }, (_, i) => ({ value: i + 1, label: `Chapter ${i + 1}` })),
 };
 
 export const fields = (
