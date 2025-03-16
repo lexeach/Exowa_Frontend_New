@@ -74,7 +74,7 @@ const classoptions = [
   },
   {
     value: "B Sc",
-    label: "12",
+    label: "B Sc",
   },
 ];
 
