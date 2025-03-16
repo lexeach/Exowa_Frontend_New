@@ -12,27 +12,60 @@ const options = [
 ];
 
 // Class selection options
-const classoptions = Array.from({ length: 12 }, (_, i) => ({
-  value: i + 1,
-  label: `Class ${i + 1}`,
-}));
+const classoptions = [
+  { value: 6, label: "6" },
+  { value: 7, label: "7" },
+  { value: 8, label: "8" },
+  { value: 9, label: "9" },
+  { value: 10, label: "10" },
+  { value: 11, label: "11" },
+  { value: 12, label: "12" },
+];
 
-// Unique chapters for each class
-const chapterOptionsMap: Record<number, { value: number; label: string }[]> = {
-  1: Array.from({ length: 8 }, (_, i) => ({ value: i + 1, label: `Class 1 - Chapter ${i + 1}` })),
-  2: Array.from({ length: 9 }, (_, i) => ({ value: i + 1, label: `Class 2 - Chapter ${i + 1}` })),
-  3: Array.from({ length: 10 }, (_, i) => ({ value: i + 1, label: `Class 3 - Chapter ${i + 1}` })),
-  10: Array.from({ length: 15 }, (_, i) => ({ value: i + 1, label: `Class 10 - Chapter ${i + 1}` })),
-};
+// Language options
+const languageOptions = [
+  { value: "English", label: "English" },
+  { value: "Hindi", label: "Hindi" },
+  { value: "Urdu", label: "Urdu" },
+  { value: "Marathi", label: "Marathi" },
+  { value: "Tamil", label: "Tamil" },
+  { value: "Telugu", label: "Telugu" },
+];
 
 export default function ClassSelectionForm() {
   const [selectedClass, setSelectedClass] = useState<number | null>(null);
   const [chapterOptions, setChapterOptions] = useState<{ value: number; label: string }[]>([]);
 
+  // Update chapter options based on selected class
   useEffect(() => {
-    console.log("Selected Class:", selectedClass);
-    if (selectedClass && chapterOptionsMap[selectedClass]) {
-      setChapterOptions(chapterOptionsMap[selectedClass]);
+    if (selectedClass === 6) {
+      setChapterOptions(
+        Array.from({ length: 8 }, (_, i) => ({ value: i + 1, label: `Class 6 - Chapter ${i + 1}` }))
+      );
+    } else if (selectedClass === 7) {
+      setChapterOptions(
+        Array.from({ length: 9 }, (_, i) => ({ value: i + 1, label: `Class 7 - Chapter ${i + 1}` }))
+      );
+    } else if (selectedClass === 8) {
+      setChapterOptions(
+        Array.from({ length: 10 }, (_, i) => ({ value: i + 1, label: `Class 8 - Chapter ${i + 1}` }))
+      );
+    } else if (selectedClass === 9) {
+      setChapterOptions(
+        Array.from({ length: 10 }, (_, i) => ({ value: i + 1, label: `Class 9 - Chapter ${i + 1}` }))
+      );
+    } else if (selectedClass === 10) {
+      setChapterOptions(
+        Array.from({ length: 15 }, (_, i) => ({ value: i + 1, label: `Class 10 - Chapter ${i + 1}` }))
+      );
+    } else if (selectedClass === 11) {
+      setChapterOptions(
+        Array.from({ length: 9 }, (_, i) => ({ value: i + 1, label: `Class 11 - Chapter ${i + 1}` }))
+      );
+    } else if (selectedClass === 12) {
+      setChapterOptions(
+        Array.from({ length: 10 }, (_, i) => ({ value: i + 1, label: `Class 12 - Chapter ${i + 1}` }))
+      );
     } else {
       setChapterOptions([]);
     }
@@ -40,6 +73,7 @@ export default function ClassSelectionForm() {
 
   return (
     <div className="p-4 max-w-md mx-auto bg-white shadow-md rounded-lg">
+      {/* Class Selection */}
       <label className="block text-sm font-medium text-gray-700">Class</label>
       <select
         onChange={(e) => setSelectedClass(Number(e.target.value))}
@@ -53,6 +87,7 @@ export default function ClassSelectionForm() {
         ))}
       </select>
 
+      {/* Chapter From */}
       <label className="block text-sm font-medium text-gray-700 mt-4">Chapter From</label>
       <select className="mt-1 block w-full p-2 border border-gray-300 rounded-md">
         {chapterOptions.length > 0 ? (
@@ -66,11 +101,36 @@ export default function ClassSelectionForm() {
         )}
       </select>
 
+      {/* Chapter To */}
+      <label className="block text-sm font-medium text-gray-700 mt-4">Chapter To</label>
+      <select className="mt-1 block w-full p-2 border border-gray-300 rounded-md">
+        {chapterOptions.length > 0 ? (
+          chapterOptions.map((chap) => (
+            <option key={chap.value} value={chap.value}>
+              {chap.label}
+            </option>
+          ))
+        ) : (
+          <option value="">No Record Found</option>
+        )}
+      </select>
+
+      {/* Number Of Questions */}
       <label className="block text-sm font-medium text-gray-700 mt-4">Number Of Questions</label>
       <select className="mt-1 block w-full p-2 border border-gray-300 rounded-md">
         {options.map((opt) => (
           <option key={opt.value} value={opt.value}>
             {opt.label}
+          </option>
+        ))}
+      </select>
+
+      {/* Language Selection */}
+      <label className="block text-sm font-medium text-gray-700 mt-4">Language</label>
+      <select className="mt-1 block w-full p-2 border border-gray-300 rounded-md">
+        {languageOptions.map((lang) => (
+          <option key={lang.value} value={lang.value}>
+            {lang.label}
           </option>
         ))}
       </select>
@@ -82,4 +142,7 @@ export default function ClassSelectionForm() {
 export const schema = yup.object().shape({
   class: yup.string().required("Class is required"),
   chapter_from: yup.string().required("Chapter From is required"),
+  chapter_to: yup.string().required("Chapter To is required"),
+  no_of_question: yup.string().required("Number of questions is required"),
+  language: yup.string().required("Language is required"),
 });
