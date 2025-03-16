@@ -71,7 +71,11 @@ const classoptions = [
   {
     value: 12,
     label: "12",
-  }, 
+  },
+  {
+    value: "B Sc",
+    label: "12",
+  },
 ];
 
 const chapteroptions = [
