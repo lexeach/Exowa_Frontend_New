@@ -47,7 +47,7 @@ export function Sidebar({ children }) {
     <div className="flex flex-col min-h-screen">
       {/* Mobile Header */}
       <div className="md:hidden fixed top-0 left-0 right-0 z-20 bg-white border-b p-4 flex items-center justify-between">
-        <div className="text-lg font-semibold">Automated Assessment</div>
+        <div className="text-lg font-semibold">Exowa Automated Assessment</div>
         <Button
           variant="ghost"
           size="sm"
