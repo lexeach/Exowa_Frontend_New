@@ -17,7 +17,7 @@ const options = [
 // Class options dropdown
 const classoptions = Array.from({ length: 12 }, (_, i) => ({
   value: i + 1,
-  label: `Class ${i + 1}`,
+  label: {i + 1}`,
 }));
 
 // Unique chapters for each class
