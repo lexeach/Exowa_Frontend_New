@@ -26,12 +26,21 @@ const classoptions = [
 ];
 
 const generateChapterOptions = (selectedClass) => {
-  let chapterCount = 10; // Default chapter count
-
-  if (selectedClass === 7) {
+  
+  if (selectedClass === 6) {
+    chapterCount = 8;
+  } else if (selectedClass === 7) {
+    chapterCount = 9;
+  } else if (selectedClass === 8) {
+    chapterCount = 10;
+  } else if (selectedClass === 9) {
+    chapterCount = 11;
+  } else if (selectedClass === 10) {
     chapterCount = 12;
   } else if (selectedClass === 11) {
-    chapterCount = 15;
+    chapterCount = 13;
+  } else if (selectedClass === 12) {
+    chapterCount = 14;
   }
 
   const chapterOptions = [];
