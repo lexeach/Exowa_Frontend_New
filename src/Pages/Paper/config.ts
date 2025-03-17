@@ -135,6 +135,15 @@ export const fields = (
       wrapperClassName: "mb-6",
       fieldWrapperClassName: "col-span-6  mb-[400px] sm:mb-5",
     },
+    {
+      name:"textInput",
+      label: "Text Input",
+      placeholder: "Enter Text...",
+      type:"text",
+      wrapperClassName: "mb-6",
+      fieldWrapperClassName: "col-span-12"
+    }
+
   ];
 };
 
@@ -169,7 +178,7 @@ function MyForm({ useGetSubjectOptionsMutation, useGetSyllabusOptionsMutation })
           {field.type === "select" && (
             <select
               name={field.name}
-              onChange={field.onChange && field.onChange} // Corrected line
+              onChange={field.onChange ? field.onChange : undefined}
             >
               {field.options &&
                 field.options.map((option) => (
@@ -178,6 +187,9 @@ function MyForm({ useGetSubjectOptionsMutation, useGetSyllabusOptionsMutation })
                   </option>
                 ))}
             </select>
+          )}
+          {field.type === "text" && (
+            <input type="text" name={field.name} placeholder={field.placeholder} />
           )}
         </div>
       ))}
