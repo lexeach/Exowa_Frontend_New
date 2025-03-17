@@ -28,19 +28,19 @@ const classoptions = [
 const generateChapterOptions = (selectedClass) => {
   let chapterCount = 10;
 
-  if (parseInt(selectedClass) === 7) {
+  if (selectedClass === 7) {
     chapterCount = 12;
-  } else if (parseInt(selectedClass) === 11) {
+  } else if (selectedClass === 11) {
     chapterCount = 15;
-  } else if (parseInt(selectedClass) === 6) {
+  } else if (selectedClass === 6) {
     chapterCount = 10;
-  } else if (parseInt(selectedClass) === 8) {
+  } else if (selectedClass === 8) {
     chapterCount = 10;
-  } else if (parseInt(selectedClass) === 9) {
+  } else if (selectedClass === 9) {
     chapterCount = 10;
-  } else if (parseInt(selectedClass) === 10) {
+  } else if (selectedClass === 10) {
     chapterCount = 10;
-  } else if (parseInt(selectedClass) === 12) {
+  } else if (selectedClass === 12) {
     chapterCount = 10;
   }
 
@@ -87,7 +87,7 @@ export const fields = (
       wrapperClassName: "mb-6",
       fieldWrapperClassName: "col-span-12",
       onChange: (e) => {
-        const selectedValue = parseInt(e.target.value);
+        const selectedValue = parseInt(e.target.value, 10); // Parse as integer with base 10
         setSelectedClass(selectedValue);
         console.log("Selected Class:", selectedValue);
       },
