@@ -26,7 +26,8 @@ const classoptions = [
 ];
 
 const generateChapterOptions = (selectedClass) => {
-  
+  let chapterCount = 10; // Default count, in case no class matches.
+
   if (selectedClass === 6) {
     chapterCount = 8;
   } else if (selectedClass === 7) {
