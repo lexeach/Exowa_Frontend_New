@@ -87,7 +87,7 @@ export const fields = (
       wrapperClassName: "mb-6",
       fieldWrapperClassName: "col-span-12",
       onChange: (e) => {
-        const selectedValue = e.target.value; // No need to parse here, parse in generateChapterOptions
+        const selectedValue = parseInt(e.target.value);
         setSelectedClass(selectedValue);
         console.log("Selected Class:", selectedValue);
       },
