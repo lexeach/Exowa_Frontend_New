@@ -1,5 +1,5 @@
 import * as yup from "yup";
-import { useState } from "react"; // Import useState if you're using React
+import React, { useState } from "react"; // Ensure React is imported if you are using it.
 
 const options = [
   { value: 5, label: "5" },
@@ -26,7 +26,7 @@ const classoptions = [
 ];
 
 const generateChapterOptions = (selectedClass) => {
-  let chapterCount = 10; // Default count, in case no class matches.
+  let chapterCount = 10; // Default count
 
   if (selectedClass === 6) {
     chapterCount = 8;
@@ -54,10 +54,9 @@ const generateChapterOptions = (selectedClass) => {
 export const fields = (
   useGetSubjectOptionsMutation,
   useGetSyllabusOptionsMutation,
-  selectedClass, // Pass selectedClass as prop
-  setSelectedClass //Pass setSelectedClass as prop
+  selectedClass,
+  setSelectedClass
 ) => {
-
   const chapterOptions = generateChapterOptions(selectedClass);
 
   return [
@@ -88,8 +87,10 @@ export const fields = (
       wrapperClassName: "mb-6",
       fieldWrapperClassName: "col-span-12",
       onChange: (e) => {
-          setSelectedClass(parseInt(e.target.value));
-      }
+        const selectedValue = parseInt(e.target.value);
+        setSelectedClass(selectedValue);
+        console.log("Selected Class:", selectedValue); // Debugging
+      },
     },
     {
       name: "chapter_from",
@@ -149,3 +150,41 @@ export const schema = yup
     class: yup.string().required("this_field_required"),
   })
   .required();
+
+// Example React Component Usage:
+function MyForm({ useGetSubjectOptionsMutation, useGetSyllabusOptionsMutation }) {
+  const [selectedClass, setSelectedClass] = useState(6); // Initial class
+
+  const formFields = fields(
+    useGetSubjectOptionsMutation,
+    useGetSyllabusOptionsMutation,
+    selectedClass,
+    setSelectedClass
+  );
+
+  return (
+    <div>
+      {/* Example: Render the form fields */}
+      {formFields.map((field) => (
+        <div key={field.name}>
+          <label>{field.label}</label>
+          {field.type === "select" && (
+            <select
+              name={field.name}
+              onChange={field.onChange}
+            >
+              {field.options && field.options.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+          )}
+          {/* Add other field types rendering here */}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+export default MyForm;
