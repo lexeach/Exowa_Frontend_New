@@ -1,5 +1,5 @@
 import * as yup from "yup";
-import React, { useState } from "react"; // Ensure React is imported if you are using it.
+import React, { useState } from "react";
 
 const options = [
   { value: 5, label: "5" },
@@ -26,7 +26,7 @@ const classoptions = [
 ];
 
 const generateChapterOptions = (selectedClass) => {
-  let chapterCount = 10; // Default count
+  let chapterCount = 10;
 
   if (selectedClass === 6) {
     chapterCount = 8;
@@ -89,7 +89,7 @@ export const fields = (
       onChange: (e) => {
         const selectedValue = parseInt(e.target.value);
         setSelectedClass(selectedValue);
-        console.log("Selected Class:", selectedValue); // Debugging
+        console.log("Selected Class:", selectedValue);
       },
     },
     {
@@ -151,9 +151,8 @@ export const schema = yup
   })
   .required();
 
-// Example React Component Usage:
 function MyForm({ useGetSubjectOptionsMutation, useGetSyllabusOptionsMutation }) {
-  const [selectedClass, setSelectedClass] = useState(6); // Initial class
+  const [selectedClass, setSelectedClass] = useState(6);
 
   const formFields = fields(
     useGetSubjectOptionsMutation,
@@ -164,23 +163,22 @@ function MyForm({ useGetSubjectOptionsMutation, useGetSyllabusOptionsMutation })
 
   return (
     <div>
-      {/* Example: Render the form fields */}
       {formFields.map((field) => (
         <div key={field.name}>
           <label>{field.label}</label>
           {field.type === "select" && (
             <select
               name={field.name}
-              onChange={field.onChange}
+              onChange={field.onChange && field.onChange} // Corrected line
             >
-              {field.options && field.options.map((option) => (
-                <option key={option.value} value={option.value}>
-                  {option.label}
-                </option>
-              ))}
+              {field.options &&
+                field.options.map((option) => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
             </select>
           )}
-          {/* Add other field types rendering here */}
         </div>
       ))}
     </div>
