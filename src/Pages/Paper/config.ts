@@ -1,5 +1,5 @@
 import * as yup from "yup";
-import { useState } from "react"; // Import useState if you're using React
+import { useState } from "react";
 
 const options = [
   { value: 5, label: "5" },
@@ -26,12 +26,22 @@ const classoptions = [
 ];
 
 const generateChapterOptions = (selectedClass) => {
-  let chapterCount = 10; // Default chapter count
+  let chapterCount = 10;
 
-  if (selectedClass === 7) {
+  if (selectedClass === 6) {
+    chapterCount = 8;
+  } else if (selectedClass === 7) {
     chapterCount = 12;
+  } else if (selectedClass === 8) {
+    chapterCount = 11;
+  } else if (selectedClass === 9) {
+    chapterCount = 13;
+  } else if (selectedClass === 10) {
+    chapterCount = 14;
   } else if (selectedClass === 11) {
     chapterCount = 15;
+  } else if (selectedClass === 12) {
+    chapterCount = 16;
   }
 
   const chapterOptions = [];
@@ -44,10 +54,9 @@ const generateChapterOptions = (selectedClass) => {
 export const fields = (
   useGetSubjectOptionsMutation,
   useGetSyllabusOptionsMutation,
-  selectedClass, // Pass selectedClass as prop
-  setSelectedClass //Pass setSelectedClass as prop
+  selectedClass,
+  setSelectedClass
 ) => {
-
   const chapterOptions = generateChapterOptions(selectedClass);
 
   return [
@@ -78,8 +87,9 @@ export const fields = (
       wrapperClassName: "mb-6",
       fieldWrapperClassName: "col-span-12",
       onChange: (e) => {
-          setSelectedClass(parseInt(e.target.value));
-      }
+        const selectedValue = parseInt(e.target.value, 10);
+        setSelectedClass(selectedValue);
+      },
     },
     {
       name: "chapter_from",
@@ -126,21 +136,7 @@ export const fields = (
     },
   ];
 };
-import React, { useState } from 'react';
-import { fields, schema } from './yourFieldsFile'; // Replace with your file path
 
-function MyForm({ useGetSubjectOptionsMutation, useGetSyllabusOptionsMutation }) {
-  const [selectedClass, setSelectedClass] = useState(6); // Initialize with a default class
-
-  const formFields = fields(
-    useGetSubjectOptionsMutation,
-    useGetSyllabusOptionsMutation,
-    selectedClass,
-    setSelectedClass
-  );
-
-  // ... rest of your form component using formFields and schema
-}
 export const schema = yup
   .object()
   .shape({
@@ -153,3 +149,41 @@ export const schema = yup
     class: yup.string().required("this_field_required"),
   })
   .required();
+
+function MyForm({ useGetSubjectOptionsMutation, useGetSyllabusOptionsMutation }) {
+  const [selectedClass, setSelectedClass] = useState(6);
+
+  const formFields = fields(
+    useGetSubjectOptionsMutation,
+    useGetSyllabusOptionsMutation,
+    selectedClass,
+    setSelectedClass
+  );
+
+  return (
+    <div>
+      {formFields.map((field) => {
+        return (
+          <div key={field.name}>
+            <label>{field.label}</label>
+            {field.type === "select" && (
+              <select
+                name={field.name}
+                onChange={field.onChange}
+              >
+                {field.options &&
+                  field.options.map((option) => (
+                    <option key={option.value} value={option.value}>
+                      {option.label}
+                    </option>
+                  ))}
+              </select>
+            )}
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+export default MyForm;
