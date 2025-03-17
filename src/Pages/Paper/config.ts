@@ -136,14 +136,13 @@ export const fields = (
       fieldWrapperClassName: "col-span-6  mb-[400px] sm:mb-5",
     },
     {
-      name:"textInput",
+      name: "textInput",
       label: "Text Input",
       placeholder: "Enter Text...",
-      type:"text",
+      type: "text",
       wrapperClassName: "mb-6",
-      fieldWrapperClassName: "col-span-12"
-    }
-
+      fieldWrapperClassName: "col-span-12",
+    },
   ];
 };
 
@@ -172,27 +171,29 @@ function MyForm({ useGetSubjectOptionsMutation, useGetSyllabusOptionsMutation })
 
   return (
     <div>
-      {formFields.map((field) => (
-        <div key={field.name}>
-          <label>{field.label}</label>
-          {field.type === "select" && (
-            <select
-              name={field.name}
-              onChange={field.onChange ? field.onChange : undefined}
-            >
-              {field.options &&
-                field.options.map((option) => (
-                  <option key={option.value} value={option.value}>
-                    {option.label}
-                  </option>
-                ))}
-            </select>
-          )}
-          {field.type === "text" && (
-            <input type="text" name={field.name} placeholder={field.placeholder} />
-          )}
-        </div>
-      ))}
+      {formFields.map((field) => {
+        return (
+          <div key={field.name}>
+            <label>{field.label}</label>
+            {field.type === "select" && (
+              <select
+                name={field.name}
+                onChange={field.onChange}
+              >
+                {field.options &&
+                  field.options.map((option) => (
+                    <option key={option.value} value={option.value}>
+                      {option.label}
+                    </option>
+                  ))}
+              </select>
+            )}
+            {field.type === "text" && (
+              <input type="text" name={field.name} placeholder={field.placeholder} />
+            )}
+          </div>
+        );
+      })}
     </div>
   );
 }
