@@ -26,7 +26,7 @@ const classoptions = [
 ];
 
 const generateChapterOptions = (selectedClass) => {
-  let chapterCount = 10;
+  let chapterCount = 10; // Default value
 
   if (selectedClass === 6) {
     chapterCount = 8;
@@ -51,19 +51,22 @@ const generateChapterOptions = (selectedClass) => {
   return chapterOptions;
 };
 
-export const fields = (
+export const useFormFields = (
   useGetSubjectOptionsMutation,
-  useGetSyllabusOptionsMutation,
-  selectedClass,
-  setSelectedClass
+  useGetSyllabusOptionsMutation
 ) => {
-  const [chapterOptions, setChapterOptions] = useState(generateChapterOptions(selectedClass));
+  const [selectedClass, setSelectedClass] = useState(null);
+  const [chapterOptions, setChapterOptions] = useState([]);
 
+  // Update chapterOptions whenever selectedClass changes
   useEffect(() => {
-    setChapterOptions(generateChapterOptions(selectedClass));
+    if (selectedClass !== null) {
+      const newChapterOptions = generateChapterOptions(selectedClass);
+      setChapterOptions(newChapterOptions);
+    }
   }, [selectedClass]);
 
-  return [
+  const fields = [
     {
       name: "subject",
       label: "Subject",
@@ -139,6 +142,8 @@ export const fields = (
       fieldWrapperClassName: "col-span-6  mb-[400px] sm:mb-5",
     },
   ];
+
+  return fields;
 };
 
 export const schema = yup
