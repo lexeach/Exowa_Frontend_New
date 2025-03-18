@@ -1,5 +1,5 @@
 import * as yup from "yup";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const options = [
   { value: 5, label: "5" },
@@ -57,7 +57,11 @@ export const fields = (
   selectedClass,
   setSelectedClass
 ) => {
-  const chapterOptions = generateChapterOptions(selectedClass);
+  const [chapterOptions, setChapterOptions] = useState(generateChapterOptions(selectedClass));
+
+  useEffect(() => {
+    setChapterOptions(generateChapterOptions(selectedClass));
+  }, [selectedClass]);
 
   return [
     {
