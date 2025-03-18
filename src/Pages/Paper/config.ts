@@ -1,5 +1,9 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
+import { useForm, Controller } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 
+// Options for the "Number of Questions" field
 const options = [
   { value: 5, label: "5" },
   { value: 10, label: "10" },
@@ -13,6 +17,7 @@ const options = [
   { value: 50, label: "50" },
 ];
 
+// Options for the "Class" field
 const classoptions = [
   { value: 6, label: "6" },
   { value: 7, label: "7" },
@@ -24,6 +29,7 @@ const classoptions = [
   { value: "B Sc (1st year)", label: "B Sc (1st year)" },
 ];
 
+// Function to generate chapter options based on the selected class
 const generateChapterOptions = (selectedClass) => {
   let chapterCount = 10; // Default value
 
@@ -50,10 +56,8 @@ const generateChapterOptions = (selectedClass) => {
   return chapterOptions;
 };
 
-export const useFormFields = (
-  useGetSubjectOptionsMutation,
-  useGetSyllabusOptionsMutation
-) => {
+// Custom hook to generate form fields
+const useFormFields = (useGetSubjectOptionsMutation, useGetSyllabusOptionsMutation) => {
   const [selectedClass, setSelectedClass] = useState(null);
   const [chapterOptions, setChapterOptions] = useState([]);
 
@@ -140,3 +144,110 @@ export const useFormFields = (
 
   return { fields, selectedClass, setSelectedClass };
 };
+
+// Validation schema
+const schema = yup.object().shape({
+  language: yup.string().required("This field is required"),
+  chapter_to: yup.string().required("This field is required"),
+  chapter_from: yup.string().required("This field is required"),
+  syllabus: yup.string().required("This field is required"),
+  subject: yup.string().required("This field is required"),
+  no_of_question: yup.string().required("This field is required"),
+  class: yup.string().required("This field is required"),
+});
+
+// Main component
+const App = () => {
+  // Mock mutations (replace with your actual mutations)
+  const useGetSubjectOptionsMutation = () => [
+    { value: "math", label: "Mathematics" },
+    { value: "science", label: "Science" },
+  ];
+
+  const useGetSyllabusOptionsMutation = () => [
+    { value: "cbse", label: "CBSE" },
+    { value: "icse", label: "ICSE" },
+  ];
+
+  // Get form fields and state
+  const { fields, selectedClass, setSelectedClass } = useFormFields(
+    useGetSubjectOptionsMutation,
+    useGetSyllabusOptionsMutation
+  );
+
+  // React Hook Form
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
+
+  // Form submission handler
+  const onSubmit = (data) => {
+    console.log("Form Data:", data);
+  };
+
+  return (
+    <div className="p-6 max-w-md mx-auto bg-white shadow-md rounded-lg">
+      <h1 className="text-2xl font-bold mb-6">Dynamic Form</h1>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        {fields.map((field, index) => (
+          <div key={index} className={field.wrapperClassName}>
+            <label className="block text-sm font-medium text-gray-700">
+              {field.label}
+            </label>
+            <Controller
+              name={field.name}
+              control={control}
+              defaultValue=""
+              render={({ field: { onChange, value } }) => {
+                if (field.type === "select") {
+                  return (
+                    <select
+                      className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      onChange={(e) => {
+                        onChange(e);
+                        if (field.name === "class") {
+                          setSelectedClass(parseInt(e.target.value, 10));
+                        }
+                      }}
+                      value={value}
+                    >
+                      <option value="">{field.placeholder}</option>
+                      {field.options?.map((option) => (
+                        <option key={option.value} value={option.value}>
+                          {option.label}
+                        </option>
+                      ))}
+                      {field.fetchData?.().map((option) => (
+                        <option key={option.value} value={option.value}>
+                          {option.label}
+                        </option>
+                      ))}
+                    </select>
+                  );
+                }
+                return null;
+              }}
+            />
+            {errors[field.name] && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors[field.name].message}
+              </p>
+            )}
+          </div>
+        ))}
+        <button
+          type="submit"
+          className="w-full bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        >
+          Submit
+        </button>
+      </form>
+    </div>
+  );
+};
+
+export default App;
