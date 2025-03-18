@@ -1,4 +1,3 @@
-import * as yup from "yup";
 import { useState, useEffect } from "react";
 
 const options = [
@@ -93,10 +92,6 @@ export const useFormFields = (
       options: classoptions,
       wrapperClassName: "mb-6",
       fieldWrapperClassName: "col-span-12",
-      onChange: (e) => {
-        const selectedValue = parseInt(e.target.value, 10);
-        setSelectedClass(selectedValue);
-      },
     },
     {
       name: "chapter_from",
@@ -143,18 +138,5 @@ export const useFormFields = (
     },
   ];
 
-  return fields;
+  return { fields, selectedClass, setSelectedClass };
 };
-
-export const schema = yup
-  .object()
-  .shape({
-    language: yup.string().required("this_field_required"),
-    chapter_to: yup.string().required("this_field_required"),
-    chapter_from: yup.string().required("this_field_required"),
-    syllabus: yup.string().required("this_field_required"),
-    subject: yup.string().required("this_field_required"),
-    no_of_question: yup.string().required("this_field_required"),
-    class: yup.string().required("this_field_required"),
-  })
-  .required();
