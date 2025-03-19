@@ -26,13 +26,13 @@ const classoptions = [
 
 // Mapping of chapter counts for general subjects
 const generalChapterCounts = new Map([
-  [6, 8],
-  [7, 12],
-  [8, 11],
-  [9, 13],
+  [6, 10],
+  [7, 13],
+  [8, 13],
+  [9, 12],
   [10, 14],
-  [11, 15],
-  [12, 16],
+  [11, 16],
+  [12, 13],
 ]);
 
 // Separate mapping for English subject chapter counts
@@ -48,7 +48,7 @@ const englishChapterCounts = new Map([
 
 // Function to generate chapter options based on selected class and subject
 const generateChapterOptions = (selectedClass, subject) => {
-  const chapterCounts = subject === "english" ? englishChapterCounts : generalChapterCounts;
+  const chapterCounts = subject === "English" ? englishChapterCounts : generalChapterCounts;
   const chapterCount = chapterCounts.get(selectedClass) || 10;
 
   return Array.from({ length: chapterCount }, (_, i) => {
