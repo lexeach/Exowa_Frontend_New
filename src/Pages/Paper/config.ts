@@ -1,4 +1,5 @@
 import * as yup from "yup";
+
 const options = [
   { value: 5, label: "5" },
   { value: 10, label: "10" },
@@ -23,26 +24,37 @@ const classoptions = [
   { value: "B Sc (1st year)", label: "B Sc (1st year)" },
 ];
 
-const generateChapterOptions = (selectedClass, subject) => {
-  const chapterCounts = new Map([
-    [6, 8],
-    [7, 12],
-    [8, 11],
-    [9, 13],
-    [10, 14],
-    [11, 15],
-    [12, 16],
-  ]);
+// Mapping of chapter counts for general subjects
+const generalChapterCounts = new Map([
+  [6, 8],
+  [7, 12],
+  [8, 11],
+  [9, 13],
+  [10, 14],
+  [11, 15],
+  [12, 16],
+]);
 
+// Separate mapping for English subject chapter counts
+const englishChapterCounts = new Map([
+  [6, 21],
+  [7, 24],
+  [8, 23],
+  [9, 25],
+  [10, 26],
+  [11, 28],
+  [12, 30],
+]);
+
+// Function to generate chapter options based on selected class and subject
+const generateChapterOptions = (selectedClass, subject) => {
+  const chapterCounts = subject === "english" ? englishChapterCounts : generalChapterCounts;
   const chapterCount = chapterCounts.get(selectedClass) || 10;
+
   return Array.from({ length: chapterCount }, (_, i) => {
-    const questionNumber = i + 1;
     return {
-      value: subject === "english" ? questionNumber + 2 : questionNumber,
-      label: (subject === "english"
-        ? questionNumber + 2
-        : questionNumber
-      ).toString(),
+      value: i + 1,
+      label: (i + 1).toString(),
     };
   });
 };
@@ -133,6 +145,7 @@ export const fields = (
   ];
 };
 
+// Validation Schema
 export const schema = yup
   .object()
   .shape({
