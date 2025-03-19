@@ -6,11 +6,11 @@ const options = [
   { value: 15, label: "15" },
   { value: 20, label: "20" },
   { value: 25, label: "25" },
-  { value: 30, label: "30" },
-  { value: 35, label: "35" },
-  { value: 40, label: "40" },
-  { value: 45, label: "45" },
-  { value: 50, label: "50" },
+  //{ value: 30, label: "30" },
+  //{ value: 35, label: "35" },
+  //{ value: 40, label: "40" },
+  //{ value: 45, label: "45" },
+  //{ value: 50, label: "50" },
 ];
 
 const classoptions = [
@@ -21,7 +21,7 @@ const classoptions = [
   { value: 10, label: "10" },
   { value: 11, label: "11" },
   { value: 12, label: "12" },
-  { value: "B Sc (1st year)", label: "B Sc (1st year)" },
+  //{ value: "B Sc (1st year)", label: "B Sc (1st year)" },
 ];
 
 // Mapping of chapter counts for general subjects
