@@ -23,6 +23,8 @@ const PapersForm: React.FC<PaperFormProps> = ({ handleCancel, sheet }) => {
   const dispatch = useDispatch();
   const [data, setData] = useState({});
   const [createPaper, { isLoading: isCreateLoading }] = useAddPaperMutation();
+  const [currentClass, setCurrentClass] = useState(null);
+  const [currentSubject, setCurrentSubject] = useState(null);
 
   const methods = useForm({
     resolver: yupResolver(schema),
@@ -67,6 +69,9 @@ const PapersForm: React.FC<PaperFormProps> = ({ handleCancel, sheet }) => {
       </UIButton>
     </div>
   );
+
+  // if english selected and class 6 //  chapter 5
+
   return (
     <div className="">
       <SheetHeader title={"Generate New Questions"} />
@@ -79,7 +84,11 @@ const PapersForm: React.FC<PaperFormProps> = ({ handleCancel, sheet }) => {
                   <DynamicForm
                     fields={fields(
                       useGetSubjectOptionsMutation,
-                      useGetSyllabusOptionsMutation
+                      useGetSyllabusOptionsMutation,
+                      currentClass,
+                      setCurrentClass,
+                      currentSubject,
+                      setCurrentSubject
                     )}
                     onSubmit={(val) => {
                       setData({ ...data, ...val });

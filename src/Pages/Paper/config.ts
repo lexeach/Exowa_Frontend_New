@@ -1,9 +1,4 @@
-import React, { useState, useEffect } from "react";
-import { useForm, Controller } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-
-// Options for the "Number of Questions" field
 const options = [
   { value: 5, label: "5" },
   { value: 10, label: "10" },
@@ -17,7 +12,6 @@ const options = [
   { value: 50, label: "50" },
 ];
 
-// Options for the "Class" field
 const classoptions = [
   { value: 6, label: "6" },
   { value: 7, label: "7" },
@@ -29,47 +23,41 @@ const classoptions = [
   { value: "B Sc (1st year)", label: "B Sc (1st year)" },
 ];
 
-// Function to generate chapter options based on the selected class
-const generateChapterOptions = (selectedClass) => {
-  let chapterCount = 10; // Default value
+const generateChapterOptions = (selectedClass, subject) => {
+  const chapterCounts = new Map([
+    [6, 8],
+    [7, 12],
+    [8, 11],
+    [9, 13],
+    [10, 14],
+    [11, 15],
+    [12, 16],
+  ]);
 
-  if (selectedClass === 6) {
-    chapterCount = 8;
-  } else if (selectedClass === 7) {
-    chapterCount = 12;
-  } else if (selectedClass === 8) {
-    chapterCount = 11;
-  } else if (selectedClass === 9) {
-    chapterCount = 13;
-  } else if (selectedClass === 10) {
-    chapterCount = 14;
-  } else if (selectedClass === 11) {
-    chapterCount = 15;
-  } else if (selectedClass === 12) {
-    chapterCount = 16;
-  }
-
-  const chapterOptions = [];
-  for (let i = 1; i <= chapterCount; i++) {
-    chapterOptions.push({ value: i, label: i.toString() });
-  }
-  return chapterOptions;
+  const chapterCount = chapterCounts.get(selectedClass) || 10;
+  return Array.from({ length: chapterCount }, (_, i) => {
+    const questionNumber = i + 1;
+    return {
+      value: subject === "english" ? questionNumber + 2 : questionNumber,
+      label: (subject === "english"
+        ? questionNumber + 2
+        : questionNumber
+      ).toString(),
+    };
+  });
 };
 
-// Custom hook to generate form fields
-const useFormFields = (useGetSubjectOptionsMutation, useGetSyllabusOptionsMutation) => {
-  const [selectedClass, setSelectedClass] = useState(null);
-  const [chapterOptions, setChapterOptions] = useState([]);
+export const fields = (
+  useGetSubjectOptionsMutation,
+  useGetSyllabusOptionsMutation,
+  currentClass,
+  setCurrentClass,
+  currentSubject,
+  setCurrentSubject
+) => {
+  const chapterOptions = generateChapterOptions(currentClass, currentSubject);
 
-  // Update chapterOptions whenever selectedClass changes
-  useEffect(() => {
-    if (selectedClass !== null) {
-      const newChapterOptions = generateChapterOptions(selectedClass);
-      setChapterOptions(newChapterOptions);
-    }
-  }, [selectedClass]);
-
-  const fields = [
+  return [
     {
       name: "subject",
       label: "Subject",
@@ -78,6 +66,7 @@ const useFormFields = (useGetSubjectOptionsMutation, useGetSyllabusOptionsMutati
       fetchData: useGetSubjectOptionsMutation,
       wrapperClassName: "mb-6",
       fieldWrapperClassName: "col-span-12",
+      getValueCallback: (value) => setCurrentSubject(value),
     },
     {
       name: "syllabus",
@@ -96,6 +85,7 @@ const useFormFields = (useGetSubjectOptionsMutation, useGetSyllabusOptionsMutati
       options: classoptions,
       wrapperClassName: "mb-6",
       fieldWrapperClassName: "col-span-12",
+      getValueCallback: (value) => setCurrentClass(value),
     },
     {
       name: "chapter_from",
@@ -141,113 +131,17 @@ const useFormFields = (useGetSubjectOptionsMutation, useGetSyllabusOptionsMutati
       fieldWrapperClassName: "col-span-6  mb-[400px] sm:mb-5",
     },
   ];
-
-  return { fields, selectedClass, setSelectedClass };
 };
 
-// Validation schema
-const schema = yup.object().shape({
-  language: yup.string().required("This field is required"),
-  chapter_to: yup.string().required("This field is required"),
-  chapter_from: yup.string().required("This field is required"),
-  syllabus: yup.string().required("This field is required"),
-  subject: yup.string().required("This field is required"),
-  no_of_question: yup.string().required("This field is required"),
-  class: yup.string().required("This field is required"),
-});
-
-// Main component
-const App = () => {
-  // Mock mutations (replace with your actual mutations)
-  const useGetSubjectOptionsMutation = () => [
-    { value: "math", label: "Mathematics" },
-    { value: "science", label: "Science" },
-  ];
-
-  const useGetSyllabusOptionsMutation = () => [
-    { value: "cbse", label: "CBSE" },
-    { value: "icse", label: "ICSE" },
-  ];
-
-  // Get form fields and state
-  const { fields, selectedClass, setSelectedClass } = useFormFields(
-    useGetSubjectOptionsMutation,
-    useGetSyllabusOptionsMutation
-  );
-
-  // React Hook Form
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    resolver: yupResolver(schema),
-  });
-
-  // Form submission handler
-  const onSubmit = (data) => {
-    console.log("Form Data:", data);
-  };
-
-  return (
-    <div className="p-6 max-w-md mx-auto bg-white shadow-md rounded-lg">
-      <h1 className="text-2xl font-bold mb-6">Dynamic Form</h1>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        {fields.map((field, index) => (
-          <div key={index} className={field.wrapperClassName}>
-            <label className="block text-sm font-medium text-gray-700">
-              {field.label}
-            </label>
-            <Controller
-              name={field.name}
-              control={control}
-              defaultValue=""
-              render={({ field: { onChange, value } }) => {
-                if (field.type === "select") {
-                  return (
-                    <select
-                      className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      onChange={(e) => {
-                        onChange(e);
-                        if (field.name === "class") {
-                          setSelectedClass(parseInt(e.target.value, 10));
-                        }
-                      }}
-                      value={value}
-                    >
-                      <option value="">{field.placeholder}</option>
-                      {field.options?.map((option) => (
-                        <option key={option.value} value={option.value}>
-                          {option.label}
-                        </option>
-                      ))}
-                      {field.fetchData?.().map((option) => (
-                        <option key={option.value} value={option.value}>
-                          {option.label}
-                        </option>
-                      ))}
-                    </select>
-                  );
-                }
-                return null;
-              }}
-            />
-            {errors[field.name] && (
-              <p className="text-red-500 text-sm mt-1">
-                {errors[field.name].message}
-              </p>
-            )}
-          </div>
-        ))}
-        <button
-          type="submit"
-          className="w-full bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
-        >
-          Submit
-        </button>
-      </form>
-    </div>
-  );
-};
-
-export default App;
+export const schema = yup
+  .object()
+  .shape({
+    language: yup.string().required("this_field_required"),
+    chapter_to: yup.string().required("this_field_required"),
+    chapter_from: yup.string().required("this_field_required"),
+    syllabus: yup.string().required("this_field_required"),
+    subject: yup.string().required("this_field_required"),
+    no_of_question: yup.string().required("this_field_required"),
+    class: yup.string().required("this_field_required"),
+  })
+  .required();
