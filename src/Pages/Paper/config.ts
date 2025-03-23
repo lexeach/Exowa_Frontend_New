@@ -26,8 +26,8 @@ const classoptions = [
 // Mapping of chapter counts based on class, subject, and syllabus
 const chapterCounts = new Map([
   // General Subjects
-  ["6,English-National Council of Educational Research and Training (NCERT)", 10],
-  ["6,English-CBSE", 20],
+  ["6,Science-National Council of Educational Research and Training (NCERT)", 10],
+  ["6,Science-CBSE", 20],
   ["6-General-Default", 10],
   ["6-General-Default", 10],
   ["7-General-Default", 13],
