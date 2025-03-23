@@ -34,6 +34,15 @@ const chapterCounts = new Map([
     ["11-Mathematics-National Council of Educational Research and Training (NCERT)", 16],
     ["12-Mathematics-National Council of Educational Research and Training (NCERT)", 13],
 
+    // Class 6to12 Mathematics for CBSE
+    ["6-Mathematics-CBSE", 0],
+    ["7-Mathematics-CBSE", 3],
+    ["8-Mathematics-CBSE", 3],
+    ["9-Mathematics-CBSE", 2],
+    ["10-Mathematics-CBSE", 4],
+    ["11-Mathematics-CBSE", 6],
+    ["12-Mathematics-CBSE", 3],
+
     // Add other class, subject, and syllabus combinations as needed...
     // Example:
     ["7-Math-State Board", 15],
