@@ -25,36 +25,16 @@ const classoptions = [
 
 // Mapping of chapter counts based on class, subject, and syllabus
 const chapterCounts = new Map([
-  // General Subjects
-  ["6,Science-National Council of Educational Research and Training (NCERT)", 10],
-  ["6,Science-CBSE", 20],
-  ["6-General-Default", 10],
-  ["6-General-Default", 10],
-  ["7-General-Default", 13],
-  ["8-General-Default", 13],
-  ["9-General-Default", 12],
-  ["10-General-Default", 14],
-  ["11-General-Default", 16],
-  ["12-General-Default", 13],
+    // Class 6 Science
+    ["6-Science-CBSE", 10],
+    ["6-Science-National Council of Educational Research and Training (NCERT)", 20],
 
-  // English Subject
-  ["6-English-Default", 21],
-  ["7-English-Default", 24],
-  ["8-English-Default", 23],
-  ["9-English-Default", 25],
-  ["10-English-Default", 26],
-  ["11-English-Default", 28],
-  ["12-English-Default", 30],
-
-  // Syllabus-Specific (Add your syllabus data here)
-  ["6-General-SyllabusA", 15],
-  ["7-General-SyllabusA", 18],
-  ["8-General-SyllabusA", 20],
-  ["9-General-SyllabusB", 22],
-  ["10-English-SyllabusC", 27],
-  ["11-English-SyllabusD", 32],
-  ["12-General-SyllabusE", 17],
-  // Add other syllabus and class combinations as needed...
+    // Add other class, subject, and syllabus combinations as needed...
+    // Example:
+    ["7-Math-State Board", 15],
+    ["8-English-Default", 25],
+    ["9-Social Studies-Default", 12],
+    // ... more entries ...
 ]);
 
 // Function to generate chapter options based on selected class, subject, and syllabus
