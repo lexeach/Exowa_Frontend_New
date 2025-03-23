@@ -25,9 +25,14 @@ const classoptions = [
 
 // Mapping of chapter counts based on class, subject, and syllabus
 const chapterCounts = new Map([
-    // Class 6 Science
-    ["6-Science-CBSE", 10],
-    ["6-Science-National Council of Educational Research and Training (NCERT)", 20],
+    // Class 6to12 Mathematics for NCERT
+    ["6-Mathematics-National Council of Educational Research and Training (NCERT)", 10],
+    ["7-Mathematics-National Council of Educational Research and Training (NCERT)", 13],
+    ["8-Mathematics-National Council of Educational Research and Training (NCERT)", 13],
+    ["9-Mathematics-National Council of Educational Research and Training (NCERT)", 12],
+    ["10-Mathematics-National Council of Educational Research and Training (NCERT)", 14],
+    ["11-Mathematics-National Council of Educational Research and Training (NCERT)", 16],
+    ["12-Mathematics-National Council of Educational Research and Training (NCERT)", 13],
 
     // Add other class, subject, and syllabus combinations as needed...
     // Example:
