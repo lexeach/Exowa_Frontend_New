@@ -11,7 +11,7 @@ import UIButton from "@/UI/Elements/Button";
 import { setRefresh, setDialogClose } from "@/slice/layoutSlice";
 import { useDispatch } from "react-redux";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { fields, schema } from "./config";
+import { fields, schema } from "./config"; // Assuming the config file is in the same directory
 import { Loader } from "lucide-react";
 
 type PaperFormProps = {
@@ -25,6 +25,7 @@ const PapersForm: React.FC<PaperFormProps> = ({ handleCancel, sheet }) => {
   const [createPaper, { isLoading: isCreateLoading }] = useAddPaperMutation();
   const [currentClass, setCurrentClass] = useState(null);
   const [currentSubject, setCurrentSubject] = useState(null);
+  const [currentSyllabus, setCurrentSyllabus] = useState(null); // Add state for syllabus
 
   const methods = useForm({
     resolver: yupResolver(schema),
@@ -70,8 +71,6 @@ const PapersForm: React.FC<PaperFormProps> = ({ handleCancel, sheet }) => {
     </div>
   );
 
-  // if english selected and class 6 //  chapter 5
-
   return (
     <div className="">
       <SheetHeader title={"Generate New Questions"} />
@@ -88,12 +87,13 @@ const PapersForm: React.FC<PaperFormProps> = ({ handleCancel, sheet }) => {
                       currentClass,
                       setCurrentClass,
                       currentSubject,
-                      setCurrentSubject
+                      setCurrentSubject,
+                      currentSyllabus, // Pass currentSyllabus
+                      setCurrentSyllabus // Pass setCurrentSyllabus
                     )}
                     onSubmit={(val) => {
                       setData({ ...data, ...val });
                     }}
-                    // loading={false}
                     useFormMethods={methods}
                     showButton={false}
                   />
