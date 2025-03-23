@@ -21,35 +21,53 @@ const classoptions = [
   { value: 10, label: "10" },
   { value: 11, label: "11" },
   { value: 12, label: "12" },
-  //{ value: "B Sc (1st year)", label: "B Sc (1st year)" },
 ];
 
-// Mapping of chapter counts for general subjects
-const generalChapterCounts = new Map([
-  [6, 10],
-  [7, 13],
-  [8, 13],
-  [9, 12],
-  [10, 14],
-  [11, 16],
-  [12, 13],
+// Mapping of chapter counts based on class, subject, and syllabus
+const chapterCounts = new Map([
+  // General Subjects
+  ["6,English-National Council of Educational Research and Training (NCERT)", 10],
+  ["6,English-CBSE", 20],
+  ["6-General-Default", 10],
+  ["6-General-Default", 10],
+  ["7-General-Default", 13],
+  ["8-General-Default", 13],
+  ["9-General-Default", 12],
+  ["10-General-Default", 14],
+  ["11-General-Default", 16],
+  ["12-General-Default", 13],
+
+  // English Subject
+  ["6-English-Default", 21],
+  ["7-English-Default", 24],
+  ["8-English-Default", 23],
+  ["9-English-Default", 25],
+  ["10-English-Default", 26],
+  ["11-English-Default", 28],
+  ["12-English-Default", 30],
+
+  // Syllabus-Specific (Add your syllabus data here)
+  ["6-General-SyllabusA", 15],
+  ["7-General-SyllabusA", 18],
+  ["8-General-SyllabusA", 20],
+  ["9-General-SyllabusB", 22],
+  ["10-English-SyllabusC", 27],
+  ["11-English-SyllabusD", 32],
+  ["12-General-SyllabusE", 17],
+  // Add other syllabus and class combinations as needed...
 ]);
 
-// Separate mapping for English subject chapter counts
-const englishChapterCounts = new Map([
-  [6, 21],
-  [7, 24],
-  [8, 23],
-  [9, 25],
-  [10, 26],
-  [11, 28],
-  [12, 30],
-]);
+// Function to generate chapter options based on selected class, subject, and syllabus
+const generateChapterOptions = (selectedClass, subject, syllabus) => {
+  let key;
 
-// Function to generate chapter options based on selected class and subject
-const generateChapterOptions = (selectedClass, subject) => {
-  const chapterCounts = subject === "English" ? englishChapterCounts : generalChapterCounts;
-  const chapterCount = chapterCounts.get(selectedClass) || 10;
+  if (syllabus) {
+    key = `${selectedClass}-${subject}-${syllabus}`;
+  } else {
+    key = `${selectedClass}-${subject}-Default`;
+  }
+
+  const chapterCount = chapterCounts.get(key) || 10; // Default to 10 if not found
 
   return Array.from({ length: chapterCount }, (_, i) => {
     return {
@@ -65,9 +83,11 @@ export const fields = (
   currentClass,
   setCurrentClass,
   currentSubject,
-  setCurrentSubject
+  setCurrentSubject,
+  currentSyllabus,
+  setCurrentSyllabus
 ) => {
-  const chapterOptions = generateChapterOptions(currentClass, currentSubject);
+  const chapterOptions = generateChapterOptions(currentClass, currentSubject, currentSyllabus);
 
   return [
     {
@@ -88,6 +108,7 @@ export const fields = (
       fetchData: useGetSyllabusOptionsMutation,
       wrapperClassName: "mb-6",
       fieldWrapperClassName: "col-span-12",
+      getValueCallback: (value) => setCurrentSyllabus(value),
     },
     {
       name: "class",
