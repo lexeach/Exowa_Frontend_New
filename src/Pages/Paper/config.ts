@@ -140,7 +140,6 @@ export const fields = (
       options: [
         { value: "English", label: "English" },
         { value: "Hindi", label: "Hindi" },
-        { value: "Urdu", label: "Urdu" },
         { value: "Marathi", label: "Marathi" },
         { value: "Tamil", label: "Tamil" },
         { value: "Telugu", label: "Telugu" },
@@ -148,8 +147,8 @@ export const fields = (
         { value: "Gujarati", label: "Gujarati" },
         { value: "Kannada", label: "Kannada" },
         { value: "Malayalam", label: "Malayalam" },
+        { value: "Urdu", label: "Urdu" },
         { value: "Manipuri", label: "Manipuri" },
-        { value: "Santali", label: "Santali" },
         { value: "Kashmiri", label: "Kashmiri" },
       ],
       wrapperClassName: "mb-6",
