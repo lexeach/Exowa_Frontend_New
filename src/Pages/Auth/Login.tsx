@@ -18,11 +18,11 @@ const Spinner = () => (
 const fields = [
   {
     name: "email",
-    label: "Email",
-    placeholder: "Enter your email",
+    label: "User ID",
+    placeholder: "Enter your user ID",
     type: "text",
     wrapperClassName: "mb-6",
-    validation: yup.string().email("Invalid email").required("Email is required"),
+    validation: yup.string().required("user id is required"),
     fieldWrapperClassName: "col-span-6",
   },
   {
@@ -75,12 +75,6 @@ export default function Login() {
           disabled: isLoading,
         }}
       />
-      <p className="mt-6">
-        Don't Have an Account?{" "}
-        <UIButton variant="link" className="p-0" onClick={() => navigate("/auth/register")}>
-          Sign Up
-        </UIButton>
-      </p>
     </AuthWrapper>
   );
 }
