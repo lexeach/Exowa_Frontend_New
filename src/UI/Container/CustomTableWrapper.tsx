@@ -50,6 +50,7 @@ export default function CustomTableWrapper({
       refetchOnMountOrArgChange: true,
     }
   );
+  
 
   useEffect(() => {
     const handler = setTimeout(() => {

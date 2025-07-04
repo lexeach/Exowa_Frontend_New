@@ -2,5 +2,5 @@
 // export const BaseURL = 'http://localhost:5173' // locals
 export const BaseURL = 'https://test.exowa.click'
 //export const apiUrl = 'https://ai-exam-be-001.onrender.com'
-export const apiUrl = 'https://exowa-backend.onrender.com'
-
+// export const apiUrl = 'https://exowa-backend.onrender.com'
+export const apiUrl = 'http://apic.myreview.website:8931'

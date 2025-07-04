@@ -76,7 +76,7 @@ const PapersForm: React.FC<PaperFormProps> = ({ handleCancel, sheet }) => {
         onClick={methods.handleSubmit(onSubmit)}
         disabled={isCreateLoading}
       >
-        {sheet?.id ? "Cave Changes" : "Save"}
+        {sheet?.id ? "Save Changes" : "Save"}
       </UIButton>
     </div>
   );

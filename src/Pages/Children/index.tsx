@@ -42,6 +42,7 @@ const Departments = () => {
       headerClass: "flex justify-center",
       cellClass: "flex justify-center",
       cell: ({ row }) => {
+        const userRole = localStorage.getItem('role');
         const updatedRow = {
           ...row,
           original: {
@@ -49,7 +50,7 @@ const Departments = () => {
             available_actions: {
               view: false,
               update: true,
-              delete: true,
+              delete: userRole=== 'admin',
             },
           },
         };
@@ -58,7 +59,7 @@ const Departments = () => {
             row={updatedRow}
             viewUrl="children"
             formComponent="addChildren"
-            deleteComponent="deleteChildren"
+            deleteComponent={userRole === 'admin' ? 'deleteChildren' : undefined}
           />
         );
       },
