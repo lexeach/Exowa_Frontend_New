@@ -244,7 +244,7 @@ export const fields = (
       label: "Subject",
       placeholder: "Select Subject ...",
       type: "select",
-      fetchData: subjectoptions,
+      options: subjectoptions,
       wrapperClassName: "mb-6",
       fieldWrapperClassName: "col-span-12",
       getValueCallback: (value) => setCurrentSubject(value),
