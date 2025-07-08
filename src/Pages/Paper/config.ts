@@ -201,15 +201,16 @@ export const fields = (
   
   return [
     {
-      name: "subject",
-      label: "Subject",
-      placeholder: "Select Subject ...",
+      name: "class",
+      label: "Class",
+      placeholder: "Class ...",
       type: "select",
-      fetchData: useGetSubjectOptionsMutation,
+      options: classOptions, // Dynamically set from API
       wrapperClassName: "mb-6",
       fieldWrapperClassName: "col-span-12",
-      getValueCallback: (value) => setCurrentSubject(value),
+      getValueCallback: (value) => setCurrentClass(value),
     },
+    
     {
       name: "syllabus",
       label: "Syllabus",
@@ -221,14 +222,14 @@ export const fields = (
       getValueCallback: (value) => setCurrentSyllabus(value),
     },
     {
-      name: "class",
-      label: "Class",
-      placeholder: "Class ...",
+      name: "subject",
+      label: "Subject",
+      placeholder: "Select Subject ...",
       type: "select",
-      options: classOptions, // Dynamically set from API
+      fetchData: useGetSubjectOptionsMutation,
       wrapperClassName: "mb-6",
       fieldWrapperClassName: "col-span-12",
-      getValueCallback: (value) => setCurrentClass(value),
+      getValueCallback: (value) => setCurrentSubject(value),
     },
     {
       name: "chapter_from",
