@@ -64,7 +64,7 @@ const generateChapterOptions = (selectedClass, subject, syllabus) => {
     key = `${selectedClass}-${subject}-Default`;
   }
 
-  const chapterCount = chapterCounts.get(key) || 10; // Default to 10 if not found
+  const chapterCount = chapterCounts.get(key) || 0; // Default to 0 if not found
 
   return Array.from({ length: chapterCount }, (_, i) => {
     return {
