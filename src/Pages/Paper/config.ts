@@ -29,30 +29,45 @@ const dynamicSubjectOptions = {
     { value: "English", label: "English" },
     { value: "Hindi", label: "Hindi" },
     { value: "Mathematics", label: "Mathematics" },
+    { value: "Science", label: "Science" },
+    { value: "Social Science", label: "Social Science" },
   ],
   "7": [
+    { value: "English", label: "English" },
+    { value: "Hindi", label: "Hindi" },
+    { value: "Mathematics", label: "Mathematics" },
     { value: "Science", label: "Science" },
-    { value: "Geography", label: "Geography" },
-    { value: "Economics", label: "Economics" },
+    { value: "Social Science", label: "Social Science" },
   ],
   "8": [
-    { value: "Physics", label: "Physics" },
-    { value: "Chemistry", label: "Chemistry" },
-    { value: "Biology", label: "Biology" },
+    { value: "English", label: "English" },
+    { value: "Hindi", label: "Hindi" },
+    { value: "Mathematics", label: "Mathematics" },
+    { value: "Science", label: "Science" },
+    { value: "Social Science", label: "Social Science" },
   ],
   "9": [
-    { value: "History", label: "History" },
-    { value: "Civics", label: "Civics" },
+    { value: "English", label: "English" },
+    { value: "Hindi", label: "Hindi" },
+    { value: "Mathematics", label: "Mathematics" },
+    { value: "Science", label: "Science" },
+    { value: "Social Science", label: "Social Science" },
   ],
   // Add more class-subject mappings as needed
   // Example for other classes, using some from your original subjectoptions if still relevant
   "10": [
+    { value: "English", label: "English" },
+    { value: "Hindi", label: "Hindi" },
     { value: "Mathematics", label: "Mathematics" },
     { value: "Science", label: "Science" },
+    { value: "Social Science", label: "Social Science" },
   ],
   "11": [
+    { value: "English", label: "English" },
+    { value: "Physics", label: "Physics" },
     { value: "Mathematics", label: "Mathematics" },
-    { value: "Science", label: "Science" },
+    { value: "Chemistry", label: "Chemistry" },
+    { value: "Biology", label: "Biology" },
   ],
   "12": [
     { value: "Mathematics", label: "Mathematics" },
@@ -111,7 +126,7 @@ const generateChapterOptions = (selectedClass, subject, syllabus) => {
     key = `${selectedClass}-${subject || "Default"}-Default`;
   }
 
-  const chapterCount = chapterCounts.get(key) || 10; // Default to 10 if not found
+  const chapterCount = chapterCounts.get(key) || 0; // Default to 0 if not found
 
   return Array.from({ length: chapterCount }, (_, i) => {
     return {
