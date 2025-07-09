@@ -23,17 +23,44 @@ const classoptions = [
   { value: 12, label: "12" },
 ];
 
-// New subjectoptions array as requested
-const subjectoptions = [
-  { value: "Mathematics", label: "Mathematics" },
-  { value: "Science", label: "Science" },
-  { value: 8, label: "8" },
-  { value: 9, label: "9" },
-  { value: 10, label: "10" },
-  { value: 11, label: "11" },
-  { value: 12, label: "12" },
-];
-
+// Define the dynamic subject options based on class
+const dynamicSubjectOptions = {
+  "6": [
+    { value: "English", label: "English" },
+    { value: "Hindi", label: "Hindi" },
+    { value: "Mathematics", label: "Mathematics" },
+  ],
+  "7": [
+    { value: "Science", label: "Science" },
+    { value: "Geography", label: "Geography" },
+    { value: "Economics", label: "Economics" },
+  ],
+  "8": [
+    { value: "Physics", label: "Physics" },
+    { value: "Chemistry", label: "Chemistry" },
+    { value: "Biology", label: "Biology" },
+  ],
+  "9": [
+    { value: "History", label: "History" },
+    { value: "Civics", label: "Civics" },
+  ],
+  // Add more class-subject mappings as needed
+  // Example for other classes, using some from your original subjectoptions if still relevant
+  "10": [
+    { value: "Mathematics", label: "Mathematics" },
+    { value: "Science", label: "Science" },
+  ],
+  "11": [
+    { value: "Mathematics", label: "Mathematics" },
+    { value: "Science", label: "Science" },
+  ],
+  "12": [
+    { value: "Mathematics", label: "Mathematics" },
+    { value: "Science", label: "Science" },
+  ],
+  // Default or empty array if no specific subjects are defined for a class
+  "default": [],
+};
 
 // Mapping of chapter counts based on class, subject, and syllabus
 const chapterCounts = new Map([
@@ -57,6 +84,15 @@ const chapterCounts = new Map([
 
   // Add other class, subject, and syllabus combinations as needed...
   // Example:
+  ["7-Science-Default", 15], // Added for new subjects
+  ["7-Geography-Default", 10],
+  ["7-Economics-Default", 8],
+  ["8-Physics-Default", 12],
+  ["8-Chemistry-Default", 11],
+  ["8-Biology-Default", 13],
+  ["6-English-Default", 10], // Added for new subjects
+  ["6-Hindi-Default", 10],
+  ["6-Mathematics-Default", 10],
   ["7-Math-State Board", 15],
   ["8-English-Default", 25],
   ["9-Social Studies-Default", 12],
@@ -70,7 +106,9 @@ const generateChapterOptions = (selectedClass, subject, syllabus) => {
   if (syllabus) {
     key = `${selectedClass}-${subject}-${syllabus}`;
   } else {
-    key = `${selectedClass}-${subject}-Default`;
+    // It's good practice to ensure 'subject' is not undefined or null here
+    // before concatenating. Default to "Default" for subject if it's not set.
+    key = `${selectedClass}-${subject || "Default"}-Default`;
   }
 
   const chapterCount = chapterCounts.get(key) || 10; // Default to 10 if not found
@@ -84,7 +122,7 @@ const generateChapterOptions = (selectedClass, subject, syllabus) => {
 };
 
 export const fields = (
-  useGetSubjectOptionsMutation, // This mutation won't be used for 'subject' field anymore
+  useGetSubjectOptionsMutation, // This is now likely unused for the subject field
   useGetSyllabusOptionsMutation,
   currentClass,
   setCurrentClass,
@@ -94,6 +132,9 @@ export const fields = (
   setCurrentSyllabus,
   childrenListData // Pass children list data here
 ) => {
+  // Determine subject options based on currentClass
+  const subjectOptionsForClass = dynamicSubjectOptions[currentClass] || dynamicSubjectOptions["default"];
+
   const chapterOptions = generateChapterOptions(currentClass, currentSubject, currentSyllabus);
 
   // Map childrenListData to dropdown options format
@@ -115,7 +156,10 @@ export const fields = (
       options: classOptions, // Dynamically set from API
       wrapperClassName: "mb-6",
       fieldWrapperClassName: "col-span-12",
-      getValueCallback: (value) => setCurrentClass(value),
+      getValueCallback: (value) => {
+        setCurrentClass(value);
+        setCurrentSubject(null); // Reset subject when class changes
+      },
     },
 
     {
@@ -133,11 +177,12 @@ export const fields = (
       label: "Subject",
       placeholder: "Select Subject ...",
       type: "select",
-      options: subjectoptions, // Now using the new subjectoptions array
-      // fetchData: useGetSubjectOptionsMutation, // This line is commented out/removed
+      options: subjectOptionsForClass, // Dynamically set based on selected class
       wrapperClassName: "mb-6",
       fieldWrapperClassName: "col-span-12",
       getValueCallback: (value) => setCurrentSubject(value),
+      // Add disabled prop if no class is selected or no subjects for selected class
+      disabled: !currentClass || subjectOptionsForClass.length === 0,
     },
     {
       name: "chapter_from",
