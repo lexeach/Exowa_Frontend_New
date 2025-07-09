@@ -23,15 +23,17 @@ const classoptions = [
   { value: 12, label: "12" },
 ];
 
+// New subjectoptions array as requested
 const subjectoptions = [
-  { value: Mathematics, label: "Mathematics" },
-  { value: Science, label: "Science" },
+  { value: "Mathematics", label: "Mathematics" },
+  { value: "Science", label: "Science" },
   { value: 8, label: "8" },
   { value: 9, label: "9" },
   { value: 10, label: "10" },
   { value: 11, label: "11" },
   { value: 12, label: "12" },
 ];
+
 
 // Mapping of chapter counts based on class, subject, and syllabus
 const chapterCounts = new Map([
@@ -82,7 +84,7 @@ const generateChapterOptions = (selectedClass, subject, syllabus) => {
 };
 
 export const fields = (
-  useGetSubjectOptionsMutation, // This mutation won't be used for 'subject' field anymore if hardcoded
+  useGetSubjectOptionsMutation, // This mutation won't be used for 'subject' field anymore
   useGetSyllabusOptionsMutation,
   currentClass,
   setCurrentClass,
@@ -131,8 +133,8 @@ export const fields = (
       label: "Subject",
       placeholder: "Select Subject ...",
       type: "select",
-      options: classoptions, // Hardcoded to use classoptions
-      // fetchData: useGetSubjectOptionsMutation, // Removed as options are now hardcoded
+      options: subjectoptions, // Now using the new subjectoptions array
+      // fetchData: useGetSubjectOptionsMutation, // This line is commented out/removed
       wrapperClassName: "mb-6",
       fieldWrapperClassName: "col-span-12",
       getValueCallback: (value) => setCurrentSubject(value),
