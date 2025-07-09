@@ -23,17 +23,6 @@ const classoptions = [
   { value: 12, label: "12" },
 ];
 
-const subjectoptions = [
-  { value: Mathematics, label: "Mathematics" },
-  { value: Science, label: "Science" },
-  //{ value: 8, label: "8" },
-  //{ value: 9, label: "9" },
-  //{ value: 10, label: "10" },
-  //{ value: 11, label: "11" },
-  //{ value: 12, label: "12" },
-];
-
-
 
 // Mapping of chapter counts based on class, subject, and syllabus
 const chapterCounts = new Map([
@@ -46,13 +35,6 @@ const chapterCounts = new Map([
     ["11-Mathematics-National Council of Educational Research and Training (NCERT)", 16],
     ["12-Mathematics-National Council of Educational Research and Training (NCERT)", 13],
 
-   // Class 6to10 Science for NCERT
-    ["6-Science-National Council of Educational Research and Training (NCERT)", 12],
-    ["7-Science-National Council of Educational Research and Training (NCERT)", 12],
-    ["8-Science-National Council of Educational Research and Training (NCERT)", 13],
-    ["9-Science-National Council of Educational Research and Training (NCERT)", 12],
-    ["10-Science-National Council of Educational Research and Training (NCERT)", 13],
-    
     // Class 6to12 Mathematics for CBSE
     ["6-Mathematics-CBSE", 0],
     ["7-Mathematics-CBSE", 3],
@@ -82,7 +64,7 @@ const generateChapterOptions = (selectedClass, subject, syllabus) => {
     key = `${selectedClass}-${subject}-Default`;
   }
 
-  const chapterCount = chapterCounts.get(key) || 0; // Default to 0 if not found
+  const chapterCount = chapterCounts.get(key) || 10; // Default to 10 if not found
 
   return Array.from({ length: chapterCount }, (_, i) => {
     return {
@@ -244,7 +226,7 @@ export const fields = (
       label: "Subject",
       placeholder: "Select Subject ...",
       type: "select",
-      options: subjectoptions,
+      fetchData: useGetSubjectOptionsMutation,
       wrapperClassName: "mb-6",
       fieldWrapperClassName: "col-span-12",
       getValueCallback: (value) => setCurrentSubject(value),
