@@ -70,8 +70,11 @@ const dynamicSubjectOptions = {
     { value: "Biology", label: "Biology" },
   ],
   "12": [
+    { value: "English", label: "English" },
+    { value: "Physics", label: "Physics" },
     { value: "Mathematics", label: "Mathematics" },
-    { value: "Science", label: "Science" },
+    { value: "Chemistry", label: "Chemistry" },
+    { value: "Biology", label: "Biology" },
   ],
   // Default or empty array if no specific subjects are defined for a class
   "default": [],
