@@ -47,34 +47,78 @@ const dynamicSubjectOptions = {
     { value: "Social Science", label: "Social Science" },
   ],
   "9": [
-    { value: "English", label: "English" },
+    { value: "English Beehive", label: "English Beehive" },
+    { value: "English Moments Supplementary Reader", label: "English Moments Supplementary Reader" },
+    { value: "English Words and Expressions 1", label: "English Words and Expressions 1" },
     { value: "Hindi", label: "Hindi" },
     { value: "Mathematics", label: "Mathematics" },
     { value: "Science", label: "Science" },
-    { value: "Social Science", label: "Social Science" },
+    { value: "Political Science", label: "Political Science" },
+    { value: "History", label: "History" },
+    { value: "Geography", label: "Geography" },
+    { value: "Economics", label: "Economics" },
   ],
   // Add more class-subject mappings as needed
   // Example for other classes, using some from your original subjectoptions if still relevant
   "10": [
-    { value: "English", label: "English" },
+    { value: "English First Flight", label: "English First Flight" },
+    { value: "English Foot Prints Without Feet", label: "English Foot Prints Without Feet" },
+    { value: "English Words and Expressions 2", label: "English Words and Expressions 2" },
     { value: "Hindi", label: "Hindi" },
     { value: "Mathematics", label: "Mathematics" },
     { value: "Science", label: "Science" },
-    { value: "Social Science", label: "Social Science" },
+    { value: "Political Science", label: "Political Science" },
+    { value: "History", label: "History" },
+    { value: "Geography", label: "Geography" },
+    { value: "Economics", label: "Economics" },
   ],
   "11": [
-    { value: "English", label: "English" },
+    { value: "English Woven Words", label: "English Woven Words" },
+    { value: "English Hornbill", label: "English Hornbill" },
+    { value: "English Snapshots Supplementary Reader", label: "English Snapshots Supplementary Reader" },
     { value: "Physics", label: "Physics" },
     { value: "Mathematics", label: "Mathematics" },
     { value: "Chemistry", label: "Chemistry" },
     { value: "Biology", label: "Biology" },
+    { value: "Sanskrit", label: "Sanskrit" },
+  { value: "Accountancy", label: "Accountancy" },
+  { value: "Psychology", label: "Psychology" },
+  { value: "Geography", label: "Geography" },
+  { value: "Hindi", label: "Hindi" },
+  { value: "Sociology", label: "Sociology" },
+  { value: "Political Science", label: "Political Science" },
+  { value: "History", label: "History" },
+  { value: "Economics", label: "Economics" },
+  { value: "Business Studies", label: "Business Studies" },
+  { value: "Urdu", label: "Urdu" },
+  { value: "Home Science", label: "Home Science" },
+  { value: "Creative Writing and Translation", label: "Creative Writing and Translation" },
+  { value: "Informatics Practices", label: "Informatics Practices" },
+  { value: "Computer Science", label: "Computer Science" },
   ],
   "12": [
-    { value: "English", label: "English" },
+    { value: "English Kaleidoscope", label: "English Kaleidoscope" },
+    { value: "English Flamingo", label: "English Flamingo" },
+    { value: "English Vistas", label: "English Vistas" },
     { value: "Physics", label: "Physics" },
     { value: "Mathematics", label: "Mathematics" },
     { value: "Chemistry", label: "Chemistry" },
     { value: "Biology", label: "Biology" },
+     { value: "Sanskrit", label: "Sanskrit" },
+  { value: "Accountancy", label: "Accountancy" },
+  { value: "Psychology", label: "Psychology" },
+  { value: "Geography", label: "Geography" },
+  { value: "Hindi", label: "Hindi" },
+  { value: "Sociology", label: "Sociology" },
+  { value: "Political Science", label: "Political Science" },
+  { value: "History", label: "History" },
+  { value: "Economics", label: "Economics" },
+  { value: "Business Studies", label: "Business Studies" },
+  { value: "Urdu", label: "Urdu" },
+  { value: "Home Science", label: "Home Science" },
+  { value: "Creative Writing and Translation", label: "Creative Writing and Translation" },
+  { value: "Informatics Practices", label: "Informatics Practices" },
+  { value: "Computer Science", label: "Computer Science" },
   ],
   // Default or empty array if no specific subjects are defined for a class
   "default": [],
@@ -91,6 +135,53 @@ const chapterCounts = new Map([
   ["11-Mathematics-National Council of Educational Research and Training (NCERT)", 16],
   ["12-Mathematics-National Council of Educational Research and Training (NCERT)", 13],
 
+  // Class 6to12 English for NCERT
+  ["6-English-National Council of Educational Research and Training (NCERT)", 5],
+  ["7-English-National Council of Educational Research and Training (NCERT)", 5],
+  ["8-English-National Council of Educational Research and Training (NCERT)", 8],
+  ["9-English Beehive-National Council of Educational Research and Training (NCERT)", 9],
+  ["9-English Moments Supplementary Reader-National Council of Educational Research and Training (NCERT)", 9],
+  ["9-English Words and Expressions 1-National Council of Educational Research and Training (NCERT)", 9],
+  ["10-English First Flight-National Council of Educational Research and Training (NCERT)", 14],
+  ["10-English Foot Prints Without Feet-National Council of Educational Research and Training (NCERT)", 14],
+  ["10-English Words and Expressions 2-National Council of Educational Research and Training (NCERT)", 14],
+  ["11-English Woven Words-National Council of Educational Research and Training (NCERT)", 16],
+  ["11-English Hornbill-National Council of Educational Research and Training (NCERT)", 16],
+  ["11-English Snapshots Supplementary Reader-National Council of Educational Research and Training (NCERT)", 16],
+  ["12-English-National Council of Educational Research and Training (NCERT)", 13],
+
+  
+ // Class 6to10 Science for NCERT
+  ["6-Science-National Council of Educational Research and Training (NCERT)", 12],
+  ["7-Science-National Council of Educational Research and Training (NCERT)", 12],
+  ["8-Science-National Council of Educational Research and Training (NCERT)", 13],
+  ["9-Science-National Council of Educational Research and Training (NCERT)", 12],
+  ["10-Science-National Council of Educational Research and Training (NCERT)", 13],
+
+  // Class 6to8 Social Science for NCERT
+  ["6-Social Science-National Council of Educational Research and Training (NCERT)", 14],
+  ["7-Social Science-National Council of Educational Research and Training (NCERT)", 12],
+  ["8-Social Science-National Council of Educational Research and Training (NCERT)", 10],
+
+    // Class 9to12 Political Science for NCERT
+  ["9-Political Science-National Council of Educational Research and Training (NCERT)", 5],
+  ["10-Political Science-National Council of Educational Research and Training (NCERT)", 5],
+
+   // Class 9to12 History for NCERT
+  ["9-History-National Council of Educational Research and Training (NCERT)", 5],
+  ["10-History-National Council of Educational Research and Training (NCERT)", 5],
+
+    // Class 9to12 Geography for NCERT
+  ["9-Geography-National Council of Educational Research and Training (NCERT)", 6],
+  ["10-Geography-National Council of Educational Research and Training (NCERT)", 7],
+
+   // Class 9to12 Economics for NCERT
+  ["9-Economics-National Council of Educational Research and Training (NCERT)", 4],
+  ["10-Economics-National Council of Educational Research and Training (NCERT)", 5],
+
+
+
+  
   // Class 6to12 Mathematics for CBSE
   ["6-Mathematics-CBSE", 0],
   ["7-Mathematics-CBSE", 3],
