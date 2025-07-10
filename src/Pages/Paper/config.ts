@@ -31,6 +31,8 @@ const dynamicSubjectOptions = {
     { value: "Mathematics", label: "Mathematics" },
     { value: "Science", label: "Science" },
     { value: "Social Science", label: "Social Science" },
+    { value: "Urdu", label: "Urdu" },
+    { value: "Sanskrit", label: "Sanskrit" },
   ],
   "7": [
     { value: "English", label: "English" },
@@ -38,25 +40,37 @@ const dynamicSubjectOptions = {
     { value: "Mathematics", label: "Mathematics" },
     { value: "Science", label: "Science" },
     { value: "Social Science", label: "Social Science" },
+    { value: "Urdu", label: "Urdu" },
+    { value: "Sanskrit", label: "Sanskrit" },
   ],
   "8": [
-    { value: "English", label: "English" },
+    { value: "English It So Happened", label: "English It So Happened" },
+    { value: "English HoneyDew", label: "English HoneyDew" },
     { value: "Hindi", label: "Hindi" },
     { value: "Mathematics", label: "Mathematics" },
     { value: "Science", label: "Science" },
     { value: "Social Science", label: "Social Science" },
+    { value: "Urdu", label: "Urdu" },
+    { value: "Sanskrit", label: "Sanskrit" },
   ],
   "9": [
     { value: "English Beehive", label: "English Beehive" },
     { value: "English Moments Supplementary Reader", label: "English Moments Supplementary Reader" },
     { value: "English Words and Expressions 1", label: "English Words and Expressions 1" },
-    { value: "Hindi", label: "Hindi" },
+    { value: "Hindi Kshitij", label: "Hindi Kshitij" },
+    { value: "Hindi Sprash", label: "Hindi Sprash" },
+    { value: "Hindi Kritika", label: "Hindi Kritika" },
+    { value: "Hindi Sanchayan", label: "Hindi Sanchayan" },
     { value: "Mathematics", label: "Mathematics" },
     { value: "Science", label: "Science" },
     { value: "Political Science", label: "Political Science" },
     { value: "History", label: "History" },
     { value: "Geography", label: "Geography" },
     { value: "Economics", label: "Economics" },
+    { value: "Urdu", label: "Urdu" },
+    { value: "Sanskrit Shemushi Prathmo", label: "Sanskrit Shemushi Prathmo" },
+    { value: "Sanskrit Vyakranavithi", label: "Sanskrit Vyakranavithi" },
+    { value: "Sanskrit Abhyaswaan Bhav", label: "Sanskrit Abhyaswaan Bhav" },
   ],
   // Add more class-subject mappings as needed
   // Example for other classes, using some from your original subjectoptions if still relevant
@@ -71,6 +85,10 @@ const dynamicSubjectOptions = {
     { value: "History", label: "History" },
     { value: "Geography", label: "Geography" },
     { value: "Economics", label: "Economics" },
+    { value: "Urdu", label: "Urdu" },
+    { value: "Sanskrit Shemushi Part 2", label: "Sanskrit Shemushi Prathmo" },
+    { value: "Sanskrit Vyakranavithi", label: "Sanskrit Vyakranavithi" },
+    { value: "Sanskrit Abhyaswaan Bhav", label: "Sanskrit Abhyaswaan Bhav" },
   ],
   "11": [
     { value: "English Woven Words", label: "English Woven Words" },
@@ -130,17 +148,55 @@ const dynamicSubjectOptions = {
 const chapterCounts = new Map([
   // Class 6to12 Mathematics for NCERT
   ["6-Mathematics-National Council of Educational Research and Training (NCERT)", 10],
-  ["7-Mathematics-National Council of Educational Research and Training (NCERT)", 13],
-  ["8-Mathematics-National Council of Educational Research and Training (NCERT)", 13],
+  ["7-Mathematics-National Council of Educational Research and Training (NCERT)", 8],
+  ["8-Mathematics-National Council of Educational Research and Training (NCERT)", 16],
   ["9-Mathematics-National Council of Educational Research and Training (NCERT)", 12],
   ["10-Mathematics-National Council of Educational Research and Training (NCERT)", 14],
   ["11-Mathematics-National Council of Educational Research and Training (NCERT)", 16],
   ["12-Mathematics-National Council of Educational Research and Training (NCERT)", 13],
 
+  // Class 6to12 Urdu for NCERT
+  ["6-Urdu-National Council of Educational Research and Training (NCERT)", 14],
+  ["7-Urdu-National Council of Educational Research and Training (NCERT)", 14],
+  ["8-Urdu-National Council of Educational Research and Training (NCERT)", 22],
+  ["9-Urdu-National Council of Educational Research and Training (NCERT)", 12],
+  ["10-Urdu-National Council of Educational Research and Training (NCERT)", 14],
+  ["11-Urdu-National Council of Educational Research and Training (NCERT)", 16],
+  ["12-Urdu-National Council of Educational Research and Training (NCERT)", 13],
+
+
+  // Class 6to12 Hindi for NCERT
+  ["6-Hindi-National Council of Educational Research and Training (NCERT)", 13],
+  ["7-Hindi-National Council of Educational Research and Training (NCERT)", 10],
+  ["8-Hindi-National Council of Educational Research and Training (NCERT)", 13],
+  ["9-Hindi Kshitij-National Council of Educational Research and Training (NCERT)", 13],
+  ["9-Hindi Sprash-National Council of Educational Research and Training (NCERT)", 10],
+  ["9-Hindi Kritika-National Council of Educational Research and Training (NCERT)", 3],
+  ["9-Hindi Sanchayan-National Council of Educational Research and Training (NCERT)", 4],
+  ["10-Hindi-National Council of Educational Research and Training (NCERT)", 14],
+  ["11-Hindi-National Council of Educational Research and Training (NCERT)", 16],
+  ["12-Hindi-National Council of Educational Research and Training (NCERT)", 13],
+
+  
+   // Class 6to12 Sanskrit for NCERT
+  ["6-Sanskrit-National Council of Educational Research and Training (NCERT)", 16],
+  ["7-Sanskrit-National Council of Educational Research and Training (NCERT)", 15],
+  ["8-Sanskrit-National Council of Educational Research and Training (NCERT)", 14],
+  ["9-Sanskrit Shemushi Prathmo-National Council of Educational Research and Training (NCERT)", 10],
+  ["9-Sanskrit Vyakranavithi-National Council of Educational Research and Training (NCERT)", 12],
+  ["9-Sanskrit Abhyaswaan Bhav-National Council of Educational Research and Training (NCERT)", 12],
+  ["10-Sanskrit Shemushi Part 2-National Council of Educational Research and Training (NCERT)", 10],
+  ["10-Sanskrit Vyakranavithi-National Council of Educational Research and Training (NCERT)", 12],
+  ["10-Sanskrit Abhyaswaan Bhav-National Council of Educational Research and Training (NCERT)", 14],
+  ["11-Sanskrit-National Council of Educational Research and Training (NCERT)", 16],
+  ["12-Sanskrit-National Council of Educational Research and Training (NCERT)", 13],
+
+  
   // Class 6to12 English for NCERT
   ["6-English-National Council of Educational Research and Training (NCERT)", 5],
   ["7-English-National Council of Educational Research and Training (NCERT)", 5],
-  ["8-English-National Council of Educational Research and Training (NCERT)", 8],
+  ["8-English HoneyDew-National Council of Educational Research and Training (NCERT)", 8],
+  ["8-English It So Happened-National Council of Educational Research and Training (NCERT)", 8],
   ["9-English Beehive-National Council of Educational Research and Training (NCERT)", 9],
   ["9-English Moments Supplementary Reader-National Council of Educational Research and Training (NCERT)", 9],
   ["9-English Words and Expressions 1-National Council of Educational Research and Training (NCERT)", 9],
@@ -156,7 +212,7 @@ const chapterCounts = new Map([
  // Class 6to10 Science for NCERT
   ["6-Science-National Council of Educational Research and Training (NCERT)", 12],
   ["7-Science-National Council of Educational Research and Training (NCERT)", 12],
-  ["8-Science-National Council of Educational Research and Training (NCERT)", 13],
+  ["8-Science-National Council of Educational Research and Training (NCERT)", 18],
   ["9-Science-National Council of Educational Research and Training (NCERT)", 12],
   ["10-Science-National Council of Educational Research and Training (NCERT)", 13],
 
