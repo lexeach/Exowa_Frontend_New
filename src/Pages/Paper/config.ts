@@ -76,7 +76,8 @@ const dynamicSubjectOptions = {
     { value: "English Woven Words", label: "English Woven Words" },
     { value: "English Hornbill", label: "English Hornbill" },
     { value: "English Snapshots Supplementary Reader", label: "English Snapshots Supplementary Reader" },
-    { value: "Physics", label: "Physics" },
+    { value: "Physics Part 1", label: "Physics Part 1" },
+    { value: "Physics Part 2", label: "Physics Part 2" },
     { value: "Mathematics", label: "Mathematics" },
     { value: "Chemistry", label: "Chemistry" },
     { value: "Biology", label: "Biology" },
@@ -86,7 +87,8 @@ const dynamicSubjectOptions = {
   { value: "Geography", label: "Geography" },
   { value: "Hindi", label: "Hindi" },
   { value: "Sociology", label: "Sociology" },
-  { value: "Political Science", label: "Political Science" },
+  { value: "Political Science Political Theory", label: "Political Science Political Theory" },
+    { value: "Political Science India Constitution at Work", label: "Political Science India Constitution at Work" },
   { value: "History", label: "History" },
   { value: "Economics", label: "Economics" },
   { value: "Business Studies", label: "Business Studies" },
@@ -142,9 +144,9 @@ const chapterCounts = new Map([
   ["9-English Beehive-National Council of Educational Research and Training (NCERT)", 9],
   ["9-English Moments Supplementary Reader-National Council of Educational Research and Training (NCERT)", 9],
   ["9-English Words and Expressions 1-National Council of Educational Research and Training (NCERT)", 9],
-  ["10-English First Flight-National Council of Educational Research and Training (NCERT)", 14],
-  ["10-English Foot Prints Without Feet-National Council of Educational Research and Training (NCERT)", 14],
-  ["10-English Words and Expressions 2-National Council of Educational Research and Training (NCERT)", 14],
+  ["10-English First Flight-National Council of Educational Research and Training (NCERT)", 9],
+  ["10-English Foot Prints Without Feet-National Council of Educational Research and Training (NCERT)", 9],
+  ["10-English Words and Expressions 2-National Council of Educational Research and Training (NCERT)", 9],
   ["11-English Woven Words-National Council of Educational Research and Training (NCERT)", 16],
   ["11-English Hornbill-National Council of Educational Research and Training (NCERT)", 16],
   ["11-English Snapshots Supplementary Reader-National Council of Educational Research and Training (NCERT)", 16],
@@ -166,6 +168,8 @@ const chapterCounts = new Map([
     // Class 9to12 Political Science for NCERT
   ["9-Political Science-National Council of Educational Research and Training (NCERT)", 5],
   ["10-Political Science-National Council of Educational Research and Training (NCERT)", 5],
+  ["11-Political Science Political Theory-National Council of Educational Research and Training (NCERT)", 8],
+  ["12-Political Science India Constitution at Work-National Council of Educational Research and Training (NCERT)", 10],
 
    // Class 9to12 History for NCERT
   ["9-History-National Council of Educational Research and Training (NCERT)", 5],
@@ -178,6 +182,10 @@ const chapterCounts = new Map([
    // Class 9to12 Economics for NCERT
   ["9-Economics-National Council of Educational Research and Training (NCERT)", 4],
   ["10-Economics-National Council of Educational Research and Training (NCERT)", 5],
+
+  // Class 11 to 12 physics for NCERT
+  ["11-Physics Part 1-National Council of Educational Research and Training (NCERT)", 7],
+  ["112-Economics-National Council of Educational Research and Training (NCERT)", 5],
 
 
 
