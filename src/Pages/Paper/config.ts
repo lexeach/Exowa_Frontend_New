@@ -108,7 +108,7 @@ const dynamicSubjectOptions = {
     { value: "Biology", label: "Biology" },
     { value: "Sanskrit Bhaswati", label: "Sanskrit Bhaswati" },
     { value: "Sanskrit Shashwati", label: "Sanskrit Shashwati" },
-  { value: "Accountancy", label: "Accountancy" },
+  //{ value: "Accountancy", label: "Accountancy" },
   { value: "Psychology", label: "Psychology" },
   { value: "Geography Fundamental of Physical Geography", label: "Geography Fundamental of Physical Geography" },
   { value: "Geography Pratical Work in Geography", label: "Geography Pratical Work in Geography" },
@@ -120,11 +120,14 @@ const dynamicSubjectOptions = {
     { value: "Sociology Understanding Society", label: "Sociology Understanding Society" },
   { value: "Political Science Political Theory", label: "Political Science Political Theory" },
     { value: "Political Science India Constitution at Work", label: "Political Science India Constitution at Work" },
-  { value: "History", label: "History" },
-  { value: "Economics", label: "Economics" },
+  { value: "History Themes in Indian History", label: "History Themes in Indian History" },
+   // { value: "History Themes in Indian History", label: "History Themes in Indian History" },
+  { value: "Economics Indian Economic Development", label: "Economics Indian Economic Development" },
+    { value: "Economics Statistics for Economics", label: "Economics Statistics for Economics" },
   { value: "Business Studies", label: "Business Studies" },
   { value: "Urdu", label: "Urdu" },
-  { value: "Home Science", label: "Home Science" },
+  { value: "Home Science Human Ecology and Family Sciences Part 1", label: "Home Science Human Ecology and Family Sciences Part 1" },
+    { value: "Home Science Human Ecology and Family Sciences Part 2", label: "Home Science Human Ecology and Family Sciences Part 2" },
   { value: "Creative Writing and Translation", label: "Creative Writing and Translation" },
   { value: "Informatics Practices", label: "Informatics Practices" },
   { value: "Computer Science", label: "Computer Science" },
@@ -155,11 +158,16 @@ const dynamicSubjectOptions = {
     { value: "Sociology Social Change and Development in India", label: "Sociology Social Change and Development in India" },
   { value: "Political Science Politics in India Since Independence", label: "Political Science Politics in India Since Independence" },
     { value: "Political Science Contemporary World Politics", label: "Political Science Contemporary World Politics" },
-  { value: "History", label: "History" },
-  { value: "Economics", label: "Economics" },
-  { value: "Business Studies", label: "Business Studies" },
+  { value: "History Themes in Indian History Part 1", label: "History Themes in Indian History Part 1" },
+    { value: "History Themes in Indian History Part 2", label: "History Themes in Indian History Part 2" },
+    { value: "History Themes in Indian History Part 3", label: "History Themes in Indian History Part 3" },
+  { value: "Economics Introductory Microeconomics", label: "Economics Introductory Microeconomics" },
+    { value: "Economics Introductory Macroeconomics", label: "Economics Introductory Macroeconomics" },
+  { value: "Business Studies Part 1", label: "Business Studies Part 1" },
+    { value: "Business Studies Part 2", label: "Business Studies Part 2" },
   { value: "Urdu", label: "Urdu" },
-  { value: "Home Science", label: "Home Science" },
+  { value: "Home Science Human Ecology and Family Sciences Part 1", label: "Home Science Human Ecology and Family Sciences Part 1" },
+    { value: "Home Science Human Ecology and Family Sciences Part 2", label: "Home Science Human Ecology and Family Sciences Part 2" },
   { value: "Creative Writing and Translation", label: "Creative Writing and Translation" },
   { value: "Informatics Practices", label: "Informatics Practices" },
   { value: "Computer Science", label: "Computer Science" },
@@ -270,7 +278,10 @@ const chapterCounts = new Map([
   ["8-History-National Council of Educational Research and Training (NCERT)", 12],
   ["9-History-National Council of Educational Research and Training (NCERT)", 5],
   ["10-History-National Council of Educational Research and Training (NCERT)", 5],
-  ["11-History-National Council of Educational Research and Training (NCERT)", 7],
+  ["11-History Themes in Indian History-National Council of Educational Research and Training (NCERT)", 7],
+  ["12-History Themes in Indian History Part 1-National Council of Educational Research and Training (NCERT)", 4],
+  ["12-History Themes in Indian History Part 2-National Council of Educational Research and Training (NCERT)", 4],
+  ["12-History Themes in Indian History Part 3-National Council of Educational Research and Training (NCERT)", 4],
 
     // Class 9to12 Geography for NCERT
   ["8-Geography-National Council of Educational Research and Training (NCERT)", 6],
@@ -286,7 +297,35 @@ const chapterCounts = new Map([
    // Class 9to12 Economics for NCERT
   ["9-Economics-National Council of Educational Research and Training (NCERT)", 4],
   ["10-Economics-National Council of Educational Research and Training (NCERT)", 5],
+  ["11-Economics Indian Economic Development-National Council of Educational Research and Training (NCERT)", 8],
+  ["11-Economics Statistics for Economics-National Council of Educational Research and Training (NCERT)", 8],
+  ["12-Economics Introductory Microeconomics-National Council of Educational Research and Training (NCERT)", 5],
+  ["12-Economics Introductory Macroeconomics-National Council of Educational Research and Training (NCERT)", 6],
 
+  // Class 11 to 12 Business Studies for NCERT
+  ["11-Business Studies-National Council of Educational Research and Training (NCERT)", 11],
+  ["12-Business Studies Part 1-National Council of Educational Research and Training (NCERT)", 8],
+  ["12-Business Studies Part 2-National Council of Educational Research and Training (NCERT)", 8],
+
+  // Class 11 to 12 Home science for NCERT
+  ["11-Home Science Human Ecology and Family Sciences Part 1-National Council of Educational Research and Training (NCERT)", 7],
+  ["11-Home Science Human Ecology and Family Sciences Part 2-National Council of Educational Research and Training (NCERT)", 4],
+  ["12-Home Science Human Ecology and Family Sciences Part 1-National Council of Educational Research and Training (NCERT)", 7],
+  ["12-Home Science Human Ecology and Family Sciences Part 2-National Council of Educational Research and Training (NCERT)", 4],
+
+
+  // Class 11 to 12  Informatics Practices for NCERT
+  ["11-Informatics Practices-National Council of Educational Research and Training (NCERT)", 8],
+  ["12-Informatics Practices-National Council of Educational Research and Training (NCERT)", 7],
+
+   // Class 11 to 12  computer science for NCERT
+  ["11-Computer Science-National Council of Educational Research and Training (NCERT)", 11],
+  ["12-Computer Science-National Council of Educational Research and Training (NCERT)", 13],
+
+  // Class 11 to 12  Biotechnology for NCERT
+  ["11-Biotechnology-National Council of Educational Research and Training (NCERT)", 12],
+  ["12-Biotechnology-National Council of Educational Research and Training (NCERT)", 13],
+  
   // Class 11 to 12 physics for NCERT
   ["11-Physics Part 1-National Council of Educational Research and Training (NCERT)", 7],
   ["11-Physics Part 2-National Council of Educational Research and Training (NCERT)", 7],
