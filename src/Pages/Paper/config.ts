@@ -49,7 +49,9 @@ const dynamicSubjectOptions = {
     { value: "Hindi", label: "Hindi" },
     { value: "Mathematics", label: "Mathematics" },
     { value: "Science", label: "Science" },
-    { value: "Social Science", label: "Social Science" },
+    { value: "Political Science", label: "Political Science" },
+    { value: "History", label: "History" },
+    { value: "Geography", label: "Geography" },
     { value: "Urdu", label: "Urdu" },
     { value: "Sanskrit", label: "Sanskrit" },
   ],
@@ -71,6 +73,7 @@ const dynamicSubjectOptions = {
     { value: "Sanskrit Shemushi Prathmo", label: "Sanskrit Shemushi Prathmo" },
     { value: "Sanskrit Vyakranavithi", label: "Sanskrit Vyakranavithi" },
     { value: "Sanskrit Abhyaswaan Bhav", label: "Sanskrit Abhyaswaan Bhav" },
+    { value: "Information and Communication Technology", label: "Information and Communication Technology" },
   ],
   // Add more class-subject mappings as needed
   // Example for other classes, using some from your original subjectoptions if still relevant
@@ -78,7 +81,10 @@ const dynamicSubjectOptions = {
     { value: "English First Flight", label: "English First Flight" },
     { value: "English Foot Prints Without Feet", label: "English Foot Prints Without Feet" },
     { value: "English Words and Expressions 2", label: "English Words and Expressions 2" },
-    { value: "Hindi", label: "Hindi" },
+    { value: "Hindi Kshitij", label: "Hindi Kshitij" },
+    { value: "Hindi Sprash", label: "Hindi Sprash" },
+    { value: "Hindi Kritika", label: "Hindi Kritika" },
+    { value: "Hindi Sanchayan", label: "Hindi Sanchayan" },
     { value: "Mathematics", label: "Mathematics" },
     { value: "Science", label: "Science" },
     { value: "Political Science", label: "Political Science" },
@@ -97,14 +103,21 @@ const dynamicSubjectOptions = {
     { value: "Physics Part 1", label: "Physics Part 1" },
     { value: "Physics Part 2", label: "Physics Part 2" },
     { value: "Mathematics", label: "Mathematics" },
-    { value: "Chemistry", label: "Chemistry" },
+    { value: "Chemistry Part 1", label: "Chemistry Part 1" },
+    { value: "Chemistry Part 2", label: "Chemistry Part 2" },
     { value: "Biology", label: "Biology" },
-    { value: "Sanskrit", label: "Sanskrit" },
+    { value: "Sanskrit Bhaswati", label: "Sanskrit Bhaswati" },
+    { value: "Sanskrit Shashwati", label: "Sanskrit Shashwati" },
   { value: "Accountancy", label: "Accountancy" },
   { value: "Psychology", label: "Psychology" },
-  { value: "Geography", label: "Geography" },
-  { value: "Hindi", label: "Hindi" },
-  { value: "Sociology", label: "Sociology" },
+  { value: "Geography Fundamental of Physical Geography", label: "Geography Fundamental of Physical Geography" },
+  { value: "Geography Pratical Work in Geography", label: "Geography Pratical Work in Geography" },
+  { value: "Geography India Physical Environment", label: "Geography India Physical Environment" },
+  { value: "Hindi Antra Part 1", label: "Hindi Antra Part 1" },
+    { value: "Hindi Aroh", label: "Hindi Aroh" },
+    { value: "Hindi Vitan Part 1", label: "Hindi Vitan Part 1" },
+  { value: "Sociology Introducing Sociology", label: "Sociology Introducing Sociology" },
+    { value: "Sociology Understanding Society", label: "Sociology Understanding Society" },
   { value: "Political Science Political Theory", label: "Political Science Political Theory" },
     { value: "Political Science India Constitution at Work", label: "Political Science India Constitution at Work" },
   { value: "History", label: "History" },
@@ -115,22 +128,33 @@ const dynamicSubjectOptions = {
   { value: "Creative Writing and Translation", label: "Creative Writing and Translation" },
   { value: "Informatics Practices", label: "Informatics Practices" },
   { value: "Computer Science", label: "Computer Science" },
+    { value: "Financial Accounting", label: "Financial Accounting" },
+    { value: "Accountancy", label: "Accountancy" },
   ],
   "12": [
-    { value: "English Kaleidoscope", label: "English Kaleidoscope" },
-    { value: "English Flamingo", label: "English Flamingo" },
+    //{ value: "English Kaleidoscope", label: "English Kaleidoscope" },
+    //{ value: "English Flamingo", label: "English Flamingo" },
     { value: "English Vistas", label: "English Vistas" },
-    { value: "Physics", label: "Physics" },
-    { value: "Mathematics", label: "Mathematics" },
+    { value: "Physics Part 1", label: "Physics Part 1" },
+    { value: "Physics Part 2", label: "Physics Part 2" },
+    { value: "Mathematics Part 1", label: "Mathematics Part 1" },
+    { value: "Mathematics Part 2", label: "Mathematics Part 2" },
     { value: "Chemistry", label: "Chemistry" },
     { value: "Biology", label: "Biology" },
      { value: "Sanskrit", label: "Sanskrit" },
+  { value: "Computerised Accounting System", label: "Computerised Accounting System" },
   { value: "Accountancy", label: "Accountancy" },
   { value: "Psychology", label: "Psychology" },
-  { value: "Geography", label: "Geography" },
-  { value: "Hindi", label: "Hindi" },
-  { value: "Sociology", label: "Sociology" },
-  { value: "Political Science", label: "Political Science" },
+  { value: "Geography Fundamentals of Human Geography", label: "Geography Fundamentals of Human Geography" },
+    { value: "Geography Pratical Work in Geography", label: "Geography Pratical Work in Geography" },
+    { value: "Geography India People And Economy", label: "Geography India People And Economy" },
+  { value: "Hindi Antra Part 2", label: "Hindi Antra Part 2" },
+    { value: "Hindi Aroh Part 2", label: "Hindi Aroh Part 2" },
+    { value: "Hindi Vitan Part 2", label: "Hindi Vitan Part 2" },
+  { value: "Sociology Indian Society", label: "Sociology Indian Society" },
+    { value: "Sociology Social Change and Development in India", label: "Sociology Social Change and Development in India" },
+  { value: "Political Science Politics in India Since Independence", label: "Political Science Politics in India Since Independence" },
+    { value: "Political Science Contemporary World Politics", label: "Political Science Contemporary World Politics" },
   { value: "History", label: "History" },
   { value: "Economics", label: "Economics" },
   { value: "Business Studies", label: "Business Studies" },
@@ -152,8 +176,9 @@ const chapterCounts = new Map([
   ["8-Mathematics-National Council of Educational Research and Training (NCERT)", 16],
   ["9-Mathematics-National Council of Educational Research and Training (NCERT)", 12],
   ["10-Mathematics-National Council of Educational Research and Training (NCERT)", 14],
-  ["11-Mathematics-National Council of Educational Research and Training (NCERT)", 16],
-  ["12-Mathematics-National Council of Educational Research and Training (NCERT)", 13],
+  ["11-Mathematics-National Council of Educational Research and Training (NCERT)", 14],
+  ["12-Mathematics Part 1-National Council of Educational Research and Training (NCERT)", 6],
+  ["12-Mathematics Part 2-National Council of Educational Research and Training (NCERT)", 7],
 
   // Class 6to12 Urdu for NCERT
   ["6-Urdu-National Council of Educational Research and Training (NCERT)", 14],
@@ -173,10 +198,16 @@ const chapterCounts = new Map([
   ["9-Hindi Sprash-National Council of Educational Research and Training (NCERT)", 10],
   ["9-Hindi Kritika-National Council of Educational Research and Training (NCERT)", 3],
   ["9-Hindi Sanchayan-National Council of Educational Research and Training (NCERT)", 4],
-  ["10-Hindi-National Council of Educational Research and Training (NCERT)", 14],
-  ["11-Hindi-National Council of Educational Research and Training (NCERT)", 16],
-  ["12-Hindi-National Council of Educational Research and Training (NCERT)", 13],
-
+  ["10-Hindi Kshitij-National Council of Educational Research and Training (NCERT)", 12],
+  ["10-Hindi Sprash-National Council of Educational Research and Training (NCERT)", 14],
+  ["10-Hindi Kritika-National Council of Educational Research and Training (NCERT)", 3],
+  ["10-Hindi Sanchayan-National Council of Educational Research and Training (NCERT)", 3],
+  ["11-Hindi Antra Part 1-National Council of Educational Research and Training (NCERT)", 16],
+  ["11-Hindi Aroh-National Council of Educational Research and Training (NCERT)", 16],
+  ["11-Hindi Vitan Part 1-National Council of Educational Research and Training (NCERT)", 5],
+  ["12-Hindi Antra Part 2-National Council of Educational Research and Training (NCERT)", 17],
+  ["12-Hindi Aroh Part 2-National Council of Educational Research and Training (NCERT)", 15],
+  ["12-Hindi Vitan Part 2-National Council of Educational Research and Training (NCERT)", 3],
   
    // Class 6to12 Sanskrit for NCERT
   ["6-Sanskrit-National Council of Educational Research and Training (NCERT)", 16],
@@ -188,7 +219,8 @@ const chapterCounts = new Map([
   ["10-Sanskrit Shemushi Part 2-National Council of Educational Research and Training (NCERT)", 10],
   ["10-Sanskrit Vyakranavithi-National Council of Educational Research and Training (NCERT)", 12],
   ["10-Sanskrit Abhyaswaan Bhav-National Council of Educational Research and Training (NCERT)", 14],
-  ["11-Sanskrit-National Council of Educational Research and Training (NCERT)", 16],
+  ["11-Sanskrit Bhaswati-National Council of Educational Research and Training (NCERT)", 11],
+  ["11-Sanskrit Shashwati-National Council of Educational Research and Training (NCERT)", 16],
   ["12-Sanskrit-National Council of Educational Research and Training (NCERT)", 13],
 
   
@@ -206,7 +238,9 @@ const chapterCounts = new Map([
   ["11-English Woven Words-National Council of Educational Research and Training (NCERT)", 16],
   ["11-English Hornbill-National Council of Educational Research and Training (NCERT)", 16],
   ["11-English Snapshots Supplementary Reader-National Council of Educational Research and Training (NCERT)", 16],
-  ["12-English-National Council of Educational Research and Training (NCERT)", 13],
+  ["12-English Vistas-National Council of Educational Research and Training (NCERT)", 6],
+  //["12-English Kaleidoscope-National Council of Educational Research and Training (NCERT)", 13],
+  //["12-English Kaleidoscope-National Council of Educational Research and Training (NCERT)", 13],
 
   
  // Class 6to10 Science for NCERT
@@ -219,21 +253,35 @@ const chapterCounts = new Map([
   // Class 6to8 Social Science for NCERT
   ["6-Social Science-National Council of Educational Research and Training (NCERT)", 14],
   ["7-Social Science-National Council of Educational Research and Training (NCERT)", 12],
-  ["8-Social Science-National Council of Educational Research and Training (NCERT)", 10],
 
+  // Class  9 information and comunication technology for NCERT
+  ["9-Information and Communication Technology-National Council of Educational Research and Training (NCERT)", 8],
+  
     // Class 9to12 Political Science for NCERT
+  ["8-Political Science-National Council of Educational Research and Training (NCERT)", 10],
   ["9-Political Science-National Council of Educational Research and Training (NCERT)", 5],
   ["10-Political Science-National Council of Educational Research and Training (NCERT)", 5],
   ["11-Political Science Political Theory-National Council of Educational Research and Training (NCERT)", 8],
-  ["12-Political Science India Constitution at Work-National Council of Educational Research and Training (NCERT)", 10],
+  ["11-Political Science India Constitution at Work-National Council of Educational Research and Training (NCERT)", 10],
+  ["12-Political Science Contemporary World Politics-National Council of Educational Research and Training (NCERT)", 7],
+  ["12-Political Science Politics in India Since Independence-National Council of Educational Research and Training (NCERT)", 8],
 
    // Class 9to12 History for NCERT
+  ["8-History-National Council of Educational Research and Training (NCERT)", 12],
   ["9-History-National Council of Educational Research and Training (NCERT)", 5],
   ["10-History-National Council of Educational Research and Training (NCERT)", 5],
+  ["11-History-National Council of Educational Research and Training (NCERT)", 7],
 
     // Class 9to12 Geography for NCERT
+  ["8-Geography-National Council of Educational Research and Training (NCERT)", 6],
   ["9-Geography-National Council of Educational Research and Training (NCERT)", 6],
   ["10-Geography-National Council of Educational Research and Training (NCERT)", 7],
+  ["11-Geography Fundamental of Physical Geography-National Council of Educational Research and Training (NCERT)", 14],
+  ["11-Geography Pratical Work in Geography-National Council of Educational Research and Training (NCERT)", 6],
+  ["11-Geography India Physical Environment-National Council of Educational Research and Training (NCERT)", 6],
+  ["12-Geography Fundamentals of Human Geography-National Council of Educational Research and Training (NCERT)", 8],
+  ["12-Geography Pratical Work in Geography-National Council of Educational Research and Training (NCERT)", 4],
+  ["12-Geography India People And Economy-National Council of Educational Research and Training (NCERT)", 9],
 
    // Class 9to12 Economics for NCERT
   ["9-Economics-National Council of Educational Research and Training (NCERT)", 4],
@@ -241,8 +289,37 @@ const chapterCounts = new Map([
 
   // Class 11 to 12 physics for NCERT
   ["11-Physics Part 1-National Council of Educational Research and Training (NCERT)", 7],
-  ["112-Economics-National Council of Educational Research and Training (NCERT)", 5],
+  ["11-Physics Part 2-National Council of Educational Research and Training (NCERT)", 7],
+  ["12-Physics Part 1-National Council of Educational Research and Training (NCERT)", 8],
+  ["12-Physics Part 2-National Council of Educational Research and Training (NCERT)", 6],
 
+  // Class 11 to 12 chemistry for NCERT
+  ["11-Chemistry Part 1-National Council of Educational Research and Training (NCERT)", 6],
+  ["11-Chemistry Part 2-National Council of Educational Research and Training (NCERT)", 3],
+  ["12-Chemistry Part 1-National Council of Educational Research and Training (NCERT)", 5],
+  ["12-Chemistry Part 2-National Council of Educational Research and Training (NCERT)", 5],
+
+  // Class 11 to 12 biology for NCERT
+  ["11-Biology-National Council of Educational Research and Training (NCERT)", 19],
+  ["12-Biology-National Council of Educational Research and Training (NCERT)", 13],
+
+  // Class 11 to 12 Psychology for NCERT
+  ["11-Psychology-National Council of Educational Research and Training (NCERT)", 8],
+  ["12-Psychology-National Council of Educational Research and Training (NCERT)", 7],
+
+  // Class 11 to 12 Sociology for NCERT
+  ["11-Sociology Introducing Sociology-National Council of Educational Research and Training (NCERT)", 5],
+  ["11-Sociology Understanding Society-National Council of Educational Research and Training (NCERT)", 5],
+  ["12-Sociology Indian Society-National Council of Educational Research and Training (NCERT)", 7],
+  ["12-Sociology Social Change and Development in India-National Council of Educational Research and Training (NCERT)", 8],
+
+
+  
+  // Class 11 to 12 Accountancy for NCERT
+  ["11-Financial Accounting-National Council of Educational Research and Training (NCERT)", 7],
+  ["11-Accountancy-National Council of Educational Research and Training (NCERT)", 2],
+  ["12-Computerised Accounting System-National Council of Educational Research and Training (NCERT)", 4],
+  ["12-Accountancy-National Council of Educational Research and Training (NCERT)", 4],
 
 
   
