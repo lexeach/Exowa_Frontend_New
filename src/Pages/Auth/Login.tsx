@@ -173,6 +173,16 @@ export default function Login() {
           disabled: isLoading,
         }}
       />
+         {/* <p className="mt-6">
+         Don't Have an Account?{" "}
+         <UIButton
+           variant="link"
+           className="p-0"
+          onClick={() => navigate("https://user.exowa.click/registration")}
+         >
+           Sign Up
+         </UIButton>
+       </p> */}
     </AuthWrapper>
   );
 }
