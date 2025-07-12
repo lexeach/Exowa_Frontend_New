@@ -175,16 +175,18 @@ export default function Login() {
         }}
       />
        
-          <p className="mt-6">
-            Don't Have an Account?{" "}
-            <UIButton
-              variant="link"
-              className="p-0"
-              onClick={() => navigate("https://user.exowa.click/registration")}
-            >
-              Sign Up
-            </UIButton>
-          </p>
-    </AuthWrapper>
-  );
-}
+         <p className="mt-6">
+               Don't Have an Account?{" "}
+           <UIButton
+                variant="link"
+                    className="p-0"
+                    onClick={() => window.open("https://user.exowa.click/registration", "_blank")}
+                   // OR for a direct redirect in the same tab:
+                     // onClick={() => window.location.href = "https://user.exowa.click/registration"}
+                        >
+                       Sign Up
+                     </UIButton>
+                         </p>
+                       </AuthWrapper>
+                          );
+                       }
