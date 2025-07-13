@@ -32,7 +32,7 @@ const Papers = () => {
     {
       header: 'Class',
       class: 'pl-5',
-      accessor: 'class',
+      accessor: 'ClassName',
       cell: info => <span>{info.getValue()}</span>,
       cellClass: 'pl-4 text-black ',
       headerClass: 'pl-4',
