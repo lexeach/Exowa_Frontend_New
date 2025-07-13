@@ -69,13 +69,44 @@ const Papers = () => {
       headerClass: 'pl-4',
     },
     {
-      header: "CreatedAt",
-      class: "pl-5",
-      accessor: "createdAt",
-      cell: (info) => <span>{info.getValue()}</span>,
-      cellClass: "pl-4 text-black ",
-      headerClass: "pl-4",
-    },
+  header: "CreatedAt",
+  class: "pl-5",
+  accessor: "createdAt",
+  cell: (info) => {
+    const rawDate = info.getValue();
+    if (!rawDate) return <span>-</span>; // Handle cases where date might be null or undefined
+
+    try {
+      const date = new Date(rawDate);
+      // Check if the date is valid before formatting
+      if (isNaN(date.getTime())) {
+        return <span>Invalid Date</span>;
+      }
+
+      // Format the date to Indian Standard Time (IST)
+      // Options for full date and time, adjust as needed
+      const options = {
+        year: 'numeric',
+        month: 'numeric',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+        second: 'numeric',
+        hour12: true, // Use 12-hour clock with AM/PM
+        timeZone: 'Asia/Kolkata'
+      };
+
+      const formattedDate = date.toLocaleString('en-IN', options); // 'en-IN' for Indian locale formatting
+
+      return <span>{formattedDate}</span>;
+    } catch (error) {
+      console.error("Error formatting date:", error);
+      return <span>Error</span>; // Display an error if date parsing fails
+    }
+  },
+  cellClass: "pl-4 text-black ",
+  headerClass: "pl-4",
+},
     {
       header: "Total Questions",
       class: "pl-5",
