@@ -518,7 +518,7 @@ export const fields = (
       label: "Number Of Question",
       placeholder: "Select Number ...",
       type: "select",
-      options: [options],
+      options: options,
       wrapperClassName: "mb-6",
       fieldWrapperClassName: "col-span-6 mb-[400px] sm:mb-5",
     },
