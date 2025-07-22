@@ -65,7 +65,6 @@ const router = createHashRouter([
             path: "logout",
             element: <LogOut />,
           },
-          
         ],
       },
     ],
@@ -102,6 +101,10 @@ const router = createHashRouter([
         element: <ThankYouPage />,
       },
     ],
+  },
+  {
+    path: "/thankyou",
+    element: <ThankYouPage />,
   },
 ]);
 

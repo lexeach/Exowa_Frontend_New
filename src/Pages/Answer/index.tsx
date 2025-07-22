@@ -133,7 +133,7 @@ const Answer = () => {
           dispatch(handleLogout());
           SuccessToaster("Login Out");
           localStorage.removeItem("token");
-          navigate("/auth/thankyou");
+          navigate("/auth/thankyou", { state: id });
           setIsAnswered(true);
         }, 1000);
       } catch (error) {

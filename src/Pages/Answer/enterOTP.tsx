@@ -61,7 +61,7 @@ const EnterOTPPage = ({ questionOTP, onVerify }) => {
           <UIButton
             onClick={handleSubmit}
             disabled={otp.includes("")}
-            variant={otp.includes("") ? "ghost" : "sky"}
+            variant={"sky"}
             size="lg"
             className="w-full py-3 mt-6"
           >

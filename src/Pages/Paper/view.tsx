@@ -234,9 +234,9 @@ const PaperView = () => {
                     </div>
                   ))}
                 </div>
-                <div className="mt-2 md:mt-4 text-blue-600 font-semibold text-sm md:text-base">
+                {/* <div className="mt-2 md:mt-4 text-blue-600 font-semibold text-sm md:text-base">
                   Correct Answer: {question.correctAnswer}
-                </div>
+                </div> */}
               </div>
             ))
           : questions.map((question) => {
