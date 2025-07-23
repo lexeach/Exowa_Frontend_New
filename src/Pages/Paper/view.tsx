@@ -114,6 +114,15 @@ const PaperView = () => {
       }
     };
 
+    const handlePractice = () => {
+      const newURL = `${BaseURL}/#/student-answer/${id}`;
+      if (selectedChild) {
+        window.open(newURL, "_blank"); // Open in new tab
+      } else {
+        ErrorToaster("Please select a child first");
+      }
+    };
+
     return (
       <div className="space-y-4">
         {/* Generate Link and OTP Section */}
@@ -137,20 +146,36 @@ const PaperView = () => {
                       onChange={handleSelectChange}
                     />
                   </div>
-                  <UIButton
-                    variant="sky"
-                    size="md"
-                    onClick={handleGenerateLink}
-                    tooltipContent={
-                      selectedChild
-                        ? "Assign the question to the selected child"
-                        : "Select a child first"
-                    }
-                    disabled={!selectedChild}
-                    className="w-full md:w-auto"
-                  >
-                    Assign Question to Child
-                  </UIButton>
+                  <div className="">
+                    <UIButton
+                      variant="sky"
+                      size="md"
+                      onClick={handleGenerateLink}
+                      tooltipContent={
+                        selectedChild
+                          ? "Assign the question to the selected child"
+                          : "Select a child first"
+                      }
+                      disabled={!selectedChild}
+                      className="w-full md:w-auto block my-2"
+                    >
+                      Assign Question to Child
+                    </UIButton>
+                    <UIButton
+                      variant="sky"
+                      size="md"
+                      onClick={handlePractice}
+                      tooltipContent={
+                        selectedChild
+                          ? "Assign the question to the selected child"
+                          : "Select a child first"
+                      }
+                      disabled={!selectedChild}
+                      className="w-full md:w-auto block my-2"
+                    >
+                      Do Practice
+                    </UIButton>
+                  </div>
                 </div>
 
                 {OTP ? (

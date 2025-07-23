@@ -15,6 +15,7 @@ import { fields, schema } from "./config"; // Assuming the config file is in the
 import { Loader } from "lucide-react";
 import { useGetChildrenListQuery } from "@/service/children";
 import { useNavigate } from "react-router-dom";
+import { useMobileKeyboardPrevention } from "@/Hooks/useMobileKeyboardPrevention";
 
 type PaperFormProps = {
   handleCancel: () => void;
@@ -24,6 +25,7 @@ type PaperFormProps = {
 const PapersForm: React.FC<PaperFormProps> = ({ handleCancel, sheet }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  useMobileKeyboardPrevention(); // Add the hook to prevent keyboard on mobile
   const [data, setData] = useState({});
   const [createPaper, { isLoading: isCreateLoading }] = useAddPaperMutation();
   const [currentClass, setCurrentClass] = useState(null);

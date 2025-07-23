@@ -899,6 +899,7 @@ export const fields = (
       autoFocus: true,
       wrapperClassName: "mb-6",
       fieldWrapperClassName: "col-span-12",
+      className: "mobile-select-no-keyboard", // Add CSS class for mobile keyboard prevention
       getValueCallback: (value) => {
         setCurrentClass(value);
         setCurrentSubject(null); // Reset subject when class changes
@@ -914,6 +915,7 @@ export const fields = (
       fetchData: useGetSyllabusOptionsMutation,
       wrapperClassName: "mb-6",
       fieldWrapperClassName: "col-span-12",
+      className: "mobile-select-no-keyboard", // Add CSS class for mobile keyboard prevention
       getValueCallback: (value) => setCurrentSyllabus(value),
     },
     {
@@ -925,6 +927,7 @@ export const fields = (
       options: subjectOptionsForClass, // Dynamically set based on selected class
       wrapperClassName: "mb-6",
       fieldWrapperClassName: "col-span-12",
+      className: "mobile-select-no-keyboard", // Add CSS class for mobile keyboard prevention
       getValueCallback: (value) => setCurrentSubject(value),
       // Add disabled prop if no class is selected or no subjects for selected class
       disabled: !currentClass || subjectOptionsForClass.length === 0,
@@ -938,6 +941,7 @@ export const fields = (
       options: chapterOptions,
       wrapperClassName: "mb-6",
       fieldWrapperClassName: "col-span-6",
+      className: "mobile-select-no-keyboard", // Add CSS class for mobile keyboard prevention
     },
     {
       name: "chapter_to",
@@ -948,6 +952,7 @@ export const fields = (
       options: chapterOptions,
       wrapperClassName: "mb-6",
       fieldWrapperClassName: "col-span-6",
+      className: "mobile-select-no-keyboard", // Add CSS class for mobile keyboard prevention
     },
     {
       name: "language",
@@ -971,6 +976,7 @@ export const fields = (
       ],
       wrapperClassName: "mb-6",
       fieldWrapperClassName: "col-span-6",
+      className: "mobile-select-no-keyboard", // Add CSS class for mobile keyboard prevention
     },
     {
       name: "no_of_question",
@@ -981,6 +987,7 @@ export const fields = (
       autoFocus: true,
       wrapperClassName: "mb-6",
       fieldWrapperClassName: "col-span-6 mb-[400px] sm:mb-5",
+      className: "mobile-select-no-keyboard", // Add CSS class for mobile keyboard prevention
     },
   ];
 };

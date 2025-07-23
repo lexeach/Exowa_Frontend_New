@@ -34,7 +34,7 @@ interface Field {
   customComponent?: React.ElementType<any>;
   fetchData?: any;
   fetchId?: any;
-  getValueCallback?: () => {};
+  getValueCallback?: (value?: any) => void;
   isRepeater?: boolean; // For repeater fields
   fields?: Field[]; // Repeater's internal fields
 }

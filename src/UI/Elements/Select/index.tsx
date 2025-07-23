@@ -17,7 +17,7 @@ interface UISelectProps {
   options?: Option[];
   query?: any;
   caption?: string;
-  error?: string;
+  error?: string | { message?: string };
   noLabel?: boolean;
   placeholder?: string;
   onChange?: (value: string | string[]) => void;
@@ -27,7 +27,15 @@ interface UISelectProps {
     | number
     | { id: string | number }[];
   multi?: boolean;
-  menuPosition?: string;
+  menuPosition?: 'absolute' | 'fixed';
+  fetchData?: any;
+  fetchId?: string;
+  optionLabel?: string;
+  getValueCallback?: (value: any) => void;
+  getSelectedOption?: (option: any) => void;
+  setFormValue?: (name: string, value: any) => void;
+  wrapperClassName?: string;
+  name?: string;
 }
 
 const defaultOptions: Option[] = [{ label: 'test', value: 'test' }];
@@ -84,7 +92,7 @@ export default function UISelect({
           typeof props.value[0] !== 'number' &&
           typeof props.value[0] !== 'string'
         ) {
-          const arr = props.value.map(item => item._id);
+          const arr = props.value.map((item: any) => item._id);
           setFormValue(props.name, arr);
         }
       } catch (error) {
@@ -156,10 +164,36 @@ export default function UISelect({
           menuPortal: base => ({ ...base, zIndex: 9999 }),
         }}
         noOptionsMessage={() => t('no_records_found')}
+        // Disable keyboard on mobile devices
+        onMenuOpen={() => {
+          // Prevent keyboard from opening on mobile
+          setTimeout(() => {
+            const inputs = document.querySelectorAll('.react-select__input input');
+            inputs.forEach((input: HTMLInputElement) => {
+              input.setAttribute('inputmode', 'none');
+              input.setAttribute('readonly', 'readonly');
+              input.style.caretColor = 'transparent';
+            });
+          }, 0);
+        }}
+        onMenuClose={() => {
+          // Remove readonly attribute when menu closes
+          const inputs = document.querySelectorAll('.react-select__input input');
+          inputs.forEach((input: HTMLInputElement) => {
+            input.removeAttribute('readonly');
+            input.removeAttribute('inputmode');
+            input.style.caretColor = '';
+          });
+        }}
+        // Additional mobile-specific props
+        isSearchable={false}
+        blurInputOnSelect={true}
       />
-      {error?.message && (
+      {error && (
         <>
-          <p className="mt-1 text-gray-500 text-sm">{t(error?.message)}</p>
+          <p className="mt-1 text-gray-500 text-sm">
+            {t(typeof error === 'string' ? error : error?.message || '')}
+          </p>
         </>
       )}
     </div>

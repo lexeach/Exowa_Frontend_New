@@ -14,11 +14,11 @@ const baseQuery = fetchBaseQuery({
 });
 
 const baseQueryWithReauth = async (args, api, extraOptions) => {
-  const token = localStorage.getItem("token");
-  if (!token) {
-    window.location.href = "/auth/login";
-    return;
-  }
+  // const token = localStorage.getItem("token");
+  // if (!token) {
+  //   window.location.href = "/auth/login";
+  //   return;
+  // }
   const result = await baseQuery(args, api, extraOptions);
   // console.log("args-----",args,"----", api,  "aaaaaa-----" , extraOptions)
   if (result.error && result.error.status === 401) {
