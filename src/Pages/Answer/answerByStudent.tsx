@@ -127,7 +127,7 @@ const Answer = () => {
         }).unwrap();
 
         setTimeout(() => {
-          const AnswerURL = `${BaseURL}/#/auth/result/${id}`;
+          //const AnswerURL = `${BaseURL}/#/auth/result/${id}`;
           navigate("/auth/thankyou", { state: id });
           window.open(AnswerURL, "_blank");
         }, 1000);
