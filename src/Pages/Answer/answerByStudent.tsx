@@ -127,11 +127,9 @@ const Answer = () => {
         }).unwrap();
 
         setTimeout(() => {
-          dispatch(handleLogout());
-          SuccessToaster("Login Out");
-          localStorage.removeItem("token");
-          navigate("/auth/thankyou", { state: id });
-          setIsAnswered(true);
+          const AnswerURL = `${BaseURL}/#/auth/result/${id}`;
+          navigate(`/papers/${id}`);
+          window.open(AnswerURL, "_blank");
         }, 1000);
       } catch (error) {
         // *** IMPORTANT: Ensure error is explicitly logged for debugging ***
