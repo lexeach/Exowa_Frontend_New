@@ -32,6 +32,8 @@ const Answer = () => {
       ...prev,
       [questionNumber]: selectedOption,
     }));
+    // *** Add this console log for debugging on mobile! ***
+    console.log(`Option selected for Q${questionNumber}: ${selectedOption}`);
   };
 
   const renderQuestions = () => {
@@ -47,10 +49,19 @@ const Answer = () => {
             </h2>
             <div className="mt-4 space-y-2">
               {Object.entries(question.choices).map(([key, value]) => (
-                <div key={key} className="flex items-center"> {/* Removed space-x-3 here to give label full control */}
+                <div key={key} className="relative flex items-center"> {/* Added relative to parent of label */}
                   <label
                     htmlFor={`question-${question.questionNumber}-option-${key}`}
-                    className="flex items-center space-x-2 cursor-pointer w-full" // Added w-full to make label cover full width
+                    className="flex items-center space-x-2 cursor-pointer w-full p-3 rounded-md hover:bg-gray-100 transition-colors duration-150 select-none" // Increased padding, added select-none
+                    // *** ADD THIS FOR DIAGNOSTIC ***
+                    // onClick={(e) => {
+                    //   console.log("Label clicked!");
+                    //   // If the input doesn't change, you could programmatically click it here
+                    //   // const inputEl = document.getElementById(`question-${question.questionNumber}-option-${key}`) as HTMLInputElement;
+                    //   // if (inputEl && !inputEl.checked) {
+                    //   //   inputEl.click();
+                    //   // }
+                    // }}
                   >
                     <input
                       type="radio"
@@ -58,22 +69,42 @@ const Answer = () => {
                       id={`question-${question.questionNumber}-option-${key}`}
                       value={key}
                       checked={answers[question.questionNumber] === key}
-                      onChange={() =>
-                        handleOptionChange(question.questionNumber, key)
-                      }
-                      className="hidden peer"
+                      onChange={(e) => {
+                        handleOptionChange(question.questionNumber, key);
+                        // console.log("Input onChange fired:", e.target.checked); // For debugging
+                      }}
+                      // --- ULTIMATE HIDING/INTERACTION METHOD ---
+                      className="
+                        absolute // Position absolutely
+                        z-10 // Give it a higher z-index to ensure it's on top of its siblings
+                        left-0 top-0 // Place it at the start of the label
+                        w-full h-full // Make it cover the *entire label area*
+                        opacity-0 // Make it completely transparent
+                        cursor-pointer // Show cursor pointer
+                      "
+                      // Removed `peer` from input directly, as we're making the input itself the full clickable area.
+                      // The visual span will now be styled based on `answers` state directly.
                     />
-                    {/* The visual indicator */}
-                    <span className="w-5 h-5 border-2 border-gray-400 rounded-full flex items-center justify-center peer-checked:border-0 peer-checked:bg-blue-500"> {/* Changed to rounded-full for radio, added peer-checked:bg-blue-500 for a solid fill when checked */}
+
+                    {/* The custom visual indicator - now styled purely by React state */}
+                    <span className={`
+                        w-5 h-5 border-2 rounded-full flex items-center justify-center flex-shrink-0
+                        ${answers[question.questionNumber] === key
+                            ? 'border-blue-500 bg-blue-500' // Checked state
+                            : 'border-gray-400' // Unchecked state
+                        }
+                    `}>
                       {answers[question.questionNumber] === key && (
                         <CheckCircleIcon
-                          width={16} // Reduced size slightly to fit better if solid fill is used
+                          width={16}
                           height={16}
-                          className="text-white" // Changed to white to contrast with blue background
+                          className="text-white"
                         />
                       )}
                     </span>
-                    <span className="font-medium text-gray-800">{value}</span> {/* Added a text color for clarity */}
+                    <span className="font-medium text-gray-800 break-words">
+                      {value}
+                    </span>
                   </label>
                 </div>
               ))}
@@ -85,31 +116,7 @@ const Answer = () => {
   };
 
   const handleSubmit = async () => {
-    if (Object.keys(answers).length === questions.length) {
-      setIsSubmitted(true);
-      const formattedAnswers = Object.entries(answers).map(
-        ([questionNumber, option]) => ({
-          questionNumber: Number(questionNumber),
-          option,
-        })
-      );
-
-      try {
-        await answerQuestion({
-          questionId: id,
-          answers: formattedAnswers,
-          userId: parentId,
-        }).unwrap();
-
-        setTimeout(() => {
-          const AnswerURL = `${BaseURL}/#/auth/result/${id}`;
-          navigate(`/papers/${id}`); // This navigate is likely to stay within the app
-          window.open(AnswerURL, "_blank"); // This opens the result in a new tab
-        }, 1000);
-      } catch (error) {
-        ErrorToaster(error?.data?.message || "Issue in submitting answers");
-      }
-    }
+    // ... (rest of your handleSubmit function)
   };
 
   if (paperLoading) {
