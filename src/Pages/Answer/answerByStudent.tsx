@@ -18,15 +18,12 @@ const Answer = () => {
     { skip: !id }
   );
 
-  // Move all useState hooks to the top, before any returns
   const [answers, setAnswers] = useState<Record<number, string>>({});
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  // Extract data after hooks
   const questions = singlePaper?.data?.questions ?? [];
   const parentId = singlePaper?.data?.author?._id;
 
-  // Define functions after hooks
   const handleOptionChange = (
     questionNumber: number,
     selectedOption: string
@@ -50,10 +47,10 @@ const Answer = () => {
             </h2>
             <div className="mt-4 space-y-2">
               {Object.entries(question.choices).map(([key, value]) => (
-                <div key={key} className="flex items-center space-x-3">
+                <div key={key} className="flex items-center"> {/* Removed space-x-3 here to give label full control */}
                   <label
                     htmlFor={`question-${question.questionNumber}-option-${key}`}
-                    className="flex items-center space-x-2 cursor-pointer"
+                    className="flex items-center space-x-2 cursor-pointer w-full" // Added w-full to make label cover full width
                   >
                     <input
                       type="radio"
@@ -66,16 +63,17 @@ const Answer = () => {
                       }
                       className="hidden peer"
                     />
-                    <span className="w-5 h-5 border-2 border-gray-400 rounded-md flex items-center justify-center peer-checked:border-0">
+                    {/* The visual indicator */}
+                    <span className="w-5 h-5 border-2 border-gray-400 rounded-full flex items-center justify-center peer-checked:border-0 peer-checked:bg-blue-500"> {/* Changed to rounded-full for radio, added peer-checked:bg-blue-500 for a solid fill when checked */}
                       {answers[question.questionNumber] === key && (
                         <CheckCircleIcon
-                          width={20}
-                          height={20}
-                          className="text-green-500"
+                          width={16} // Reduced size slightly to fit better if solid fill is used
+                          height={16}
+                          className="text-white" // Changed to white to contrast with blue background
                         />
                       )}
                     </span>
-                    <span className="font-medium">{value}</span>
+                    <span className="font-medium text-gray-800">{value}</span> {/* Added a text color for clarity */}
                   </label>
                 </div>
               ))}
@@ -105,8 +103,8 @@ const Answer = () => {
 
         setTimeout(() => {
           const AnswerURL = `${BaseURL}/#/auth/result/${id}`;
-          navigate(`/papers/${id}`);
-          window.open(AnswerURL, "_blank");
+          navigate(`/papers/${id}`); // This navigate is likely to stay within the app
+          window.open(AnswerURL, "_blank"); // This opens the result in a new tab
         }, 1000);
       } catch (error) {
         ErrorToaster(error?.data?.message || "Issue in submitting answers");
@@ -114,7 +112,6 @@ const Answer = () => {
     }
   };
 
-  // Conditional rendering after all hooks and logic
   if (paperLoading) {
     return <div>Loading...</div>;
   }
