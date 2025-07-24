@@ -1,7 +1,7 @@
 import UILayout from "@/UI/Elements/Layout";
 import { useGetSinglePaperQuery } from "@/service/paper";
 import { useNavigate, useParams } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { CheckCircleIcon } from "lucide-react";
 import { ErrorToaster } from "@/UI/Elements/Toast";
 import { useAnswerPaperMutation } from "@/service/paper";
@@ -24,6 +24,16 @@ const Answer = () => {
   const questions = singlePaper?.data?.questions ?? [];
   const parentId = singlePaper?.data?.author?._id;
 
+  // DEBUGGING: Log answers state and button disable status
+  useEffect(() => {
+    if (!paperLoading && questions.length > 0) {
+      console.log("Total Questions:", questions.length);
+      console.log("Answers Recorded:", Object.keys(answers).length, answers);
+      console.log("Is Submit Button Disabled?", Object.keys(answers).length < questions.length);
+    }
+  }, [answers, questions.length, paperLoading]);
+  // END DEBUGGING
+
   const handleOptionChange = (
     questionNumber: number,
     selectedOption: string
@@ -32,8 +42,7 @@ const Answer = () => {
       ...prev,
       [questionNumber]: selectedOption,
     }));
-    // *** Add this console log for debugging on mobile! ***
-    console.log(`Option selected for Q${questionNumber}: ${selectedOption}`);
+    console.log(`Q${questionNumber} selected: ${selectedOption}`);
   };
 
   const renderQuestions = () => {
@@ -49,19 +58,10 @@ const Answer = () => {
             </h2>
             <div className="mt-4 space-y-2">
               {Object.entries(question.choices).map(([key, value]) => (
-                <div key={key} className="relative flex items-center"> {/* Added relative to parent of label */}
+                <div key={key} className="relative flex items-center">
                   <label
                     htmlFor={`question-${question.questionNumber}-option-${key}`}
-                    className="flex items-center space-x-2 cursor-pointer w-full p-3 rounded-md hover:bg-gray-100 transition-colors duration-150 select-none" // Increased padding, added select-none
-                    // *** ADD THIS FOR DIAGNOSTIC ***
-                    // onClick={(e) => {
-                    //   console.log("Label clicked!");
-                    //   // If the input doesn't change, you could programmatically click it here
-                    //   // const inputEl = document.getElementById(`question-${question.questionNumber}-option-${key}`) as HTMLInputElement;
-                    //   // if (inputEl && !inputEl.checked) {
-                    //   //   inputEl.click();
-                    //   // }
-                    // }}
+                    className="flex items-center space-x-2 cursor-pointer w-full p-3 rounded-md hover:bg-gray-100 transition-colors duration-150 select-none"
                   >
                     <input
                       type="radio"
@@ -71,27 +71,16 @@ const Answer = () => {
                       checked={answers[question.questionNumber] === key}
                       onChange={(e) => {
                         handleOptionChange(question.questionNumber, key);
-                        // console.log("Input onChange fired:", e.target.checked); // For debugging
                       }}
-                      // --- ULTIMATE HIDING/INTERACTION METHOD ---
-                      className="
-                        absolute // Position absolutely
-                        z-10 // Give it a higher z-index to ensure it's on top of its siblings
-                        left-0 top-0 // Place it at the start of the label
-                        w-full h-full // Make it cover the *entire label area*
-                        opacity-0 // Make it completely transparent
-                        cursor-pointer // Show cursor pointer
-                      "
-                      // Removed `peer` from input directly, as we're making the input itself the full clickable area.
-                      // The visual span will now be styled based on `answers` state directly.
+                      className="absolute z-10 left-0 top-0 w-full h-full opacity-0 cursor-pointer"
+                      aria-hidden="true"
                     />
 
-                    {/* The custom visual indicator - now styled purely by React state */}
                     <span className={`
                         w-5 h-5 border-2 rounded-full flex items-center justify-center flex-shrink-0
                         ${answers[question.questionNumber] === key
-                            ? 'border-blue-500 bg-blue-500' // Checked state
-                            : 'border-gray-400' // Unchecked state
+                            ? 'border-blue-500 bg-blue-500'
+                            : 'border-gray-400'
                         }
                     `}>
                       {answers[question.questionNumber] === key && (
@@ -116,7 +105,41 @@ const Answer = () => {
   };
 
   const handleSubmit = async () => {
-    // ... (rest of your handleSubmit function)
+    console.log("Submit button clicked!"); // Check if this logs
+    console.log("Current answers length:", Object.keys(answers).length);
+    console.log("Total questions length:", questions.length);
+
+    if (Object.keys(answers).length === questions.length) {
+      console.log("All questions answered. Proceeding with submission.");
+      setIsSubmitted(true);
+      const formattedAnswers = Object.entries(answers).map(
+        ([questionNumber, option]) => ({
+          questionNumber: Number(questionNumber),
+          option,
+        })
+      );
+
+      try {
+        await answerQuestion({
+          questionId: id,
+          answers: formattedAnswers,
+          userId: parentId,
+        }).unwrap();
+
+        setTimeout(() => {
+          const AnswerURL = `${BaseURL}/#/auth/result/${id}`;
+          navigate(`/papers/${id}`);
+          window.open(AnswerURL, "_blank");
+        }, 1000);
+      } catch (error) {
+        // *** IMPORTANT: Ensure error is explicitly logged for debugging ***
+        console.error("Submission Error:", error);
+        ErrorToaster(error?.data?.message || "Issue in submitting answers");
+      }
+    } else {
+      console.log("Not all questions answered yet. Button remains disabled.");
+      ErrorToaster(`Please answer all ${questions.length} questions.`);
+    }
   };
 
   if (paperLoading) {
@@ -137,7 +160,8 @@ const Answer = () => {
         >
           <div className="w-full max-w-4xl border border-dark p-6 rounded-lg shadow overflow-y-auto">
             {renderQuestions()}
-            <div className="text-right">
+            {/* *** IMPORTANT CHANGE HERE: Make the parent div relative with z-index *** */}
+            <div className="text-right relative z-20">
               <button
                 onClick={handleSubmit}
                 disabled={Object.keys(answers).length < questions.length}
