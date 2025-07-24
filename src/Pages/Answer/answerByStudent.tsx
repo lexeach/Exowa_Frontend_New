@@ -128,7 +128,7 @@ const Answer = () => {
 
         setTimeout(() => {
           const AnswerURL = `${BaseURL}/#/auth/result/${id}`;
-          navigate(`/papers/${id}`);
+          navigate("/auth/thankyou", { state: id });
           window.open(AnswerURL, "_blank");
         }, 1000);
       } catch (error) {
