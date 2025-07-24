@@ -20,6 +20,7 @@ const Answer = () => {
 
   const [answers, setAnswers] = useState<Record<number, string>>({});
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isAnswered, setIsAnswered] = useState(false);
 
   const questions = singlePaper?.data?.questions ?? [];
   const parentId = singlePaper?.data?.author?._id;
@@ -129,6 +130,7 @@ const Answer = () => {
         setTimeout(() => {
           //const AnswerURL = `${BaseURL}/#/auth/result/${id}`;
           navigate("/auth/thankyou", { state: id });
+           setIsAnswered(true);
           window.open(AnswerURL, "_blank");
         }, 1000);
       } catch (error) {
