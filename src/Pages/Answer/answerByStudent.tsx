@@ -1,7 +1,7 @@
 import UILayout from "@/UI/Elements/Layout";
 import { useGetSinglePaperQuery } from "@/service/paper";
 import { useNavigate, useParams } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { CheckCircleIcon } from "lucide-react";
 import { ErrorToaster } from "@/UI/Elements/Toast";
 import { useAnswerPaperMutation } from "@/service/paper";
@@ -18,23 +18,15 @@ const Answer = () => {
     { skip: !id }
   );
 
+  // Move all useState hooks to the top, before any returns
   const [answers, setAnswers] = useState<Record<number, string>>({});
   const [isSubmitted, setIsSubmitted] = useState(false);
- 
 
+  // Extract data after hooks
   const questions = singlePaper?.data?.questions ?? [];
   const parentId = singlePaper?.data?.author?._id;
 
-  // DEBUGGING: Log answers state and button disable status
-  useEffect(() => {
-    if (!paperLoading && questions.length > 0) {
-      console.log("Total Questions:", questions.length);
-      console.log("Answers Recorded:", Object.keys(answers).length, answers);
-      console.log("Is Submit Button Disabled?", Object.keys(answers).length < questions.length);
-    }
-  }, [answers, questions.length, paperLoading]);
-  // END DEBUGGING
-
+  // Define functions after hooks
   const handleOptionChange = (
     questionNumber: number,
     selectedOption: string
@@ -43,7 +35,6 @@ const Answer = () => {
       ...prev,
       [questionNumber]: selectedOption,
     }));
-    console.log(`Q${questionNumber} selected: ${selectedOption}`);
   };
 
   const renderQuestions = () => {
@@ -59,10 +50,10 @@ const Answer = () => {
             </h2>
             <div className="mt-4 space-y-2">
               {Object.entries(question.choices).map(([key, value]) => (
-                <div key={key} className="relative flex items-center">
+                <div key={key} className="flex items-center space-x-3">
                   <label
                     htmlFor={`question-${question.questionNumber}-option-${key}`}
-                    className="flex items-center space-x-2 cursor-pointer w-full p-3 rounded-md hover:bg-gray-100 transition-colors duration-150 select-none"
+                    className="flex items-center space-x-2 cursor-pointer"
                   >
                     <input
                       type="radio"
@@ -70,31 +61,21 @@ const Answer = () => {
                       id={`question-${question.questionNumber}-option-${key}`}
                       value={key}
                       checked={answers[question.questionNumber] === key}
-                      onChange={(e) => {
-                        handleOptionChange(question.questionNumber, key);
-                      }}
-                      className="absolute z-10 left-0 top-0 w-full h-full opacity-0 cursor-pointer"
-                      aria-hidden="true"
+                      onChange={() =>
+                        handleOptionChange(question.questionNumber, key)
+                      }
+                      className="hidden peer"
                     />
-
-                    <span className={`
-                        w-5 h-5 border-2 rounded-full flex items-center justify-center flex-shrink-0
-                        ${answers[question.questionNumber] === key
-                            ? 'border-blue-500 bg-blue-500'
-                            : 'border-gray-400'
-                        }
-                    `}>
+                    <span className="w-5 h-5 border-2 border-gray-400 rounded-md flex items-center justify-center peer-checked:border-0">
                       {answers[question.questionNumber] === key && (
                         <CheckCircleIcon
-                          width={16}
-                          height={16}
-                          className="text-white"
+                          width={20}
+                          height={20}
+                          className="text-green-500"
                         />
                       )}
                     </span>
-                    <span className="font-medium text-gray-800 break-words">
-                      {value}
-                    </span>
+                    <span className="font-medium">{value}</span>
                   </label>
                 </div>
               ))}
@@ -106,12 +87,7 @@ const Answer = () => {
   };
 
   const handleSubmit = async () => {
-    console.log("Submit button clicked!"); // Check if this logs
-    console.log("Current answers length:", Object.keys(answers).length);
-    console.log("Total questions length:", questions.length);
-
     if (Object.keys(answers).length === questions.length) {
-      console.log("All questions answered. Proceeding with submission.");
       setIsSubmitted(true);
       const formattedAnswers = Object.entries(answers).map(
         ([questionNumber, option]) => ({
@@ -128,22 +104,15 @@ const Answer = () => {
         }).unwrap();
 
         setTimeout(() => {
-          //const AnswerURL = `${BaseURL}/#/auth/result/${id}`;
           navigate("/auth/thankyou", { state: id });
-       
-          window.open(AnswerURL, "_blank");
         }, 1000);
       } catch (error) {
-        // *** IMPORTANT: Ensure error is explicitly logged for debugging ***
-        console.error("Submission Error:", error);
         ErrorToaster(error?.data?.message || "Issue in submitting answers");
       }
-    } else {
-      console.log("Not all questions answered yet. Button remains disabled.");
-      ErrorToaster(`Please answer all ${questions.length} questions.`);
     }
   };
 
+  // Conditional rendering after all hooks and logic
   if (paperLoading) {
     return <div>Loading...</div>;
   }
@@ -162,8 +131,7 @@ const Answer = () => {
         >
           <div className="w-full max-w-4xl border border-dark p-6 rounded-lg shadow overflow-y-auto">
             {renderQuestions()}
-            {/* *** IMPORTANT CHANGE HERE: Make the parent div relative with z-index *** */}
-            <div className="text-right relative z-20">
+            <div className="text-right">
               <button
                 onClick={handleSubmit}
                 disabled={Object.keys(answers).length < questions.length}

@@ -1,8 +1,7 @@
 import UILayout from "@/UI/Elements/Layout";
 import { useGetSinglePaperQuery } from "@/service/paper";
 import { useNavigate, useParams } from "react-router-dom";
-// Import useEffect from React
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { CheckCircleIcon } from "lucide-react";
 import { ErrorToaster, SuccessToaster } from "@/UI/Elements/Toast";
 import { useChildrenloginMutation } from "@/service/apiSlice";
@@ -24,39 +23,19 @@ const Answer = () => {
     { skip: !id }
   );
 
+  // Move all useState hooks to the top, before any returns
   const [answers, setAnswers] = useState<Record<number, string>>({});
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isOTPVerified, setIsOTPVerified] = useState(false);
   const [isAnswered, setIsAnswered] = useState(false);
 
-  // START: Code to reload page on tab switch
-  useEffect(() => {
-    // Function to handle visibility change
-    const handleVisibilityChange = () => {
-      // Check if the page is hidden (user switched tabs, minimized, etc.)
-      if (document.hidden) {
-        // Reload the page
-        window.location.reload();
-        // You can also add an alert for the user
-        // alert("Cheating detected! The page will now reload.");
-      }
-    };
-
-    // Add event listener for visibility change
-    document.addEventListener("visibilitychange", handleVisibilityChange);
-
-    // Cleanup: remove the event listener when the component unmounts
-    return () => {
-      document.removeEventListener("visibilitychange", handleVisibilityChange);
-    };
-  }, []); // Empty dependency array ensures this effect runs only once
-  // END: Code to reload page on tab switch
-
+  // Extract data after hooks
   const questions = singlePaper?.data?.questions ?? [];
   const OTP = singlePaper?.data?.otp;
   const parentId = singlePaper?.data?.author?._id;
   const childID = singlePaper?.data?.children?._id;
 
+  // Define functions after hooks
   const handleOptionChange = (
     questionNumber: number,
     selectedOption: string
@@ -163,6 +142,7 @@ const Answer = () => {
     }
   };
 
+  // Conditional rendering after all hooks and logic
   if (paperLoading) {
     return <div>Loading...</div>;
   }

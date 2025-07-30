@@ -16,9 +16,22 @@ const PaperView = () => {
     const question = questions.find(
       (q) => q.questionNumber === answer.questionNumber
     );
-    return question?.correctAnswer === answer.option ? score + 1 : score;
+    
+    // If answer is "E" (no answer/skip), don't add or subtract marks
+    if (answer.option === "E") {
+      return score;
+    }
+    
+    // If answer is correct, add 1 mark
+    if (question?.correctAnswer === answer.option) {
+      return score + 1;
+    }
+    
+    // If answer is wrong, subtract 1 mark (negative marking)
+    return score - 1;
   }, 0);
-  const percentage = ((obtainedMarks / totalMarks) * 100).toFixed(2);
+  // Calculate percentage, ensuring it doesn't go below 0
+  const percentage = Math.max(0, (obtainedMarks / totalMarks) * 100).toFixed(2);
 
   const renderQuestions = () => {
     return (
@@ -41,6 +54,7 @@ const PaperView = () => {
                   {Object.entries(question.choices).map(([key, value]) => {
                     const isCorrect = key === question.correctAnswer;
                     const isUserAnswer = userAnswer?.option === key;
+                    const isNoAnswer = userAnswer?.option === "E";
 
                     return (
                       <div
@@ -57,10 +71,12 @@ const PaperView = () => {
                           type="checkbox"
                           checked={isUserAnswer}
                           readOnly
-                          className="h-4 w-4 accent-blue-600 flex-shrink-0"
+                          className={`h-4 w-4 flex-shrink-0 ${
+                            isNoAnswer ? 'accent-gray-400' : 'accent-blue-600'
+                          }`}
                         />
                         <span className="font-medium">{key}:</span>
-                        <span className="text-sm md:text-base break-words">{value}</span>
+                        <span className="text-sm md:text-base break-words">{String(value)}</span>
                         {isUserAnswer &&
                           (isCorrect ? (
                             <CheckCircleIcon className="h-5 w-5 text-green-600 flex-shrink-0" />
@@ -113,7 +129,9 @@ const PaperView = () => {
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-600">Marks Obtained:</span>
-                    <span className="font-semibold text-green-600">{obtainedMarks}</span>
+                    <span className={`font-semibold ${obtainedMarks >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                      {obtainedMarks}
+                    </span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-600">Percentage:</span>
