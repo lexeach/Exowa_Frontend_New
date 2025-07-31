@@ -36,12 +36,12 @@ const PapersForm: React.FC<PaperFormProps> = ({ handleCancel, sheet }) => {
   const methods = useForm({
     resolver: yupResolver(schema),
   });
-  //name age grade
+  //name age class
 
   useEffect(() => {
     if (singleChildren?.data) {
-      const { name, age, grade } = singleChildren?.data;
-      methods.reset({ name, age, grade });
+      const { name, age, class } = singleChildren?.data;
+      methods.reset({ name, age, class });
     }
   }, [singleChildren?.data]);
 

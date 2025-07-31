@@ -882,10 +882,10 @@ export const fields = (
   // Map childrenListData to dropdown options format
   const classOptions =
     childrenListData?.map((item) => {
-      const numericGrade = item?.grade?.match(/\d+/)?.[0] || ""; // Extract first number
+      const numericclass = item?.class?.match(/\d+/)?.[0] || ""; // Extract first number
       return {
-        value: numericGrade,
-        label: numericGrade,
+        value: numericclass,
+        label: numericclass,
       };
     }) || [];
 

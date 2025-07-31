@@ -10,7 +10,7 @@ const PaperView = () => {
   const questions = singlePaper?.data?.questions ?? [];
   const answers = singlePaper?.data?.answers ?? [];
   const childName = singlePaper?.data?.children?.name || "";
-  const childGrade = singlePaper?.data?.children?.grade || "";
+  const childclass = singlePaper?.data?.children?.class || "";
   const totalMarks = questions.length;
   const obtainedMarks = answers.reduce((score, answer) => {
     const question = questions.find(
@@ -138,9 +138,9 @@ const PaperView = () => {
                     <span className="font-semibold text-blue-600">{percentage}%</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-gray-600">Grade:</span>
+                    <span className="text-gray-600">class:</span>
                     <span className="font-semibold text-purple-600">
-                      {childGrade || "NA"}
+                      {childclass || "NA"}
                     </span>
                   </div>
                 </div>

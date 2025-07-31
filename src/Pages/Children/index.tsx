@@ -28,9 +28,9 @@ const Departments = () => {
       headerClass: "pl-4",
     },
     {
-      header: "Grade",
+      header: "class",
       class: "pl-5",
-      accessor: "grade",
+      accessor: "class",
       cell: (info) => <span>{info.getValue()}</span>,
       cellClass: "pl-4 text-black ",
       headerClass: "pl-4",
