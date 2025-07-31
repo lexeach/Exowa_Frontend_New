@@ -249,9 +249,9 @@ const PaperView = () => {
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-600">class:</span>
+                  <span className="text-gray-600">Grade:</span>
                   <span className="font-semibold text-purple-600">
-                    {"class"}
+                    {"grade"}
                   </span>
                 </div>
               </div>

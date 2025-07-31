@@ -41,7 +41,7 @@ const PaperView = () => {
   const OTP = singlePaper?.data?.otp;
   const QuestionURL = singlePaper?.data?.url;
   const childName = singlePaper?.data?.children?.name || "";
-  const childclass = singlePaper?.data?.children?.class || "";
+  const childGrade = singlePaper?.data?.children?.grade || "";
   const [copied, setCopied] = useState(false);
   const [showMessage, setShowMessage] = useState(false);
 
@@ -407,9 +407,9 @@ const PaperView = () => {
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-600">class:</span>
+                  <span className="text-gray-600">Grade:</span>
                   <span className="font-semibold text-purple-600">
-                    {childclass || "NA"}
+                    {childGrade || "NA"}
                   </span>
                 </div>
               </div>
