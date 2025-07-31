@@ -150,7 +150,7 @@ const Papers = () => {
           }
           
           // If answer is wrong, subtract 1 mark (negative marking)
-          return score - 1;
+          return score - 2;
         }, 0);
         return <span className={obtainedMarks >= 0 ? 'text-green-600' : 'text-red-600'}>{obtainedMarks}</span>;
       },
