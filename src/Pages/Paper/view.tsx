@@ -50,9 +50,22 @@ const PaperView = () => {
     const question = questions.find(
       (q) => q.questionNumber === answer.questionNumber
     );
-    return question?.correctAnswer === answer.option ? score + 1 : score;
+    
+    // If answer is "E" (no answer/skip), don't add or subtract marks
+    if (answer.option === "E") {
+      return score;
+    }
+    
+    // If answer is correct, add 1 mark
+    if (question?.correctAnswer === answer.option) {
+      return score + 1;
+    }
+    
+    // If answer is wrong, subtract 1 mark (negative marking)
+    return score - 1;
   }, 0);
-  const percentage = ((obtainedMarks / totalMarks) * 100).toFixed(2);
+  // Calculate percentage, ensuring it doesn't go below 0
+  const percentage = Math.max(0, (obtainedMarks / totalMarks) * 100).toFixed(2);
 
   const renderQuestions = () => {
     const [selectedChild, setSelectedChild] = useState("");
@@ -383,13 +396,13 @@ const PaperView = () => {
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-600">Marks Obtained:</span>
-                  <span className="font-semibold text-green-600">
+                  <span className={`font-semibold ${obtainedMarks >= 0 ? 'text-green-600' : 'text-red-600'}`}>
                     {obtainedMarks}
                   </span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-600">Percentage:</span>
-                  <span className="font-semibold text-blue-600">
+                  <span className={`font-semibold ${obtainedMarks >= 0 ? 'text-green-600' : 'text-red-600'}`}>
                     {percentage}%
                   </span>
                 </div>
