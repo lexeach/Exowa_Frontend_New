@@ -180,7 +180,7 @@ const Papers = () => {
           }
           
           // If answer is wrong, subtract 1 mark (negative marking)
-          return score - 1;
+          return score - 2;
         }, 0);
         // Calculate percentage, ensuring it doesn't go below 0
         const percentage =
