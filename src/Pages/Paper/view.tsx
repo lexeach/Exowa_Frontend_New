@@ -61,7 +61,7 @@ const PaperView = () => {
       return score + 1;
     }
     
-    // If answer is wrong, subtract 1 mark (negative marking)
+    // If answer is wrong, subtract 2 mark (negative marking)
     return score - 2;
   }, 0);
   // Calculate percentage, ensuring it doesn't go below 0
@@ -70,8 +70,9 @@ const PaperView = () => {
   const renderQuestions = () => {
     const [selectedChild, setSelectedChild] = useState("");
     const [generatedLink, setGeneratedLink] = useState("");
-    const [selectedOption, setSelectedOption] = useState<string | string[]>("");
+    const [selectedOption, setSelectedOption] = useState('');
     const [childOptions, setChildOptions] = useState([]);
+    const [showPopup, setShowPopup] = useState(false); // New state for popup visibility
 
     useEffect(() => {
       const options = children?.data?.map((child) => ({
@@ -89,22 +90,26 @@ const PaperView = () => {
       }
     };
 
-    const handleSelectChange = (value: string | string[]) => {
+    const handleSelectChange = (value) => {
       setSelectedOption(value);
       setSelectedChild(value);
     };
 
     const handleGenerateLink = async () => {
-      if (selectedChild) {
-        const newUrl = `${BaseURL}/#/auth/answer/${id}`;
-        const assignRes = await assignPaper({
-          childId: selectedChild,
-          paperId: id,
-          url: newUrl,
-        }).unwrap();
-        setGeneratedLink(newUrl);
-        setUrlUpdate(true);
+      // Check for selected child and show popup if none is selected
+      if (!selectedChild) {
+        setShowPopup(true);
+        return;
       }
+      
+      const newUrl = `${BaseURL}/#/auth/answer/${id}`;
+      const assignRes = await assignPaper({
+        childId: selectedChild,
+        paperId: id,
+        url: newUrl,
+      }).unwrap();
+      setGeneratedLink(newUrl);
+      setUrlUpdate(true);
     };
 
     const handleCopy = () => {
@@ -128,12 +133,14 @@ const PaperView = () => {
     };
 
     const handlePractice = () => {
-      const newURL = `${BaseURL}/#/student-answer/${id}`;
-      if (selectedChild) {
-        window.open(newURL, "_blank"); // Open in new tab
-      } else {
-        ErrorToaster("Please select a child first");
+      // Check for selected child and show popup if none is selected
+      if (!selectedChild) {
+        setShowPopup(true);
+        return;
       }
+
+      const newURL = `${BaseURL}/#/student-answer/${id}`;
+      window.open(newURL, "_blank"); // Open in new tab
     };
 
     return (
@@ -164,12 +171,6 @@ const PaperView = () => {
                       variant="sky"
                       size="md"
                       onClick={handleGenerateLink}
-                      tooltipContent={
-                        selectedChild
-                          ? "Assign the question to the selected child"
-                          : "Select a child first"
-                      }
-                      disabled={!selectedChild}
                       className="w-full md:w-auto block my-2"
                     >
                       Assign Question to Child
@@ -178,12 +179,6 @@ const PaperView = () => {
                       variant="sky"
                       size="md"
                       onClick={handlePractice}
-                      tooltipContent={
-                        selectedChild
-                          ? "Assign the question to the selected child"
-                          : "Select a child first"
-                      }
-                      disabled={!selectedChild}
                       className="w-full md:w-auto block my-2"
                     >
                       Do Practice
@@ -272,9 +267,6 @@ const PaperView = () => {
                     </div>
                   ))}
                 </div>
-                {/* <div className="mt-2 md:mt-4 text-blue-600 font-semibold text-sm md:text-base">
-                  Correct Answer: {question.correctAnswer}
-                </div> */}
               </div>
             ))
           : questions.map((question) => {
@@ -332,6 +324,31 @@ const PaperView = () => {
                 </div>
               );
             })}
+        {/* The Popup/Modal component */}
+        {showPopup && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-900 bg-opacity-50 transition-opacity">
+            <div className="bg-white p-6 rounded-lg shadow-xl max-w-sm w-full mx-4 relative">
+              <div className="flex justify-between items-center mb-4">
+                <h3 className="text-xl font-bold text-gray-800">Selection Required</h3>
+                <button
+                  onClick={() => setShowPopup(false)}
+                  className="text-gray-400 hover:text-gray-600 transition-colors"
+                  aria-label="Close popup"
+                >
+                  <XCircleIcon size={24} />
+                </button>
+              </div>
+              <p className="text-gray-600 mb-6">
+                Please select a child from the dropdown menu first.
+              </p>
+              <div className="flex justify-end">
+                <UIButton onClick={() => setShowPopup(false)}>
+                  Got it
+                </UIButton>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     );
   };
