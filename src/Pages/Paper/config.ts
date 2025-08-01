@@ -513,7 +513,21 @@ const chapterCounts = new Map([
   ],
   [
     "10-Science-NCERT",
-    13,
+    [
+      "Chemical Reactions and Equations",
+      "Acids, Bases and Salts",
+      "Metals and Non-metals",
+      "Carbon and its Compounds",
+      "Life Processes",
+      "Control and Coordination",
+      "How do Organisms Reproduce?",
+      "Heredity",
+      "Light – Reflection and Refraction",
+      "Human Eye and Colourful World",
+      "Electricity",
+      "Magnetic Effects of Electric Current",
+      "Our Environment",
+    ],
   ],
 
   // Class 6to8 Social Science for NCERT
