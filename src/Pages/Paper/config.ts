@@ -862,14 +862,25 @@ const generateChapterOptions = (selectedClass, subject, syllabus) => {
     key = `${selectedClass}-${subject || "Default"}-Default`;
   }
 
-  const chapterCount = chapterCounts.get(key) || 0; // Default to 0 if not found
+  const chapterData = chapterCounts.get(key);
 
-  return Array.from({ length: chapterCount }, (_, i) => {
-    return {
-      value: i + 1,
+  // If the chapter data is an array of strings, map it to the desired format
+  if (Array.isArray(chapterData)) {
+    return chapterData.map((chapterName, index) => ({
+      value: (index + 1).toString(),
+      label: chapterName,
+    }));
+  }
+  // If the chapter data is a number, generate options based on the count
+  else if (typeof chapterData === "number") {
+    return Array.from({ length: chapterData }, (_, i) => ({
+      value: (i + 1).toString(),
       label: (i + 1).toString(),
-    };
-  });
+    }));
+  }
+
+  // If data is not found or in an unexpected format, return an empty array
+  return [];
 };
 
 export const fields = (
