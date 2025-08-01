@@ -867,7 +867,7 @@ const generateChapterOptions = (selectedClass, subject, syllabus) => {
   // If the chapter data is an array of strings, map it to the desired format
   if (Array.isArray(chapterData)) {
     return chapterData.map((chapterName, index) => ({
-      value: (index + 1).toString(),
+      value: (index + 0).toString(),
       label: chapterName,
     }));
   }
