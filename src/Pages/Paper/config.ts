@@ -784,15 +784,89 @@ const chapterCounts = new Map([
     "Rebels and the Raj: The Revolt of 1857 and its Representations",
     "Mahatma Gandhi and the Nationalist Movement: Civil Disobedience and Beyond"
   ]],
-  ["8-Geography-NCERT", 6],
-  ["9-Geography-NCERT", 6],
-  ["10-Geography-NCERT", 7],
-  ["11-Geography Fundamental of Physical Geography-NCERT", 14],
-  ["11-Geography Pratical Work in Geography-NCERT", 6],
-  ["11-Geography India Physical Environment-NCERT", 6],
-  ["12-Geography Fundamentals of Human Geography-NCERT", 8],
-  ["12-Geography Pratical Work in Geography-NCERT", 4],
-  ["12-Geography India People And Economy-NCERT", 9],
+  
+ ["8-Geography-NCERT", [
+    "Resources",
+    "Land, Soil, Water, Natural Vegetation and Wildlife Resources",
+    "Agriculture",
+    "Industries",
+    "Human Resources"
+  ]],
+  ["9-Geography-NCERT", [
+    "India - Size and Location",
+    "Physical Features of India",
+    "Drainage",
+    "Climate",
+    "Natural Vegetation and Wildlife"
+  ]],
+  ["10-Geography-NCERT", [
+    "Resources and Development",
+    "Forest and Wildlife Resources",
+    "Water Resources",
+    "Agriculture",
+    "Minerals and Energy Resources",
+    "Manufacturing Industries",
+    "Lifelines of National Economy"
+  ]],
+  ["11-Geography Fundamental of Physical Geography-NCERT", [
+    "Geography as a Discipline",
+    "The Origin and Evolution of the Earth",
+    "Interior of the Earth",
+    "Distribution of Oceans and Continents",
+    "Minerals and Rocks",
+    "Geomorphic Processes",
+    "Landforms and their Evolution",
+    "Composition and Structure of Atmosphere",
+    "Solar Radiation, Heat Balance and Temperature",
+    "Atmospheric Circulation and Weather Systems",
+    "Water in the Atmosphere",
+    "World Climate and Climate Change",
+    "Water (Oceans)",
+    "Movements of Ocean Water"
+  ]],
+  ["11-Geography Pratical Work in Geography-NCERT", [
+    "Introduction to Maps",
+    "Map Scale",
+    "Latitude, Longitude and Time",
+    "Map Projections",
+    "Topographical Maps",
+    "Introduction to Aerial Photographs, Remote Sensing and Geographic Information System"
+  ]],
+  ["11-Geography India Physical Environment-NCERT", [
+    "Introduction",
+    "Structure and Physiography",
+    "Drainage System",
+    "Climate",
+    "Natural Vegetation",
+    "Soils"
+  ]],
+  ["12-Geography Fundamentals of Human Geography-NCERT", [
+    "Human Geography: Nature and Scope",
+    "The World Population: Distribution, Density and Growth",
+    "Human Development",
+    "Primary Activities",
+    "Secondary Activities",
+    "Tertiary and Quaternary Activities",
+    "Transport and Communication",
+    "International Trade"
+  ]],
+  ["12-Geography Pratical Work in Geography-NCERT", [
+    "Data-Its Source and Compilation",
+    "Data Processing",
+    "Graphical Representation of Data",
+    "Use of Computer in Data Processing and Thematic Mapping"
+  ]],
+  ["12-Geography India People And Economy-NCERT", [
+    "Population: Distribution, Density, Growth and Composition",
+    "Migration: Types, Causes and Consequences",
+    "Human Development",
+    "Human Settlements",
+    "Land Resources and Agriculture",
+    "Water Resources",
+    "Mineral and Energy Resources",
+    "Manufacturing Industries",
+    "Planning and Sustainable Development in Indian Context"
+  ]],
   ["9-Economics-NCERT", 4],
   ["10-Economics-NCERT", 5],
   ["11-Economics Indian Economic Development-NCERT", 8],
