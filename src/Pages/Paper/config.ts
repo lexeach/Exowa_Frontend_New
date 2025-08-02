@@ -1094,17 +1094,8 @@ const chapterCounts = new Map([
     "Struggles for Equality"
   ],],
   */}
-                              
-  ["9-Information and Communication Technology-NCERT", [
-    "Introduction to Computer System",
-    "Computer Networks",
-    "Email",
-    "Web Browse",
-    "Introduction to Word Processing",
-    "Introduction to Presentation",
-    "Introduction to Spreadsheets",
-    "Social Ethical and Legal Issues"
-  ],],
+  
+["9-Information and Communication Technology-NCERT", 8],
 
   
   ["8-Political Science-NCERT", [
