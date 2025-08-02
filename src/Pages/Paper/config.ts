@@ -867,15 +867,85 @@ const chapterCounts = new Map([
     "Manufacturing Industries",
     "Planning and Sustainable Development in Indian Context"
   ]],
-  ["9-Economics-NCERT", 4],
-  ["10-Economics-NCERT", 5],
-  ["11-Economics Indian Economic Development-NCERT", 8],
-  ["11-Economics Statistics for Economics-NCERT", 8],
-  ["12-Economics Introductory Microeconomics-NCERT", 5],
-  ["12-Economics Introductory Macroeconomics-NCERT", 6],
-  ["11-Business Studies-NCERT", 11],
-  ["12-Business Studies Part 1-NCERT", 8],
-  ["12-Business Studies Part 2-NCERT", 8],
+
+  
+  ["9-Economics-NCERT", [
+    "The Story of Village Palampur",
+    "People as Resource",
+    "Poverty as a Challenge",
+    "Food Security in India"
+  ]],
+  ["10-Economics-NCERT", [
+    "Development",
+    "Sectors of the Indian Economy",
+    "Money and Credit",
+    "Globalisation and the Indian Economy",
+    "Consumer Rights"
+  ]],
+  ["11-Economics Indian Economic Development-NCERT", [
+    "Indian Economy on the Eve of Independence",
+    "Indian Economy (1950-1990)",
+    "Liberalisation, Privatisation and Globalisation: An Appraisal",
+    "Poverty",
+    "Human Capital Formation in India",
+    "Rural Development",
+    "Employment: Growth, Informalisation and other Issues",
+    "Infrastructure"
+  ]],
+  ["11-Economics Statistics for Economics-NCERT", [
+    "Introduction",
+    "Collection of Data",
+    "Organisation of Data",
+    "Presentation of Data",
+    "Measures of Central Tendency",
+    "Measures of Dispersion",
+    "Correlation",
+    "Index Numbers"
+  ]],
+  ["12-Economics Introductory Microeconomics-NCERT", [
+    "Introduction",
+    "Theory of Consumer Behaviour",
+    "Production and Costs",
+    "The Theory of the Firm under Perfect Competition",
+    "Market Equilibrium"
+  ]],
+  ["12-Economics Introductory Macroeconomics-NCERT", [
+    "Introduction",
+    "National Income Accounting",
+    "Money and Banking",
+    "Income and Employment Determination",
+    "Government Budget and the Economy",
+    "Open-Economy Macroeconomics"
+  ]],
+  
+  ["11-Business Studies-NCERT", [
+    "Business, Trade and Commerce",
+    "Forms of Business Organisations",
+    "Private, Public and Global Enterprises",
+    "Business Services",
+    "Emerging Modes of Business",
+    "Social Responsibilities of Business and Business Ethics",
+    "Sources of Business Finance",
+    "Small Business",
+    "Internal Trade",
+    "International Business"
+  ]],
+  ["12-Business Studies Part 1-NCERT", [
+    "Nature and Significance of Management",
+    "Principles of Management",
+    "Business Environment",
+    "Planning",
+    "Organising",
+    "Staffing",
+    "Directing",
+    "Controlling"
+  ]],
+  ["12-Business Studies Part 2-NCERT", [
+    "Financial Management",
+    "Financial Markets",
+    "Marketing Management",
+    "Consumer Protection"
+  ]],
   ["11-Home Science Human Ecology and Family Sciences Part 1-NCERT", 7],
   ["11-Home Science Human Ecology and Family Sciences Part 2-NCERT", 4],
   ["12-Home Science Human Ecology and Family Sciences Part 1-NCERT", 7],
