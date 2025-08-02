@@ -119,6 +119,7 @@ const dynamicSubjectOptions = {
     { value: "Sanskrit Bhaswati", label: "Sanskrit Bhaswati" },
     { value: "Sanskrit Shashwati", label: "Sanskrit Shashwati" },
     { value: "Psychology", label: "Psychology" },
+     { value: "Biotechnology", label: "Biotechnology" },
     {
       value: "Geography Fundamental of Physical Geography",
       label: "Geography Fundamental of Physical Geography",
@@ -196,6 +197,7 @@ const dynamicSubjectOptions = {
     },
     { value: "Accountancy", label: "Accountancy" },
     { value: "Psychology", label: "Psychology" },
+    { value: "Biotechnology", label: "Biotechnology" },
     {
       value: "Geography Fundamentals of Human Geography",
       label: "Geography Fundamentals of Human Geography",
@@ -1038,16 +1040,109 @@ const chapterCounts = new Map([
     "Biotechnology in Health",
     "Biotechnology in Environment"
   ]],
-  ["11-Physics Part 1-NCERT", 7],
-  ["11-Physics Part 2-NCERT", 7],
-  ["12-Physics Part 1-NCERT", 8],
-  ["12-Physics Part 2-NCERT", 6],
-  ["11-Chemistry Part 1-NCERT", 6],
-  ["11-Chemistry Part 2-NCERT", 3],
-  ["12-Chemistry Part 1-NCERT", 5],
-  ["12-Chemistry Part 2-NCERT", 5],
-  ["11-Biology-NCERT", 19],
-  ["12-Biology-NCERT", 13],
+
+  
+  ["11-Physics Part 1-NCERT", [
+    "Physical World",
+    "Units and Measurements",
+    "Motion in a Straight Line",
+    "Motion in a Plane",
+    "Laws of Motion",
+    "Work, Energy and Power",
+    "System of Particles and Rotational Motion"
+  ]],
+  ["11-Physics Part 2-NCERT", [
+    "Gravitation",
+    "Mechanical Properties of Solids",
+    "Mechanical Properties of Fluids",
+    "Thermal Properties of Matter",
+    "Thermodynamics",
+    "Kinetic Theory",
+    "Oscillations"
+  ]],
+  ["12-Physics Part 1-NCERT", [
+    "Electric Charges and Fields",
+    "Electrostatic Potential and Capacitance",
+    "Current Electricity",
+    "Moving Charges and Magnetism",
+    "Magnetism and Matter",
+    "Electromagnetic Induction",
+    "Alternating Current",
+    "Electromagnetic Waves"
+  ]],
+  ["12-Physics Part 2-NCERT", [
+    "Ray Optics and Optical Instruments",
+    "Wave Optics",
+    "Dual Nature of Radiation and Matter",
+    "Atoms",
+    "Nuclei",
+    "Semiconductor Electronics"
+  ]],
+  
+  ["11-Chemistry Part 1-NCERT", [
+    "Some Basic Concepts of Chemistry",
+    "Structure of Atom",
+    "Classification of Elements and Periodicity in Properties",
+    "Chemical Bonding and Molecular Structure",
+    "Chemical Thermodynamics",
+    "Equilibrium"
+  ]],
+  ["11-Chemistry Part 2-NCERT", [
+    "Redox Reactions",
+    "Organic Chemistry – Some Basic Principles and Techniques",
+    "Hydrocarbons"
+  ]],
+  ["12-Chemistry Part 1-NCERT", [
+    "Solutions",
+    "Electrochemistry",
+    "Chemical Kinetics",
+    "The d- and f-Block Elements",
+    "Coordination Compounds"
+  ]],
+  ["12-Chemistry Part 2-NCERT", [
+    "Haloalkanes and Haloarenes",
+    "Alcohols, Phenols and Ethers",
+    "Aldehydes, Ketones and Carboxylic Acids",
+    "Amines",
+    "Biomolecules"
+  ]],
+  
+  ["11-Biology-NCERT", [
+    "The Living World",
+    "Biological Classification",
+    "Plant Kingdom",
+    "Animal Kingdom",
+    "Morphology of Flowering Plants",
+    "Anatomy of Flowering Plants",
+    "Structural Organisation in Animals",
+    "Cell: The Unit of Life",
+    "Biomolecules",
+    "Cell Cycle and Cell Division",
+    "Photosynthesis in Higher Plants",
+    "Respiration in Plants",
+    "Plant Growth and Development",
+    "Breathing and Exchange of Gases",
+    "Body Fluids and Circulation",
+    "Excretory Products and their Elimination",
+    "Locomotion and Movement",
+    "Neural Control and Coordination",
+    "Chemical Coordination and Integration"
+  ]],
+  ["12-Biology-NCERT", [
+    "Sexual Reproduction in Flowering Plants",
+    "Human Reproduction",
+    "Reproductive Health",
+    "Principles of Inheritance and Variation",
+    "Molecular Basis of Inheritance",
+    "Evolution",
+    "Human Health and Disease",
+    "Microbes in Human Welfare",
+    "Biotechnology - Principles and Processes",
+    "Biotechnology and its Applications",
+    "Organisms and Populations",
+    "Ecosystem",
+    "Biodiversity and Conservation"
+  ]],
   ["11-Psychology-NCERT", 8],
   ["12-Psychology-NCERT", 7],
   ["11-Sociology Introducing Sociology-NCERT", 5],
