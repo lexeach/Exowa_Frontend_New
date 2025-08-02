@@ -151,8 +151,8 @@ const dynamicSubjectOptions = {
       label: "Political Science India Constitution at Work",
     },
     {
-      value: "History Themes in Indian History",
-      label: "History Themes in Indian History",
+      value: "History Themes in World History",
+      label: "History Themes in World History",
     },
     {
       value: "Economics Indian Economic Development",
