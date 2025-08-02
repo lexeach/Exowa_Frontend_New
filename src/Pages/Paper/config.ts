@@ -668,25 +668,24 @@ export const schema = yup
   .object()
   .shape({
     language: yup.string().required("this_field_required"),
-    chapter_from: yup.string().required("this_field_required"),
-    chapter_to: yup.string().when('chapter_from', {
-      is: (chapter_from) => chapter_from,
-      then: (schema) =>
-        schema
-          .required("this_field_required")
-          .test(
-            "is-greater",
-            "Chapter to cannot be less than Chapter from",
-            function (chapter_to) {
-              const chapter_from = this.parent.chapter_from;
-              return parseInt(chapter_to) >= parseInt(chapter_from);
-            }
-          ),
-      otherwise: (schema) => schema.required("this_field_required"),
-    }),
-    syllabus: yup.string().required("this_field_required"),
-    subject: yup.string().required("this_field_required"),
     no_of_question: yup.string().required("this_field_required"),
     class: yup.string().required("this_field_required"),
+    syllabus: yup.string().required("this_field_required"),
+    subject: yup.string().required("this_field_required"),
+    
+    // Updated validation for chapter_from and chapter_to
+    chapter_from: yup
+      .number()
+      .typeError("Please select a valid chapter")
+      .required("this_field_required"),
+      
+    chapter_to: yup
+      .number()
+      .typeError("Please select a valid chapter")
+      .required("this_field_required")
+      .min(
+        yup.ref("chapter_from"),
+        "Chapter to cannot be less than Chapter from"
+      ),
   })
   .required();
