@@ -1098,12 +1098,12 @@ const chapterCounts = new Map([
   ["9-Information and Communication Technology-NCERT", [
     "Introduction to Computer System",
     "Computer Networks",
-    "E-mail",
+    "Email",
     "Web Browse",
     "Introduction to Word Processing",
     "Introduction to Presentation",
     "Introduction to Spreadsheets",
-    "Social, Ethical and Legal Issues"
+    "Social Ethical and Legal Issues"
   ],],
 
   
@@ -1129,7 +1129,7 @@ const chapterCounts = new Map([
   ["10-Political Science-NCERT", [
     "Power-sharing",
     "Federalism",
-    "Gender, Religion and Caste",
+    "Gender Religion and Caste",
     "Political Parties",
     "Outcomes of Democracy"
   ],],
@@ -1168,7 +1168,7 @@ const chapterCounts = new Map([
     "Challenges of Nation Building",
     "Era of One-Party Dominance",
     "Politics of Planned Development",
-    "India’s External Relations",
+    "Indias External Relations",
     "Challenges to and Restoration of the Congress System",
     "The Crisis of Democratic Order",
     "Rise of Popular Movements",
@@ -1179,14 +1179,14 @@ const chapterCounts = new Map([
 
   
   ["8-History-NCERT", [
-    "How, When and Where",
+    "How When and Where",
     "From Trade to Territory",
     "Ruling the Countryside",
-    "Tribals, Dikus and the Vision of a Golden Age",
+    "Tribals Dikus and the Vision of a Golden Age",
     "When People Rebel 1857 and After",
-    "Weavers, Iron Smelters and Factory Owners",
-    "Civilising the 'Native', Educating the Nation",
-    "Women, Caste and Reform",
+    "Weavers Iron Smelters and Factory Owners",
+    "Civilising the Native Educating the Nation",
+    "Women Caste and Reform",
     "The Making of the National Movement: 1870s–1947",
     "India After Independence"
   ],],
