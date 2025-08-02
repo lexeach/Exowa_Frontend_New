@@ -1143,16 +1143,85 @@ const chapterCounts = new Map([
     "Ecosystem",
     "Biodiversity and Conservation"
   ]],
-  ["11-Psychology-NCERT", 8],
-  ["12-Psychology-NCERT", 7],
-  ["11-Sociology Introducing Sociology-NCERT", 5],
-  ["11-Sociology Understanding Society-NCERT", 5],
-  ["12-Sociology Indian Society-NCERT", 7],
-  ["12-Sociology Social Change and Development in India-NCERT", 8],
-  ["11-Financial Accounting-NCERT", 7],
-  ["11-Accountancy-NCERT", 2],
-  ["12-Computerised Accounting System-NCERT", 4],
-  ["12-Accountancy-NCERT", 4],
+
+  
+  ["11-Psychology-NCERT", [
+    "What is Psychology?",
+    "Methods of Enquiry in Psychology",
+    "The Bases of Human Behaviour",
+    "Human Development",
+    "Sensory, Attentional and Perceptual Processes",
+    "Learning",
+    "Human Memory",
+    "Motivation and Emotion"
+  ]],
+  ["12-Psychology-NCERT", [
+    "Psychological Attributes",
+    "Self and Personality",
+    "Meeting Life Challenges",
+    "Psychological Disorders",
+    "Therapeutic Approaches and Counselling",
+    "Attitude and Social Cognition",
+    "Social Influence and Group Processes"
+  ]],
+  
+  ["11-Sociology Introducing Sociology-NCERT", [
+    "Sociology and Society",
+    "Terms, Concepts and their Use in Sociology",
+    "Understanding Social Institutions",
+    "Culture and Socialisation",
+    "Doing Sociology: Research Methods"
+  ]],
+  ["11-Sociology Understanding Society-NCERT", [
+    "Social Structure, Stratification and Social Processes in Society",
+    "Social Change and Social Order in Rural and Urban Society",
+    "Environment and Society",
+    "Western Sociologists: A Theoretical Perspective",
+    "Indian Sociologists: A Theoretical Perspective"
+  ]],
+  ["12-Sociology Indian Society-NCERT", [
+    "The Demographic Structure of the Indian Society",
+    "Social Institutions: Continuity and Change",
+    "The Market as a Social Institution",
+    "The Pattern of Social Inequality and Exclusion",
+    "Challenges of Cultural Diversity",
+    "The Binders of a Nation"
+  ]],
+  ["12-Sociology Social Change and Development in India-NCERT", [
+    "Structural Change",
+    "Cultural Change",
+    "The Story of Indian Democracy at Work",
+    "Change and Development in Rural Society",
+    "Change and Development in Industrial Society",
+    "Globalisation and Social Change",
+    "Social Movements"
+  ]],
+  
+ ["11-Accountancy Part 1-NCERT", [
+    "Introduction to Accounting",
+    "Theory Base of Accounting",
+    "Recording of Transactions-I",
+    "Recording of Transactions-II",
+    "Bank Reconciliation Statement"
+  ]],
+  ["11-Accountancy Part 2-NCERT", [
+    "Trial Balance and Errors",
+    "Depreciation, Provisions and Reserves",
+    "Accounting for Bills of Exchange",
+    "Financial Statements-I"
+  ]],
+  ["12-Computerised Accounting System-NCERT", [
+    "Introduction to Computerised Accounting System",
+    "Accounting Application of Electronic Spreadsheet",
+    "Using Computerised Accounting System",
+    "Database Management System for Accounting"
+  ]],
+  ["12-Accountancy Part 2-NCERT", [
+    "Financial Statements of a Company",
+    "Analysis of Financial Statements",
+    "Accounting Ratios",
+    "Cash Flow Statement"
+  ]],
   ["6-Mathematics-CBSE", 0],
   ["7-Mathematics-CBSE", 3],
   ["8-Mathematics-CBSE", 3],
