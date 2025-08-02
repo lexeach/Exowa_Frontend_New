@@ -967,72 +967,653 @@ const chapterCounts = new Map([
       "Our Environment",
     ],
   ],
-  ["6-Social Science-NCERT", 14],
-  ["7-Social Science-NCERT", 12],
-  ["9-Information and Communication Technology-NCERT", 8],
+
+  ["6-Social Science (History)-NCERT", [
+    "What, Where, How and When?",
+    "On The Trail of The Earliest People",
+    "From Gathering to Growing Food",
+    "In the Earliest Cities",
+    "What Books and Burials Tell Us",
+    "Kingdoms, Kings and an Early Republic",
+    "New Questions and Ideas",
+    "Ashoka, The Emperor Who Gave Up War",
+    "Vital Villages, Thriving Towns",
+    "Traders, Kings and Pilgrims",
+    "New Empires and Kingdoms"
+  ]],
+  ["6-Social Science (Geography)-NCERT", [
+    "The Earth in the Solar System",
+    "Globe: Latitudes and Longitudes",
+    "Motions of the Earth",
+    "Maps",
+    "Major Domains of the Earth",
+    "Major Landforms of the Earth",
+    "Our Country – India",
+    "India: Climate, Vegetation and Wildlife"
+  ]],
+  ["6-Social Science (Civics)-NCERT", [
+    "Understanding Diversity",
+    "Diversity and Discrimination",
+    "What is Government?",
+    "Key Elements of a Democratic Government",
+    "Panchayati Raj",
+    "Rural Administration",
+    "Urban Administration",
+    "Rural Livelihoods",
+    "Urban Livelihoods"
+  ]],
+  ["7-Social Science (History)-NCERT", [
+    "Tracing Changes Through a Thousand Years",
+    "New Kings and Kingdoms",
+    "The Delhi Sultans",
+    "The Mughal Empire",
+    "Rulers and Buildings",
+    "Towns, Traders and Craftspersons",
+    "Tribes, Nomads and Settled Communities",
+    "Devotional Paths to the Divine",
+    "The Making of Regional Cultures",
+    "Eighteenth-Century Political Formations"
+  ]],
+  ["7-Social Science (Geography)-NCERT", [
+    "Environment",
+    "Inside Our Earth",
+    "Our Changing Earth",
+    "Air",
+    "Water",
+    "Natural Vegetation and Wildlife",
+    "Human Environment – Settlement, Transport and Communication",
+    "Human Environment Interactions: The Tropical and the Subtropical Region",
+    "Life in the Temperate Grasslands",
+    "Life in the Deserts"
+  ]],
+  ["7-Social Science (Civics)-NCERT", [
+    "On Equality",
+    "Role of the Government in Health",
+    "How the State Government Works",
+    "Growing up as Boys and Girls",
+    "Women Change the World",
+    "Media and Advertising",
+    "Understanding Advertising",
+    "Markets Around Us",
+    "A Shirt in the Market",
+    "Struggles for Equality"
+  ]],
+  ["9-Information and Communication Technology-NCERT", [
+    "Introduction to Computer System",
+    "Computer Networks",
+    "E-mail",
+    "Web Browse",
+    "Introduction to Word Processing",
+    "Introduction to Presentation",
+    "Introduction to Spreadsheets",
+    "Social, Ethical and Legal Issues"
+  ]],
+
   
-  ["8-Political Science-NCERT", 10],
-  ["9-Political Science-NCERT", 5],
-  ["10-Political Science-NCERT", 5],
-  ["11-Political Science Political Theory-NCERT", 8],
-  ["11-Political Science India Constitution at Work-NCERT", 10],
-  ["12-Political Science Contemporary World Politics-NCERT", 7],
-  ["12-Political Science Politics in India Since Independence-NCERT", 8],
-  ["8-History-NCERT", 12],
-  ["9-History-NCERT", 5],
-  ["10-History-NCERT", 5],
-  ["11-History Themes in Indian History-NCERT", 7],
-  ["12-History Themes in Indian History Part 1-NCERT", 4],
-  ["12-History Themes in Indian History Part 2-NCERT", 4],
-  ["12-History Themes in Indian History Part 3-NCERT", 4],
-  ["8-Geography-NCERT", 6],
-  ["9-Geography-NCERT", 6],
-  ["10-Geography-NCERT", 7],
-  ["11-Geography Fundamental of Physical Geography-NCERT", 14],
-  ["11-Geography Pratical Work in Geography-NCERT", 6],
-  ["11-Geography India Physical Environment-NCERT", 6],
-  ["12-Geography Fundamentals of Human Geography-NCERT", 8],
-  ["12-Geography Pratical Work in Geography-NCERT", 4],
-  ["12-Geography India People And Economy-NCERT", 9],
-  ["9-Economics-NCERT", 4],
-  ["10-Economics-NCERT", 5],
-  ["11-Economics Indian Economic Development-NCERT", 8],
-  ["11-Economics Statistics for Economics-NCERT", 8],
-  ["12-Economics Introductory Microeconomics-NCERT", 5],
-  ["12-Economics Introductory Macroeconomics-NCERT", 6],
-  ["11-Business Studies-NCERT", 11],
-  ["12-Business Studies Part 1-NCERT", 8],
-  ["12-Business Studies Part 2-NCERT", 8],
-  ["11-Home Science Human Ecology and Family Sciences Part 1-NCERT", 7],
-  ["11-Home Science Human Ecology and Family Sciences Part 2-NCERT", 4],
-  ["12-Home Science Human Ecology and Family Sciences Part 1-NCERT", 7],
-  ["12-Home Science Human Ecology and Family Sciences Part 2-NCERT", 4],
-  ["11-Informatics Practices-NCERT", 8],
-  ["12-Informatics Practices-NCERT", 7],
-  ["11-Computer Science-NCERT", 11],
-  ["12-Computer Science-NCERT", 13],
-  ["11-Biotechnology-NCERT", 12],
-  ["12-Biotechnology-NCERT", 13],
-  ["11-Physics Part 1-NCERT", 7],
-  ["11-Physics Part 2-NCERT", 7],
-  ["12-Physics Part 1-NCERT", 8],
-  ["12-Physics Part 2-NCERT", 6],
-  ["11-Chemistry Part 1-NCERT", 6],
-  ["11-Chemistry Part 2-NCERT", 3],
-  ["12-Chemistry Part 1-NCERT", 5],
-  ["12-Chemistry Part 2-NCERT", 5],
-  ["11-Biology-NCERT", 19],
-  ["12-Biology-NCERT", 13],
-  ["11-Psychology-NCERT", 8],
-  ["12-Psychology-NCERT", 7],
-  ["11-Sociology Introducing Sociology-NCERT", 5],
-  ["11-Sociology Understanding Society-NCERT", 5],
-  ["12-Sociology Indian Society-NCERT", 7],
-  ["12-Sociology Social Change and Development in India-NCERT", 8],
-  ["11-Financial Accounting-NCERT", 7],
-  ["11-Accountancy-NCERT", 2],
-  ["12-Computerised Accounting System-NCERT", 4],
-  ["12-Accountancy-NCERT", 4],
+  ["8-Political Science-NCERT", [
+    "The Indian Constitution",
+    "Understanding Secularism",
+    "Why Do We Need a Parliament?",
+    "Understanding Laws",
+    "Judiciary",
+    "Understanding Our Criminal Justice System",
+    "Understanding Marginalisation",
+    "Confronting Marginalisation",
+    "Public Facilities",
+    "Law and Social Justice"
+  ]],
+  ["9-Political Science-NCERT", [
+    "What is Democracy? Why Democracy?",
+    "Constitutional Design",
+    "Electoral Politics",
+    "Working of Institutions",
+    "Democratic Rights"
+  ]],
+  ["10-Political Science-NCERT", [
+    "Power-sharing",
+    "Federalism",
+    "Gender, Religion and Caste",
+    "Political Parties",
+    "Outcomes of Democracy"
+  ]],
+  ["11-Political Science Political Theory-NCERT", [
+    "Political Theory: An Introduction",
+    "Freedom",
+    "Equality",
+    "Social Justice",
+    "Rights",
+    "Citizenship",
+    "Nationalism",
+    "Secularism"
+  ]],
+  ["11-Political Science India Constitution at Work-NCERT", [
+    "Constitution: Why and How?",
+    "Rights in the Indian Constitution",
+    "Election and Representation",
+    "Executive",
+    "Legislature",
+    "Judiciary",
+    "Federalism",
+    "Local Governments",
+    "Constitution as a Living Document",
+    "The Philosophy of the Constitution"
+  ]],
+  ["12-Political Science Contemporary World Politics-NCERT", [
+    "The Cold War Era",
+    "The End of Bipolarity",
+    "New Centres of Power",
+    "Contemporary South Asia",
+    "International Organisations",
+    "Security in the Contemporary World",
+    "Globalisation"
+  ]],
+  ["12-Political Science Politics in India Since Independence-NCERT", [
+    "Challenges of Nation Building",
+    "Era of One-Party Dominance",
+    "Politics of Planned Development",
+    "India’s External Relations",
+    "Challenges to and Restoration of the Congress System",
+    "The Crisis of Democratic Order",
+    "Rise of Popular Movements",
+    "Regional Aspirations",
+    "Recent Developments in Indian Politics"
+  ]],
+
+
+  
+  ["8-History-NCERT", [
+    "How, When and Where",
+    "From Trade to Territory",
+    "Ruling the Countryside",
+    "Tribals, Dikus and the Vision of a Golden Age",
+    "When People Rebel 1857 and After",
+    "Weavers, Iron Smelters and Factory Owners",
+    "Civilising the 'Native', Educating the Nation",
+    "Women, Caste and Reform",
+    "The Making of the National Movement: 1870s–1947",
+    "India After Independence"
+  ]],
+  ["9-History-NCERT", [
+    "The French Revolution",
+    "Socialism in Europe and the Russian Revolution",
+    "Nazism and the Rise of Hitler",
+    "Forest Society and Colonialism",
+    "Pastoralists in the Modern World"
+  ]],
+  ["10-History-NCERT", [
+    "The Rise of Nationalism in Europe",
+    "Nationalism in India",
+    "The Making of a Global World",
+    "The Age of Industrialisation",
+    "Print Culture and the Modern World"
+  ]],
+  ["11-History Themes in World History-NCERT", [
+    "From the Beginning of Time",
+    "Writing and City Life",
+    "An Empire Across Three Continents",
+    "The Central Islamic Lands",
+    "Nomadic Empires",
+    "The Three Orders",
+    "Changing Cultural Traditions",
+    "Confrontation of Cultures",
+    "The Industrial Revolution",
+    "Displacing Indigenous Peoples",
+    "Paths to Modernisation"
+  ]],
+  ["12-History Themes in Indian History Part 1-NCERT", [
+    "The Story of the First Cities: Harappan Archaeology",
+    "Political and Economic History: How Inscriptions tell a story",
+    "Social Histories: Using the Mahabharata",
+    "A History of Buddhism: Sanchi Stupa"
+  ]],
+  ["12-History Themes in Indian History Part 2-NCERT", [
+    "Through the Eyes of Travellers: Perceptions of Society",
+    "Bhakti-Sufi Traditions: Changes in Religious Beliefs and Devotional Texts",
+    "An Imperial Capital: Vijayanagara",
+    "Agrarian Relations: The Ain-i-Akbari"
+  ]],
+  ["12-History Themes in Indian History Part 3-NCERT", [
+    "Kings and Chronicles: The Mughal Courts",
+    "Colonialism and the Countryside: Exploring Official Archives",
+    "Rebels and the Raj: The Revolt of 1857 and its Representations",
+    "Mahatma Gandhi and the Nationalist Movement: Civil Disobedience and Beyond"
+  ]],
+
+  
+  ["8-Geography-NCERT", [
+    "Resources",
+    "Land, Soil, Water, Natural Vegetation and Wildlife Resources",
+    "Agriculture",
+    "Industries",
+    "Human Resources"
+  ]],
+  ["9-Geography-NCERT", [
+    "India - Size and Location",
+    "Physical Features of India",
+    "Drainage",
+    "Climate",
+    "Natural Vegetation and Wildlife"
+  ]],
+  ["10-Geography-NCERT", [
+    "Resources and Development",
+    "Forest and Wildlife Resources",
+    "Water Resources",
+    "Agriculture",
+    "Minerals and Energy Resources",
+    "Manufacturing Industries",
+    "Lifelines of National Economy"
+  ]],
+  ["11-Geography Fundamental of Physical Geography-NCERT", [
+    "Geography as a Discipline",
+    "The Origin and Evolution of the Earth",
+    "Interior of the Earth",
+    "Distribution of Oceans and Continents",
+    "Minerals and Rocks",
+    "Geomorphic Processes",
+    "Landforms and their Evolution",
+    "Composition and Structure of Atmosphere",
+    "Solar Radiation, Heat Balance and Temperature",
+    "Atmospheric Circulation and Weather Systems",
+    "Water in the Atmosphere",
+    "World Climate and Climate Change",
+    "Water (Oceans)",
+    "Movements of Ocean Water"
+  ]],
+  ["11-Geography Pratical Work in Geography-NCERT", [
+    "Introduction to Maps",
+    "Map Scale",
+    "Latitude, Longitude and Time",
+    "Map Projections",
+    "Topographical Maps",
+    "Introduction to Aerial Photographs, Remote Sensing and Geographic Information System"
+  ]],
+  ["11-Geography India Physical Environment-NCERT", [
+    "Introduction",
+    "Structure and Physiography",
+    "Drainage System",
+    "Climate",
+    "Natural Vegetation",
+    "Soils"
+  ]],
+  ["12-Geography Fundamentals of Human Geography-NCERT", [
+    "Human Geography: Nature and Scope",
+    "The World Population: Distribution, Density and Growth",
+    "Human Development",
+    "Primary Activities",
+    "Secondary Activities",
+    "Tertiary and Quaternary Activities",
+    "Transport and Communication",
+    "International Trade"
+  ]],
+  ["12-Geography Pratical Work in Geography-NCERT", [
+    "Data-Its Source and Compilation",
+    "Data Processing",
+    "Graphical Representation of Data",
+    "Use of Computer in Data Processing and Thematic Mapping"
+  ]],
+  ["12-Geography India People And Economy-NCERT", [
+    "Population: Distribution, Density, Growth and Composition",
+    "Migration: Types, Causes and Consequences",
+    "Human Development",
+    "Human Settlements",
+    "Land Resources and Agriculture",
+    "Water Resources",
+    "Mineral and Energy Resources",
+    "Manufacturing Industries",
+    "Planning and Sustainable Development in Indian Context"
+  ]],
+  
+  
+  ["9-Economics-NCERT", [
+    "The Story of Village Palampur",
+    "People as Resource",
+    "Poverty as a Challenge",
+    "Food Security in India"
+  ]],
+  ["10-Economics-NCERT", [
+    "Development",
+    "Sectors of the Indian Economy",
+    "Money and Credit",
+    "Globalisation and the Indian Economy",
+    "Consumer Rights"
+  ]],
+  ["11-Economics Indian Economic Development-NCERT", [
+    "Indian Economy on the Eve of Independence",
+    "Indian Economy (1950-1990)",
+    "Liberalisation, Privatisation and Globalisation: An Appraisal",
+    "Poverty",
+    "Human Capital Formation in India",
+    "Rural Development",
+    "Employment: Growth, Informalisation and other Issues",
+    "Infrastructure"
+  ]],
+  ["11-Economics Statistics for Economics-NCERT", [
+    "Introduction",
+    "Collection of Data",
+    "Organisation of Data",
+    "Presentation of Data",
+    "Measures of Central Tendency",
+    "Measures of Dispersion",
+    "Correlation",
+    "Index Numbers"
+  ]],
+  ["12-Economics Introductory Microeconomics-NCERT", [
+    "Introduction",
+    "Theory of Consumer Behaviour",
+    "Production and Costs",
+    "The Theory of the Firm under Perfect Competition",
+    "Market Equilibrium"
+  ]],
+  ["12-Economics Introductory Macroeconomics-NCERT", [
+    "Introduction",
+    "National Income Accounting",
+    "Money and Banking",
+    "Income and Employment Determination",
+    "Government Budget and the Economy",
+    "Open-Economy Macroeconomics"
+  ]],
+  
+  ["11-Business Studies-NCERT", [
+    "Business, Trade and Commerce",
+    "Forms of Business Organisations",
+    "Private, Public and Global Enterprises",
+    "Business Services",
+    "Emerging Modes of Business",
+    "Social Responsibilities of Business and Business Ethics",
+    "Sources of Business Finance",
+    "Small Business",
+    "Internal Trade",
+    "International Business"
+  ]],
+  ["12-Business Studies Part 1-NCERT", [
+    "Nature and Significance of Management",
+    "Principles of Management",
+    "Business Environment",
+    "Planning",
+    "Organising",
+    "Staffing",
+    "Directing",
+    "Controlling"
+  ]],
+  ["12-Business Studies Part 2-NCERT", [
+    "Financial Management",
+    "Financial Markets",
+    "Marketing Management",
+    "Consumer Protection"
+  ]],
+  
+  ["11-Home Science Human Ecology and Family Sciences Part 1-NCERT", [
+    "Introduction to Home Science",
+    "Food, Nutrition, Health and Fitness",
+    "The Family",
+    "The Family Life Cycle",
+    "The Family and its Resources",
+    "The World of the Young Child",
+    "Adolescence"
+  ]],
+  ["11-Home Science Human Ecology and Family Sciences Part 2-NCERT", [
+    "The World of Work",
+    "Fabrics",
+    "Clothing",
+    "Care and Maintenance of Fabrics and Apparels"
+  ]],
+  ["12-Home Science Human Ecology and Family Sciences Part 1-NCERT", [
+    "Work, Livelihood and Career",
+    "Clinical Nutrition and Dietetics",
+    "Public Nutrition and Health",
+    "Food Processing and Technology",
+    "Catering and Food Service Management",
+    "Hospitality Management",
+    "Institutional Management"
+  ]],
+  ["12-Home Science Human Ecology and Family Sciences Part 2-NCERT", [
+    "Early Childhood Care and Education",
+    "Fashion Design and Merchandising",
+    "Mass Communication and Entertainment",
+    "Designing, Planning and Organising Events"
+  ]],
+  
+ ["11-Informatics Practices-NCERT", [
+    "Computer System",
+    "Emerging Trends",
+    "Introduction to Problem Solving",
+    "Getting Started with Python",
+    "Python Fundamentals",
+    "Data Handling",
+    "Conditional and Looping Constructs",
+    "Strings in Python"
+  ]],
+  ["12-Informatics Practices-NCERT", [
+    "Python Pandas - I",
+    "Python Pandas - II",
+    "Introduction to Plotting",
+    "SQL Commands",
+    "SQL Functions",
+    "Database and Management System",
+    "Society, Law and Ethics"
+  ]],
+  ["11-Computer Science-NCERT", [
+    "Computer Systems",
+    "Encoding Schemes and Number System",
+    "Emerging Trends",
+    "Introduction to Problem Solving",
+    "Getting Started with Python",
+    "Python Fundamentals",
+    "Data Handling",
+    "Conditional and Looping Constructs",
+    "Strings",
+    "Lists",
+    "Tuples and Dictionaries"
+  ]],
+  ["12-Computer Science-NCERT", [
+    "Review of Python",
+    "Functions",
+    "File Handling",
+    "Data Structure: Stacks and Queues",
+    "Computer Networks",
+    "Database Concepts",
+    "Structured Query Language",
+    "Society, Law and Ethics"
+  ]],
+  ["11-Biotechnology-NCERT", [
+    "Biotechnology - Principles and Processes",
+    "Genetic Engineering",
+    "Bioethics",
+    "Bioprocessing",
+    "Applications of Biotechnology"
+  ]],
+  ["12-Biotechnology-NCERT", [
+    "Introduction",
+    "Recombinant DNA Technology",
+    "Protein Structure and Engineering",
+    "Genomics",
+    "Bioethics",
+    "Biosafety",
+    "Intellectual Property Rights",
+    "Biotechnology in Agriculture",
+    "Biotechnology in Health",
+    "Biotechnology in Environment"
+  ]],
+  
+  ["11-Physics Part 1-NCERT", [
+    "Physical World",
+    "Units and Measurements",
+    "Motion in a Straight Line",
+    "Motion in a Plane",
+    "Laws of Motion",
+    "Work, Energy and Power",
+    "System of Particles and Rotational Motion"
+  ]],
+  ["11-Physics Part 2-NCERT", [
+    "Gravitation",
+    "Mechanical Properties of Solids",
+    "Mechanical Properties of Fluids",
+    "Thermal Properties of Matter",
+    "Thermodynamics",
+    "Kinetic Theory",
+    "Oscillations"
+  ]],
+  ["12-Physics Part 1-NCERT", [
+    "Electric Charges and Fields",
+    "Electrostatic Potential and Capacitance",
+    "Current Electricity",
+    "Moving Charges and Magnetism",
+    "Magnetism and Matter",
+    "Electromagnetic Induction",
+    "Alternating Current",
+    "Electromagnetic Waves"
+  ]],
+  ["12-Physics Part 2-NCERT", [
+    "Ray Optics and Optical Instruments",
+    "Wave Optics",
+    "Dual Nature of Radiation and Matter",
+    "Atoms",
+    "Nuclei",
+    "Semiconductor Electronics"
+  ]],
+  
+  ["11-Chemistry Part 1-NCERT", [
+    "Some Basic Concepts of Chemistry",
+    "Structure of Atom",
+    "Classification of Elements and Periodicity in Properties",
+    "Chemical Bonding and Molecular Structure",
+    "Chemical Thermodynamics",
+    "Equilibrium"
+  ]],
+  ["11-Chemistry Part 2-NCERT", [
+    "Redox Reactions",
+    "Organic Chemistry – Some Basic Principles and Techniques",
+    "Hydrocarbons"
+  ]],
+  ["12-Chemistry Part 1-NCERT", [
+    "Solutions",
+    "Electrochemistry",
+    "Chemical Kinetics",
+    "The d- and f-Block Elements",
+    "Coordination Compounds"
+  ]],
+  ["12-Chemistry Part 2-NCERT", [
+    "Haloalkanes and Haloarenes",
+    "Alcohols, Phenols and Ethers",
+    "Aldehydes, Ketones and Carboxylic Acids",
+    "Amines",
+    "Biomolecules"
+  ]],
+  
+  ["11-Biology-NCERT", [
+    "The Living World",
+    "Biological Classification",
+    "Plant Kingdom",
+    "Animal Kingdom",
+    "Morphology of Flowering Plants",
+    "Anatomy of Flowering Plants",
+    "Structural Organisation in Animals",
+    "Cell: The Unit of Life",
+    "Biomolecules",
+    "Cell Cycle and Cell Division",
+    "Photosynthesis in Higher Plants",
+    "Respiration in Plants",
+    "Plant Growth and Development",
+    "Breathing and Exchange of Gases",
+    "Body Fluids and Circulation",
+    "Excretory Products and their Elimination",
+    "Locomotion and Movement",
+    "Neural Control and Coordination",
+    "Chemical Coordination and Integration"
+  ]],
+  ["12-Biology-NCERT", [
+    "Sexual Reproduction in Flowering Plants",
+    "Human Reproduction",
+    "Reproductive Health",
+    "Principles of Inheritance and Variation",
+    "Molecular Basis of Inheritance",
+    "Evolution",
+    "Human Health and Disease",
+    "Microbes in Human Welfare",
+    "Biotechnology - Principles and Processes",
+    "Biotechnology and its Applications",
+    "Organisms and Populations",
+    "Ecosystem",
+    "Biodiversity and Conservation"
+  ]],
+  ["11-Psychology-NCERT", [
+    "What is Psychology?",
+    "Methods of Enquiry in Psychology",
+    "The Bases of Human Behaviour",
+    "Human Development",
+    "Sensory, Attentional and Perceptual Processes",
+    "Learning",
+    "Human Memory",
+    "Motivation and Emotion"
+  ]],
+  ["12-Psychology-NCERT", [
+    "Psychological Attributes",
+    "Self and Personality",
+    "Meeting Life Challenges",
+    "Psychological Disorders",
+    "Therapeutic Approaches and Counselling",
+    "Attitude and Social Cognition",
+    "Social Influence and Group Processes"
+  ]],
+  
+  ["11-Sociology Introducing Sociology-NCERT", [
+    "Sociology and Society",
+    "Terms, Concepts and their Use in Sociology",
+    "Understanding Social Institutions",
+    "Culture and Socialisation",
+    "Doing Sociology: Research Methods"
+  ]],
+  ["11-Sociology Understanding Society-NCERT", [
+    "Social Structure, Stratification and Social Processes in Society",
+    "Social Change and Social Order in Rural and Urban Society",
+    "Environment and Society",
+    "Western Sociologists: A Theoretical Perspective",
+    "Indian Sociologists: A Theoretical Perspective"
+  ]],
+  ["12-Sociology Indian Society-NCERT", [
+    "The Demographic Structure of the Indian Society",
+    "Social Institutions: Continuity and Change",
+    "The Market as a Social Institution",
+    "The Pattern of Social Inequality and Exclusion",
+    "Challenges of Cultural Diversity",
+    "The Binders of a Nation"
+  ]],
+  ["12-Sociology Social Change and Development in India-NCERT", [
+    "Structural Change",
+    "Cultural Change",
+    "The Story of Indian Democracy at Work",
+    "Change and Development in Rural Society",
+    "Change and Development in Industrial Society",
+    "Globalisation and Social Change",
+    "Social Movements"
+  ]],
+  
+ ["11-Accountancy Part 1-NCERT", [
+    "Introduction to Accounting",
+    "Theory Base of Accounting",
+    "Recording of Transactions-I",
+    "Recording of Transactions-II",
+    "Bank Reconciliation Statement"
+  ]],
+  ["11-Accountancy Part 2-NCERT", [
+    "Trial Balance and Errors",
+    "Depreciation, Provisions and Reserves",
+    "Accounting for Bills of Exchange",
+    "Financial Statements-I"
+  ]],
+  ["12-Computerised Accounting System-NCERT", [
+    "Introduction to Computerised Accounting System",
+    "Accounting Application of Electronic Spreadsheet",
+    "Using Computerised Accounting System",
+    "Database Management System for Accounting"
+  ]],
+  ["12-Accountancy Part 2-NCERT", [
+    "Financial Statements of a Company",
+    "Analysis of Financial Statements",
+    "Accounting Ratios",
+    "Cash Flow Statement"
+  ]],
+  
   ["6-Mathematics-CBSE", 0],
   ["7-Mathematics-CBSE", 3],
   ["8-Mathematics-CBSE", 3],
@@ -1040,6 +1621,8 @@ const chapterCounts = new Map([
   ["10-Mathematics-CBSE", 4],
   ["11-Mathematics-CBSE", 6],
   ["12-Mathematics-CBSE", 3],
+
+  
   ["7-Science-Default", 15],
   ["7-Geography-Default", 10],
   ["7-Economics-Default", 8],
