@@ -727,13 +727,63 @@ const chapterCounts = new Map([
     "Regional Aspirations",
     "Recent Developments in Indian Politics"
   ]],
-  ["8-History-NCERT", 12],
-  ["9-History-NCERT", 5],
-  ["10-History-NCERT", 5],
-  ["11-History Themes in Indian History-NCERT", 7],
-  ["12-History Themes in Indian History Part 1-NCERT", 4],
-  ["12-History Themes in Indian History Part 2-NCERT", 4],
-  ["12-History Themes in Indian History Part 3-NCERT", 4],
+  ["8-History-NCERT", [
+    "How, When and Where",
+    "From Trade to Territory",
+    "Ruling the Countryside",
+    "Tribals, Dikus and the Vision of a Golden Age",
+    "When People Rebel 1857 and After",
+    "Weavers, Iron Smelters and Factory Owners",
+    "Civilising the 'Native', Educating the Nation",
+    "Women, Caste and Reform",
+    "The Making of the National Movement: 1870s–1947",
+    "India After Independence"
+  ]],
+  ["9-History-NCERT", [
+    "The French Revolution",
+    "Socialism in Europe and the Russian Revolution",
+    "Nazism and the Rise of Hitler",
+    "Forest Society and Colonialism",
+    "Pastoralists in the Modern World"
+  ]],
+  ["10-History-NCERT", [
+    "The Rise of Nationalism in Europe",
+    "Nationalism in India",
+    "The Making of a Global World",
+    "The Age of Industrialisation",
+    "Print Culture and the Modern World"
+  ]],
+  ["11-History Themes in World History-NCERT", [
+    "From the Beginning of Time",
+    "Writing and City Life",
+    "An Empire Across Three Continents",
+    "The Central Islamic Lands",
+    "Nomadic Empires",
+    "The Three Orders",
+    "Changing Cultural Traditions",
+    "Confrontation of Cultures",
+    "The Industrial Revolution",
+    "Displacing Indigenous Peoples",
+    "Paths to Modernisation"
+  ]],
+  ["12-History Themes in Indian History Part 1-NCERT", [
+    "The Story of the First Cities: Harappan Archaeology",
+    "Political and Economic History: How Inscriptions tell a story",
+    "Social Histories: Using the Mahabharata",
+    "A History of Buddhism: Sanchi Stupa"
+  ]],
+  ["12-History Themes in Indian History Part 2-NCERT", [
+    "Through the Eyes of Travellers: Perceptions of Society",
+    "Bhakti-Sufi Traditions: Changes in Religious Beliefs and Devotional Texts",
+    "An Imperial Capital: Vijayanagara",
+    "Agrarian Relations: The Ain-i-Akbari"
+  ]],
+  ["12-History Themes in Indian History Part 3-NCERT", [
+    "Kings and Chronicles: The Mughal Courts",
+    "Colonialism and the Countryside: Exploring Official Archives",
+    "Rebels and the Raj: The Revolt of 1857 and its Representations",
+    "Mahatma Gandhi and the Nationalist Movement: Civil Disobedience and Beyond"
+  ]],
   ["8-Geography-NCERT", 6],
   ["9-Geography-NCERT", 6],
   ["10-Geography-NCERT", 7],
