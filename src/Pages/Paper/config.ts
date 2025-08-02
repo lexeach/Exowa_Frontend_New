@@ -281,7 +281,7 @@ const chapterCounts = new Map([
     "Ratio and Proportion",
     "Symmetry",
     "Practical Geometry"
-  ],],
+  ]],
   ["7-Mathematics-NCERT", [
     "Integers",
     "Fractions and Decimals",
@@ -298,7 +298,7 @@ const chapterCounts = new Map([
     "Exponents and Powers",
     "Symmetry",
     "Visualising Solid Shapes"
-  ],],
+  ]],
   ["8-Mathematics-NCERT", [
     "Rational Numbers",
     "Linear Equations in One Variable",
@@ -316,7 +316,7 @@ const chapterCounts = new Map([
     "Factorisation",
     "Introduction to Graphs",
     "Playing with Numbers"
-  ],],
+  ]],
   ["9-Mathematics-NCERT", [
     "Number Systems",
     "Polynomials",
@@ -333,7 +333,7 @@ const chapterCounts = new Map([
     "Surface Areas and Volumes",
     "Statistics",
     "Probability"
-  ],],
+  ]],
   ["10-Mathematics-NCERT", [
     "Real Numbers",
     "Polynomials",
@@ -349,7 +349,7 @@ const chapterCounts = new Map([
     "Surface Areas and Volumes",
     "Statistics",
     "Probability"
-  ],],
+  ]],
   ["11-Mathematics-NCERT", [
     "Sets",
     "Relations and Functions",
@@ -367,7 +367,7 @@ const chapterCounts = new Map([
     "Mathematical Reasoning",
     "Statistics",
     "Probability"
-  ],],
+  ]],
   ["12-Mathematics Part 1-NCERT", [
     "Relations and Functions",
     "Inverse Trigonometric Functions",
@@ -375,7 +375,7 @@ const chapterCounts = new Map([
     "Determinants",
     "Continuity and Differentiability",
     "Application of Derivatives"
-  ],],
+  ]],
   ["12-Mathematics Part 2-NCERT", [
     "Integrals",
     "Application of Integrals",
@@ -384,7 +384,7 @@ const chapterCounts = new Map([
     "Three Dimensional Geometry",
     "Linear Programming",
     "Probability"
-  ],],
+  ]],
 
 
   {/*
@@ -403,7 +403,7 @@ const chapterCounts = new Map([
     "दोस्ती",
     "मेरा घर",
     "आज़ादी"
-  ],],
+  ]],
   ["7-Urdu-NCERT", [
     "अल्लाह",
     "पहाड़ और गिलहरी",
@@ -419,7 +419,7 @@ const chapterCounts = new Map([
     "आज़ादी",
     "चाँद",
     "ख़ुदा की क़ुदरत"
-  ],],
+  ]],
   ["8-Urdu-NCERT", [
     "दोहे",
     "नन्हीं चींटी",
@@ -443,7 +443,7 @@ const chapterCounts = new Map([
     "आज़ादी",
     "ख़ुशियाँ",
     "पहेलियाँ"
-  ],],
+  ]],
   ["9-Urdu-NCERT", [
     "हमद",
     "नात",
@@ -457,7 +457,7 @@ const chapterCounts = new Map([
     "मसनवी",
     "नावेल",
     "दोहे"
-  ],],
+  ]],
   ["10-Urdu-NCERT", [
     "हज़रत मुहम्मद सल्लल्लाहु अलैहि वसल्लम",
     "क़ुतुबुद्दीन ऐबक",
@@ -473,7 +473,7 @@ const chapterCounts = new Map([
     "मेरे घर",
     "आज का दौर",
     "पहेलियाँ"
-  ],],
+  ]],
   ["11-Urdu-NCERT", [
     "तारीख़",
     "अदब का मअनी",
@@ -491,7 +491,7 @@ const chapterCounts = new Map([
     "अल्लामा इक़बाल",
     "मिर्ज़ा ग़ालिब",
     "मीर अनीस"
-  ],],
+  ]],
   ["12-Urdu-NCERT", [
     "नक़्क़ाद",
     "नवाए उर्दू",
@@ -506,7 +506,7 @@ const chapterCounts = new Map([
     "चकबस्त",
     "जोश",
     "फैज़"
-  ],],
+  ]],
 
   
   ["6-Hindi-NCERT", [
@@ -524,7 +524,7 @@ const chapterCounts = new Map([
     "संसार पुस्तक है",
     "मैं सबसे छोटी होऊँ",
     "लोकगीत"
-  ],],
+  ]],
   ["7-Hindi-NCERT", [
     "हम पंछी उन्मुक्त गगन के",
     "दादी माँ",
@@ -540,7 +540,7 @@ const chapterCounts = new Map([
     "वीर कुंवर सिंह",
     "विप्लव गायन",
     "एक तिनका"
-  ],],
+  ]],
   ["8-Hindi-NCERT", [
     "ध्वनि",
     "लाख की चूड़ियाँ",
@@ -555,7 +555,7 @@ const chapterCounts = new Map([
     "जब सिनेमा ने बोलना सीखा",
     "सुदामा चरित",
     "जहाँ पहिया है"
-  ],],
+  ]],
   ["9-Hindi Kshitij-NCERT", [
     "कबीर की साखियाँ और सबद",
     "ललद्यद",
@@ -570,7 +570,7 @@ const chapterCounts = new Map([
     "जाबिर हुसैन",
     "हरिशंकर परसाई",
     "हजारी प्रसाद द्विवेदी"
-  ],],
+  ]],
   ["9-Hindi Sprash-NCERT", [
     "तुलसीदास",
     "रहीम",
@@ -582,17 +582,17 @@ const chapterCounts = new Map([
     "रमेश चंद्र शाह",
     "महादेवी वर्मा",
     "निदा फ़ाज़ली"
-  ],],
+  ]],
   ["9-Hindi Kritika-NCERT", [
     "इस जल प्रलय में",
     "मेरे संग की औरतें",
     "रीढ़ की हड्डी"
-  ],],
+  ]],
   ["9-Hindi Sanchayan-NCERT", [
     "गिल्लू",
     "स्मृति",
     "कल्लू कुम्हार की उनाकोटी"
-  ],],
+  ]],
   ["10-Hindi Kshitij-NCERT", [
     "उत्साह और अट नहीं रही है",
     "फ़सल और यह दंतुरित मुसकान",
@@ -606,7 +606,7 @@ const chapterCounts = new Map([
     "एक कहानी यह भी",
     "नौबतखाने में इबादत",
     "संस्कृति"
-  ],],
+  ]],
   ["10-Hindi Sprash-NCERT", [
     "साखी",
     "पद",
@@ -622,17 +622,17 @@ const chapterCounts = new Map([
     "अब कहाँ दूसरों के दुख से दुखी होने वाले",
     "पतझर में टूटी पत्तियाँ",
     "कारतूस"
-  ],],
+  ]],
   ["10-Hindi Kritika-NCERT", [
     "माता का आँचल",
     "जॉर्ज पंचम की नाक",
     "साना-साना हाथ जोड़ि"
-  ],],
+  ]],
   ["10-Hindi Sanchayan-NCERT", [
     "हरिहर काका",
     "सपनों के-से दिन",
     "टोपी शुक्ला"
-  ],],
+  ]],
   ["11-Hindi Antra Part 1-NCERT", [
     "कबीर",
     "सूरदास",
@@ -650,7 +650,7 @@ const chapterCounts = new Map([
     "मंगलेश डबराल",
     "निर्मल वर्मा",
     "अब्दुल कलाम"
-  ],],
+  ]],
   ["11-Hindi Aroh-NCERT", [
     "कबीर",
     "मीरा",
@@ -668,12 +668,12 @@ const chapterCounts = new Map([
     "शेखर जोशी",
     "मन्नू भंडारी",
     "कृष्णनाथ"
-  ],],
+  ]],
   ["11-Hindi Vitan Part 1-NCERT", [
     "भारतीय गायिकाओं में बेजोड़ : लता मंगेशकर",
     "राजस्थान की रजत बूंदें",
     "आलो-आँधारि"
-  ],],
+  ]],
   ["12-Hindi Antra Part 2-NCERT", [
     "जयशंकर प्रसाद",
     "सूर्यकांत त्रिपाठी 'निराला'",
@@ -692,7 +692,7 @@ const chapterCounts = new Map([
     "असलम",
     "निर्मल वर्मा",
     "अज्ञेय"
-  ],],
+  ]],
   ["12-Hindi Aroh Part 2-NCERT", [
     "हरिवंश राय बच्चन",
     "आलोक धन्वा",
@@ -709,12 +709,12 @@ const chapterCounts = new Map([
     "धर्मवीर भारती",
     "रामविलास शर्मा",
     "हजारी प्रसाद द्विवेदी"
-  ],],
+  ]],
   ["12-Hindi Vitan Part 2-NCERT", [
     "सिल्वर वैडिंग",
     "जूझ",
     "अतीत में दबे पाँव"
-  ],],
+  ]],
 */}
 
  ["6-Urdu-NCERT", 14],
@@ -787,7 +787,7 @@ const chapterCounts = new Map([
     "Who I Am",
     "Fair Play",
     "Vocation"
-  ],],
+  ]],
   ["7-English-NCERT", [
     "Three Questions",
     "A Gift of Chappals",
@@ -799,7 +799,7 @@ const chapterCounts = new Map([
     "Fire: Friend and Foe",
     "A Bicycle in Good Repair",
     "The Story of Cricket"
-  ],],
+  ]],
   ["8-English HoneyDew-NCERT", [
     "The Best Christmas Present in the World",
     "The Tsunami",
@@ -809,7 +809,7 @@ const chapterCounts = new Map([
     "This is Jody’s Fawn",
     "A Visit to Cambridge",
     "A Short Monsoon Diary"
-  ],],
+  ]],
   ["8-English It So Happened-NCERT", [
     "How the Camel Got His Hump",
     "Children at Work",
@@ -819,7 +819,7 @@ const chapterCounts = new Map([
     "The Fight",
     "The Open Window",
     "Jalebis"
-  ],],
+  ]],
   ["9-English Beehive-NCERT", [
     "The Fun They Had",
     "The Sound of Music",
@@ -830,7 +830,7 @@ const chapterCounts = new Map([
     "Packing",
     "Reach for the Top",
     "The Bond of Love"
-  ],],
+  ]],
   ["9-English Moments Supplementary Reader-NCERT", [
     "The Lost Child",
     "The Adventures of Toto",
@@ -841,7 +841,7 @@ const chapterCounts = new Map([
     "The Last Leaf",
     "A House Is Not a Home",
     "The Accidental Tourist"
-  ],],
+  ]],
   
   ["9-English Words and Expressions 1-NCERT", 9], // This is a workbook, so a numerical count is appropriate
   
@@ -855,7 +855,7 @@ const chapterCounts = new Map([
     "Glimpses of India",
     "Mijbil the Otter",
     "Madam Rides the Bus"
-  ],],
+  ]],
   ["10-English Foot Prints Without Feet-NCERT", [
     "A Triumph of Surgery",
     "The Thief’s Story",
@@ -866,7 +866,7 @@ const chapterCounts = new Map([
     "The Necklace",
     "The Hack Driver",
     "Bholi"
-  ],],
+  ]],
   ["10-English Words and Expressions 2-NCERT", 9], // This is a workbook, so a numerical count is appropriate
   ["11-English Woven Words-NCERT", [
     "The Lament",
@@ -891,7 +891,7 @@ const chapterCounts = new Map([
     "The Watcher",
     "My Mother",
     "The Road to Peace"
-  ],],
+  ]],
   ["11-English Hornbill-NCERT", [
     "The Portrait of a Lady",
     "We're Not Afraid to Die... If We Can All Be Together",
@@ -906,7 +906,7 @@ const chapterCounts = new Map([
     "The Voice of the Rain",
     "Childhood",
     "Father to Son"
-  ],],
+  ]],
   ["11-English Snapshots Supplementary Reader-NCERT", [
     "The Summer of the Beautiful White Horse",
     "The Address",
@@ -916,7 +916,7 @@ const chapterCounts = new Map([
     "The Ghat of the Only World",
     "Birth",
     "The Tale of Melon City"
-  ],],
+  ]],
   ["12-English Vistas-NCERT", [
     "The Third Level",
     "The Tiger King",
@@ -924,7 +924,7 @@ const chapterCounts = new Map([
     "The Enemy",
     "On the Face of It",
     "Memories of Childhood"
-  ],],
+  ]],
 
   
   ["6-Science-NCERT", [
@@ -944,8 +944,7 @@ const chapterCounts = new Map([
       "Water",
       "Air Around Us",
       "Garbage In, Garbage Out",
-    ],
-  ],
+    ]],
   ["7-Science-NCERT", [
       "Nutrition in Plants",
       "Nutrition in Animals",
@@ -965,7 +964,7 @@ const chapterCounts = new Map([
       "Water: A Precious Resource",
       "Forests: Our Lifeline",
       "Wastewater Story",
-    ],
+    ]
   ],
   ["8-Science-NCERT", [
       "Crop Production and Management",
@@ -986,7 +985,7 @@ const chapterCounts = new Map([
       "Light",
       "Stars and the Solar System",
       "Pollution of Air and Water",
-    ],
+    ]
   ],
   ["9-Science-NCERT", [
       "Matter in Our Surroundings",
@@ -1001,7 +1000,7 @@ const chapterCounts = new Map([
       "Work and Energy",
       "Sound",
       "Improvement in Food Resources",
-    ],
+    ]
   ],
   ["10-Science-NCERT", [
       "Chemical Reactions and Equations",
@@ -1017,9 +1016,13 @@ const chapterCounts = new Map([
       "Electricity",
       "Magnetic Effects of Electric Current",
       "Our Environment",
-    ],
+    ]
   ],
 
+  ["6-Social Science-NCERT", 14],
+  ["7-Social Science-NCERT", 12],
+
+  {/*
   ["6-Social Science (History)-NCERT", [
     "What, Where, How and When?",
     "On The Trail of The Earliest People",
@@ -1032,7 +1035,7 @@ const chapterCounts = new Map([
     "Vital Villages, Thriving Towns",
     "Traders, Kings and Pilgrims",
     "New Empires and Kingdoms"
-  ],],
+  ]],
   ["6-Social Science (Geography)-NCERT", [
     "The Earth in the Solar System",
     "Globe: Latitudes and Longitudes",
@@ -1042,7 +1045,7 @@ const chapterCounts = new Map([
     "Major Landforms of the Earth",
     "Our Country – India",
     "India: Climate, Vegetation and Wildlife"
-  ],],
+  ]],
   ["6-Social Science (Civics)-NCERT", [
     "Understanding Diversity",
     "Diversity and Discrimination",
@@ -1053,7 +1056,7 @@ const chapterCounts = new Map([
     "Urban Administration",
     "Rural Livelihoods",
     "Urban Livelihoods"
-  ],],
+  ]],
   ["7-Social Science (History)-NCERT", [
     "Tracing Changes Through a Thousand Years",
     "New Kings and Kingdoms",
@@ -1065,7 +1068,7 @@ const chapterCounts = new Map([
     "Devotional Paths to the Divine",
     "The Making of Regional Cultures",
     "Eighteenth-Century Political Formations"
-  ],],
+  ]],
   ["7-Social Science (Geography)-NCERT", [
     "Environment",
     "Inside Our Earth",
@@ -1090,6 +1093,8 @@ const chapterCounts = new Map([
     "A Shirt in the Market",
     "Struggles for Equality"
   ],],
+  */}
+                              
   ["9-Information and Communication Technology-NCERT", [
     "Introduction to Computer System",
     "Computer Networks",
