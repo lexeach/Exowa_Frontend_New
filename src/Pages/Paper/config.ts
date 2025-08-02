@@ -324,7 +324,6 @@ const chapterCounts = new Map([
   ["11-English Hornbill-NCERT", 16],
   ["11-English Snapshots Supplementary Reader-NCERT", 16],
   ["12-English Vistas-NCERT", 6],
-
   ["6-Science-NCERT", [
       "Food: Where Does It Come From?",
       "Components of Food",
@@ -516,10 +515,11 @@ const generateChapterOptions = (selectedClass, subject, syllabus) => {
 
   if (Array.isArray(chapterData)) {
     return chapterData.map((chapterName, index) => ({
-      value: (index + 1).toString(),
-      label: `${index + 1}. ${chapterName}`,
+      value: chapterName, // The value that gets submitted (e.g., "Food: Where Does It Come From?")
+      label: (index + 1).toString(), // The label the user sees (e.g., "1", "2", "3")
     }));
   } else if (typeof chapterData === "number") {
+    // This case remains the same as there are no names to inject.
     return Array.from({ length: chapterData }, (_, i) => ({
       value: (i + 1).toString(),
       label: (i + 1).toString(),
