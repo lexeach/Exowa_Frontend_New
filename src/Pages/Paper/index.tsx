@@ -20,14 +20,14 @@ const Papers = () => {
       headerClass: "pl-4 ",
     },
 
-     {
-     header: 'id',
-    class: 'pl-5',
-       accessor: 'id',
-       cell: info => <span>{info.getValue()}</span>,
-       cellClass: 'pl-4 text-black ',
-       headerClass: 'pl-4',
-     },
+    // {
+    // header: 'id',
+    //class: 'pl-5',
+      // accessor: 'id',
+      // cell: info => <span>{info.getValue()}</span>,
+      // cellClass: 'pl-4 text-black ',
+      // headerClass: 'pl-4',
+    // },
 
     {
       header: "Class",
