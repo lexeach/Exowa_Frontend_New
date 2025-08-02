@@ -5,6 +5,12 @@ const options = [
   { value: 10, label: "10" },
   { value: 15, label: "15" },
   { value: 20, label: "20" },
+  // { value: 25, label: "25" },
+  // { value: 30, label: "30" },
+  // { value: 35, label: "35" },
+  // { value: 40, label: "40" },
+  // { value: 45, label: "45" },
+  // { value: 50, label: "50" },
 ];
 
 const classoptions = [
@@ -515,11 +521,10 @@ const generateChapterOptions = (selectedClass, subject, syllabus) => {
 
   if (Array.isArray(chapterData)) {
     return chapterData.map((chapterName, index) => ({
-      value: chapterName, // The value that gets submitted (e.g., "Food: Where Does It Come From?")
-      label: (index + 1).toString(), // The label the user sees (e.g., "1", "2", "3")
+      value: chapterName,
+      label: (index + 1).toString(),
     }));
   } else if (typeof chapterData === "number") {
-    // This case remains the same as there are no names to inject.
     return Array.from({ length: chapterData }, (_, i) => ({
       value: (i + 1).toString(),
       label: (i + 1).toString(),
@@ -663,8 +668,22 @@ export const schema = yup
   .object()
   .shape({
     language: yup.string().required("this_field_required"),
-    chapter_to: yup.string().required("this_field_required"),
     chapter_from: yup.string().required("this_field_required"),
+    chapter_to: yup.string().when('chapter_from', {
+      is: (chapter_from) => chapter_from,
+      then: (schema) =>
+        schema
+          .required("this_field_required")
+          .test(
+            "is-greater",
+            "Chapter to cannot be less than Chapter from",
+            function (chapter_to) {
+              const chapter_from = this.parent.chapter_from;
+              return parseInt(chapter_to) >= parseInt(chapter_from);
+            }
+          ),
+      otherwise: (schema) => schema.required("this_field_required"),
+    }),
     syllabus: yup.string().required("this_field_required"),
     subject: yup.string().required("this_field_required"),
     no_of_question: yup.string().required("this_field_required"),
