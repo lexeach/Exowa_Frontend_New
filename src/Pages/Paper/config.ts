@@ -385,7 +385,9 @@ const chapterCounts = new Map([
     "Linear Programming",
     "Probability"
   ]],
-  
+
+
+  {/*
   ["6-Urdu-NCERT", [
     "हमद",
     "नाथ",
@@ -713,7 +715,55 @@ const chapterCounts = new Map([
     "जूझ",
     "अतीत में दबे पाँव"
   ]],
+*/}
 
+ ["6-Urdu-NCERT", 14],
+
+  ["7-Urdu-NCERT", 14],
+
+  ["8-Urdu-NCERT", 22],
+
+  ["9-Urdu-NCERT", 12],
+
+  ["10-Urdu-NCERT", 14],
+
+  ["11-Urdu-NCERT", 16],
+
+  ["12-Urdu-NCERT", 13],
+  
+  ["6-Hindi-NCERT", 13],
+
+  ["7-Hindi-NCERT", 10],
+
+  ["8-Hindi-NCERT", 13],
+
+  ["9-Hindi Kshitij-NCERT", 13],
+
+  ["9-Hindi Sprash-NCERT", 10],
+
+  ["9-Hindi Kritika-NCERT", 3],
+
+  ["9-Hindi Sanchayan-NCERT", 4],
+
+  ["10-Hindi Kshitij-NCERT", 12],
+
+  ["10-Hindi Sprash-NCERT", 14],
+
+  ["10-Hindi Kritika-NCERT", 3],
+
+  ["10-Hindi Sanchayan-NCERT", 3],
+
+  ["11-Hindi Antra Part 1-NCERT", 16],
+
+  ["11-Hindi Aroh-NCERT", 16],
+
+  ["11-Hindi Vitan Part 1-NCERT", 5],
+
+  ["12-Hindi Antra Part 2-NCERT", 17],
+
+  ["12-Hindi Aroh Part 2-NCERT", 15],
+
+  ["12-Hindi Vitan Part 2-NCERT", 3],
   
   ["6-Sanskrit-NCERT", 16],
   ["7-Sanskrit-NCERT", 15],
