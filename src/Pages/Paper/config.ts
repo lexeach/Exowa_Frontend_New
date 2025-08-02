@@ -5,12 +5,6 @@ const options = [
   { value: 10, label: "10" },
   { value: 15, label: "15" },
   { value: 20, label: "20" },
-  // { value: 25, label: "25" },
-  // { value: 30, label: "30" },
-  // { value: 35, label: "35" },
-  // { value: 40, label: "40" },
-  // { value: 45, label: "45" },
-  // { value: 50, label: "50" },
 ];
 
 const classoptions = [
@@ -520,11 +514,13 @@ const generateChapterOptions = (selectedClass, subject, syllabus) => {
   const chapterData = chapterCounts.get(key);
 
   if (Array.isArray(chapterData)) {
+    // Correct logic: value is the chapter name, label is the number
     return chapterData.map((chapterName, index) => ({
       value: chapterName,
       label: (index + 1).toString(),
     }));
   } else if (typeof chapterData === "number") {
+    // Correct logic: both are the number, as there's no name data
     return Array.from({ length: chapterData }, (_, i) => ({
       value: (i + 1).toString(),
       label: (i + 1).toString(),
@@ -533,6 +529,7 @@ const generateChapterOptions = (selectedClass, subject, syllabus) => {
 
   return [];
 };
+
 
 export const fields = (
   useGetSubjectOptionsMutation,
@@ -668,24 +665,60 @@ export const schema = yup
   .object()
   .shape({
     language: yup.string().required("this_field_required"),
-    no_of_question: yup.string().required("this_field_required"),
-    class: yup.string().required("this_field_required"),
+    chapter_from: yup.string().required("this_field_required"),
+    chapter_to: yup.string().when('chapter_from', {
+      is: (chapter_from) => chapter_from,
+      then: (schema) =>
+        schema
+          .required("this_field_required")
+          .test(
+            "is-greater-or-equal",
+            "Chapter to cannot be less than Chapter from",
+            function (chapter_to) {
+              const { chapter_from, subject, class: classValue, syllabus } = this.parent;
+              
+              if (!chapter_from || !chapter_to) {
+                return true; // Pass validation if one is missing
+              }
+
+              // Try to parse the values as numbers. This works for numerical chapters (e.g., Math)
+              const numChapterFrom = parseInt(chapter_from);
+              const numChapterTo = parseInt(chapter_to);
+
+              if (!isNaN(numChapterFrom) && !isNaN(numChapterTo)) {
+                return numChapterTo >= numChapterFrom;
+              }
+
+              // If parsing fails, it means the values are chapter names (e.g., Science).
+              // We must find their index in the original data to compare them.
+              let key;
+              if (syllabus) {
+                key = `${classValue}-${subject}-${syllabus}`;
+              } else {
+                key = `${classValue}-${subject || "Default"}-Default`;
+              }
+              const chapterData = chapterCounts.get(key);
+
+              if (Array.isArray(chapterData)) {
+                const indexFrom = chapterData.indexOf(chapter_from);
+                const indexTo = chapterData.indexOf(chapter_to);
+
+                // Ensure both chapter names were found and compare their indices
+                if (indexFrom !== -1 && indexTo !== -1) {
+                  return indexTo >= indexFrom;
+                }
+              }
+
+              // If the logic above couldn't find a valid comparison,
+              // we return true to not block the user.
+              return true;
+            }
+          ),
+      otherwise: (schema) => schema.required("this_field_required"),
+    }),
     syllabus: yup.string().required("this_field_required"),
     subject: yup.string().required("this_field_required"),
-    
-    // Updated validation for chapter_from and chapter_to
-    chapter_from: yup
-      .number()
-      .typeError("Please select a valid chapter")
-      .required("this_field_required"),
-      
-    chapter_to: yup
-      .number()
-      .typeError("Please select a valid chapter")
-      .required("this_field_required")
-      .min(
-        yup.ref("chapter_from"),
-        "Chapter to cannot be less than Chapter from"
-      ),
+    no_of_question: yup.string().required("this_field_required"),
+    class: yup.string().required("this_field_required"),
   })
   .required();
