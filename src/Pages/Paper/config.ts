@@ -946,16 +946,98 @@ const chapterCounts = new Map([
     "Marketing Management",
     "Consumer Protection"
   ]],
-  ["11-Home Science Human Ecology and Family Sciences Part 1-NCERT", 7],
-  ["11-Home Science Human Ecology and Family Sciences Part 2-NCERT", 4],
-  ["12-Home Science Human Ecology and Family Sciences Part 1-NCERT", 7],
-  ["12-Home Science Human Ecology and Family Sciences Part 2-NCERT", 4],
-  ["11-Informatics Practices-NCERT", 8],
-  ["12-Informatics Practices-NCERT", 7],
-  ["11-Computer Science-NCERT", 11],
-  ["12-Computer Science-NCERT", 13],
-  ["11-Biotechnology-NCERT", 12],
-  ["12-Biotechnology-NCERT", 13],
+ ["11-Home Science Human Ecology and Family Sciences Part 1-NCERT", [
+    "Introduction to Home Science",
+    "Food, Nutrition, Health and Fitness",
+    "The Family",
+    "The Family Life Cycle",
+    "The Family and its Resources",
+    "The World of the Young Child",
+    "Adolescence"
+  ]],
+  ["11-Home Science Human Ecology and Family Sciences Part 2-NCERT", [
+    "The World of Work",
+    "Fabrics",
+    "Clothing",
+    "Care and Maintenance of Fabrics and Apparels"
+  ]],
+  ["12-Home Science Human Ecology and Family Sciences Part 1-NCERT", [
+    "Work, Livelihood and Career",
+    "Clinical Nutrition and Dietetics",
+    "Public Nutrition and Health",
+    "Food Processing and Technology",
+    "Catering and Food Service Management",
+    "Hospitality Management",
+    "Institutional Management"
+  ]],
+  ["12-Home Science Human Ecology and Family Sciences Part 2-NCERT", [
+    "Early Childhood Care and Education",
+    "Fashion Design and Merchandising",
+    "Mass Communication and Entertainment",
+    "Designing, Planning and Organising Events"
+  ]],
+  
+ ["11-Informatics Practices-NCERT", [
+    "Computer System",
+    "Emerging Trends",
+    "Introduction to Problem Solving",
+    "Getting Started with Python",
+    "Python Fundamentals",
+    "Data Handling",
+    "Conditional and Looping Constructs",
+    "Strings in Python"
+  ]],
+  ["12-Informatics Practices-NCERT", [
+    "Python Pandas - I",
+    "Python Pandas - II",
+    "Introduction to Plotting",
+    "SQL Commands",
+    "SQL Functions",
+    "Database and Management System",
+    "Society, Law and Ethics"
+  ]],
+  ["11-Computer Science-NCERT", [
+    "Computer Systems",
+    "Encoding Schemes and Number System",
+    "Emerging Trends",
+    "Introduction to Problem Solving",
+    "Getting Started with Python",
+    "Python Fundamentals",
+    "Data Handling",
+    "Conditional and Looping Constructs",
+    "Strings",
+    "Lists",
+    "Tuples and Dictionaries"
+  ]],
+  ["12-Computer Science-NCERT", [
+    "Review of Python",
+    "Functions",
+    "File Handling",
+    "Data Structure: Stacks and Queues",
+    "Computer Networks",
+    "Database Concepts",
+    "Structured Query Language",
+    "Society, Law and Ethics"
+  ]],
+  ["11-Biotechnology-NCERT", [
+    "Biotechnology - Principles and Processes",
+    "Genetic Engineering",
+    "Bioethics",
+    "Bioprocessing",
+    "Applications of Biotechnology"
+  ]],
+  ["12-Biotechnology-NCERT", [
+    "Introduction",
+    "Recombinant DNA Technology",
+    "Protein Structure and Engineering",
+    "Genomics",
+    "Bioethics",
+    "Biosafety",
+    "Intellectual Property Rights",
+    "Biotechnology in Agriculture",
+    "Biotechnology in Health",
+    "Biotechnology in Environment"
+  ]],
   ["11-Physics Part 1-NCERT", 7],
   ["11-Physics Part 2-NCERT", 7],
   ["12-Physics Part 1-NCERT", 8],
