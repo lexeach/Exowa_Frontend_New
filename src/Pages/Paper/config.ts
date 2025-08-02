@@ -1109,21 +1109,21 @@ const chapterCounts = new Map([
     "Confronting Marginalisation",
     "Public Facilities",
     "Law and Social Justice"
-  ],],
+  ]],
   ["9-Political Science-NCERT", [
     "What is Democracy? Why Democracy?",
     "Constitutional Design",
     "Electoral Politics",
     "Working of Institutions",
     "Democratic Rights"
-  ],],
+  ]],
   ["10-Political Science-NCERT", [
     "Power-sharing",
     "Federalism",
     "Gender Religion and Caste",
     "Political Parties",
     "Outcomes of Democracy"
-  ],],
+  ]],
   ["11-Political Science Political Theory-NCERT", [
     "Political Theory: An Introduction",
     "Freedom",
@@ -1133,7 +1133,7 @@ const chapterCounts = new Map([
     "Citizenship",
     "Nationalism",
     "Secularism"
-  ],],
+  ]],
   ["11-Political Science India Constitution at Work-NCERT", [
     "Constitution: Why and How?",
     "Rights in the Indian Constitution",
@@ -1145,7 +1145,7 @@ const chapterCounts = new Map([
     "Local Governments",
     "Constitution as a Living Document",
     "The Philosophy of the Constitution"
-  ],],
+  ]],
   ["12-Political Science Contemporary World Politics-NCERT", [
     "The Cold War Era",
     "The End of Bipolarity",
@@ -1154,7 +1154,7 @@ const chapterCounts = new Map([
     "International Organisations",
     "Security in the Contemporary World",
     "Globalisation"
-  ],],
+  ]],
   ["12-Political Science Politics in India Since Independence-NCERT", [
     "Challenges of Nation Building",
     "Era of One-Party Dominance",
@@ -1165,7 +1165,7 @@ const chapterCounts = new Map([
     "Rise of Popular Movements",
     "Regional Aspirations",
     "Recent Developments in Indian Politics"
-  ],],
+  ]],
 
 
   
@@ -1180,21 +1180,21 @@ const chapterCounts = new Map([
     "Women Caste and Reform",
     "The Making of the National Movement: 1870s–1947",
     "India After Independence"
-  ],],
+  ]],
   ["9-History-NCERT", [
     "The French Revolution",
     "Socialism in Europe and the Russian Revolution",
     "Nazism and the Rise of Hitler",
     "Forest Society and Colonialism",
     "Pastoralists in the Modern World"
-  ],],
+  ]],
   ["10-History-NCERT", [
     "The Rise of Nationalism in Europe",
     "Nationalism in India",
     "The Making of a Global World",
     "The Age of Industrialisation",
     "Print Culture and the Modern World"
-  ],],
+  ]],
   ["11-History Themes in World History-NCERT", [
     "From the Beginning of Time",
     "Writing and City Life",
@@ -1207,25 +1207,25 @@ const chapterCounts = new Map([
     "The Industrial Revolution",
     "Displacing Indigenous Peoples",
     "Paths to Modernisation"
-  ],],
+  ]],
   ["12-History Themes in Indian History Part 1-NCERT", [
     "The Story of the First Cities: Harappan Archaeology",
     "Political and Economic History: How Inscriptions tell a story",
     "Social Histories: Using the Mahabharata",
     "A History of Buddhism: Sanchi Stupa"
-  ],],
+  ]],
   ["12-History Themes in Indian History Part 2-NCERT", [
     "Through the Eyes of Travellers: Perceptions of Society",
     "Bhakti-Sufi Traditions: Changes in Religious Beliefs and Devotional Texts",
     "An Imperial Capital: Vijayanagara",
     "Agrarian Relations: The Ain-i-Akbari"
-  ],],
+  ]],
   ["12-History Themes in Indian History Part 3-NCERT", [
     "Kings and Chronicles: The Mughal Courts",
     "Colonialism and the Countryside: Exploring Official Archives",
     "Rebels and the Raj: The Revolt of 1857 and its Representations",
     "Mahatma Gandhi and the Nationalist Movement: Civil Disobedience and Beyond"
-  ],],
+  ]],
 
   
   ["8-Geography-NCERT", [
@@ -1234,14 +1234,14 @@ const chapterCounts = new Map([
     "Agriculture",
     "Industries",
     "Human Resources"
-  ],],
+  ]],
   ["9-Geography-NCERT", [
     "India - Size and Location",
     "Physical Features of India",
     "Drainage",
     "Climate",
     "Natural Vegetation and Wildlife"
-  ],],
+  ]],
   ["10-Geography-NCERT", [
     "Resources and Development",
     "Forest and Wildlife Resources",
@@ -1250,7 +1250,7 @@ const chapterCounts = new Map([
     "Minerals and Energy Resources",
     "Manufacturing Industries",
     "Lifelines of National Economy"
-  ],],
+  ]],
   ["11-Geography Fundamental of Physical Geography-NCERT", [
     "Geography as a Discipline",
     "The Origin and Evolution of the Earth",
@@ -1266,7 +1266,7 @@ const chapterCounts = new Map([
     "World Climate and Climate Change",
     "Water (Oceans)",
     "Movements of Ocean Water"
-  ],],
+  ]],
   ["11-Geography Pratical Work in Geography-NCERT", [
     "Introduction to Maps",
     "Map Scale",
@@ -1274,7 +1274,7 @@ const chapterCounts = new Map([
     "Map Projections",
     "Topographical Maps",
     "Introduction to Aerial Photographs, Remote Sensing and Geographic Information System"
-  ],],
+  ]],
   ["11-Geography India Physical Environment-NCERT", [
     "Introduction",
     "Structure and Physiography",
@@ -1282,7 +1282,7 @@ const chapterCounts = new Map([
     "Climate",
     "Natural Vegetation",
     "Soils"
-  ],],
+  ]],
   ["12-Geography Fundamentals of Human Geography-NCERT", [
     "Human Geography: Nature and Scope",
     "The World Population: Distribution, Density and Growth",
@@ -1292,13 +1292,13 @@ const chapterCounts = new Map([
     "Tertiary and Quaternary Activities",
     "Transport and Communication",
     "International Trade"
-  ],],
+  ]],
   ["12-Geography Pratical Work in Geography-NCERT", [
     "Data-Its Source and Compilation",
     "Data Processing",
     "Graphical Representation of Data",
     "Use of Computer in Data Processing and Thematic Mapping"
-  ],],
+  ]],
   ["12-Geography India People And Economy-NCERT", [
     "Population: Distribution, Density, Growth and Composition",
     "Migration: Types, Causes and Consequences",
@@ -1309,7 +1309,7 @@ const chapterCounts = new Map([
     "Mineral and Energy Resources",
     "Manufacturing Industries",
     "Planning and Sustainable Development in Indian Context"
-  ],],
+  ]],
   
   
   ["9-Economics-NCERT", [
@@ -1317,14 +1317,14 @@ const chapterCounts = new Map([
     "People as Resource",
     "Poverty as a Challenge",
     "Food Security in India"
-  ],],
+  ]],
   ["10-Economics-NCERT", [
     "Development",
     "Sectors of the Indian Economy",
     "Money and Credit",
     "Globalisation and the Indian Economy",
     "Consumer Rights"
-  ],],
+  ]],
   ["11-Economics Indian Economic Development-NCERT", [
     "Indian Economy on the Eve of Independence",
     "Indian Economy (1950-1990)",
@@ -1334,7 +1334,7 @@ const chapterCounts = new Map([
     "Rural Development",
     "Employment: Growth, Informalisation and other Issues",
     "Infrastructure"
-  ],],
+  ]],
   ["11-Economics Statistics for Economics-NCERT", [
     "Introduction",
     "Collection of Data",
@@ -1344,14 +1344,14 @@ const chapterCounts = new Map([
     "Measures of Dispersion",
     "Correlation",
     "Index Numbers"
-  ],],
+  ]],
   ["12-Economics Introductory Microeconomics-NCERT", [
     "Introduction",
     "Theory of Consumer Behaviour",
     "Production and Costs",
     "The Theory of the Firm under Perfect Competition",
     "Market Equilibrium"
-  ],],
+  ]],
   ["12-Economics Introductory Macroeconomics-NCERT", [
     "Introduction",
     "National Income Accounting",
@@ -1359,7 +1359,7 @@ const chapterCounts = new Map([
     "Income and Employment Determination",
     "Government Budget and the Economy",
     "Open-Economy Macroeconomics"
-  ],],
+  ]],
   
   ["11-Business Studies-NCERT", [
     "Business, Trade and Commerce",
@@ -1372,7 +1372,7 @@ const chapterCounts = new Map([
     "Small Business",
     "Internal Trade",
     "International Business"
-  ],],
+  ]],
   ["12-Business Studies Part 1-NCERT", [
     "Nature and Significance of Management",
     "Principles of Management",
@@ -1382,13 +1382,13 @@ const chapterCounts = new Map([
     "Staffing",
     "Directing",
     "Controlling"
-  ],],
+  ]],
   ["12-Business Studies Part 2-NCERT", [
     "Financial Management",
     "Financial Markets",
     "Marketing Management",
     "Consumer Protection"
-  ],],
+  ]],
   
   ["11-Home Science Human Ecology and Family Sciences Part 1-NCERT", [
     "Introduction to Home Science",
@@ -1398,13 +1398,13 @@ const chapterCounts = new Map([
     "The Family and its Resources",
     "The World of the Young Child",
     "Adolescence"
-  ],],
+  ]],
   ["11-Home Science Human Ecology and Family Sciences Part 2-NCERT", [
     "The World of Work",
     "Fabrics",
     "Clothing",
     "Care and Maintenance of Fabrics and Apparels"
-  ],],
+  ]],
   ["12-Home Science Human Ecology and Family Sciences Part 1-NCERT", [
     "Work, Livelihood and Career",
     "Clinical Nutrition and Dietetics",
@@ -1413,13 +1413,13 @@ const chapterCounts = new Map([
     "Catering and Food Service Management",
     "Hospitality Management",
     "Institutional Management"
-  ],],
+  ]],
   ["12-Home Science Human Ecology and Family Sciences Part 2-NCERT", [
     "Early Childhood Care and Education",
     "Fashion Design and Merchandising",
     "Mass Communication and Entertainment",
     "Designing, Planning and Organising Events"
-  ],],
+  ]],
   
  ["11-Informatics Practices-NCERT", [
     "Computer System",
@@ -1430,7 +1430,7 @@ const chapterCounts = new Map([
     "Data Handling",
     "Conditional and Looping Constructs",
     "Strings in Python"
-  ],],
+  ]],
   ["12-Informatics Practices-NCERT", [
     "Python Pandas - I",
     "Python Pandas - II",
@@ -1439,7 +1439,7 @@ const chapterCounts = new Map([
     "SQL Functions",
     "Database and Management System",
     "Society, Law and Ethics"
-  ],],
+  ]],
   ["11-Computer Science-NCERT", [
     "Computer Systems",
     "Encoding Schemes and Number System",
@@ -1452,7 +1452,7 @@ const chapterCounts = new Map([
     "Strings",
     "Lists",
     "Tuples and Dictionaries"
-  ],],
+  ]],
   ["12-Computer Science-NCERT", [
     "Review of Python",
     "Functions",
@@ -1462,14 +1462,14 @@ const chapterCounts = new Map([
     "Database Concepts",
     "Structured Query Language",
     "Society, Law and Ethics"
-  ],],
+  ]],
   ["11-Biotechnology-NCERT", [
     "Biotechnology - Principles and Processes",
     "Genetic Engineering",
     "Bioethics",
     "Bioprocessing",
     "Applications of Biotechnology"
-  ],],
+  ]],
   ["12-Biotechnology-NCERT", [
     "Introduction",
     "Recombinant DNA Technology",
@@ -1481,7 +1481,7 @@ const chapterCounts = new Map([
     "Biotechnology in Agriculture",
     "Biotechnology in Health",
     "Biotechnology in Environment"
-  ],],
+  ]],
   
   ["11-Physics Part 1-NCERT", [
     "Physical World",
@@ -1491,7 +1491,7 @@ const chapterCounts = new Map([
     "Laws of Motion",
     "Work, Energy and Power",
     "System of Particles and Rotational Motion"
-  ],],
+  ]],
   ["11-Physics Part 2-NCERT", [
     "Gravitation",
     "Mechanical Properties of Solids",
@@ -1500,7 +1500,7 @@ const chapterCounts = new Map([
     "Thermodynamics",
     "Kinetic Theory",
     "Oscillations"
-  ],],
+  ]],
   ["12-Physics Part 1-NCERT", [
     "Electric Charges and Fields",
     "Electrostatic Potential and Capacitance",
@@ -1510,7 +1510,7 @@ const chapterCounts = new Map([
     "Electromagnetic Induction",
     "Alternating Current",
     "Electromagnetic Waves"
-  ],],
+  ]],
   ["12-Physics Part 2-NCERT", [
     "Ray Optics and Optical Instruments",
     "Wave Optics",
@@ -1518,7 +1518,7 @@ const chapterCounts = new Map([
     "Atoms",
     "Nuclei",
     "Semiconductor Electronics"
-  ],],
+  ]],
   
   ["11-Chemistry Part 1-NCERT", [
     "Some Basic Concepts of Chemistry",
@@ -1527,26 +1527,26 @@ const chapterCounts = new Map([
     "Chemical Bonding and Molecular Structure",
     "Chemical Thermodynamics",
     "Equilibrium"
-  ],],
+  ]],
   ["11-Chemistry Part 2-NCERT", [
     "Redox Reactions",
     "Organic Chemistry – Some Basic Principles and Techniques",
     "Hydrocarbons"
-  ],],
+  ]],
   ["12-Chemistry Part 1-NCERT", [
     "Solutions",
     "Electrochemistry",
     "Chemical Kinetics",
     "The d- and f-Block Elements",
     "Coordination Compounds"
-  ],],
+  ]],
   ["12-Chemistry Part 2-NCERT", [
     "Haloalkanes and Haloarenes",
     "Alcohols, Phenols and Ethers",
     "Aldehydes, Ketones and Carboxylic Acids",
     "Amines",
     "Biomolecules"
-  ],],
+  ]],
   
   ["11-Biology-NCERT", [
     "The Living World",
@@ -1568,7 +1568,7 @@ const chapterCounts = new Map([
     "Locomotion and Movement",
     "Neural Control and Coordination",
     "Chemical Coordination and Integration"
-  ],],
+  ]],
   ["12-Biology-NCERT", [
     "Sexual Reproduction in Flowering Plants",
     "Human Reproduction",
@@ -1583,7 +1583,7 @@ const chapterCounts = new Map([
     "Organisms and Populations",
     "Ecosystem",
     "Biodiversity and Conservation"
-  ],],
+  ]],
   ["11-Psychology-NCERT", [
     "What is Psychology?",
     "Methods of Enquiry in Psychology",
@@ -1593,7 +1593,7 @@ const chapterCounts = new Map([
     "Learning",
     "Human Memory",
     "Motivation and Emotion"
-  ],],
+  ]],
   ["12-Psychology-NCERT", [
     "Psychological Attributes",
     "Self and Personality",
@@ -1602,7 +1602,7 @@ const chapterCounts = new Map([
     "Therapeutic Approaches and Counselling",
     "Attitude and Social Cognition",
     "Social Influence and Group Processes"
-  ],],
+  ]],
   
   ["11-Sociology Introducing Sociology-NCERT", [
     "Sociology and Society",
@@ -1610,14 +1610,14 @@ const chapterCounts = new Map([
     "Understanding Social Institutions",
     "Culture and Socialisation",
     "Doing Sociology: Research Methods"
-  ],],
+  ]],
   ["11-Sociology Understanding Society-NCERT", [
     "Social Structure, Stratification and Social Processes in Society",
     "Social Change and Social Order in Rural and Urban Society",
     "Environment and Society",
     "Western Sociologists: A Theoretical Perspective",
     "Indian Sociologists: A Theoretical Perspective"
-  ],],
+  ]],
   ["12-Sociology Indian Society-NCERT", [
     "The Demographic Structure of the Indian Society",
     "Social Institutions: Continuity and Change",
@@ -1625,7 +1625,7 @@ const chapterCounts = new Map([
     "The Pattern of Social Inequality and Exclusion",
     "Challenges of Cultural Diversity",
     "The Binders of a Nation"
-  ],],
+  ]],
   ["12-Sociology Social Change and Development in India-NCERT", [
     "Structural Change",
     "Cultural Change",
@@ -1634,7 +1634,7 @@ const chapterCounts = new Map([
     "Change and Development in Industrial Society",
     "Globalisation and Social Change",
     "Social Movements"
-  ],],
+  ]],
   
  ["11-Accountancy Part 1-NCERT", [
     "Introduction to Accounting",
@@ -1642,25 +1642,25 @@ const chapterCounts = new Map([
     "Recording of Transactions-I",
     "Recording of Transactions-II",
     "Bank Reconciliation Statement"
-  ],],
+  ]],
   ["11-Accountancy Part 2-NCERT", [
     "Trial Balance and Errors",
     "Depreciation, Provisions and Reserves",
     "Accounting for Bills of Exchange",
     "Financial Statements-I"
-  ],],
+  ]],
   ["12-Computerised Accounting System-NCERT", [
     "Introduction to Computerised Accounting System",
     "Accounting Application of Electronic Spreadsheet",
     "Using Computerised Accounting System",
     "Database Management System for Accounting"
-  ],],
+  ]],
   ["12-Accountancy Part 2-NCERT", [
     "Financial Statements of a Company",
     "Analysis of Financial Statements",
     "Accounting Ratios",
     "Cash Flow Statement"
-  ],],
+  ]],
   
   ["6-Mathematics-CBSE", 0],
   ["7-Mathematics-CBSE", 3],
