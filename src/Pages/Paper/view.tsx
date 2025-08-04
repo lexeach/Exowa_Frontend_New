@@ -50,29 +50,26 @@ const PaperView = () => {
     const question = questions.find(
       (q) => q.questionNumber === answer.questionNumber
     );
-    
-    // If answer is "E" (no answer/skip), don't add or subtract marks
+
     if (answer.option === "E") {
       return score;
     }
-    
-    // If answer is correct, add 1 mark
+
     if (question?.correctAnswer === answer.option) {
       return score + 1;
     }
-    
-    // If answer is wrong, subtract 2 mark (negative marking)
+
     return score - 2;
   }, 0);
-  // Calculate percentage, ensuring it doesn't go below 0
+
   const percentage = Math.max(0, (obtainedMarks / totalMarks) * 100).toFixed(2);
 
   const renderQuestions = () => {
     const [selectedChild, setSelectedChild] = useState("");
     const [generatedLink, setGeneratedLink] = useState("");
-    const [selectedOption, setSelectedOption] = useState('');
+    const [selectedOption, setSelectedOption] = useState("");
     const [childOptions, setChildOptions] = useState([]);
-    const [showPopup, setShowPopup] = useState(false); // New state for popup visibility
+    const [showPopup, setShowPopup] = useState(false);
 
     useEffect(() => {
       const options = children?.data?.map((child) => ({
@@ -85,7 +82,7 @@ const PaperView = () => {
     const handleCopyOtp = () => {
       if (OTP) {
         navigator.clipboard.writeText(OTP);
-        setShowMessage(true); // Show "Copied!" message
+        setShowMessage(true);
         setTimeout(() => setShowMessage(false), 1000);
       }
     };
@@ -96,12 +93,11 @@ const PaperView = () => {
     };
 
     const handleGenerateLink = async () => {
-      // Check for selected child and show popup if none is selected
       if (!selectedChild) {
         setShowPopup(true);
         return;
       }
-      
+
       const newUrl = `${BaseURL}/#/auth/answer/${id}`;
       const assignRes = await assignPaper({
         childId: selectedChild,
@@ -133,15 +129,19 @@ const PaperView = () => {
     };
 
     const handlePractice = () => {
-      // Check for selected child and show popup if none is selected
       if (!selectedChild) {
         setShowPopup(true);
         return;
       }
 
       const newURL = `${BaseURL}/#/student-answer/${id}`;
-      window.open(newURL, "_blank"); // Open in new tab
+      window.open(newURL, "_blank");
     };
+
+    // ✅ Find the name of the selected child
+    const selectedChildName = childOptions?.find(
+      (option) => option.value === selectedChild
+    )?.label;
 
     return (
       <div className="space-y-4">
@@ -165,6 +165,16 @@ const PaperView = () => {
                       value={selectedOption}
                       onChange={handleSelectChange}
                     />
+
+                    {/* ✅ Display the selected child's name immediately */}
+                    {selectedChildName && (
+                      <p className="text-sm text-gray-600 mt-2">
+                        Selected Child:{" "}
+                        <span className="font-bold text-blue-600">
+                          {selectedChildName}
+                        </span>
+                      </p>
+                    )}
                   </div>
                   <div className="">
                     <UIButton
@@ -218,7 +228,8 @@ const PaperView = () => {
                     <p className="font-semibold text-gray-700 text-sm md:text-base">
                       Generated Link:{" "}
                       <span className="text-green-600 text-xs md:text-sm">
-                        (only valid for selected child) (Name: {childName})
+                        (only valid for selected child) (Name:{" "}
+                        {selectedChildName || childName})
                       </span>
                     </p>
                     <div className="flex flex-col md:flex-row md:justify-between items-start md:items-center mt-2">
@@ -329,7 +340,9 @@ const PaperView = () => {
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-900 bg-opacity-50 transition-opacity">
             <div className="bg-white p-6 rounded-lg shadow-xl max-w-sm w-full mx-4 relative">
               <div className="flex justify-between items-center mb-4">
-                <h3 className="text-xl font-bold text-gray-800">Selection Required</h3>
+                <h3 className="text-xl font-bold text-gray-800">
+                  Selection Required
+                </h3>
                 <button
                   onClick={() => setShowPopup(false)}
                   className="text-gray-400 hover:text-gray-600 transition-colors"
@@ -402,7 +415,8 @@ const PaperView = () => {
                 <div className="flex justify-between">
                   <span className="text-gray-600">Children Name:</span>
                   <span className="font-semibold text-gray-800 break-words">
-                    {childName || "childName"}
+                    {/* ✅ Corrected fallback value */}
+                    {childName || "N/A"}
                   </span>
                 </div>
                 <div className="flex justify-between">
@@ -413,13 +427,21 @@ const PaperView = () => {
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-600">Marks Obtained:</span>
-                  <span className={`font-semibold ${obtainedMarks >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                  <span
+                    className={`font-semibold ${
+                      obtainedMarks >= 0 ? "text-green-600" : "text-red-600"
+                    }`}
+                  >
                     {obtainedMarks}
                   </span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-600">Percentage:</span>
-                  <span className={`font-semibold ${obtainedMarks >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                  <span
+                    className={`font-semibold ${
+                      obtainedMarks >= 0 ? "text-green-600" : "text-red-600"
+                    }`}
+                  >
                     {percentage}%
                   </span>
                 </div>
