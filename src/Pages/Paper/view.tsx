@@ -132,7 +132,7 @@ const PaperView = () => {
       }
     };
 
-    const handlePractice = async () => {
+    const handlePractice = () => {
       if (!selectedChild) {
         setShowPopup(true);
         return;
@@ -140,18 +140,20 @@ const PaperView = () => {
       
       const newURL = `${BaseURL}/#/student-answer/${id}`;
       
-      // Open the new tab immediately
+      // 1. Open the new tab instantly
       window.open(newURL, "_blank");
       
-      // Then, run the API call in the background
-      await assignPaper({
+      // 2. Then, fire off the API call in the background without waiting
+      assignPaper({
         childId: selectedChild,
         paperId: id,
         url: newURL,
         isPractice: true,
-      }).unwrap();
+      }).unwrap().then(() => {
+        // 3. Once the API call is done, refetch the details
+        DetailRefetch();
+      });
       
-      DetailRefetch();
       setShowGeneratedLink(false);
     };
 
