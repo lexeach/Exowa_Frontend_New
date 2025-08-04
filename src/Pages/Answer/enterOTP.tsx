@@ -24,10 +24,10 @@ const EnterOTPPage = ({ questionOTP, onVerify }) => {
   const handleSubmit = () => {
     const otpValue = otp.join("");
     const isOTPVerified = otpValue === questionOTP.toString();
-    if(isOTPVerified){
-      onVerify(true)
+    if (isOTPVerified) {
+      onVerify(true);
     } else {
-      setIsWrongOTP(!isOTPVerified)
+      setIsWrongOTP(!isOTPVerified);
     }
   };
   return (
@@ -46,7 +46,8 @@ const EnterOTPPage = ({ questionOTP, onVerify }) => {
               <UIInput
                 key={index}
                 id={`otp-input-${index}`}
-                type="text"
+                type="tel" // Changed to "tel" to suggest numeric keyboard
+                inputMode="numeric" // Added for broader support
                 value={digit}
                 maxLength={1}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
