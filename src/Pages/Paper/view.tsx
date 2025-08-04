@@ -70,6 +70,7 @@ const PaperView = () => {
     const [selectedOption, setSelectedOption] = useState("");
     const [childOptions, setChildOptions] = useState([]);
     const [showPopup, setShowPopup] = useState(false);
+    const [showGeneratedLink, setShowGeneratedLink] = useState(false);
 
     useEffect(() => {
       const options = children?.data?.map((child) => ({
@@ -108,6 +109,7 @@ const PaperView = () => {
       DetailRefetch();
       setGeneratedLink(newUrl);
       setUrlUpdate(true);
+      setShowGeneratedLink(true);
     };
 
     const handleCopy = () => {
@@ -148,6 +150,7 @@ const PaperView = () => {
       window.open(newURL, "_blank");
       
       DetailRefetch();
+      setShowGeneratedLink(false);
       SuccessToaster("Practice quiz opened in a new tab.");
     };
 
@@ -233,7 +236,7 @@ const PaperView = () => {
                   </UIButton>
                 )}
 
-                {QuestionURL && (
+                {showGeneratedLink && QuestionURL && (
                   <div className="p-4 border rounded-md bg-gray-50 relative">
                     <p className="font-semibold text-gray-700 text-sm md:text-base">
                       Generated Link:{" "}
