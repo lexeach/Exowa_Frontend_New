@@ -44,6 +44,7 @@ const PaperView = () => {
   const childGrade = singlePaper?.data?.children?.grade || "";
   const [copied, setCopied] = useState(false);
   const [showMessage, setShowMessage] = useState(false);
+  const [isPractice, setIsPractice] = useState(false);
 
   const totalMarks = questions.length;
   const obtainedMarks = answers.reduce((score, answer) => {
@@ -97,17 +98,14 @@ const PaperView = () => {
         setShowPopup(true);
         return;
       }
-
+      setIsPractice(false);
       const newUrl = `${BaseURL}/#/auth/answer/${id}`;
       await assignPaper({
         childId: selectedChild,
         paperId: id,
         url: newUrl,
       }).unwrap();
-
-      // **FIX: Refetch paper details to get the assigned child's name.**
       DetailRefetch();
-
       setGeneratedLink(newUrl);
       setUrlUpdate(true);
     };
@@ -125,7 +123,7 @@ const PaperView = () => {
     const handleGenerateOTP = async () => {
       try {
         await generateNewOTP(id).unwrap();
-        DetailRefetch(); // **FIX: Refetch after generating OTP to update the paper data.**
+        DetailRefetch();
         SuccessToaster("OTP Generated Successfully");
       } catch (error) {
         ErrorToaster("OTP Generation Failed");
@@ -138,11 +136,11 @@ const PaperView = () => {
         return;
       }
 
+      setIsPractice(true);
       const newURL = `${BaseURL}/#/student-answer/${id}`;
       window.open(newURL, "_blank");
     };
 
-    // ✅ Find the name of the selected child
     const selectedChildName = childOptions?.find(
       (option) => option.value === selectedChild
     )?.label;
@@ -417,8 +415,8 @@ const PaperView = () => {
                 <div className="flex justify-between">
                   <span className="text-gray-600">Children Name:</span>
                   <span className="font-semibold text-gray-800 break-words">
-                    {/* ✅ Corrected fallback value */}
-                    {childName || "N/A"}
+                    {/* Updated to check for isPractice first */}
+                    {isPractice ? "Practice Session" : childName || "N/A"}
                   </span>
                 </div>
                 <div className="flex justify-between">
