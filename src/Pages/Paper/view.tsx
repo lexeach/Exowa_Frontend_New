@@ -99,11 +99,15 @@ const PaperView = () => {
       }
 
       const newUrl = `${BaseURL}/#/auth/answer/${id}`;
-      const assignRes = await assignPaper({
+      await assignPaper({
         childId: selectedChild,
         paperId: id,
         url: newUrl,
       }).unwrap();
+
+      // **FIX: Refetch paper details to get the assigned child's name.**
+      DetailRefetch();
+
       setGeneratedLink(newUrl);
       setUrlUpdate(true);
     };
@@ -121,7 +125,7 @@ const PaperView = () => {
     const handleGenerateOTP = async () => {
       try {
         await generateNewOTP(id).unwrap();
-        refetch();
+        DetailRefetch(); // **FIX: Refetch after generating OTP to update the paper data.**
         SuccessToaster("OTP Generated Successfully");
       } catch (error) {
         ErrorToaster("OTP Generation Failed");
@@ -165,8 +169,6 @@ const PaperView = () => {
                       value={selectedOption}
                       onChange={handleSelectChange}
                     />
-
-                    {/* ✅ Display the selected child's name immediately */}
                     {selectedChildName && (
                       <p className="text-sm text-gray-600 mt-2">
                         Selected Child:{" "}
