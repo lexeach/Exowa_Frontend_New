@@ -225,7 +225,8 @@ const Papers = () => {
 
   const buttons = [
     {
-      label: "Generate New Paper",
+      //label: "Generate New Paper",
+      label: "Generate New Quiz",
       icon: <Plus />,
       onClick: () => dispatch(setFormOpen({ sheetComponent: "addPaper" })),
     },
