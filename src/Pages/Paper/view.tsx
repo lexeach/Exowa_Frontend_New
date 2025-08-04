@@ -140,14 +140,16 @@ const PaperView = () => {
       
       const newURL = `${BaseURL}/#/student-answer/${id}`;
       
+      // Open the new tab immediately
+      window.open(newURL, "_blank");
+      
+      // Then, run the API call in the background
       await assignPaper({
         childId: selectedChild,
         paperId: id,
         url: newURL,
         isPractice: true,
       }).unwrap();
-      
-      window.open(newURL, "_blank");
       
       DetailRefetch();
       setShowGeneratedLink(false);
