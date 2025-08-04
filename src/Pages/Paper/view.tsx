@@ -103,7 +103,7 @@ const PaperView = () => {
         childId: selectedChild,
         paperId: id,
         url: newUrl,
-        isPractice: false, // Ensure this is explicitly false
+        isPractice: false,
       }).unwrap();
       DetailRefetch();
       setGeneratedLink(newUrl);
@@ -138,17 +138,17 @@ const PaperView = () => {
       
       const newURL = `${BaseURL}/#/student-answer/${id}`;
       
-      // **FIX: Assign the paper as a practice run and refetch details**
+      // **FIX: Assign paper and set URL, but don't open new tab immediately.**
       await assignPaper({
         childId: selectedChild,
         paperId: id,
         url: newURL,
-        isPractice: true, // Tell the backend it's a practice run
+        isPractice: true,
       }).unwrap();
       
-      DetailRefetch(); // Refetch to get the updated paper details with the child's name
-      
-      window.open(newURL, "_blank");
+      DetailRefetch();
+      setUrlUpdate(true); // This will trigger the useEffect to refetch and display the URL.
+      SuccessToaster("Practice link generated. You can now copy and share it.");
     };
 
     const selectedChildName = childOptions?.find(
@@ -425,7 +425,6 @@ const PaperView = () => {
                 <div className="flex justify-between">
                   <span className="text-gray-600">Children Name:</span>
                   <span className="font-semibold text-gray-800 break-words">
-                    {/* The name is now correctly coming from the fetched data */}
                     {childName || "N/A"}
                   </span>
                 </div>
