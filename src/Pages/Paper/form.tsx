@@ -71,7 +71,7 @@ const PapersForm: React.FC<PaperFormProps> = ({ handleCancel, sheet }) => {
         ) : sheet?.id ? (
           "Save Changes"
         ) : (
-          "Generate Questions"
+          "Generate Quiz"
         )}
       </UIButton>
     </div>
@@ -82,7 +82,7 @@ const PapersForm: React.FC<PaperFormProps> = ({ handleCancel, sheet }) => {
 
   return (
     <div className="">
-      <SheetHeader title={"Generate New Questions"} />
+      <SheetHeader title={"Generate New Quiz"} />
       <div className="layout-container h-[75vh] overflow-auto">
         <div className="mt-6">
           <div className="layout-container mt-6">
