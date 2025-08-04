@@ -138,7 +138,7 @@ const PaperView = () => {
       
       const newURL = `${BaseURL}/#/student-answer/${id}`;
       
-      // **FIX: Assign paper and set URL, but don't open new tab immediately.**
+      // Assign paper to link the child
       await assignPaper({
         childId: selectedChild,
         paperId: id,
@@ -146,9 +146,11 @@ const PaperView = () => {
         isPractice: true,
       }).unwrap();
       
+      // Immediately open the new tab
+      window.open(newURL, "_blank");
+      
+      // Refetch to update the parent component's state
       DetailRefetch();
-      setUrlUpdate(true); // This will trigger the useEffect to refetch and display the URL.
-      SuccessToaster("Practice link generated. You can now copy and share it.");
     };
 
     const selectedChildName = childOptions?.find(
