@@ -138,7 +138,6 @@ const PaperView = () => {
       
       const newURL = `${BaseURL}/#/student-answer/${id}`;
       
-      // Assign paper to link the child
       await assignPaper({
         childId: selectedChild,
         paperId: id,
@@ -146,11 +145,10 @@ const PaperView = () => {
         isPractice: true,
       }).unwrap();
       
-      // Immediately open the new tab
       window.open(newURL, "_blank");
       
-      // Refetch to update the parent component's state
       DetailRefetch();
+      SuccessToaster("Practice quiz opened in a new tab.");
     };
 
     const selectedChildName = childOptions?.find(
