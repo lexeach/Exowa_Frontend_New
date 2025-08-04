@@ -151,7 +151,6 @@ const PaperView = () => {
       
       DetailRefetch();
       setShowGeneratedLink(false);
-      SuccessToaster("Practice quiz opened in a new tab.");
     };
 
     const selectedChildName = childOptions?.find(
