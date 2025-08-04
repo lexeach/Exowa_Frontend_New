@@ -45,9 +45,6 @@ const PaperView = () => {
   const [copied, setCopied] = useState(false);
   const [showMessage, setShowMessage] = useState(false);
 
-  // This state is no longer needed since we're using URL parameters
-  // const [isPractice, setIsPractice] = useState(false);
-
   const totalMarks = questions.length;
   const obtainedMarks = answers.reduce((score, answer) => {
     const question = questions.find(
@@ -66,11 +63,6 @@ const PaperView = () => {
   }, 0);
 
   const percentage = Math.max(0, (obtainedMarks / totalMarks) * 100).toFixed(2);
-
-  // Use the location hook to check for the practice URL parameter
-  const currentLocation = useLocation();
-  const isPracticeSession = new URLSearchParams(currentLocation.search).get("practice") === "true";
-
 
   const renderQuestions = () => {
     const [selectedChild, setSelectedChild] = useState("");
@@ -111,6 +103,7 @@ const PaperView = () => {
         childId: selectedChild,
         paperId: id,
         url: newUrl,
+        isPractice: false, // Ensure this is explicitly false
       }).unwrap();
       DetailRefetch();
       setGeneratedLink(newUrl);
@@ -137,13 +130,24 @@ const PaperView = () => {
       }
     };
 
-    const handlePractice = () => {
+    const handlePractice = async () => {
       if (!selectedChild) {
         setShowPopup(true);
         return;
       }
       
-      const newURL = `${BaseURL}/#/student-answer/${id}?practice=true`;
+      const newURL = `${BaseURL}/#/student-answer/${id}`;
+      
+      // **FIX: Assign the paper as a practice run and refetch details**
+      await assignPaper({
+        childId: selectedChild,
+        paperId: id,
+        url: newURL,
+        isPractice: true, // Tell the backend it's a practice run
+      }).unwrap();
+      
+      DetailRefetch(); // Refetch to get the updated paper details with the child's name
+      
       window.open(newURL, "_blank");
     };
 
@@ -421,8 +425,8 @@ const PaperView = () => {
                 <div className="flex justify-between">
                   <span className="text-gray-600">Children Name:</span>
                   <span className="font-semibold text-gray-800 break-words">
-                    {/* Check if it's a practice session */}
-                    {isPracticeSession ? "Practice Session" : childName || "N/A"}
+                    {/* The name is now correctly coming from the fetched data */}
+                    {childName || "N/A"}
                   </span>
                 </div>
                 <div className="flex justify-between">
