@@ -402,7 +402,7 @@ const PaperView = () => {
                 <div className="flex justify-between">
                   <span className="text-gray-600">Children Name:</span>
                   <span className="font-semibold text-gray-800 break-words">
-                    {childName || "N/A"}
+                    {childName || "childName"}
                   </span>
                 </div>
                 <div className="flex justify-between">
