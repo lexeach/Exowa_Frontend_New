@@ -44,7 +44,9 @@ const PaperView = () => {
   const childGrade = singlePaper?.data?.children?.grade || "";
   const [copied, setCopied] = useState(false);
   const [showMessage, setShowMessage] = useState(false);
-  const [isPractice, setIsPractice] = useState(false);
+
+  // This state is no longer needed since we're using URL parameters
+  // const [isPractice, setIsPractice] = useState(false);
 
   const totalMarks = questions.length;
   const obtainedMarks = answers.reduce((score, answer) => {
@@ -64,6 +66,11 @@ const PaperView = () => {
   }, 0);
 
   const percentage = Math.max(0, (obtainedMarks / totalMarks) * 100).toFixed(2);
+
+  // Use the location hook to check for the practice URL parameter
+  const currentLocation = useLocation();
+  const isPracticeSession = new URLSearchParams(currentLocation.search).get("practice") === "true";
+
 
   const renderQuestions = () => {
     const [selectedChild, setSelectedChild] = useState("");
@@ -98,7 +105,7 @@ const PaperView = () => {
         setShowPopup(true);
         return;
       }
-      setIsPractice(false);
+      
       const newUrl = `${BaseURL}/#/auth/answer/${id}`;
       await assignPaper({
         childId: selectedChild,
@@ -135,9 +142,8 @@ const PaperView = () => {
         setShowPopup(true);
         return;
       }
-
-      setIsPractice(true);
-      const newURL = `${BaseURL}/#/student-answer/${id}`;
+      
+      const newURL = `${BaseURL}/#/student-answer/${id}?practice=true`;
       window.open(newURL, "_blank");
     };
 
@@ -415,8 +421,8 @@ const PaperView = () => {
                 <div className="flex justify-between">
                   <span className="text-gray-600">Children Name:</span>
                   <span className="font-semibold text-gray-800 break-words">
-                    {/* Updated to check for isPractice first */}
-                    {isPractice ? "Practice Session" : childName || "N/A"}
+                    {/* Check if it's a practice session */}
+                    {isPracticeSession ? "Practice Session" : childName || "N/A"}
                   </span>
                 </div>
                 <div className="flex justify-between">
