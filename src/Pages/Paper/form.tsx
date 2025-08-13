@@ -85,6 +85,35 @@ const PapersForm: React.FC<PaperFormProps> = ({ handleCancel, sheet }) => {
     ? [...new Set(childrenListData.data.map((child) => child.class))]
     : [];
 
+  const classOptions = uniqueClasses.map((className) => ({
+    value: className,
+    label: `Class ${className}`,
+  }));
+
+  // Get the default fields from the config file
+  const baseFields = fields(
+    useGetSubjectOptionsMutation,
+    useGetSyllabusOptionsMutation,
+    currentClass,
+    setCurrentClass,
+    currentSubject,
+    setCurrentSubject,
+    currentSyllabus,
+    setCurrentSyllabus,
+    childrenListData?.data
+  );
+
+  // Find the class field and update its options
+  const updatedFields = baseFields.map((field) => {
+    if (field.name === "class") {
+      return {
+        ...field,
+        options: classOptions,
+      };
+    }
+    return field;
+  });
+
   return (
     <div className="">
       <SheetHeader title={"Generate New Quiz"} />
@@ -95,26 +124,7 @@ const PapersForm: React.FC<PaperFormProps> = ({ handleCancel, sheet }) => {
               <div>
                 {(!sheet.id || (sheet.id && Object.keys(data)).length > 0) && (
                   <DynamicForm
-                    fields={fields(
-                      useGetSubjectOptionsMutation,
-                      useGetSyllabusOptionsMutation,
-                      currentClass,
-                      setCurrentClass,
-                      currentSubject,
-                      setCurrentSubject,
-                      currentSyllabus,
-                      setCurrentSyllabus,
-                      childrenListData?.data
-                    )}
-                    // Pass the unique classes to the `class` field configuration
-                    customFields={{
-                      class: {
-                        options: uniqueClasses.map((className) => ({
-                          value: className,
-                          label: `Class ${className}`,
-                        })),
-                      },
-                    }}
+                    fields={updatedFields} // Use the updated fields list
                     fetchData={useGetChildrenListQuery}
                     onSubmit={(val) => {
                       setData({ ...data, ...val });
