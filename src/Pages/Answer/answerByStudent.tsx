@@ -1,104 +1,11 @@
-import React, { useState, useEffect, KeyboardEvent } from "react";
+import UILayout from "@/UI/Elements/Layout";
+import { useGetSinglePaperQuery } from "@/service/paper";
+import { useNavigate, useParams } from "react-router-dom";
+import { useState, useEffect } from "react"; // Added useEffect import for potential future debugging if needed
 import { CheckCircleIcon } from "lucide-react";
-
-// --- MOCK IMPLEMENTATIONS START ---
-// The following components and hooks are mocked to resolve the import errors
-// and make the component runnable in a standalone environment.
-
-const UILayout = ({ children }: { children: React.ReactNode }) => (
-  <div className="ui-layout">{children}</div>
-);
-
-const ErrorToaster = (message: string) => {
-  console.error("TOAST_ERROR:", message);
-  // In a real app, you would render a toast component here.
-};
-
-const BaseURL = "http://localhost:3000";
-
-// Mock data that simulates the API response for a single paper.
-const mockSinglePaperData = {
-  data: {
-    author: { _id: "author-123" },
-    questions: [
-      {
-        questionNumber: 1,
-        question: "What is the capital of France?",
-        choices: { a: "Berlin", b: "Madrid", c: "Paris", d: "Rome" },
-      },
-      {
-        questionNumber: 2,
-        question: "Which planet is known as the Red Planet?",
-        choices: { a: "Earth", b: "Mars", c: "Jupiter", d: "Venus" },
-      },
-      {
-        questionNumber: 3,
-        question: "What is the largest ocean on Earth?",
-        choices: {
-          a: "Atlantic",
-          b: "Indian",
-          c: "Arctic",
-          d: "Pacific",
-        },
-      },
-       {
-        questionNumber: 4,
-        question: "What is 2 + 2?",
-        choices: {
-          a: "3",
-          b: "4",
-          c: "5",
-          d: "6",
-        },
-      },
-    ],
-  },
-};
-
-// Mock hook to simulate fetching paper data.
-const useGetSinglePaperQuery = (id: string | undefined, options: any) => {
-  const [data, setData] = useState<any>(null);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    if (id) {
-      setTimeout(() => {
-        setData(mockSinglePaperData);
-        setIsLoading(false);
-      }, 1000); // Simulate network delay
-    } else {
-        setIsLoading(false);
-    }
-  }, [id]);
-
-  return { data, isLoading };
-};
-
-// Mock hook to simulate submitting answers.
-const useAnswerPaperMutation = () => {
-    const answerQuestion = async (payload: any) => {
-        console.log("Submitting answers:", payload);
-        // Simulate a successful API call
-        return new Promise((resolve) => {
-            setTimeout(() => {
-                resolve({ unwrap: () => Promise.resolve() });
-            }, 500);
-        });
-    };
-    return [answerQuestion];
-};
-
-// Mock for react-router-dom hooks
-const useParams = () => ({ id: "paper-123" });
-const useNavigate = () => {
-    return (path: string, options?: any) => {
-        console.log(`Navigating to: ${path}`, options);
-        // In a real app, this would change the URL.
-    }
-};
-
-// --- MOCK IMPLEMENTATIONS END ---
-
+import { ErrorToaster } from "@/UI/Elements/Toast";
+import { useAnswerPaperMutation } from "@/service/paper";
+import { BaseURL } from "../../config";
 
 const Answer = () => {
   const { id } = useParams();
@@ -117,16 +24,15 @@ const Answer = () => {
   const questions = singlePaper?.data?.questions ?? [];
   const parentId = singlePaper?.data?.author?._id;
 
+  // Optional: Keep this useEffect for debugging, it logs current state of answers
   useEffect(() => {
     if (!paperLoading && questions.length > 0) {
       console.log("Total Questions:", questions.length);
       console.log("Answers Recorded:", Object.keys(answers).length, answers);
-      console.log(
-        "Is Submit Button Disabled?",
-        Object.keys(answers).length < questions.length
-      );
+      console.log("Is Submit Button Disabled?", Object.keys(answers).length < questions.length);
     }
   }, [answers, questions.length, paperLoading]);
+
 
   const handleOptionChange = (
     questionNumber: number,
@@ -138,9 +44,8 @@ const Answer = () => {
     }));
     console.log(`Q${questionNumber} selected: ${selectedOption}`);
 
-    // *** FIX: Blur the currently focused element after selection. ***
-    // This prevents arrow keys from changing the radio selection while
-    // allowing them to scroll the page normally.
+    // *** This is the key part of the fix ***
+    // It blurs the focused element after selection.
     if (document.activeElement instanceof HTMLElement) {
         document.activeElement.blur();
     }
@@ -159,9 +64,11 @@ const Answer = () => {
             </h2>
             <div className="mt-4 space-y-2">
               {Object.entries(question.choices).map(([key, value]) => (
+                // Added 'relative' to the parent div of the label for absolute positioning context
                 <div key={key} className="relative flex items-center">
                   <label
                     htmlFor={`question-${question.questionNumber}-option-${key}`}
+                    // Enhanced label for better clickability and UX
                     className="flex items-center space-x-2 cursor-pointer w-full p-3 rounded-md hover:bg-gray-100 transition-colors duration-150 select-none"
                   >
                     <input
@@ -173,38 +80,35 @@ const Answer = () => {
                       onChange={() =>
                         handleOptionChange(question.questionNumber, key)
                       }
-                      // The onKeyDown handler has been removed from here
+                      // --- RECTIFIED CODE FOR CHECKBOX INTERACTION ---
+                      // This makes the input cover the entire label area, but is transparent
                       className="
-                        absolute
-                        z-10
-                        left-0 top-0
-                        w-full h-full
-                        opacity-0
-                        cursor-pointer
+                        absolute // Position absolutely
+                        z-10 // Give it a higher z-index to ensure it's on top of its siblings
+                        left-0 top-0 // Place it at the start of the label
+                        w-full h-full // Make it cover the *entire label area*
+                        opacity-0 // Make it completely transparent
+                        cursor-pointer // Show cursor pointer for desktop
                       "
-                      aria-hidden="true"
+                      aria-hidden="true" // Optional: hide from screen readers if label is descriptive
                     />
-                    <span
-                      className={`
+                    {/* The custom visual indicator for the radio button */}
+                    <span className={`
                         w-5 h-5 border-2 rounded-full flex items-center justify-center flex-shrink-0
-                        ${
-                          answers[question.questionNumber] === key
-                            ? "border-blue-500 bg-blue-500"
-                            : "border-gray-400"
+                        ${answers[question.questionNumber] === key
+                            ? 'border-blue-500 bg-blue-500' // Checked state: blue border and fill
+                            : 'border-gray-400' // Unchecked state: gray border
                         }
-                      `}
-                    >
+                    `}>
                       {answers[question.questionNumber] === key && (
                         <CheckCircleIcon
-                          width={16}
+                          width={16} // Smaller icon for better fit
                           height={16}
-                          className="text-white"
+                          className="text-white" // White icon for contrast on blue background
                         />
                       )}
                     </span>
-                    <span className="font-medium text-gray-800 break-words">
-                      {value}
-                    </span>
+                    <span className="font-medium text-gray-800 break-words">{value}</span> {/* Added text color and word break */}
                   </label>
                 </div>
               ))}
@@ -216,7 +120,11 @@ const Answer = () => {
   };
 
   const handleSubmit = async () => {
+    // Optional: Keep these console logs for debugging submit button behavior
     console.log("Submit button clicked!");
+    console.log("Current answers length:", Object.keys(answers).length);
+    console.log("Total questions length:", questions.length);
+
     if (Object.keys(answers).length === questions.length) {
       console.log("All questions answered. Proceeding with submission.");
       setIsSubmitted(true);
@@ -232,23 +140,26 @@ const Answer = () => {
           questionId: id,
           answers: formattedAnswers,
           userId: parentId,
-        });
+        }).unwrap();
 
         setTimeout(() => {
-          navigate("/auth/thankyou", { state: id });
+          // Changed navigation for result page as per previous discussions
+          // Assuming /auth/result/:id is the desired URL.
+          // window.open(`${BaseURL}/#/auth/result/${id}`, "_blank");
+          navigate("/auth/thankyou", { state: id }); // Navigating within the app as per your original code
         }, 1000);
-      } catch (error: any) {
-        console.error("Submission Error:", error);
+      } catch (error) {
+        console.error("Submission Error:", error); // Log the full error for debugging
         ErrorToaster(error?.data?.message || "Issue in submitting answers");
       }
     } else {
       console.log("Not all questions answered yet. Button remains disabled.");
-      ErrorToaster(`Please answer all ${questions.length} questions.`);
+      ErrorToaster(`Please answer all ${questions.length} questions.`); // User feedback if not all answered
     }
   };
 
   if (paperLoading) {
-    return <div className="p-6 text-center">Loading...</div>;
+    return <div>Loading...</div>;
   }
 
   return (
@@ -265,6 +176,8 @@ const Answer = () => {
         >
           <div className="w-full max-w-4xl border border-dark p-6 rounded-lg shadow overflow-y-auto">
             {renderQuestions()}
+            {/* Keeping the submit button's parent div with relative and z-index as discussed previously
+                to help with potential overlay issues on mobile for the button itself. */}
             <div className="text-right relative z-20">
               <button
                 onClick={handleSubmit}
