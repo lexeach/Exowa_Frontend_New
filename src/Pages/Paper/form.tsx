@@ -11,7 +11,7 @@ import UIButton from "@/UI/Elements/Button";
 import { setRefresh } from "@/slice/layoutSlice";
 import { useDispatch } from "react-redux";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { fields, schema } from "./config"; // Assuming the config file is in the same directory
+import { fields, schema } from "./config";
 import { Loader } from "lucide-react";
 import { useGetChildrenListQuery } from "@/service/children";
 import { useNavigate } from "react-router-dom";
@@ -25,12 +25,12 @@ type PaperFormProps = {
 const PapersForm: React.FC<PaperFormProps> = ({ handleCancel, sheet }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  useMobileKeyboardPrevention(); // Add the hook to prevent keyboard on mobile
+  useMobileKeyboardPrevention();
   const [data, setData] = useState({});
   const [createPaper, { isLoading: isCreateLoading }] = useAddPaperMutation();
   const [currentClass, setCurrentClass] = useState(null);
   const [currentSubject, setCurrentSubject] = useState(null);
-  const [currentSyllabus, setCurrentSyllabus] = useState(null); // Add state for syllabus
+  const [currentSyllabus, setCurrentSyllabus] = useState(null);
 
   const methods = useForm({
     resolver: yupResolver(schema),
@@ -38,7 +38,6 @@ const PapersForm: React.FC<PaperFormProps> = ({ handleCancel, sheet }) => {
 
   const onSubmit = async (formData) => {
     try {
-
       const result = await createPaper(formData).unwrap();
       SuccessToaster("Records Created Successfully");
       dispatch(setRefresh());
@@ -76,9 +75,15 @@ const PapersForm: React.FC<PaperFormProps> = ({ handleCancel, sheet }) => {
       </UIButton>
     </div>
   );
+
   const { data: childrenListData } = useGetChildrenListQuery({
     refetchOnMountOrArgChange: true,
   });
+
+  // Extract unique class values from childrenListData
+  const uniqueClasses = childrenListData?.data
+    ? [...new Set(childrenListData.data.map((child) => child.class))]
+    : [];
 
   return (
     <div className="">
@@ -97,10 +102,19 @@ const PapersForm: React.FC<PaperFormProps> = ({ handleCancel, sheet }) => {
                       setCurrentClass,
                       currentSubject,
                       setCurrentSubject,
-                      currentSyllabus, // Pass currentSyllabus
-                      setCurrentSyllabus, // <-- Missing comma added here
+                      currentSyllabus,
+                      setCurrentSyllabus,
                       childrenListData?.data
                     )}
+                    // Pass the unique classes to the `class` field configuration
+                    customFields={{
+                      class: {
+                        options: uniqueClasses.map((className) => ({
+                          value: className,
+                          label: `Class ${className}`,
+                        })),
+                      },
+                    }}
                     fetchData={useGetChildrenListQuery}
                     onSubmit={(val) => {
                       setData({ ...data, ...val });
