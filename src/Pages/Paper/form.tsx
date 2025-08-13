@@ -80,9 +80,15 @@ const PapersForm: React.FC<PaperFormProps> = ({ handleCancel, sheet }) => {
     refetchOnMountOrArgChange: true,
   });
 
-  // Extract unique class values from childrenListData
+  // Extract unique class values, filtering out any undefined or null values
   const uniqueClasses = childrenListData?.data
-    ? [...new Set(childrenListData.data.map((child) => child.class))]
+    ? [
+        ...new Set(
+          childrenListData.data
+            .map((child) => child.class)
+            .filter((className) => className != null)
+        ),
+      ]
     : [];
 
   const classOptions = uniqueClasses.map((className) => ({
@@ -124,7 +130,7 @@ const PapersForm: React.FC<PaperFormProps> = ({ handleCancel, sheet }) => {
               <div>
                 {(!sheet.id || (sheet.id && Object.keys(data)).length > 0) && (
                   <DynamicForm
-                    fields={updatedFields} // Use the updated fields list
+                    fields={updatedFields}
                     fetchData={useGetChildrenListQuery}
                     onSubmit={(val) => {
                       setData({ ...data, ...val });
