@@ -11,7 +11,7 @@ import UIButton from "@/UI/Elements/Button";
 import { setRefresh } from "@/slice/layoutSlice";
 import { useDispatch } from "react-redux";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { fields, schema } from "./config";
+import { fields, schema } from "./config"; // Assuming the config file is in the same directory
 import { Loader } from "lucide-react";
 import { useGetChildrenListQuery } from "@/service/children";
 import { useNavigate } from "react-router-dom";
@@ -25,12 +25,12 @@ type PaperFormProps = {
 const PapersForm: React.FC<PaperFormProps> = ({ handleCancel, sheet }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  useMobileKeyboardPrevention();
+  useMobileKeyboardPrevention(); // Add the hook to prevent keyboard on mobile
   const [data, setData] = useState({});
   const [createPaper, { isLoading: isCreateLoading }] = useAddPaperMutation();
   const [currentClass, setCurrentClass] = useState(null);
   const [currentSubject, setCurrentSubject] = useState(null);
-  const [currentSyllabus, setCurrentSyllabus] = useState(null);
+  const [currentSyllabus, setCurrentSyllabus] = useState(null); // Add state for syllabus
 
   const methods = useForm({
     resolver: yupResolver(schema),
@@ -38,6 +38,7 @@ const PapersForm: React.FC<PaperFormProps> = ({ handleCancel, sheet }) => {
 
   const onSubmit = async (formData) => {
     try {
+
       const result = await createPaper(formData).unwrap();
       SuccessToaster("Records Created Successfully");
       dispatch(setRefresh());
@@ -75,49 +76,8 @@ const PapersForm: React.FC<PaperFormProps> = ({ handleCancel, sheet }) => {
       </UIButton>
     </div>
   );
-
   const { data: childrenListData } = useGetChildrenListQuery({
     refetchOnMountOrArgChange: true,
-  });
-
-  // Extract unique class values, filtering out any undefined or null values
-  const uniqueClasses = childrenListData?.data
-    ? [
-        ...new Set(
-          childrenListData.data
-            .map((child) => child.class)
-            .filter((className) => className != null)
-        ),
-      ]
-    : [];
-
-  const classOptions = uniqueClasses.map((className) => ({
-    value: className,
-    label: `Class ${className}`,
-  }));
-
-  // Get the default fields from the config file
-  const baseFields = fields(
-    useGetSubjectOptionsMutation,
-    useGetSyllabusOptionsMutation,
-    currentClass,
-    setCurrentClass,
-    currentSubject,
-    setCurrentSubject,
-    currentSyllabus,
-    setCurrentSyllabus,
-    childrenListData?.data
-  );
-
-  // Find the class field and update its options
-  const updatedFields = baseFields.map((field) => {
-    if (field.name === "class") {
-      return {
-        ...field,
-        options: classOptions,
-      };
-    }
-    return field;
   });
 
   return (
@@ -130,7 +90,17 @@ const PapersForm: React.FC<PaperFormProps> = ({ handleCancel, sheet }) => {
               <div>
                 {(!sheet.id || (sheet.id && Object.keys(data)).length > 0) && (
                   <DynamicForm
-                    fields={updatedFields}
+                    fields={fields(
+                      useGetSubjectOptionsMutation,
+                      useGetSyllabusOptionsMutation,
+                      currentClass,
+                      setCurrentClass,
+                      currentSubject,
+                      setCurrentSubject,
+                      currentSyllabus, // Pass currentSyllabus
+                      setCurrentSyllabus, // <-- Missing comma added here
+                      childrenListData?.data
+                    )}
                     fetchData={useGetChildrenListQuery}
                     onSubmit={(val) => {
                       setData({ ...data, ...val });
