@@ -36,6 +36,16 @@ const PapersForm: React.FC<PaperFormProps> = ({ handleCancel, sheet }) => {
     resolver: yupResolver(schema),
   });
 
+  // Inside PapersForm component
+
+// Extract and filter unique classes
+const uniqueClassList = childrenListData?.data
+  ? childrenListData.data.filter(
+      (child, index, self) =>
+        index === self.findIndex((c) => c.class === child.class) // Keep only first occurrence of each class
+    )
+  : [];
+
   const onSubmit = async (formData) => {
     try {
 
@@ -89,25 +99,26 @@ const PapersForm: React.FC<PaperFormProps> = ({ handleCancel, sheet }) => {
             <div className="grid md:grid-cols-1 grid-cols-1 gap-6">
               <div>
                 {(!sheet.id || (sheet.id && Object.keys(data)).length > 0) && (
-                  <DynamicForm
-                    fields={fields(
-                      useGetSubjectOptionsMutation,
-                      useGetSyllabusOptionsMutation,
-                      currentClass,
-                      setCurrentClass,
-                      currentSubject,
-                      setCurrentSubject,
-                      currentSyllabus, // Pass currentSyllabus
-                      setCurrentSyllabus, // <-- Missing comma added here
-                      childrenListData?.data
-                    )}
-                    fetchData={useGetChildrenListQuery}
-                    onSubmit={(val) => {
-                      setData({ ...data, ...val });
-                    }}
-                    useFormMethods={methods}
-                    showButton={false}
-                  />
+                <DynamicForm
+  fields={fields(
+    useGetSubjectOptionsMutation,
+    useGetSyllabusOptionsMutation,
+    currentClass,
+    setCurrentClass,
+    currentSubject,
+    setCurrentSubject,
+    currentSyllabus,
+    setCurrentSyllabus,
+    uniqueClassList // ⬅ Now sending filtered data
+  )}
+  fetchData={useGetChildrenListQuery}
+  onSubmit={(val) => {
+    setData({ ...data, ...val });
+  }}
+  useFormMethods={methods}
+  showButton={false}
+/>
+
                 )}
               </div>
             </div>
