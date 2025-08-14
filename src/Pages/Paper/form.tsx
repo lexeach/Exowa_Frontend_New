@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useAddPaperMutation } from "@/service/paper";
 import { ErrorToaster, SuccessToaster } from "@/UI/Elements/Toast";
@@ -38,6 +38,7 @@ const PapersForm: React.FC<PaperFormProps> = ({ handleCancel, sheet }) => {
 
   const onSubmit = async (formData) => {
     try {
+
       const result = await createPaper(formData).unwrap();
       SuccessToaster("Records Created Successfully");
       dispatch(setRefresh());
@@ -75,24 +76,9 @@ const PapersForm: React.FC<PaperFormProps> = ({ handleCancel, sheet }) => {
       </UIButton>
     </div>
   );
-
   const { data: childrenListData } = useGetChildrenListQuery({
     refetchOnMountOrArgChange: true,
   });
-
-  // 👇️ useMemo to create a unique list of classes
-  const uniqueClasses = useMemo(() => {
-    if (!childrenListData?.data) {
-      return [];
-    }
-
-    const classes = childrenListData.data.map((child) => child.class);
-    const uniqueClassSet = new Set(classes);
-    return Array.from(uniqueClassSet).map((className) => ({
-      label: className,
-      value: className,
-    }));
-  }, [childrenListData]);
 
   return (
     <div className="">
@@ -111,10 +97,9 @@ const PapersForm: React.FC<PaperFormProps> = ({ handleCancel, sheet }) => {
                       setCurrentClass,
                       currentSubject,
                       setCurrentSubject,
-                      currentSyllabus,
-                      setCurrentSyllabus,
-                      // 👇️ Pass the unique classes list here
-                      uniqueClasses
+                      currentSyllabus, // Pass currentSyllabus
+                      setCurrentSyllabus, // <-- Missing comma added here
+                      childrenListData?.data
                     )}
                     fetchData={useGetChildrenListQuery}
                     onSubmit={(val) => {
