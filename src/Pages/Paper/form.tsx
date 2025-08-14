@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { useAddPaperMutation } from "@/service/paper";
 import { ErrorToaster, SuccessToaster } from "@/UI/Elements/Toast";
@@ -36,10 +36,8 @@ const PapersForm: React.FC<PaperFormProps> = ({ handleCancel, sheet }) => {
     resolver: yupResolver(schema),
   });
 
- 
   const onSubmit = async (formData) => {
     try {
-
       const result = await createPaper(formData).unwrap();
       SuccessToaster("Records Created Successfully");
       dispatch(setRefresh());
@@ -77,9 +75,24 @@ const PapersForm: React.FC<PaperFormProps> = ({ handleCancel, sheet }) => {
       </UIButton>
     </div>
   );
+
   const { data: childrenListData } = useGetChildrenListQuery({
     refetchOnMountOrArgChange: true,
   });
+
+  // 👇️ useMemo to create a unique list of classes
+  const uniqueClasses = useMemo(() => {
+    if (!childrenListData?.data) {
+      return [];
+    }
+
+    const classes = childrenListData.data.map((child) => child.class);
+    const uniqueClassSet = new Set(classes);
+    return Array.from(uniqueClassSet).map((className) => ({
+      label: className,
+      value: className,
+    }));
+  }, [childrenListData]);
 
   return (
     <div className="">
@@ -90,46 +103,26 @@ const PapersForm: React.FC<PaperFormProps> = ({ handleCancel, sheet }) => {
             <div className="grid md:grid-cols-1 grid-cols-1 gap-6">
               <div>
                 {(!sheet.id || (sheet.id && Object.keys(data)).length > 0) && (
-     <DynamicForm
-  fields={fields(
-    useGetSubjectOptionsMutation,
-    useGetSyllabusOptionsMutation,
-    currentClass,
-    setCurrentClass,
-    currentSubject,
-    setCurrentSubject,
-    currentSyllabus,
-    setCurrentSyllabus,
-    // Corrected data source path
-    childrenListData?.data
-      ? Array.from(
-          new Set(
-            (childrenListData.data.children ?? childrenListData.data) // handle both shapes
-              .map((child) => String(child.class || "").trim())
-              .filter(Boolean) // remove empty/null
-          )
-        )
-          .sort((a, b) => {
-            const numA = parseInt(a, 10);
-            const numB = parseInt(b, 10);
-            if (!isNaN(numA) && !isNaN(numB)) return numA - numB;
-            return a.localeCompare(b);
-          })
-          .map((cls) => ({
-            label: `Class ${cls}`,
-            value: cls
-          }))
-      : []
-  )}
-  fetchData={useGetChildrenListQuery}
-  onSubmit={(val) => {
-    setData({ ...data, ...val });
-  }}
-  useFormMethods={methods}
-  showButton={false}
-/>
-
-
+                  <DynamicForm
+                    fields={fields(
+                      useGetSubjectOptionsMutation,
+                      useGetSyllabusOptionsMutation,
+                      currentClass,
+                      setCurrentClass,
+                      currentSubject,
+                      setCurrentSubject,
+                      currentSyllabus,
+                      setCurrentSyllabus,
+                      // 👇️ Pass the unique classes list here
+                      uniqueClasses
+                    )}
+                    fetchData={useGetChildrenListQuery}
+                    onSubmit={(val) => {
+                      setData({ ...data, ...val });
+                    }}
+                    useFormMethods={methods}
+                    showButton={false}
+                  />
                 )}
               </div>
             </div>
