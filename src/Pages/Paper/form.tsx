@@ -36,16 +36,7 @@ const PapersForm: React.FC<PaperFormProps> = ({ handleCancel, sheet }) => {
     resolver: yupResolver(schema),
   });
 
-  // Inside PapersForm component
-
-// Extract and filter unique classes
-const uniqueClassList = childrenListData?.data
-  ? childrenListData.data.filter(
-      (child, index, self) =>
-        index === self.findIndex((c) => c.class === child.class) // Keep only first occurrence of each class
-    )
-  : [];
-
+ 
   const onSubmit = async (formData) => {
     try {
 
@@ -99,7 +90,7 @@ const uniqueClassList = childrenListData?.data
             <div className="grid md:grid-cols-1 grid-cols-1 gap-6">
               <div>
                 {(!sheet.id || (sheet.id && Object.keys(data)).length > 0) && (
-                <DynamicForm
+               <DynamicForm
   fields={fields(
     useGetSubjectOptionsMutation,
     useGetSyllabusOptionsMutation,
@@ -109,7 +100,16 @@ const uniqueClassList = childrenListData?.data
     setCurrentSubject,
     currentSyllabus,
     setCurrentSyllabus,
-    uniqueClassList // ⬅ Now sending filtered data
+    // Filter here before passing to fields
+    childrenListData?.data
+      ? childrenListData.data.filter(
+          (child, index, self) =>
+            index ===
+            self.findIndex(
+              (c) => String(c.class).toLowerCase() === String(child.class).toLowerCase()
+            )
+        )
+      : []
   )}
   fetchData={useGetChildrenListQuery}
   onSubmit={(val) => {
