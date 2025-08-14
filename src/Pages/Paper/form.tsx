@@ -90,7 +90,7 @@ const PapersForm: React.FC<PaperFormProps> = ({ handleCancel, sheet }) => {
             <div className="grid md:grid-cols-1 grid-cols-1 gap-6">
               <div>
                 {(!sheet.id || (sheet.id && Object.keys(data)).length > 0) && (
-            <DynamicForm
+       <DynamicForm
   fields={fields(
     useGetSubjectOptionsMutation,
     useGetSyllabusOptionsMutation,
@@ -100,7 +100,7 @@ const PapersForm: React.FC<PaperFormProps> = ({ handleCancel, sheet }) => {
     setCurrentSubject,
     currentSyllabus,
     setCurrentSyllabus,
-    // Extract unique classes here
+    // Extract unique classes as {label, value}
     childrenListData?.data
       ? Array.from(
           new Set(
@@ -108,12 +108,17 @@ const PapersForm: React.FC<PaperFormProps> = ({ handleCancel, sheet }) => {
               .map((child) => String(child.class).trim())
               .filter((cls) => cls) // remove empty/null
           )
-        ).sort((a, b) => {
-          const numA = parseInt(a, 10);
-          const numB = parseInt(b, 10);
-          if (!isNaN(numA) && !isNaN(numB)) return numA - numB;
-          return a.localeCompare(b);
-        })
+        )
+          .sort((a, b) => {
+            const numA = parseInt(a, 10);
+            const numB = parseInt(b, 10);
+            if (!isNaN(numA) && !isNaN(numB)) return numA - numB;
+            return a.localeCompare(b);
+          })
+          .map((cls) => ({
+            label: `Class ${cls}`,
+            value: cls
+          }))
       : []
   )}
   fetchData={useGetChildrenListQuery}
