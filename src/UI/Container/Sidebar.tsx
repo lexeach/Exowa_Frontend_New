@@ -2,8 +2,8 @@ import {
   ChevronDownIcon,
   ChevronUpIcon,
   ViewColumnsIcon,
-  Bars3Icon, 
-  XMarkIcon, 
+  Bars3Icon,
+  XMarkIcon,
 } from '@heroicons/react/24/outline';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -23,7 +23,7 @@ export function Sidebar({ children }) {
   const { sidebar, hideSidebar } = useSelector((item) => item.layout);
   const location = useLocation();
   const [openSubMenu, setOpenSubMenu] = useState(null);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false); // State for mobile menu
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const userRole = localStorage.getItem('role');
   const filteredSidebarItems = sidebarItems.filter(
@@ -45,20 +45,36 @@ export function Sidebar({ children }) {
 
   return (
     <div className="flex flex-col min-h-screen">
-      {/* Mobile Header */}
-      <div className="md:hidden fixed top-0 left-0 right-0 z-20 bg-white border-b p-4 flex items-center justify-between">
-        <div className="text-lg font-semibold">Exowa Automated Assessment</div>
-        <Button
-          variant="ghost"
-          size="sm"
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-        >
-          {mobileMenuOpen ? (
-            <XMarkIcon className="h-6 w-6" />
-          ) : (
-            <Bars3Icon className="h-6 w-6" />
-          )}
-        </Button>
+      {/* Universal Header (Visible on all devices) */}
+      <div className="fixed top-0 left-0 right-0 z-20 bg-white border-b p-4 flex items-center justify-between">
+        {/* Header content for desktop */}
+        <div className="hidden md:flex items-center">
+          <UIButton
+            variant="ghost"
+            className="p-1 rounded-md"
+            size="xs"
+            onClick={toggleSidebar}
+          >
+            <ViewColumnsIcon height={24} />
+          </UIButton>
+          <div className="text-lg font-semibold ml-4">Exowa Automated Assessment</div>
+        </div>
+
+        {/* Header content for mobile */}
+        <div className="md:hidden flex items-center justify-between w-full">
+          <div className="text-lg font-semibold">Exowa Automated Assessment</div>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          >
+            {mobileMenuOpen ? (
+              <XMarkIcon className="h-6 w-6" />
+            ) : (
+              <Bars3Icon className="h-6 w-6" />
+            )}
+          </Button>
+        </div>
       </div>
 
       {/* Mobile Sidebar */}
@@ -130,7 +146,7 @@ export function Sidebar({ children }) {
         </div>
       )}
 
-      {/* Desktop Sidebar */}
+      {/* Desktop Sidebar and Main Content */}
       <div className="hidden md:flex">
         {!hideSidebar && (
           <aside
@@ -143,14 +159,7 @@ export function Sidebar({ children }) {
                 text-right rtl:text-left shadow-md`}
           >
             <div className="w-full flex mb-[18px]">
-              <UIButton
-                variant="ghost"
-                className="p-1 rounded-md"
-                size="xs"
-                onClick={toggleSidebar}
-              >
-                <ViewColumnsIcon height={24} />
-              </UIButton>
+              {/* This button is now inside the universal header */}
             </div>
             <nav className="flex flex-col items-center overflow-x-hidden overflow-y-auto max-h-[82vh] h-[100vh]">
               {filteredSidebarItems.map((item, index) => (
