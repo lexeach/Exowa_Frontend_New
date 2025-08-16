@@ -13,7 +13,6 @@ import { Button } from '@/components/ui/button';
 import UIButton from '../Elements/Button';
 import { setSideBar } from '@/slice/layoutSlice';
 import { sidebarItems } from '@/config/sidebar';
-import logo from '@/assets/ai-exam-logo.png'; // 👈️ Make sure this path is correct
 
 const notExpandedStyle = `sidebar-unexpanded-nav-hover flex mb-[8px] pt-[11px] flex-col text-black items-center justify-center w-[71px] h-15 text-xs px-0 text-[11px] last:mb-0 hover:text-blue-600 hover:bg-blue-100 hover:border-blue-500`;
 const expandedStyle = `sidebar-expanded-nav-hover flex mb-[8px] px-[12px] py-[10px] flex-row text-black items-left justify-start w-[220px] h-15 text-xs text-sm last:mb-0 hover:text-blue-600 hover:bg-blue-100 hover:border-blue-500`;
@@ -58,13 +57,12 @@ export function Sidebar({ children }) {
           >
             <ViewColumnsIcon height={24} />
           </UIButton>
-          <img src={logo} alt="Exowa Automated Assessment Logo" className="h-8 ml-4" />
+          <div className="text-lg font-semibold ml-4">Exowa Automated Assessment</div>
         </div>
 
         {/* Header content for mobile */}
         <div className="md:hidden flex items-center justify-between w-full">
-          {/* 👇️ This line was updated to display the image instead of text */}
-          <img src={logo} alt="Exowa Automated Assessment Logo" className="h-8" />
+          <div className="text-lg font-semibold">Exowa Automated Assessment</div>
           <Button
             variant="ghost"
             size="sm"
