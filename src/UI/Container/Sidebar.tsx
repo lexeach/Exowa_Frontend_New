@@ -62,6 +62,7 @@ export function Sidebar({ children }) {
 
         {/* Header content for mobile */}
         <div className="md:hidden flex items-center justify-between w-full">
+          {/* 👇️ This line was moved here to ensure it's visible on mobile */}
           <div className="text-lg font-semibold">Exowa Automated Assessment</div>
           <Button
             variant="ghost"
