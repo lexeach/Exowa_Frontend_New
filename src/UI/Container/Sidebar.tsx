@@ -13,7 +13,7 @@ import { Button } from '@/components/ui/button';
 import UIButton from '../Elements/Button';
 import { setSideBar } from '@/slice/layoutSlice';
 import { sidebarItems } from '@/config/sidebar';
-import logo from '@/assets/images/logo.png'; // Assuming your logo is in this path
+import logo from '@/assets/logo.png'; // Assuming your logo is in this path
 
 const notExpandedStyle = `sidebar-unexpanded-nav-hover flex mb-[8px] pt-[11px] flex-col text-black items-center justify-center w-[71px] h-15 text-xs px-0 text-[11px] last:mb-0 hover:text-blue-600 hover:bg-blue-100 hover:border-blue-500`;
 const expandedStyle = `sidebar-expanded-nav-hover flex mb-[8px] px-[12px] py-[10px] flex-row text-black items-left justify-start w-[220px] h-15 text-xs text-sm last:mb-0 hover:text-blue-600 hover:bg-blue-100 hover:border-blue-500`;
