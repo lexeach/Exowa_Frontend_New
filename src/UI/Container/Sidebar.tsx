@@ -45,50 +45,37 @@ export function Sidebar({ children }) {
 
   return (
     <div className="flex flex-col min-h-screen">
-     {/* Universal Header (Visible on all devices) */}
-<div className="fixed top-0 left-0 right-0 z-20 bg-white border-b p-4 flex items-center justify-between">
-  {/* Left side: Sidebar toggle + Logo + Title */}
-  <div className="flex items-center">
-    {/* Sidebar toggle button (desktop only) */}
-    <div className="hidden md:block">
-      <UIButton
-        variant="ghost"
-        className="p-1 rounded-md"
-        size="xs"
-        onClick={toggleSidebar}
-      >
-        <ViewColumnsIcon height={24} />
-      </UIButton>
-    </div>
+      {/* Universal Header (Visible on all devices) */}
+      <div className="fixed top-0 left-0 right-0 z-20 bg-white border-b p-4 flex items-center justify-between">
+        {/* Header content for desktop */}
+        <div className="hidden md:flex items-center">
+          <UIButton
+            variant="ghost"
+            className="p-1 rounded-md"
+            size="xs"
+            onClick={toggleSidebar}
+          >
+            <ViewColumnsIcon height={24} />
+          </UIButton>
+          <div className="text-lg font-semibold ml-4">Exowa Automated Assessment</div>
+        </div>
 
-    {/* Logo Image (visible on all devices) */}
-    <img
-      src="assets/ai-exam-logo.png" // replace with your image path
-      alt="Logo"
-      className="h-8 w-auto ml-3"
-    />
-
-    {/* Title (visible on all devices) */}
-    <div className="text-lg font-semibold ml-3">
-      Exowa Automated Assessment
-    </div>
-  </div>
-
-  {/* Right side: Mobile menu button (hidden on desktop) */}
-  <div className="md:hidden">
-    <Button
-      variant="ghost"
-      size="sm"
-      onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-    >
-      {mobileMenuOpen ? (
-        <XMarkIcon className="h-6 w-6" />
-      ) : (
-        <Bars3Icon className="h-6 w-6" />
-      )}
-    </Button>
-  </div>
-</div>
+        {/* Header content for mobile */}
+        <div className="md:hidden flex items-center justify-between w-full">
+          <div className="text-lg font-semibold">Exowa Automated Assessment</div>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          >
+            {mobileMenuOpen ? (
+              <XMarkIcon className="h-6 w-6" />
+            ) : (
+              <Bars3Icon className="h-6 w-6" />
+            )}
+          </Button>
+        </div>
+      </div>
 
       {/* Mobile Sidebar */}
       {mobileMenuOpen && (
