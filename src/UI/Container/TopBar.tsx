@@ -38,8 +38,22 @@ export function TopBar() {
 
   return (
     <div className="flex flex-col">
+      {/* Mobile Header */}
+      <header className="flex md:hidden top-0 left-0 right-0 z-30 h-14 items-center justify-between bg-background px-4 shadow-md">
+        <div className="flex items-center">
+          <img className="h-8 w-auto" src={Logo} alt="Logo" />
+        </div>
+        <UIDropdown
+          className="p-0"
+          options={options}
+          customName={<UIAvatar />}
+          onChange={handleOption}
+        />
+      </header>
+
+      {/* Desktop Header */}
       <header className="hidden md:flex top-0 left-0 right-0 z-30 h-16 items-center gap-4 bg-background px-4 md:px-6 shadow-md">
-        <nav className="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
+        <nav className="flex flex-col gap-6 text-lg font-medium md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
           <div className="w-[230px]">
             <img className="h-[24px]" src={Logo} alt="Logo" />
           </div>
