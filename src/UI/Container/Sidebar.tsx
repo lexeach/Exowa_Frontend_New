@@ -8,6 +8,9 @@ import {
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
+import Logo from "@/assets/ai-exam-logo.png"; // ✅ Import logo
+import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import { Button } from "@/components/ui/button"; // adjust if Button is elsewhere
 
 import { Button } from '@/components/ui/button';
 import UIButton from '../Elements/Button';
@@ -60,12 +63,13 @@ export function Sidebar({ children }) {
           <div className="text-lg font-semibold ml-4">Exowa Automated Assessment</div>
         </div>
 
-        {/* Header content for mobile */}
+
+{/* Header content for mobile */}
 <div className="md:hidden flex items-center justify-between w-full">
   {/* Logo + Text */}
   <div className="flex items-center gap-2">
     <img
-      src="src/assets/ai-exam-logo.png"
+      src={Logo}
       alt="Exowa Logo"
       className="h-8 w-8 object-contain"
     />
