@@ -61,21 +61,30 @@ export function Sidebar({ children }) {
         </div>
 
         {/* Header content for mobile */}
-        <div className="md:hidden flex items-center justify-between w-full">
-          <div className="text-lg font-semibold">Exowa Automated Assessment</div>
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          >
-            {mobileMenuOpen ? (
-              <XMarkIcon className="h-6 w-6" />
-            ) : (
-              <Bars3Icon className="h-6 w-6" />
-            )}
-          </Button>
-        </div>
-      </div>
+<div className="md:hidden flex items-center justify-between w-full">
+  {/* Logo + Text */}
+  <div className="flex items-center gap-2">
+    <img
+      src="src/assets/ai-exam-logo.png"
+      alt="Exowa Logo"
+      className="h-8 w-8 object-contain"
+    />
+    <span className="text-lg font-semibold">Exowa Automated Assessment</span>
+  </div>
+
+  {/* Menu button */}
+  <Button
+    variant="ghost"
+    size="sm"
+    onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+  >
+    {mobileMenuOpen ? (
+      <XMarkIcon className="h-6 w-6" />
+    ) : (
+      <Bars3Icon className="h-6 w-6" />
+    )}
+  </Button>
+</div>
 
       {/* Mobile Sidebar */}
       {mobileMenuOpen && (
