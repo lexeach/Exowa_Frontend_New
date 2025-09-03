@@ -25,6 +25,7 @@ import OtpExpire from "./Pages/Answer/expireOTP";
 import ThankYouPage from "./Pages/Answer/thankyou";
 import LogOut from "./Pages/Auth/LogOut";
 import AnswerByStudent from "./Pages/Answer/answerByStudent";
+import LearningView from "./Pages/Paper/LearningView";
 
 const router = createHashRouter([
   {
@@ -49,6 +50,10 @@ const router = createHashRouter([
           {
             path: "papers/:id",
             element: <PaperView />,
+          },
+           {
+            path: "papers/learning/:id",
+            element: <LearningView />,
           },
           {
             path: "children",

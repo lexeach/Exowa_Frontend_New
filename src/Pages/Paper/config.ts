@@ -267,7 +267,7 @@ const dynamicSubjectOptions = {
   default: [],
 };
 
-const chapterCounts = new Map([
+const chapterCounts = new Map<string, string[] | number>([
   ["6-Mathematics-NCERT", [
     "Knowing Our Numbers",
     "Whole Numbers",
@@ -1548,13 +1548,35 @@ const chapterCounts = new Map([
 const generateChapterOptions = (selectedClass, subject, syllabus) => {
   let key;
 
+  let chapterData = null;
+
   if (syllabus) {
+    // Try the exact syllabus first
     key = `${selectedClass}-${subject}-${syllabus}`;
+    chapterData = chapterCounts.get(key);
+    
+    // If not found, try with NCERT (most common)
+    if (!chapterData) {
+      key = `${selectedClass}-${subject}-NCERT`;
+      chapterData = chapterCounts.get(key);
+    }
+    
+    // If still not found, try with Default
+    if (!chapterData) {
+      key = `${selectedClass}-${subject}-Default`;
+      chapterData = chapterCounts.get(key);
+    }
+    
+    // If still not found, try with CBSE
+    if (!chapterData) {
+      key = `${selectedClass}-${subject}-CBSE`;
+      chapterData = chapterCounts.get(key);
+    }
   } else {
     key = `${selectedClass}-${subject || "Default"}-Default`;
+    chapterData = chapterCounts.get(key);
   }
 
-  const chapterData = chapterCounts.get(key);
 
   if (Array.isArray(chapterData)) {
     // Correct logic: value is the chapter name, label is the number
@@ -1583,10 +1605,14 @@ export const fields = (
   setCurrentSubject,
   currentSyllabus,
   setCurrentSyllabus,
-  childrenListData
+  childrenListData,
+  childrenListClass
 ) => {
+
+
   const subjectOptionsForClass =
     dynamicSubjectOptions[currentClass] || dynamicSubjectOptions["default"];
+
 
   const chapterOptions = generateChapterOptions(
     currentClass,
@@ -1594,14 +1620,9 @@ export const fields = (
     currentSyllabus
   );
 
-  const classOptions =
-    childrenListData?.map((item) => {
-      const numericGrade = item?.grade?.match(/\d+/)?.[0] || "";
-      return {
-        value: numericGrade,
-        label: numericGrade,
-      };
-    }) || [];
+
+  // Use predefined class options instead of children data to show all classes 6-12
+  // const classOptions = classoptions;
 
   return [
     {
@@ -1609,7 +1630,7 @@ export const fields = (
       label: "Class",
       placeholder: "Class ...",
       type: "select",
-      options: classOptions,
+      options: childrenListClass?.data?.data || [],
       autoFocus: true,
       wrapperClassName: "mb-6",
       fieldWrapperClassName: "col-span-12",
@@ -1642,7 +1663,10 @@ export const fields = (
       fieldWrapperClassName: "col-span-12",
       className: "mobile-select-no-keyboard",
       getValueCallback: (value) => setCurrentSubject(value),
-      disabled: !currentClass || subjectOptionsForClass.length === 0,
+      disabled: (() => {
+        const isDisabled = !currentClass || subjectOptionsForClass.length === 0;
+        return isDisabled;
+      })(),
     },
     {
       name: "chapter_from",
@@ -1654,6 +1678,11 @@ export const fields = (
       wrapperClassName: "mb-6",
       fieldWrapperClassName: "col-span-6",
       className: "mobile-select-no-keyboard",
+      disabled: (() => {
+        const isDisabled = !currentClass || !currentSubject || chapterOptions.length === 0;
+     
+        return isDisabled;
+      })(),
     },
     {
       name: "chapter_to",
@@ -1665,6 +1694,11 @@ export const fields = (
       wrapperClassName: "mb-6",
       fieldWrapperClassName: "col-span-6",
       className: "mobile-select-no-keyboard",
+      disabled: (() => {
+        const isDisabled = !currentClass || !currentSubject || chapterOptions.length === 0;
+      
+        return isDisabled;
+      })(),
     },
     {
       name: "language",

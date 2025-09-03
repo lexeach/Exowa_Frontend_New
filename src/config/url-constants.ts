@@ -13,6 +13,7 @@ export const API_ANSWER_PAPER_DETAIL = `/api/papers/answer`;
 export const API_DELETE_PAPER_DETAIL = (id) => `/api/papers/${id}`;
 export const API_POST_ASSIGN_PAPER = (id) =>
   `/api/papers/assign?questionId=${id}`;
+export const API_GET_QUESTION_EXPLANATION = (questionId, questionNumber) => `/api/papers/${questionId}/explanation?questionNumber=${questionNumber}`;
 export const API_GET_PAPER_LIST = (
   page = 1,
   pageSize = 10,
@@ -38,6 +39,8 @@ export const API_GET_PAPER_LIST = (
 
 /****** Children  ********/
 export const API_ADD_CHILDREN = "/api/children";
+export const API_GET_CHILDREN_LIST_CLASS = "api/children/classes/list";
+
 export const API_GET_CHILDREN_DETAIL = (id) => `/api/children/${id}`;
 export const API_UPDATE_CHILDREN_DETAIL = (id) => `/api/children/${id}`;
 export const API_DELETE_CHILDREN_DETAIL = (id) => `/api/children/${id}`;

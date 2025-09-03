@@ -7,7 +7,7 @@ import {
 } from "@/service/paper";
 import { useGetChildrenListQuery } from "@/service/children";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
-import { CheckCircleIcon, ClipboardPaste, XCircleIcon } from "lucide-react";
+import { CheckCircleIcon, ClipboardPaste, XCircleIcon, BookOpen } from "lucide-react";
 import { useEffect, useState } from "react";
 import UIButton from "@/UI/Elements/Button";
 import UISelect from "@/UI/Elements/Select";
@@ -289,7 +289,7 @@ const PaperView = () => {
                     >
                       <span className="font-medium">{key}:</span>
                       <span className="text-sm md:text-base break-words">
-                        {value}
+                        {String(value)}
                       </span>
                     </div>
                   ))}
@@ -333,7 +333,7 @@ const PaperView = () => {
                           />
                           <span className="font-medium">{key}:</span>
                           <span className="text-sm md:text-base break-words">
-                            {value}
+                            {String(value)}
                           </span>
                           {isUserAnswer &&
                             (isCorrect ? (
@@ -466,6 +466,19 @@ const PaperView = () => {
                     {childGrade || "NA"}
                   </span>
                 </div>
+              </div>
+              
+              {/* Learning Button */}
+              <div className="mt-6 pt-4 border-t border-gray-200">
+                <UIButton
+                  variant="outline"
+                  size="lg"
+                  onClick={() => navigate(`/papers/learning/${id}`)}
+                  className="w-full flex items-center justify-center gap-2"
+                >
+                  <BookOpen size={20} />
+                  View Learning Content
+                </UIButton>
               </div>
             </div>
           </div>

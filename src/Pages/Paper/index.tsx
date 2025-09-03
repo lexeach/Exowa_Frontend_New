@@ -4,11 +4,13 @@ import UILayout from "@/UI/Elements/Layout";
 import { setFormOpen } from "@/slice/layoutSlice";
 import { useDispatch } from "react-redux";
 import { useGetPaperListQuery } from "@/service/paper";
-import { Plus } from "lucide-react";
+import { Plus, PlusIcon, ScanEye } from "lucide-react";
+import UIButton from "@/UI/Elements/Button";
+import { useNavigate } from "react-router-dom";
 
 const Papers = () => {
   const dispatch = useDispatch();
-  console.log(useGetPaperListQuery, "useGetPaperListQueryuseGetPaperListQuery");
+  const navigate = useNavigate();
   const paperTableColumns = [
     {
       header: "Subject",
@@ -19,16 +21,6 @@ const Papers = () => {
       cellClass: "pl-4 text-black",
       headerClass: "pl-4 ",
     },
-
-    // {
-    // header: 'id',
-    //class: 'pl-5',
-      // accessor: 'id',
-      // cell: info => <span>{info.getValue()}</span>,
-      // cellClass: 'pl-4 text-black ',
-      // headerClass: 'pl-4',
-    // },
-
     {
       header: "Class",
       class: "pl-5",
@@ -37,7 +29,6 @@ const Papers = () => {
       cellClass: "pl-4 text-black ",
       headerClass: "pl-4",
     },
-
     {
       header: "Language",
       class: "pl-5",
@@ -138,21 +129,27 @@ const Papers = () => {
           const question = questions.find(
             (q) => q.questionNumber === answer.questionNumber
           );
-          
+
           // If answer is "E" (no answer/skip), don't add or subtract marks
           if (answer.option === "E") {
             return score;
           }
-          
+
           // If answer is correct, add 1 mark
           if (question?.correctAnswer === answer.option) {
             return score + 1;
           }
-          
+
           // If answer is wrong, subtract 1 mark (negative marking)
           return score - 2;
         }, 0);
-        return <span className={obtainedMarks >= 0 ? 'text-green-600' : 'text-red-600'}>{obtainedMarks}</span>;
+        return (
+          <span
+            className={obtainedMarks >= 0 ? "text-green-600" : "text-red-600"}
+          >
+            {obtainedMarks}
+          </span>
+        );
       },
       cellClass: "pl-4 text-black ",
       headerClass: "pl-4",
@@ -168,17 +165,17 @@ const Papers = () => {
           const question = questions.find(
             (q) => q.questionNumber === answer.questionNumber
           );
-          
+
           // If answer is "E" (no answer/skip), don't add or subtract marks
           if (answer.option === "E") {
             return score;
           }
-          
+
           // If answer is correct, add 1 mark
           if (question?.correctAnswer === answer.option) {
             return score + 1;
           }
-          
+
           // If answer is wrong, subtract 1 mark (negative marking)
           return score - 2;
         }, 0);
@@ -187,7 +184,13 @@ const Papers = () => {
           totalMarks > 0
             ? Math.max(0, (obtainedMarks / totalMarks) * 100).toFixed(2)
             : "0.00";
-        return <span className={obtainedMarks >= 0 ? 'text-green-600' : 'text-red-600'}>{percentage}%</span>;
+        return (
+          <span
+            className={obtainedMarks >= 0 ? "text-green-600" : "text-red-600"}
+          >
+            {percentage}%
+          </span>
+        );
       },
       cellClass: "pl-4 text-black ",
       headerClass: "pl-4",
@@ -211,12 +214,34 @@ const Papers = () => {
             },
           },
         };
+
         return (
           <ActionCell
             row={updatedRow}
             viewUrl="papers"
             formComponent="addPaper"
             deleteComponent={userRole === "admin" ? "deletePaper" : undefined}
+            actionsConfig={[
+              {
+                renderComponent: (onClick: any) => (
+                  <>
+                    <UIButton
+                      variant={!updatedRow.original?.otp ? "sky" : "white"}
+                      size="xs"
+                      className="ml-3 rounded-full"
+                      onClick={onClick}
+                      tooltipContent={"Learning"}
+                      disabled={updatedRow.original?.otp}
+                    >
+                      <ScanEye width={20} />
+                    </UIButton>
+                  </>
+                ),
+                onClick: () => {
+                  navigate(`/papers/learning/${row.original._id}`);
+                },
+              },
+            ]}
           />
         );
       },

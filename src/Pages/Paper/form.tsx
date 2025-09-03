@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useAddPaperMutation } from "@/service/paper";
+import { useAddPaperMutation, useGetChildrenListClassQuery } from "@/service/paper";
 import { ErrorToaster, SuccessToaster } from "@/UI/Elements/Toast";
 import { useGetSubjectOptionsMutation } from "@/service/subject";
 import { useGetSyllabusOptionsMutation } from "@/service/syllabus";
@@ -31,6 +31,9 @@ const PapersForm: React.FC<PaperFormProps> = ({ handleCancel, sheet }) => {
   const [currentClass, setCurrentClass] = useState(null);
   const [currentSubject, setCurrentSubject] = useState(null);
   const [currentSyllabus, setCurrentSyllabus] = useState(null); // Add state for syllabus
+  const { data: childrenListClass } = useGetChildrenListClassQuery({
+    refetchOnMountOrArgChange: true,
+  });
 
   const methods = useForm({
     resolver: yupResolver(schema),
@@ -99,7 +102,8 @@ const PapersForm: React.FC<PaperFormProps> = ({ handleCancel, sheet }) => {
                       setCurrentSubject,
                       currentSyllabus, // Pass currentSyllabus
                       setCurrentSyllabus, // <-- Missing comma added here
-                      childrenListData?.data
+                      childrenListData?.data,
+                      childrenListClass
                     )}
                     fetchData={useGetChildrenListQuery}
                     onSubmit={(val) => {
