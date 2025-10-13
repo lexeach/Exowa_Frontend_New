@@ -8,7 +8,12 @@ import { useGetChildrenListQuery } from "@/service/children";
 import {  useParams } from "react-router-dom";
 import { CheckCircleIcon, XCircleIcon, BookOpen } from "lucide-react";
 import { useEffect, useState } from "react";
-import UIButton from "@/UI/Elements/Button";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 const PaperView = () => {
   const param = useParams();
@@ -16,12 +21,13 @@ const PaperView = () => {
   
   const [urlDate, setUrlUpdate] = useState(false);
   const [selectedQuestionForLearning, setSelectedQuestionForLearning] = useState(null);
+  const [openAccordion, setOpenAccordion] = useState("");
   const { data: singlePaper, refetch: DetailRefetch } = useGetSinglePaperQuery(
     id,
     { skip: !id }
   );
 
-  const { data: explanationData, isLoading: loadingExplanation } = useGetQuestionExplanationQuery(
+  const { data: explanationData, isLoading: loadingExplanation, isFetching: fetchingExplanation } = useGetQuestionExplanationQuery(
     {
       questionId: id,
       questionNumber: selectedQuestionForLearning?.questionNumber
@@ -69,7 +75,6 @@ const PaperView = () => {
     return question?.correctAnswer !== answer.option && answer.option !== "E";
   });
 
-  console.log('selectedQuestionForLearning', selectedQuestionForLearning);
   
 
   // Set default selected question to first wrong answer when answers exist
@@ -78,8 +83,6 @@ const PaperView = () => {
       const firstWrongQuestion = questions.find(
         (q) => q.questionNumber === wrongAnswers[0].questionNumber
       );
-
-      console.log('firstWrongQuestion #', firstWrongQuestion);
       
       if (firstWrongQuestion) {
         setSelectedQuestionForLearning(firstWrongQuestion);
@@ -89,14 +92,130 @@ const PaperView = () => {
 
 
 
-  const handleLearning = (question) => {
-    console.log('question # >>>> <<<< ', question);
+  const handleLearning = (question, accordionValue) => {
     
-    setSelectedQuestionForLearning(question);
+    // If accordion is being closed, just close it
+    if (openAccordion === accordionValue) {
+      setOpenAccordion("");
+      return;
+    }
+    
+    // If content is not loaded for this question, load it
+    if (selectedQuestionForLearning?.questionNumber !== question.questionNumber) {
+      setSelectedQuestionForLearning(question);
+    }
+    
+    // Open the accordion
+    setOpenAccordion(accordionValue);
   };
 
-  console.log('loadingExplanation ....', loadingExplanation);
   
+  // Function to parse and render markdown-like content
+  const parseExplanationContent = (text) => {
+    if (!text) return null;
+
+    // Split text into lines
+    const lines = text.split('\n');
+    const elements = [];
+    let currentParagraph = [];
+    let listItems = [];
+
+    const flushParagraph = () => {
+      if (currentParagraph.length > 0) {
+        const paragraphText = currentParagraph.join(' ');
+        elements.push(
+          <p key={`p-${elements.length}`} className="mb-3 leading-relaxed">
+            {parseInlineFormatting(paragraphText)}
+          </p>
+        );
+        currentParagraph = [];
+      }
+    };
+
+    const flushList = () => {
+      if (listItems.length > 0) {
+        elements.push(
+          <ul key={`ul-${elements.length}`} className="mb-3 ml-4 space-y-1">
+            {listItems.map((item, idx) => (
+              <li key={idx} className="leading-relaxed">
+                {parseInlineFormatting(item)}
+              </li>
+            ))}
+          </ul>
+        );
+        listItems = [];
+      }
+    };
+
+    const parseInlineFormatting = (line) => {
+      // Handle bold text (but not headings)
+      const parts = [];
+      let lastIndex = 0;
+      const boldRegex = /\*\*(.+?)\*\*/g;
+      let match;
+
+      while ((match = boldRegex.exec(line)) !== null) {
+        // Add text before the bold
+        if (match.index > lastIndex) {
+          parts.push(line.substring(lastIndex, match.index));
+        }
+        // Add bold text
+        parts.push(<strong key={`bold-${match.index}`} className="font-semibold">{match[1]}</strong>);
+        lastIndex = match.index + match[0].length;
+      }
+
+      // Add remaining text
+      if (lastIndex < line.length) {
+        parts.push(line.substring(lastIndex));
+      }
+
+      return parts.length > 0 ? parts : line;
+    };
+
+    lines.forEach((line) => {
+      const trimmedLine = line.trim();
+
+      // Empty line - flush current paragraph or list
+      if (!trimmedLine) {
+        flushParagraph();
+        flushList();
+        return;
+      }
+
+      // Check for heading (bold text followed by colon or at start of line)
+      const headingMatch = trimmedLine.match(/^\*\*(.+?)\*\*:?$/);
+      if (headingMatch) {
+        flushParagraph();
+        flushList();
+        elements.push(
+          <h3 key={`h3-${elements.length}`} className="font-bold text-gray-900 text-base mb-2 mt-4">
+            {headingMatch[1]}
+          </h3>
+        );
+        return;
+      }
+
+      // Check for bullet point (starts with * or number.)
+      const bulletMatch = trimmedLine.match(/^[*•]\s+(.+)$/);
+      const numberedMatch = trimmedLine.match(/^\d+\.\s+(.+)$/);
+      
+      if (bulletMatch || numberedMatch) {
+        flushParagraph();
+        const content = bulletMatch ? bulletMatch[1] : numberedMatch[1];
+        listItems.push(content);
+        return;
+      }
+
+      // Regular text - add to current paragraph
+      currentParagraph.push(trimmedLine);
+    });
+
+    // Flush any remaining content
+    flushParagraph();
+    flushList();
+
+    return elements;
+  };
 
   const renderQuestions = () => {
     const [childOptions, setChildOptions] = useState([]);
@@ -108,9 +227,6 @@ const PaperView = () => {
       }));
       setChildOptions(options);
     }, [children?.data]);
-
-    console.log('answers # >>>> <<<< ', answers);
-    console.log('questions # >>>> <<<< ', questions);
     
 
     return (
@@ -191,27 +307,123 @@ const PaperView = () => {
                       );
                     })}
                   </div>
-                  <div className="mt-4 flex justify-end">
-                    <UIButton
-                      variant="outline"
-                      size="sm"
-                      onClick={() => handleLearning(question)}
-                      className="flex items-center gap-2"
-                      disabled={loadingExplanation && selectedQuestionForLearning?.questionNumber === question.questionNumber}
-                    >
-                      {loadingExplanation && selectedQuestionForLearning?.questionNumber === question.questionNumber ? (
-                        <>
-                          <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600"></div>
-                          <span className="text-sm">Loading...</span>
-                        </>
-                      ) : (
-                        <>
-                          <BookOpen size={16} />
-                          <span className="text-sm">Learn</span>
-                        </>
-                      )}
-                    </UIButton>
-                  </div>
+
+                  {/* Accordion for Learning Content */}
+                  <Accordion
+                    type="single"
+                    collapsible
+                    value={openAccordion}
+                    onValueChange={() => handleLearning(question, `question-${question.questionNumber}`)}
+                    className="mt-4"
+                  >
+                    <AccordionItem value={`question-${question.questionNumber}`} className="border-none">
+                      <AccordionTrigger 
+                        className="text-sm font-semibold text-blue-600 hover:text-blue-800 hover:no-underline py-2 justify-start gap-2"
+                        disabled={(loadingExplanation || fetchingExplanation) && selectedQuestionForLearning?.questionNumber === question.questionNumber}
+                      >
+                        {(loadingExplanation || fetchingExplanation) && selectedQuestionForLearning?.questionNumber === question.questionNumber ? (
+                          <>
+                            <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600"></div>
+                            <span>Loading Learning Content...</span>
+                          </>
+                        ) : (
+                          <>
+                            <BookOpen size={16} />
+                            <span>Learning Content</span>
+                          </>
+                        )}
+                      </AccordionTrigger>
+                      <AccordionContent>
+                        {(loadingExplanation || fetchingExplanation) && selectedQuestionForLearning?.questionNumber === question.questionNumber ? (
+                          <div className="text-center py-4">
+                            <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600 mx-auto"></div>
+                            <p className="text-gray-500 text-sm mt-2">Loading explanation...</p>
+                          </div>
+                        ) : selectedQuestionForLearning?.questionNumber === question.questionNumber && explanationData?.data && explanationData.data.questionNumber === question.questionNumber ? (
+                          <div className="space-y-4">
+                            {/* Explanation Section */}
+                            {explanationData.data?.explanation && (
+                              <div className="bg-gradient-to-br from-blue-50 to-indigo-50 p-4 rounded-lg border border-blue-200">
+                                <h4 className="font-bold text-blue-900 text-base mb-3 flex items-center gap-2">
+                                  <BookOpen size={18} />
+                                  Detailed Explanation
+                                </h4>
+                                <div className="text-sm text-gray-800">
+                                  {parseExplanationContent(explanationData.data.explanation)}
+                                </div>
+                              </div>
+                            )}
+                            
+                            {/* References Section */}
+                            {explanationData.data?.references && (
+                              <div className="bg-gradient-to-br from-purple-50 to-pink-50 p-4 rounded-lg border border-purple-200">
+                                <h4 className="font-bold text-purple-900 text-base mb-3">
+                                  📚 Additional Learning Resources
+                                </h4>
+                                
+                                {/* Videos */}
+                                {explanationData.data.references.videos && explanationData.data.references.videos.length > 0 && (
+                                  <div className="mb-4">
+                                    <h5 className="font-semibold text-purple-800 text-sm mb-2 flex items-center gap-2">
+                                      🎥 Recommended Videos
+                                    </h5>
+                                    <ul className="space-y-2">
+                                      {explanationData.data.references.videos.map((video, index) => (
+                                        <li key={index} className="text-sm text-gray-700 pl-4 border-l-2 border-purple-300">
+                                          {video}
+                                        </li>
+                                      ))}
+                                    </ul>
+                                  </div>
+                                )}
+                                
+                                {/* Articles */}
+                                {explanationData.data.references.articles && explanationData.data.references.articles.length > 0 && (
+                                  <div className="mb-4">
+                                    <h5 className="font-semibold text-purple-800 text-sm mb-2 flex items-center gap-2">
+                                      📄 Helpful Articles
+                                    </h5>
+                                    <ul className="space-y-2">
+                                      {explanationData.data.references.articles.map((article, index) => (
+                                        <li key={index} className="text-sm text-gray-700 pl-4 border-l-2 border-purple-300">
+                                          {article}
+                                        </li>
+                                      ))}
+                                    </ul>
+                                  </div>
+                                )}
+                                
+                                {/* Books */}
+                                {explanationData.data.references.books && explanationData.data.references.books.length > 0 && (
+                                  <div>
+                                    <h5 className="font-semibold text-purple-800 text-sm mb-2 flex items-center gap-2">
+                                      📖 Reference Books
+                                    </h5>
+                                    <ul className="space-y-2">
+                                      {explanationData.data.references.books.map((book, index) => (
+                                        <li key={index} className="text-sm text-gray-700 pl-4 border-l-2 border-purple-300">
+                                          {book}
+                                        </li>
+                                      ))}
+                                    </ul>
+                                  </div>
+                                )}
+                              </div>
+                            )}
+                          </div>
+                        ) : selectedQuestionForLearning?.questionNumber === question.questionNumber && !explanationData ? (
+                          <div className="text-center py-4">
+                            <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600 mx-auto"></div>
+                            <p className="text-gray-500 text-sm mt-2">Loading explanation...</p>
+                          </div>
+                        ) : (
+                          <div className="text-center text-gray-500 py-4">
+                            <p className="text-sm">No learning content available</p>
+                          </div>
+                        )}
+                      </AccordionContent>
+                    </AccordionItem>
+                  </Accordion>
                 </div>
               );
             })}
@@ -220,83 +432,16 @@ const PaperView = () => {
     );
   };
 
+
   return (
     <UILayout>
       <div className="p-4 md:p-6">
         <ViewHeader heading="Question Detail" backUrl="/papers" />
       </div>
-      <div className="flex flex-col md:flex-row px-4 md:px-12 py-4 space-y-6 md:space-y-0 md:space-x-8">
-        <div className="w-full md:w-3/5">
+      <div className="px-4 md:px-12 py-4">
+        <div className="w-full">
           <div className="border border-dark p-4 md:p-6 rounded-lg shadow">
             {renderQuestions()}
-          </div>
-        </div>
-
-        {/* Learning Section */}
-        <div className="w-full md:w-1/3">
-          <div className="border border-dark shadow rounded-lg p-4 md:p-6">
-            <h3 className="text-lg md:text-xl font-bold text-center text-gray-800 border-b pb-3 mb-4">
-              Learning Content
-            </h3>
-            {loadingExplanation && selectedQuestionForLearning ? (
-              <div className="text-center py-8">
-                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto"></div>
-                <p className="text-gray-500 mt-2">Loading explanation for Question {selectedQuestionForLearning.questionNumber}...</p>
-              </div>
-            ) : selectedQuestionForLearning && explanationData?.data ? (
-              <div className="space-y-4">
-                <div className="bg-blue-50 p-4 rounded-lg">
-                  <h4 className="font-semibold text-blue-800 mb-2">Question ID: {selectedQuestionForLearning.questionNumber}</h4>
-                  <p className="text-sm text-blue-700">
-                    {explanationData.data?.description || `This is the learning content for question ${selectedQuestionForLearning.questionNumber}.`}
-                  </p>
-                </div>
-                
-                {explanationData.data?.keyConcepts && (
-                  <div className="bg-green-50 p-4 rounded-lg">
-                    <h4 className="font-semibold text-green-800 mb-2">Key Concepts</h4>
-                    <ul className="text-sm text-green-700 space-y-1">
-                      {explanationData.data.keyConcepts.map((concept, index) => (
-                        <li key={index}>• {concept}</li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-                
-                {explanationData.data?.explanation && (
-                  <div className="bg-purple-50 p-4 rounded-lg">
-                    <h4 className="font-semibold text-purple-800 mb-2">Explanation</h4>
-                    <p className="text-sm text-purple-700">
-                      {explanationData.data.explanation}
-                    </p>
-                  </div>
-                )}
-
-                {explanationData.data?.studyTips && (
-                  <div className="bg-yellow-50 p-4 rounded-lg">
-                    <h4 className="font-semibold text-yellow-800 mb-2">Study Tips</h4>
-                    <div className="text-sm text-yellow-700">
-                      {explanationData.data.studyTips.map((tip, index) => (
-                        <p key={index}>• {tip}</p>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {explanationData.data?.additionalResources && (
-                  <div className="bg-indigo-50 p-4 rounded-lg">
-                    <h4 className="font-semibold text-indigo-800 mb-2">Additional Resources</h4>
-                    <div className="text-sm text-indigo-700">
-                      {explanationData.data.additionalResources}
-                    </div>
-                  </div>
-                )}
-              </div>
-            ) : (
-              <div className="text-center text-gray-500 py-8">
-                <p>No learning content available</p>
-              </div>
-            )}
           </div>
         </div>
       </div>

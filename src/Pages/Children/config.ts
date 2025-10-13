@@ -58,6 +58,29 @@ export const fields = [
     wrapperClassName: "mb-6",
     fieldWrapperClassName: "col-span-6",
   },
+  {
+    name: "topics",
+    label: "Topic",
+    placeholder: "Select Chapter ...",
+    type: "select",
+    multi: true,
+    options: [
+      {
+        value: "topic_1",
+        label: "Topic 1",
+      },
+      {
+        value: "topic_2",
+        label: "Topic 2",
+      },
+      {
+        value: "topic_3",
+        label: "Topic 3",
+      },
+    ],
+    wrapperClassName: "mb-6",
+    fieldWrapperClassName: "col-span-6",
+  },
 ];
 
 export const schema = yup
@@ -65,6 +88,6 @@ export const schema = yup
   .shape({
     name: yup.string().required("this_field_required"),
     age: yup.string().required("this_field_required"),
-    grade: yup.string().required("this_field_required")
+    grade: yup.string().required("this_field_required"),
   })
   .required();

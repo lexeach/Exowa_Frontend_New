@@ -14,48 +14,48 @@ const Papers = () => {
   const paperTableColumns = [
     {
       header: "Subject",
-      class: "pl-5",
+      class: "",
       enableSorting: true,
       accessor: "subject",
       cell: (info) => <span>{info.getValue()}</span>,
-      cellClass: "pl-4 text-black",
-      headerClass: "pl-4 ",
+      cellClass: "text-black",
+      headerClass: "text-center justify-center",
     },
     {
       header: "Class",
-      class: "pl-5",
+      class: "",
       accessor: "className",
       cell: (info) => <span>{info.getValue()}</span>,
-      cellClass: "pl-4 text-black ",
-      headerClass: "pl-4",
+      cellClass: "text-black ",
+      headerClass: "",
     },
     {
       header: "Language",
-      class: "pl-5",
+      class: "",
       accessor: "language",
       cell: (info) => <span>{info.getValue()}</span>,
-      cellClass: "pl-4 text-black ",
-      headerClass: "pl-4",
+      cellClass: "text-black ",
+      headerClass: "",
     },
     {
       header: "Chapter From",
-      class: "pl-5",
+      class: "",
       accessor: "chapter_from",
       cell: (info) => <span>{info.getValue()}</span>,
-      cellClass: "pl-4 text-black ",
-      headerClass: "pl-4",
+      cellClass: " text-black ",
+      headerClass: "",
     },
     {
       header: "Chapter To",
-      class: "pl-5",
+      class: "",
       accessor: "chapter_to",
       cell: (info) => <span>{info.getValue()}</span>,
-      cellClass: "pl-4 text-black ",
-      headerClass: "pl-4",
+      cellClass: " text-black ",
+      headerClass: "",
     },
     {
       header: "OTP",
-      class: "pl-5",
+      class: "",
       accessor: "otp",
       cell: (info) => (
         <span>
@@ -66,12 +66,12 @@ const Papers = () => {
           )}
         </span>
       ),
-      cellClass: "pl-4 text-black ",
-      headerClass: "pl-4",
+      cellClass: " text-black ",
+      headerClass: "",
     },
     {
       header: "CreatedAt",
-      class: "pl-5",
+      class: "",
       accessor: "createdAt",
       cell: (info) => {
         const rawDate = info.getValue();
@@ -105,23 +105,34 @@ const Papers = () => {
           return <span>Error</span>; // Display an error if date parsing fails
         }
       },
-      cellClass: "pl-4 text-black ",
-      headerClass: "pl-4",
+      cellClass: "text-black ",
+      headerClass: "",
     },
     {
       header: "Total Questions",
-      class: "pl-5",
+      class: "",
       accessor: "totalQuestions",
       cell: (info) => {
         const totalQuestions = info.row.original.questions?.length || 0;
         return <span>{totalQuestions}</span>;
       },
-      cellClass: "pl-4 text-black ",
-      headerClass: "pl-4",
+      cellClass: "text-black ",
+      headerClass: "",
+    },
+    {
+      header: "Creator",
+      class: "",
+      accessor: "author",
+      cell: (info) => {
+        const author = info.getValue()?.name;
+        return author ? <span>{author}</span> : <span> - </span>;
+      },
+      cellClass: "text-black ",
+      headerClass: "",
     },
     {
       header: "Marks Obtained",
-      class: "pl-5",
+      class: "",
       accessor: "marksObtained",
       cell: (info) => {
         const { questions = [], answers = [] } = info.row.original;
@@ -151,12 +162,12 @@ const Papers = () => {
           </span>
         );
       },
-      cellClass: "pl-4 text-black ",
-      headerClass: "pl-4",
+      cellClass: "text-black ",
+      headerClass: "",
     },
     {
       header: "Percentage",
-      class: "pl-5",
+      class: "",
       accessor: "percentage",
       cell: (info) => {
         const { questions = [], answers = [] } = info.row.original;
@@ -192,8 +203,8 @@ const Papers = () => {
           </span>
         );
       },
-      cellClass: "pl-4 text-black ",
-      headerClass: "pl-4",
+      cellClass: "text-black ",
+      headerClass: "",
     },
     {
       header: "actions",
@@ -233,7 +244,8 @@ const Papers = () => {
                       tooltipContent={"Learning"}
                       disabled={updatedRow.original?.otp}
                     >
-                      <ScanEye width={20} />
+                      {/* <ScanEye width={20} /> */}
+                      Learning
                     </UIButton>
                   </>
                 ),
@@ -250,7 +262,6 @@ const Papers = () => {
 
   const buttons = [
     {
-      //label: "Generate New Paper",
       label: "Generate New Quiz",
       icon: <Plus />,
       onClick: () => dispatch(setFormOpen({ sheetComponent: "addPaper" })),
@@ -258,7 +269,6 @@ const Papers = () => {
   ];
 
   return (
-    <div>
       <UILayout>
         <h1 className="text-3xl font-semibold m-2 mx-4">{"Paper"}</h1>
         <CustomTableWrapper
@@ -267,7 +277,6 @@ const Papers = () => {
           buttons={buttons}
         />
       </UILayout>
-    </div>
   );
 };
 

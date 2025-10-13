@@ -40,7 +40,7 @@ const PapersForm: React.FC<PaperFormProps> = ({ handleCancel, sheet }) => {
 
   useEffect(() => {
     if (singleChildren?.data) {
-      const { name, age, grade } = singleChildren?.data;
+      const { name, age, grade, topics } = singleChildren?.data;
       methods.reset({ name, age, grade });
     }
   }, [singleChildren?.data]);

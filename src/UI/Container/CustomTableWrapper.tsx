@@ -91,7 +91,6 @@ export default function CustomTableWrapper({
       </div>
     );
   }
-  console.log("Error", error);
 
   if (error) {
     return (
