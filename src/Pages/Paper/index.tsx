@@ -22,6 +22,14 @@ const Papers = () => {
       headerClass: "text-center justify-center",
     },
     {
+      header: "Children",
+      class: "",
+      accessor: "children",
+      cell: (info) => <span>{info.getValue()?.name || '-'}</span>,
+      cellClass: "text-black ",
+      headerClass: "",
+    },
+    {
       header: "Class",
       class: "",
       accessor: "className",
@@ -122,9 +130,9 @@ const Papers = () => {
     {
       header: "Creator",
       class: "",
-      accessor: "author",
+      accessor: "authorId",
       cell: (info) => {
-        const author = info.getValue()?.name;
+        const author = info.getValue();
         return author ? <span>{author}</span> : <span> - </span>;
       },
       cellClass: "text-black ",

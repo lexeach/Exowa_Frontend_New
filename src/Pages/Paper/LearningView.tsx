@@ -355,14 +355,14 @@ const PaperView = () => {
                             )}
                             
                             {/* References Section */}
-                            {explanationData.data?.references && (
-                              <div className="bg-gradient-to-br from-purple-50 to-pink-50 p-4 rounded-lg border border-purple-200">
-                                <h4 className="font-bold text-purple-900 text-base mb-3">
+                            {/* {explanationData.data?.references && (
+                              <div className="bg-gradient-to-br from-purple-50 to-pink-50 p-4 rounded-lg border border-purple-200"> */}
+                                {/* <h4 className="font-bold text-purple-900 text-base mb-3">
                                   📚 Additional Learning Resources
-                                </h4>
+                                </h4> */}
                                 
                                 {/* Videos */}
-                                {explanationData.data.references.videos && explanationData.data.references.videos.length > 0 && (
+                                {/* {explanationData.data.references.videos && explanationData.data.references.videos.length > 0 && (
                                   <div className="mb-4">
                                     <h5 className="font-semibold text-purple-800 text-sm mb-2 flex items-center gap-2">
                                       🎥 Recommended Videos
@@ -375,10 +375,10 @@ const PaperView = () => {
                                       ))}
                                     </ul>
                                   </div>
-                                )}
+                                )} */}
                                 
                                 {/* Articles */}
-                                {explanationData.data.references.articles && explanationData.data.references.articles.length > 0 && (
+                                {/* {explanationData.data.references.articles && explanationData.data.references.articles.length > 0 && (
                                   <div className="mb-4">
                                     <h5 className="font-semibold text-purple-800 text-sm mb-2 flex items-center gap-2">
                                       📄 Helpful Articles
@@ -391,10 +391,10 @@ const PaperView = () => {
                                       ))}
                                     </ul>
                                   </div>
-                                )}
+                                )} */}
                                 
                                 {/* Books */}
-                                {explanationData.data.references.books && explanationData.data.references.books.length > 0 && (
+                                {/* {explanationData.data.references.books && explanationData.data.references.books.length > 0 && (
                                   <div>
                                     <h5 className="font-semibold text-purple-800 text-sm mb-2 flex items-center gap-2">
                                       📖 Reference Books
@@ -407,9 +407,9 @@ const PaperView = () => {
                                       ))}
                                     </ul>
                                   </div>
-                                )}
-                              </div>
-                            )}
+                                )} */}
+                              {/* </div>
+                            )} */}
                           </div>
                         ) : selectedQuestionForLearning?.questionNumber === question.questionNumber && !explanationData ? (
                           <div className="text-center py-4">

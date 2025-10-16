@@ -1958,7 +1958,6 @@ export const fields = (
       label: "Topic",
       placeholder: "Select Chapter ...",
       type: "select",
-      multi: true,
       options: [
         {
           value: "topic_1",
@@ -2068,13 +2067,13 @@ export const fields = (
 export const schema = yup
   .object()
   .shape({
-    language: yup.string().required("this_field_required"),
-    chapter_from: yup.string().required("this_field_required"),
+    language: yup.string().required("This field required"),
+    chapter_from: yup.string().required("This field required"),
     chapter_to: yup.string().when("chapter_from", {
       is: (chapter_from) => chapter_from,
       then: (schema) =>
         schema
-          .required("this_field_required")
+          .required("This field required")
           .test(
             "is-greater-or-equal",
             "Chapter to cannot be less than Chapter from",
@@ -2123,11 +2122,12 @@ export const schema = yup
               return true;
             }
           ),
-      otherwise: (schema) => schema.required("this_field_required"),
+      otherwise: (schema) => schema.required("This field required"),
     }),
-    syllabus: yup.string().required("this_field_required"),
-    subject: yup.string().required("this_field_required"),
-    no_of_question: yup.string().required("this_field_required"),
-    class: yup.string().required("this_field_required"),
+    syllabus: yup.string().required("This field required"),
+    subject: yup.string().required("This field required"),
+    no_of_question: yup.string().required("This field required"),
+    class: yup.string().required("This field required"),
+    topics: yup.string().required("This field required"),
   })
   .required();

@@ -13,6 +13,6 @@ export const fields = [
 export const schema = yup
   .object()
   .shape({
-    name: yup.string().required("this_field_required"),
+    name: yup.string().required("This field required"),
   })
   .required();

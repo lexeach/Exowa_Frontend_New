@@ -86,8 +86,8 @@ export const fields = [
 export const schema = yup
   .object()
   .shape({
-    name: yup.string().required("this_field_required"),
-    age: yup.string().required("this_field_required"),
-    grade: yup.string().required("this_field_required"),
+    name: yup.string().required("This field required"),
+    age: yup.string().required("This field required"),
+    grade: yup.string().required("This field required"),
   })
   .required();
