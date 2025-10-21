@@ -7,20 +7,23 @@ const options = [
 ];
 
 const classoptions = [
-  { value: 11, label: "11" },
-  { value: 12, label: "12" },
+  { value: "11", label: "11" },
+  { value: "12", label: "12" },
 ];
 
-// Dynamic subject options based on Class + Topic
+// ✅ Function to generate dynamic subject list based on selected class & topic
 const getDynamicSubjectOptions = (selectedClass, selectedTopic) => {
-  if (selectedClass === "11" && selectedTopic === "topic_1") {
+  if (!selectedClass || !selectedTopic) return [];
+
+  if (String(selectedClass) === "11" && selectedTopic === "topic_1") {
     return [
       { value: "Chemistry", label: "Chemistry" },
       { value: "Physics", label: "Physics" },
       { value: "Biology", label: "Biology" },
     ];
   }
-  if (selectedClass === "12" && selectedTopic === "topic_2") {
+
+  if (String(selectedClass) === "12" && selectedTopic === "topic_2") {
     return [
       { value: "Business Studies Part 1", label: "Business Studies Part 1" },
       { value: "Business Studies Part 2", label: "Business Studies Part 2" },
@@ -30,7 +33,7 @@ const getDynamicSubjectOptions = (selectedClass, selectedTopic) => {
   return [];
 };
 
-// Chapter Data
+// ✅ Chapter dataset
 const chapterCounts = new Map([
   [
     "11-Physics-NCERT",
@@ -63,7 +66,7 @@ const chapterCounts = new Map([
   ],
 ]);
 
-// Chapter generator
+// ✅ Generate chapter options for the selected subject
 const generateChapterOptions = (selectedClass, subject, syllabus) => {
   const key = `${selectedClass}-${subject}-NCERT`;
   const chapterData = chapterCounts.get(key);
@@ -78,6 +81,7 @@ const generateChapterOptions = (selectedClass, subject, syllabus) => {
   return [];
 };
 
+// ✅ Main Field Export
 export const fields = (
   useGetSubjectOptionsMutation,
   useGetSyllabusOptionsMutation,
@@ -107,7 +111,7 @@ export const fields = (
       fieldWrapperClassName: "col-span-12",
       className: "mobile-select-no-keyboard",
       getValueCallback: (value) => {
-        setCurrentClass(value);
+        setCurrentClass(String(value)); // ✅ Always store as string
         setCurrentSubject(null);
         setCurrentTopic(null);
       },
@@ -138,7 +142,7 @@ export const fields = (
       fieldWrapperClassName: "col-span-6",
       getValueCallback: (value) => {
         setCurrentTopic(value);
-        setCurrentSubject(null);
+        setCurrentSubject(null); // reset subject when topic changes
       },
     },
     {
@@ -159,7 +163,6 @@ export const fields = (
       label: "Chapter From",
       placeholder: "Select Chapter ...",
       type: "select",
-      autoFocus: true,
       options: chapterOptions,
       wrapperClassName: "mb-6",
       fieldWrapperClassName: "col-span-6",
@@ -171,7 +174,6 @@ export const fields = (
       label: "Chapter To",
       placeholder: "Select Chapter ...",
       type: "select",
-      autoFocus: true,
       options: chapterOptions,
       wrapperClassName: "mb-6",
       fieldWrapperClassName: "col-span-6",
@@ -181,9 +183,8 @@ export const fields = (
     {
       name: "language",
       label: "Language",
-      placeholder: "Chapter Language ...",
+      placeholder: "Select Language ...",
       type: "select",
-      autoFocus: true,
       options: [
         { value: "English", label: "English" },
         { value: "Hindi", label: "Hindi" },
@@ -198,7 +199,6 @@ export const fields = (
       placeholder: "Select Number ...",
       type: "select",
       options: options,
-      autoFocus: true,
       wrapperClassName: "mb-6",
       fieldWrapperClassName: "col-span-6 mb-[400px] sm:mb-5",
       className: "mobile-select-no-keyboard",
