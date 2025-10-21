@@ -17,22 +17,7 @@ const classoptions = [
   //{ value: 12, label: "12" },
 ];
 
-// Define the dynamic subject options based on class
-const dynamicSubjectOptions = {
-  "11": [
-    { value: "Physics Part 1", label: "Physics Part 1" },
-    { value: "Physics Part 2", label: "Physics Part 2" },
-    { value: "Mathematics", label: "Mathematics" },
-    { value: "Chemistry Part 1", label: "Chemistry Part 1" },
-    { value: "Chemistry Part 2", label: "Chemistry Part 2" },
-    { value: "Biology", label: "Biology" },
-  ],
-  "12": [
-    { value: "Business Studies Part 1", label: "Business Studies Part 1" },
-    { value: "Business Studies Part 2", label: "Business Studies Part 2" },
-  ],
-  default: [],
-};
+// REMOVED: dynamicSubjectOptions is no longer needed
 
 // MAPPING FOR CLASS-BASED TOPICS
 const classTopicMapping = {
@@ -52,6 +37,7 @@ const classTopicMapping = {
 };
 
 // --- MAPPING: Subject list based on combined Class and Topic ---
+// The subject options are determined solely by this structure.
 const classTopicSubjectMapping = {
   // Class 11 Topics
   "11_topic_1": [
@@ -278,6 +264,7 @@ const chapterCounts = new Map<string, string[] | number>([
   ],
 ]);
 
+// --- Chapter Options Helper Function (Unchanged) ---
 const generateChapterOptions = (selectedClass, subject, syllabus) => {
   let key;
   let chapterData = null;
@@ -322,6 +309,7 @@ const generateChapterOptions = (selectedClass, subject, syllabus) => {
 
   return [];
 };
+// --------------------------------------------------
 
 export const fields = (
   useGetSubjectOptionsMutation,
@@ -341,8 +329,7 @@ export const fields = (
   const topicOptionsForClass =
     classTopicMapping[currentClass] || classTopicMapping["default"];
 
-  // --- REFINED LOGIC: Calculate Subject Options based on Class and Topic ---
-  // Explicitly coerce to String to ensure the key matches the mapping structure
+  // --- Subject Options Logic: Based on combined Class and Topic ---
   const safeCurrentClass = String(currentClass);
   const safeCurrentTopic = String(currentTopic);
     
@@ -411,13 +398,13 @@ export const fields = (
       placeholder: "Select Subject ...",
       type: "select",
       autoFocus: true,
-      // Use options derived from the combined Class and Topic
+      // Subject options are based on the combined Class and Topic values.
       options: subjectOptions,
       wrapperClassName: "mb-6",
       fieldWrapperClassName: "col-span-6",
       className: "mobile-select-no-keyboard",
       getValueCallback: (value) => setCurrentSubject(value),
-      // Subject field is disabled if no topic is selected (results in nil list)
+      // Subject field is disabled if no topic is selected (results in nil list).
       disabled: (() => {
         return !currentTopic;
       })(),
@@ -495,6 +482,7 @@ export const fields = (
   ];
 };
 
+// --- Schema (Unchanged) ---
 export const schema = yup
   .object()
   .shape({
@@ -556,4 +544,9 @@ export const schema = yup
       otherwise: (schema) => schema.required("This field required"),
     }),
     syllabus: yup.string().required("This field required"),
-    subject: yup.string().required("This field
+    subject: yup.string().required("This field required"),
+    no_of_question: yup.string().required("This field required"),
+    class: yup.string().required("This field required"),
+    topics: yup.string().required("This field required"),
+  })
+  .required();
