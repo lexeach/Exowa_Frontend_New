@@ -15,7 +15,7 @@ const classoptions = [
 const getDynamicSubjectOptions = (selectedClass, selectedTopic) => {
   if (!selectedClass || !selectedTopic) return [];
 
-  if (String(selectedClass) === "11" && selectedTopic === "topic_1") {
+  if (String(selectedClass) === "11" && selectedTopic === "22") {
     return [
       { value: "Chemistry", label: "Chemistry" },
       { value: "Physics", label: "Physics" },
@@ -99,7 +99,7 @@ export const fields = (
       placeholder: "Select Topic ...",
       type: "select",
       options: [
-        { value: "topic_1", label: "Topic 1" },
+        { value: "22", label: "Topic 1" },
         { value: "topic_2", label: "Topic 2" },
         { value: "topic_3", label: "Topic 3" },
       ],
