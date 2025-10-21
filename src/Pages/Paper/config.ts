@@ -6,11 +6,13 @@ const options = [
   { value: 20, label: "20" },
 ];
 
-const classoptions = [
-  { value: 10, label: "10" },
-];
+const classoptions = [{ value: 10, label: "10" }];
 
 const classTopicMapping = {
+  "10": [
+    { value: "topic_1", label: "General Topic 1" },
+    { value: "topic_2", label: "General Topic 2" },
+  ],
   "11": [
     { value: "topic_1", label: "Topic 1" },
     { value: "topic_2", label: "Topic 2" },
@@ -19,22 +21,23 @@ const classTopicMapping = {
     { value: "topic_2", label: "Topic 2" },
     { value: "topic_3", label: "Topic 3" },
   ],
-  "10": [
-    { value: "topic_1", label: "General Topic 1" },
-    { value: "topic_2", label: "General Topic 2" },
-  ],
-  default: [
-    { value: "topic_1", label: "Topic 1" },
-    { value: "topic_2", label: "Topic 2" },
-    { value: "topic_3", label: "Topic 3" },
-  ],
+  default: [{ value: "topic_1", label: "Topic 1" }],
 };
 
-// --- SUBJECT MAPPING ---
+// ✅ FIXED SUBJECT MAPPING
 const classTopicSubjectMapping = {
+  "10_topic_1": [
+    { value: "Mathematics", label: "Mathematics" },
+    { value: "Science", label: "Science" },
+    { value: "English", label: "English" },
+  ],
+  "10_topic_2": [
+    { value: "Social Science", label: "Social Science" },
+    { value: "Hindi", label: "Hindi" },
+  ],
   "11_topic_1": [
-    { value: "Chemistry", label: "Chemistry" },
     { value: "Physics", label: "Physics" },
+    { value: "Chemistry", label: "Chemistry" },
     { value: "Biology", label: "Biology" },
   ],
   "11_topic_2": [
@@ -49,17 +52,9 @@ const classTopicSubjectMapping = {
     { value: "Economics", label: "Economics" },
     { value: "Accountancy", label: "Accountancy" },
   ],
-  "10_topic_1": [
-    { value: "Mathematics", label: "Mathematics" },
-    { value: "Science", label: "Science" },
-    { value: "English", label: "English" },
-  ],
-  "10_topic_2": [
-    { value: "Social Science", label: "Social Science" },
-    { value: "Hindi", label: "Hindi" },
-  ],
 };
 
+// ✅ FIXED CHAPTER LIST
 const chapterCounts = new Map<string, string[] | number>([
   [
     "12-Business Studies Part 1-NCERT",
@@ -76,73 +71,23 @@ const chapterCounts = new Map<string, string[] | number>([
   ],
   [
     "12-Business Studies Part 2-NCERT",
-    [
-      "Financial Management",
-      "Financial Markets",
-      "Marketing Management",
-      "Consumer Protection",
-    ],
-  ],
-  [
-    "11-Physics-NCERT",
-    [
-      "Physical World",
-      "Units and Measurements",
-      "Motion in a Straight Line",
-      "Motion in a Plane",
-      "Laws of Motion",
-      "Work, Energy and Power",
-      "System of Particles and Rotational Motion",
-      "Gravitation",
-      "Mechanical Properties of Solids",
-      "Mechanical Properties of Fluids",
-      "Thermal Properties of Matter",
-      "Thermodynamics",
-      "Kinetic Theory",
-      "Oscillations",
-    ],
-  ],
-  [
-    "12-Accountancy Part 2-NCERT",
-    [
-      "Financial Statements of a Company",
-      "Analysis of Financial Statements",
-      "Accounting Ratios",
-      "Cash Flow Statement",
-    ],
+    ["Financial Management", "Financial Markets", "Marketing Management", "Consumer Protection"],
   ],
 ]);
 
-// --- Helper: Chapter Options ---
+// ✅ GENERATE CHAPTER OPTIONS
 const generateChapterOptions = (selectedClass, subject, syllabus) => {
-  let key;
-  let chapterData = null;
-
-  if (syllabus) {
-    key = `${selectedClass}-${subject}-${syllabus}`;
-    chapterData = chapterCounts.get(key);
-  }
-
-  if (!chapterData) {
-    key = `${selectedClass}-${subject}-NCERT`;
-    chapterData = chapterCounts.get(key);
-  }
-
-  if (!chapterData) {
-    key = `${selectedClass}-${subject}-Default`;
-    chapterData = chapterCounts.get(key);
-  }
-  if (!chapterData) {
-    key = `${selectedClass}-${subject}-CBSE`;
-    chapterData = chapterCounts.get(key);
-  }
+  let key = `${selectedClass}-${subject}-${syllabus || "NCERT"}`;
+  const chapterData = chapterCounts.get(key);
 
   if (Array.isArray(chapterData)) {
-    return chapterData.map((chapterName, index) => ({
+    return chapterData.map((chapterName, i) => ({
       value: chapterName,
-      label: (index + 1).toString(),
+      label: (i + 1).toString(),
     }));
-  } else if (typeof chapterData === "number") {
+  }
+
+  if (typeof chapterData === "number") {
     return Array.from({ length: chapterData }, (_, i) => ({
       value: (i + 1).toString(),
       label: (i + 1).toString(),
@@ -152,7 +97,7 @@ const generateChapterOptions = (selectedClass, subject, syllabus) => {
   return [];
 };
 
-// --- MAIN FUNCTION ---
+// ✅ MAIN FUNCTION
 export const fields = (
   useGetSubjectOptionsMutation,
   useGetSyllabusOptionsMutation,
@@ -167,33 +112,24 @@ export const fields = (
   currentTopic,
   setCurrentTopic
 ) => {
-  const topicOptionsForClass =
-    classTopicMapping[String(currentClass)] || classTopicMapping["default"];
+  const topicOptionsForClass = classTopicMapping[String(currentClass)] || classTopicMapping["default"];
 
-  // --- FIXED SUBJECT LOGIC ---
+  // ✅ FIXED SUBJECT LOGIC (Always Resolves)
   let subjectOptions = [];
-
   if (currentClass && currentTopic) {
-    const safeCurrentClass = String(currentClass);
-    const topicValue =
-      typeof currentTopic === "object" ? currentTopic.value : currentTopic;
+    const classKey = String(currentClass);
+    const topicValue = typeof currentTopic === "object" ? currentTopic.value : currentTopic;
+    const subjectKey = `${classKey}_${topicValue}`;
+    console.log("🧠 Subject Key:", subjectKey);
 
-    const subjectKey = `${safeCurrentClass}_${topicValue}`;
-    subjectOptions =
-      classTopicSubjectMapping[subjectKey] && classTopicSubjectMapping[subjectKey].length > 0
-        ? classTopicSubjectMapping[subjectKey]
-        : [
-            { value: "Mathematics", label: "Mathematics" },
-            { value: "Science", label: "Science" },
-            { value: "English", label: "English" },
-          ];
+    subjectOptions = classTopicSubjectMapping[subjectKey] || [
+      { value: "Mathematics", label: "Mathematics" },
+      { value: "Science", label: "Science" },
+      { value: "English", label: "English" },
+    ];
   }
 
-  const chapterOptions = generateChapterOptions(
-    currentClass,
-    currentSubject,
-    currentSyllabus
-  );
+  const chapterOptions = generateChapterOptions(currentClass, currentSubject, currentSyllabus);
 
   return [
     {
@@ -203,9 +139,7 @@ export const fields = (
       type: "select",
       options: childrenListClass?.data?.data || classoptions,
       autoFocus: true,
-      wrapperClassName: "mb-6",
       fieldWrapperClassName: "col-span-12",
-      className: "mobile-select-no-keyboard",
       getValueCallback: (value) => {
         setCurrentClass(value);
         setCurrentTopic(null);
@@ -213,29 +147,17 @@ export const fields = (
       },
     },
     {
-      name: "syllabus",
-      label: "Syllabus",
-      placeholder: "Select Syllabus ...",
-      type: "select",
-      fetchData: useGetSyllabusOptionsMutation,
-      wrapperClassName: "mb-6",
-      fieldWrapperClassName: "col-span-12",
-      className: "mobile-select-no-keyboard",
-      getValueCallback: (value) => setCurrentSyllabus(value),
-    },
-    {
       name: "topics",
       label: "Topic",
       placeholder: "Select Topic ...",
       type: "select",
       options: topicOptionsForClass,
-      wrapperClassName: "mb-6",
       fieldWrapperClassName: "col-span-6",
       getValueCallback: (value) => {
         setCurrentTopic(value);
         setCurrentSubject(null);
       },
-      disabled: !currentClass || topicOptionsForClass.length === 0,
+      disabled: !currentClass,
     },
     {
       name: "subject",
@@ -243,11 +165,18 @@ export const fields = (
       placeholder: "Select Subject ...",
       type: "select",
       options: subjectOptions,
-      wrapperClassName: "mb-6",
       fieldWrapperClassName: "col-span-6",
-      className: "mobile-select-no-keyboard",
       getValueCallback: (value) => setCurrentSubject(value),
       disabled: !currentTopic,
+    },
+    {
+      name: "syllabus",
+      label: "Syllabus",
+      placeholder: "Select Syllabus ...",
+      type: "select",
+      fetchData: useGetSyllabusOptionsMutation,
+      fieldWrapperClassName: "col-span-12",
+      getValueCallback: (value) => setCurrentSyllabus(value),
     },
     {
       name: "chapter_from",
@@ -255,11 +184,8 @@ export const fields = (
       placeholder: "Select Chapter ...",
       type: "select",
       options: chapterOptions,
-      wrapperClassName: "mb-6",
       fieldWrapperClassName: "col-span-6",
-      className: "mobile-select-no-keyboard",
-      disabled:
-        !currentClass || !currentSubject || chapterOptions.length === 0,
+      disabled: !currentSubject,
     },
     {
       name: "chapter_to",
@@ -267,11 +193,8 @@ export const fields = (
       placeholder: "Select Chapter ...",
       type: "select",
       options: chapterOptions,
-      wrapperClassName: "mb-6",
       fieldWrapperClassName: "col-span-6",
-      className: "mobile-select-no-keyboard",
-      disabled:
-        !currentClass || !currentSubject || chapterOptions.length === 0,
+      disabled: !currentSubject,
     },
     {
       name: "language",
@@ -282,17 +205,8 @@ export const fields = (
         { value: "English", label: "English" },
         { value: "Hindi", label: "Hindi" },
         { value: "Marathi", label: "Marathi" },
-        { value: "Tamil", label: "Tamil" },
-        { value: "Telugu", label: "Telugu" },
-        { value: "Bengali", label: "Bengali" },
-        { value: "Gujarati", label: "Gujarati" },
-        { value: "Kannada", label: "Kannada" },
-        { value: "Malayalam", label: "Malayalam" },
-        { value: "Urdu", label: "Urdu" },
       ],
-      wrapperClassName: "mb-6",
       fieldWrapperClassName: "col-span-6",
-      className: "mobile-select-no-keyboard",
     },
     {
       name: "no_of_question",
@@ -300,65 +214,22 @@ export const fields = (
       placeholder: "Select Number ...",
       type: "select",
       options: options,
-      wrapperClassName: "mb-6",
-      fieldWrapperClassName: "col-span-6 mb-[400px] sm:mb-5",
-      className: "mobile-select-no-keyboard",
+      fieldWrapperClassName: "col-span-6",
     },
   ];
 };
 
-// --- VALIDATION SCHEMA ---
+// ✅ VALIDATION
 export const schema = yup
   .object()
   .shape({
-    language: yup.string().required("This field is required"),
-    chapter_from: yup.string().required("This field is required"),
-    chapter_to: yup.string().when("chapter_from", {
-      is: (chapter_from) => chapter_from,
-      then: (schema) =>
-        schema
-          .required("This field is required")
-          .test(
-            "is-greater-or-equal",
-            "Chapter To cannot be less than Chapter From",
-            function (chapter_to) {
-              const {
-                chapter_from,
-                subject,
-                class: classValue,
-                syllabus,
-              } = this.parent;
-
-              if (!chapter_from || !chapter_to) return true;
-
-              const numFrom = parseInt(chapter_from);
-              const numTo = parseInt(chapter_to);
-
-              if (!isNaN(numFrom) && !isNaN(numTo)) {
-                return numTo >= numFrom;
-              }
-
-              let key = syllabus
-                ? `${classValue}-${subject}-${syllabus}`
-                : `${classValue}-${subject || "Default"}-Default`;
-              const chapterData = chapterCounts.get(key);
-
-              if (Array.isArray(chapterData)) {
-                const indexFrom = chapterData.indexOf(chapter_from);
-                const indexTo = chapterData.indexOf(chapter_to);
-                if (indexFrom !== -1 && indexTo !== -1)
-                  return indexTo >= indexFrom;
-              }
-
-              return true;
-            }
-          ),
-      otherwise: (schema) => schema.required("This field is required"),
-    }),
-    syllabus: yup.string().required("This field is required"),
-    subject: yup.string().required("This field is required"),
-    no_of_question: yup.string().required("This field is required"),
     class: yup.string().required("This field is required"),
     topics: yup.string().required("This field is required"),
+    subject: yup.string().required("This field is required"),
+    syllabus: yup.string().required("This field is required"),
+    chapter_from: yup.string().required("This field is required"),
+    chapter_to: yup.string().required("This field is required"),
+    language: yup.string().required("This field is required"),
+    no_of_question: yup.string().required("This field is required"),
   })
   .required();
