@@ -8,17 +8,9 @@ const options = [
 
 const classoptions = [
   { value: 10, label: "10" },
-  //{ value: 11, label: "11" },
-  //{ value: 12, label: "12" },
 ];
 
-// ✅ MAPPING FOR CLASS-BASED TOPICS (Now includes Class 10)
 const classTopicMapping = {
-  "10": [
-    { value: "topic_1", label: "Mathematics" },
-    { value: "topic_2", label: "Science" },
-    { value: "topic_3", label: "Social Studies" },
-  ],
   "11": [
     { value: "topic_1", label: "Topic 1" },
     { value: "topic_2", label: "Topic 2" },
@@ -27,29 +19,19 @@ const classTopicMapping = {
     { value: "topic_2", label: "Topic 2" },
     { value: "topic_3", label: "Topic 3" },
   ],
-  default: [
+  "10": [
     { value: "topic_1", label: "General Topic 1" },
     { value: "topic_2", label: "General Topic 2" },
   ],
+  default: [
+    { value: "topic_1", label: "Topic 1" },
+    { value: "topic_2", label: "Topic 2" },
+    { value: "topic_3", label: "Topic 3" },
+  ],
 };
 
-// ✅ MAPPING: Subject list based on combined Class and Topic (Added Class 10)
+// --- SUBJECT MAPPING ---
 const classTopicSubjectMapping = {
-  // Class 10 Topics
-  "10_topic_1": [
-    { value: "Maths Basics", label: "Maths Basics" },
-    { value: "Algebra", label: "Algebra" },
-  ],
-  "10_topic_2": [
-    { value: "Physics", label: "Physics" },
-    { value: "Biology", label: "Biology" },
-  ],
-  "10_topic_3": [
-    { value: "History", label: "History" },
-    { value: "Geography", label: "Geography" },
-  ],
-
-  // Class 11 Topics
   "11_topic_1": [
     { value: "Chemistry", label: "Chemistry" },
     { value: "Physics", label: "Physics" },
@@ -59,8 +41,6 @@ const classTopicSubjectMapping = {
     { value: "Business Studies Part 1", label: "Business Studies Part 1" },
     { value: "Business Studies Part 2", label: "Business Studies Part 2" },
   ],
-
-  // Class 12 Topics
   "12_topic_2": [
     { value: "Business Studies Part 1", label: "Business Studies Part 1" },
     { value: "Business Studies Part 2", label: "Business Studies Part 2" },
@@ -69,9 +49,17 @@ const classTopicSubjectMapping = {
     { value: "Economics", label: "Economics" },
     { value: "Accountancy", label: "Accountancy" },
   ],
+  "10_topic_1": [
+    { value: "Mathematics", label: "Mathematics" },
+    { value: "Science", label: "Science" },
+    { value: "English", label: "English" },
+  ],
+  "10_topic_2": [
+    { value: "Social Science", label: "Social Science" },
+    { value: "Hindi", label: "Hindi" },
+  ],
 };
 
-// ✅ Chapter Counts (unchanged — kept as-is)
 const chapterCounts = new Map<string, string[] | number>([
   [
     "12-Business Studies Part 1-NCERT",
@@ -95,10 +83,37 @@ const chapterCounts = new Map<string, string[] | number>([
       "Consumer Protection",
     ],
   ],
-  // ... (keep rest of your chapter data unchanged)
+  [
+    "11-Physics-NCERT",
+    [
+      "Physical World",
+      "Units and Measurements",
+      "Motion in a Straight Line",
+      "Motion in a Plane",
+      "Laws of Motion",
+      "Work, Energy and Power",
+      "System of Particles and Rotational Motion",
+      "Gravitation",
+      "Mechanical Properties of Solids",
+      "Mechanical Properties of Fluids",
+      "Thermal Properties of Matter",
+      "Thermodynamics",
+      "Kinetic Theory",
+      "Oscillations",
+    ],
+  ],
+  [
+    "12-Accountancy Part 2-NCERT",
+    [
+      "Financial Statements of a Company",
+      "Analysis of Financial Statements",
+      "Accounting Ratios",
+      "Cash Flow Statement",
+    ],
+  ],
 ]);
 
-// ✅ Helper to generate chapter options (unchanged)
+// --- Helper: Chapter Options ---
 const generateChapterOptions = (selectedClass, subject, syllabus) => {
   let key;
   let chapterData = null;
@@ -107,10 +122,12 @@ const generateChapterOptions = (selectedClass, subject, syllabus) => {
     key = `${selectedClass}-${subject}-${syllabus}`;
     chapterData = chapterCounts.get(key);
   }
+
   if (!chapterData) {
     key = `${selectedClass}-${subject}-NCERT`;
     chapterData = chapterCounts.get(key);
   }
+
   if (!chapterData) {
     key = `${selectedClass}-${subject}-Default`;
     chapterData = chapterCounts.get(key);
@@ -135,7 +152,7 @@ const generateChapterOptions = (selectedClass, subject, syllabus) => {
   return [];
 };
 
-// ✅ Fields (Updated to include safe fallback subjects)
+// --- MAIN FUNCTION ---
 export const fields = (
   useGetSubjectOptionsMutation,
   useGetSyllabusOptionsMutation,
@@ -151,21 +168,25 @@ export const fields = (
   setCurrentTopic
 ) => {
   const topicOptionsForClass =
-    classTopicMapping[currentClass] || classTopicMapping["default"];
+    classTopicMapping[String(currentClass)] || classTopicMapping["default"];
 
-  // --- Updated Subject Logic ---
+  // --- FIXED SUBJECT LOGIC ---
   let subjectOptions = [];
 
   if (currentClass && currentTopic) {
     const safeCurrentClass = String(currentClass);
-    const safeCurrentTopic = String(currentTopic);
-    const subjectKey = `${safeCurrentClass}_${safeCurrentTopic}`;
+    const topicValue =
+      typeof currentTopic === "object" ? currentTopic.value : currentTopic;
+
+    const subjectKey = `${safeCurrentClass}_${topicValue}`;
     subjectOptions =
-      classTopicSubjectMapping[subjectKey] || [
-        { value: "Mathematics", label: "Mathematics" },
-        { value: "Science", label: "Science" },
-        { value: "English", label: "English" },
-      ];
+      classTopicSubjectMapping[subjectKey] && classTopicSubjectMapping[subjectKey].length > 0
+        ? classTopicSubjectMapping[subjectKey]
+        : [
+            { value: "Mathematics", label: "Mathematics" },
+            { value: "Science", label: "Science" },
+            { value: "English", label: "English" },
+          ];
   }
 
   const chapterOptions = generateChapterOptions(
@@ -178,9 +199,9 @@ export const fields = (
     {
       name: "class",
       label: "Class",
-      placeholder: "Class ...",
+      placeholder: "Select Class ...",
       type: "select",
-      options: childrenListClass?.data?.data || [],
+      options: childrenListClass?.data?.data || classoptions,
       autoFocus: true,
       wrapperClassName: "mb-6",
       fieldWrapperClassName: "col-span-12",
@@ -194,9 +215,8 @@ export const fields = (
     {
       name: "syllabus",
       label: "Syllabus",
-      placeholder: "Syllabus Subject ...",
+      placeholder: "Select Syllabus ...",
       type: "select",
-      autoFocus: true,
       fetchData: useGetSyllabusOptionsMutation,
       wrapperClassName: "mb-6",
       fieldWrapperClassName: "col-span-12",
@@ -222,7 +242,6 @@ export const fields = (
       label: "Subject",
       placeholder: "Select Subject ...",
       type: "select",
-      autoFocus: true,
       options: subjectOptions,
       wrapperClassName: "mb-6",
       fieldWrapperClassName: "col-span-6",
@@ -235,7 +254,6 @@ export const fields = (
       label: "Chapter From",
       placeholder: "Select Chapter ...",
       type: "select",
-      autoFocus: true,
       options: chapterOptions,
       wrapperClassName: "mb-6",
       fieldWrapperClassName: "col-span-6",
@@ -248,7 +266,6 @@ export const fields = (
       label: "Chapter To",
       placeholder: "Select Chapter ...",
       type: "select",
-      autoFocus: true,
       options: chapterOptions,
       wrapperClassName: "mb-6",
       fieldWrapperClassName: "col-span-6",
@@ -259,9 +276,8 @@ export const fields = (
     {
       name: "language",
       label: "Language",
-      placeholder: "Chapter Language ...",
+      placeholder: "Select Language ...",
       type: "select",
-      autoFocus: true,
       options: [
         { value: "English", label: "English" },
         { value: "Hindi", label: "Hindi" },
@@ -280,11 +296,10 @@ export const fields = (
     },
     {
       name: "no_of_question",
-      label: "Number Of Question",
+      label: "Number Of Questions",
       placeholder: "Select Number ...",
       type: "select",
       options: options,
-      autoFocus: true,
       wrapperClassName: "mb-6",
       fieldWrapperClassName: "col-span-6 mb-[400px] sm:mb-5",
       className: "mobile-select-no-keyboard",
@@ -292,20 +307,20 @@ export const fields = (
   ];
 };
 
-// ✅ Validation Schema (unchanged)
+// --- VALIDATION SCHEMA ---
 export const schema = yup
   .object()
   .shape({
-    language: yup.string().required("This field required"),
-    chapter_from: yup.string().required("This field required"),
+    language: yup.string().required("This field is required"),
+    chapter_from: yup.string().required("This field is required"),
     chapter_to: yup.string().when("chapter_from", {
       is: (chapter_from) => chapter_from,
       then: (schema) =>
         schema
-          .required("This field required")
+          .required("This field is required")
           .test(
             "is-greater-or-equal",
-            "Chapter to cannot be less than Chapter from",
+            "Chapter To cannot be less than Chapter From",
             function (chapter_to) {
               const {
                 chapter_from,
@@ -318,6 +333,7 @@ export const schema = yup
 
               const numFrom = parseInt(chapter_from);
               const numTo = parseInt(chapter_to);
+
               if (!isNaN(numFrom) && !isNaN(numTo)) {
                 return numTo >= numFrom;
               }
@@ -333,15 +349,16 @@ export const schema = yup
                 if (indexFrom !== -1 && indexTo !== -1)
                   return indexTo >= indexFrom;
               }
+
               return true;
             }
           ),
-      otherwise: (schema) => schema.required("This field required"),
+      otherwise: (schema) => schema.required("This field is required"),
     }),
-    syllabus: yup.string().required("This field required"),
-    subject: yup.string().required("This field required"),
-    no_of_question: yup.string().required("This field required"),
-    class: yup.string().required("This field required"),
-    topics: yup.string().required("This field required"),
+    syllabus: yup.string().required("This field is required"),
+    subject: yup.string().required("This field is required"),
+    no_of_question: yup.string().required("This field is required"),
+    class: yup.string().required("This field is required"),
+    topics: yup.string().required("This field is required"),
   })
   .required();
