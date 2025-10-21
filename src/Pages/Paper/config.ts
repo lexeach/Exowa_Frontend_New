@@ -17,7 +17,7 @@ const classoptions = [
   //{ value: 12, label: "12" },
 ];
 
-// Define the dynamic subject options based on class (Kept as per original code structure)
+// Define the dynamic subject options based on class
 const dynamicSubjectOptions = {
   "11": [
     { value: "Physics Part 1", label: "Physics Part 1" },
@@ -36,14 +36,14 @@ const dynamicSubjectOptions = {
 
 // --- NEW MAPPING FOR TOPIC-BASED SUBJECTS ---
 const topicSubjectMapping = {
+  // If topic 1 is selected then show subject list Chemistry, Physics and Biology
   topic_1: [
-    // If topic 1 is selected
     { value: "Chemistry", label: "Chemistry" },
     { value: "Physics", label: "Physics" },
     { value: "Biology", label: "Biology" },
   ],
+  // If topic 2 is selected then show subject list Business Studies Part 1 and Business Studies Part 2
   topic_2: [
-    // If topic 2 is selected
     { value: "Business Studies Part 1", label: "Business Studies Part 1" },
     { value: "Business Studies Part 2", label: "Business Studies Part 2" },
   ],
@@ -51,10 +51,8 @@ const topicSubjectMapping = {
 };
 // ----------------------------------------------
 
+
 const chapterCounts = new Map<string, string[] | number>([
-  // [
-  // ... (Removed a partially empty array entry)
-  // ],
   [
     "12-Business Studies Part 1-NCERT",
     [
@@ -279,20 +277,19 @@ export const fields = (
   setCurrentSubject,
   currentSyllabus,
   setCurrentSyllabus,
-  // --- ADDED NEW STATE ARGUMENTS FOR TOPIC ---
-  currentTopic,
-  setCurrentTopic,
-  // ------------------------------------------
   childrenListData,
-  childrenListClass
+  childrenListClass,
+  // ADDED currentTopic and setCurrentTopic at the end to avoid breaking existing arguments
+  currentTopic, 
+  setCurrentTopic
 ) => {
   const subjectOptionsForClass =
     dynamicSubjectOptions[currentClass] || dynamicSubjectOptions["default"];
-
-  // --- NEW: Derive Subject Options based on Topic ---
+    
+  // Get subject options based on the selected topic
   const subjectOptionsForTopic =
     topicSubjectMapping[currentTopic] || topicSubjectMapping["default"];
-  // ----------------------------------------------------
+
 
   const chapterOptions = generateChapterOptions(
     currentClass,
@@ -306,7 +303,7 @@ export const fields = (
       label: "Class",
       placeholder: "Class ...",
       type: "select",
-      options: childrenListClass?.data?.data || [],
+      options: childrenListClass?.data?.data || [], // This now receives the correct data object
       autoFocus: true,
       wrapperClassName: "mb-6",
       fieldWrapperClassName: "col-span-12",
@@ -349,12 +346,11 @@ export const fields = (
       ],
       wrapperClassName: "mb-6",
       fieldWrapperClassName: "col-span-6",
-      // --- UPDATED: Add callback to set currentTopic and reset subject ---
+      // Callback to set the topic and reset subject
       getValueCallback: (value) => {
         setCurrentTopic(value);
         setCurrentSubject(null);
       },
-      // --------------------------------------------------------------------
     },
     {
       name: "subject",
@@ -362,156 +358,13 @@ export const fields = (
       placeholder: "Select Subject ...",
       type: "select",
       autoFocus: true,
-      // --- UPDATED: Use topic-based subject options ---
+      // Use topic-based subject options
       options: subjectOptionsForTopic,
-      // -------------------------------------------------
       wrapperClassName: "mb-6",
       fieldWrapperClassName: "col-span-6",
       className: "mobile-select-no-keyboard",
       getValueCallback: (value) => setCurrentSubject(value),
       disabled: (() => {
-        // --- UPDATED: Disable if no topic is selected or no options are available for the topic ---
         const isDisabled = !currentTopic || subjectOptionsForTopic.length === 0;
         return isDisabled;
       })(),
-    },
-
-    {
-      name: "chapter_from",
-      label: "Chapter From",
-      placeholder: "Select Chapter ...",
-      type: "select",
-      autoFocus: true,
-      options: chapterOptions,
-      wrapperClassName: "mb-6",
-      fieldWrapperClassName: "col-span-6",
-      className: "mobile-select-no-keyboard",
-      disabled: (() => {
-        const isDisabled =
-          !currentClass || !currentSubject || chapterOptions.length === 0;
-
-        return isDisabled;
-      })(),
-    },
-    {
-      name: "chapter_to",
-      label: "Chapter To",
-      placeholder: "Select Chapter ...",
-      type: "select",
-      autoFocus: true,
-      options: chapterOptions,
-      wrapperClassName: "mb-6",
-      fieldWrapperClassName: "col-span-6",
-      className: "mobile-select-no-keyboard",
-      disabled: (() => {
-        const isDisabled =
-          !currentClass || !currentSubject || chapterOptions.length === 0;
-
-        return isDisabled;
-      })(),
-    },
-    {
-      name: "language",
-      label: "Language",
-      placeholder: "Chapter Language ...",
-      type: "select",
-      autoFocus: true,
-      options: [
-        { value: "English", label: "English" },
-        { value: "Hindi", label: "Hindi" },
-        { value: "Marathi", label: "Marathi" },
-        { value: "Tamil", label: "Tamil" },
-        { value: "Telugu", label: "Telugu" },
-        { value: "Bengali", label: "Bengali" },
-        { value: "Gujarati", label: "Gujarati" },
-        { value: "Kannada", label: "Kannada" },
-        { value: "Malayalam", label: "Malayalam" },
-        { value: "Urdu", label: "Urdu" },
-        { value: "Manipuri", label: "Manipuri" },
-        { value: "Kashmiri", label: "Kashmiri" },
-      ],
-      wrapperClassName: "mb-6",
-      fieldWrapperClassName: "col-span-6",
-      className: "mobile-select-no-keyboard",
-    },
-    {
-      name: "no_of_question",
-      label: "Number Of Question",
-      placeholder: "Select Number ...",
-      type: "select",
-      options: options,
-      autoFocus: true,
-      wrapperClassName: "mb-6",
-      fieldWrapperClassName: "col-span-6 mb-[400px] sm:mb-5",
-      className: "mobile-select-no-keyboard",
-    },
-  ];
-};
-
-export const schema = yup
-  .object()
-  .shape({
-    language: yup.string().required("This field required"),
-    chapter_from: yup.string().required("This field required"),
-    chapter_to: yup.string().when("chapter_from", {
-      is: (chapter_from) => chapter_from,
-      then: (schema) =>
-        schema
-          .required("This field required")
-          .test(
-            "is-greater-or-equal",
-            "Chapter to cannot be less than Chapter from",
-            function (chapter_to) {
-              const {
-                chapter_from,
-                subject,
-                class: classValue,
-                syllabus,
-              } = this.parent;
-
-              if (!chapter_from || !chapter_to) {
-                return true; // Pass validation if one is missing
-              }
-
-              // Try to parse the values as numbers. This works for numerical chapters (e.g., Math)
-              const numChapterFrom = parseInt(chapter_from);
-              const numChapterTo = parseInt(chapter_to);
-
-              if (!isNaN(numChapterFrom) && !isNaN(numChapterTo)) {
-                return numChapterTo >= numChapterFrom;
-              }
-
-              // If parsing fails, it means the values are chapter names (e.g., Science).
-              // We must find their index in the original data to compare them.
-              let key;
-              if (syllabus) {
-                key = `${classValue}-${subject}-${syllabus}`;
-              } else {
-                key = `${classValue}-${subject || "Default"}-Default`;
-              }
-              const chapterData = chapterCounts.get(key);
-
-              if (Array.isArray(chapterData)) {
-                const indexFrom = chapterData.indexOf(chapter_from);
-                const indexTo = chapterData.indexOf(chapter_to);
-
-                // Ensure both chapter names were found and compare their indices
-                if (indexFrom !== -1 && indexTo !== -1) {
-                  return indexTo >= indexFrom;
-                }
-              }
-
-              // If the logic above couldn't find a valid comparison,
-              // we return true to not block the user.
-              return true;
-            }
-          ),
-      otherwise: (schema) => schema.required("This field required"),
-    }),
-    syllabus: yup.string().required("This field required"),
-    subject: yup.string().required("This field required"),
-    no_of_question: yup.string().required("This field required"),
-    class: yup.string().required("This field required"),
-    topics: yup.string().required("This field required"),
-  })
-  .required();
