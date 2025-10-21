@@ -17,6 +17,22 @@ const classoptions = [
   //{ value: 12, label: "12" },
 ];
 
+// Define the dynamic subject options based on class
+const dynamicSubjectOptions = {
+  "11": [
+    { value: "Physics Part 1", label: "Physics Part 1" },
+    { value: "Physics Part 2", label: "Physics Part 2" },
+    { value: "Mathematics", label: "Mathematics" },
+    { value: "Chemistry Part 1", label: "Chemistry Part 1" },
+    { value: "Chemistry Part 2", label: "Chemistry Part 2" },
+    { value: "Biology", label: "Biology" },
+  ],
+  "12": [
+    { value: "Business Studies Part 1", label: "Business Studies Part 1" },
+    { value: "Business Studies Part 2", label: "Business Studies Part 2" },
+  ],
+  default: [],
+};
 
 // MAPPING FOR CLASS-BASED TOPICS
 const classTopicMapping = {
@@ -35,7 +51,7 @@ const classTopicMapping = {
   ],
 };
 
-// --- NEW MAPPING: Subject list based on combined Class and Topic ---
+// --- MAPPING: Subject list based on combined Class and Topic ---
 const classTopicSubjectMapping = {
   // Class 11 Topics
   "11_topic_1": [
@@ -325,9 +341,13 @@ export const fields = (
   const topicOptionsForClass =
     classTopicMapping[currentClass] || classTopicMapping["default"];
 
-  // --- UPDATED LOGIC: Calculate Subject Options based on Class and Topic ---
-  const subjectKey = `${currentClass}_${currentTopic}`;
-  const subjectOptions = classTopicSubjectMapping[subjectKey] ||classTopicSubjectMapping ["default"];
+  // --- REFINED LOGIC: Calculate Subject Options based on Class and Topic ---
+  // Explicitly coerce to String to ensure the key matches the mapping structure
+  const safeCurrentClass = String(currentClass);
+  const safeCurrentTopic = String(currentTopic);
+    
+  const subjectKey = `${safeCurrentClass}_${safeCurrentTopic}`;
+  const subjectOptions = classTopicSubjectMapping[subjectKey] || [];
   // --------------------------------------------------------------------------
 
   const chapterOptions = generateChapterOptions(
@@ -397,7 +417,7 @@ export const fields = (
       fieldWrapperClassName: "col-span-6",
       className: "mobile-select-no-keyboard",
       getValueCallback: (value) => setCurrentSubject(value),
-      // Subject field is disabled if no topic is selected
+      // Subject field is disabled if no topic is selected (results in nil list)
       disabled: (() => {
         return !currentTopic;
       })(),
@@ -536,9 +556,4 @@ export const schema = yup
       otherwise: (schema) => schema.required("This field required"),
     }),
     syllabus: yup.string().required("This field required"),
-    subject: yup.string().required("This field required"),
-    no_of_question: yup.string().required("This field required"),
-    class: yup.string().required("This field required"),
-    topics: yup.string().required("This field required"),
-  })
-  .required();
+    subject: yup.string().required("This field
