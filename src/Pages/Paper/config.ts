@@ -17,8 +17,6 @@ const classoptions = [
   //{ value: 12, label: "12" },
 ];
 
-// REMOVED: dynamicSubjectOptions is no longer needed
-
 // MAPPING FOR CLASS-BASED TOPICS
 const classTopicMapping = {
   "11": [
@@ -37,7 +35,6 @@ const classTopicMapping = {
 };
 
 // --- MAPPING: Subject list based on combined Class and Topic ---
-// The subject options are determined solely by this structure.
 const classTopicSubjectMapping = {
   // Class 11 Topics
   "11_topic_1": [
@@ -229,7 +226,7 @@ const chapterCounts = new Map<string, string[] | number>([
       "Breathing and Exchange of Gases",
       "Body Fluids and Circulation",
       "Excretory Products and their Elimination",
-      "Locomotion and Movement",
+      "LocomVtion and Movement",
       "Neural Control and Coordination",
       "Chemical Coordination and Integration",
     ],
@@ -329,12 +326,17 @@ export const fields = (
   const topicOptionsForClass =
     classTopicMapping[currentClass] || classTopicMapping["default"];
 
-  // --- Subject Options Logic: Based on combined Class and Topic ---
-  const safeCurrentClass = String(currentClass);
-  const safeCurrentTopic = String(currentTopic);
+  // --- UPDATED Subject Options Logic ---
+  let subjectOptions = []; // Default to nil list
+
+  // Only attempt to find subjects IF BOTH class AND topic are selected
+  if (currentClass && currentTopic) {
+    const safeCurrentClass = String(currentClass);
+    const safeCurrentTopic = String(currentTopic);
     
-  const subjectKey = `${safeCurrentClass}_${safeCurrentTopic}`;
-  const subjectOptions = classTopicSubjectMapping[subjectKey] || [];
+    const subjectKey = `${safeCurrentClass}_${safeCurrentTopic}`;
+    subjectOptions = classTopicSubjectMapping[subjectKey] || []; // Find match or fallback to nil
+  }
   // --------------------------------------------------------------------------
 
   const chapterOptions = generateChapterOptions(
@@ -452,101 +454,4 @@ export const fields = (
       autoFocus: true,
       options: [
         { value: "English", label: "English" },
-        { value: "Hindi", label: "Hindi" },
-        { value: "Marathi", label: "Marathi" },
-        { value: "Tamil", label: "Tamil" },
-        { value: "Telugu", label: "Telugu" },
-        { value: "Bengali", label: "Bengali" },
-        { value: "Gujarati", label: "Gujarati" },
-        { value: "Kannada", label: "Kannada" },
-        { value: "Malayalam", label: "Malayalam" },
-        { value: "Urdu", label: "Urdu" },
-        { value: "Manipuri", label: "Manipuri" },
-        { value: "Kashmiri", label: "Kashmiri" },
-      ],
-      wrapperClassName: "mb-6",
-      fieldWrapperClassName: "col-span-6",
-      className: "mobile-select-no-keyboard",
-    },
-    {
-      name: "no_of_question",
-      label: "Number Of Question",
-      placeholder: "Select Number ...",
-      type: "select",
-      options: options,
-      autoFocus: true,
-      wrapperClassName: "mb-6",
-      fieldWrapperClassName: "col-span-6 mb-[400px] sm:mb-5",
-      className: "mobile-select-no-keyboard",
-    },
-  ];
-};
-
-// --- Schema (Unchanged) ---
-export const schema = yup
-  .object()
-  .shape({
-    language: yup.string().required("This field required"),
-    chapter_from: yup.string().required("This field required"),
-    chapter_to: yup.string().when("chapter_from", {
-      is: (chapter_from) => chapter_from,
-      then: (schema) =>
-        schema
-          .required("This field required")
-          .test(
-            "is-greater-or-equal",
-            "Chapter to cannot be less than Chapter from",
-            function (chapter_to) {
-              const {
-                chapter_from,
-                subject,
-                class: classValue,
-                syllabus,
-              } = this.parent;
-
-              if (!chapter_from || !chapter_to) {
-                return true; // Pass validation if one is missing
-              }
-
-              // Try to parse the values as numbers. This works for numerical chapters (e.g., Math)
-              const numChapterFrom = parseInt(chapter_from);
-              const numChapterTo = parseInt(chapter_to);
-
-              if (!isNaN(numChapterFrom) && !isNaN(numChapterTo)) {
-                return numChapterTo >= numChapterFrom;
-              }
-
-              // If parsing fails, it means the values are chapter names (e.g., Science).
-              // We must find their index in the original data to compare them.
-              let key;
-              if (syllabus) {
-                key = `${classValue}-${subject}-${syllabus}`;
-              } else {
-                key = `${classValue}-${subject || "Default"}-Default`;
-              }
-              const chapterData = chapterCounts.get(key);
-
-              if (Array.isArray(chapterData)) {
-                const indexFrom = chapterData.indexOf(chapter_from);
-                const indexTo = chapterData.indexOf(chapter_to);
-
-                // Ensure both chapter names were found and compare their indices
-                if (indexFrom !== -1 && indexTo !== -1) {
-                  return indexTo >= indexFrom;
-                }
-              }
-
-              // If the logic above couldn't find a valid comparison,
-              // we return true to not block the user.
-              return true;
-            }
-          ),
-      otherwise: (schema) => schema.required("This field required"),
-    }),
-    syllabus: yup.string().required("This field required"),
-    subject: yup.string().required("This field required"),
-    no_of_question: yup.string().required("This field required"),
-    class: yup.string().required("This field required"),
-    topics: yup.string().required("This field required"),
-  })
-  .required();
+        { value: "Hindi", label: "Hindi
