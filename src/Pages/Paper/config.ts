@@ -34,7 +34,7 @@ const dynamicSubjectOptions = {
   default: [],
 };
 
-// --- NEW MAPPING FOR CLASS-BASED TOPICS ---
+// MAPPING FOR CLASS-BASED TOPICS
 const classTopicMapping = {
   // If class is 11, show Topic 1 and Topic 2
   "11": [
@@ -53,9 +53,8 @@ const classTopicMapping = {
     { value: "topic_3", label: "Topic 3" },
   ],
 };
-// ----------------------------------------------
 
-// MAPPING FOR TOPIC-BASED SUBJECTS (from previous step)
+// MAPPING FOR TOPIC-BASED SUBJECTS
 const topicSubjectMapping = {
   topic_1: [
     { value: "Chemistry", label: "Chemistry" },
@@ -118,6 +117,27 @@ const chapterCounts = new Map<string, string[] | number>([
       "Oscillations",
     ],
   ],
+  // --- NEW: Generic Subject Key for Class 11 Physics ---
+  [
+    "11-Physics-NCERT",
+    [
+      "Physical World",
+      "Units and Measurements",
+      "Motion in a Straight Line",
+      "Motion in a Plane",
+      "Laws of Motion",
+      "Work, Energy and Power",
+      "System of Particles and Rotational Motion",
+      "Gravitation",
+      "Mechanical Properties of Solids",
+      "Mechanical Properties of Fluids",
+      "Thermal Properties of Matter",
+      "Thermodynamics",
+      "Kinetic Theory",
+      "Oscillations",
+    ],
+  ],
+  // ----------------------------------------------------
   [
     "12-Physics Part 1-NCERT",
     [
@@ -162,6 +182,22 @@ const chapterCounts = new Map<string, string[] | number>([
       "Hydrocarbons",
     ],
   ],
+  // --- NEW: Generic Subject Key for Class 11 Chemistry ---
+  [
+    "11-Chemistry-NCERT",
+    [
+      "Some Basic Concepts of Chemistry",
+      "Structure of Atom",
+      "Classification of Elements and Periodicity in Properties",
+      "Chemical Bonding and Molecular Structure",
+      "Chemical Thermodynamics",
+      "Equilibrium",
+      "Redox Reactions",
+      "Organic Chemistry – Some Basic Principles and Techniques",
+      "Hydrocarbons",
+    ],
+  ],
+  // ----------------------------------------------------
   [
     "12-Chemistry Part 1-NCERT",
     [
@@ -237,46 +273,43 @@ const chapterCounts = new Map<string, string[] | number>([
   ],
 ]);
 
+// --- UPDATED generateChapterOptions function ---
 const generateChapterOptions = (selectedClass, subject, syllabus) => {
   let key;
-
   let chapterData = null;
 
+  // 1. Check for specific subject/syllabus combination (e.g., "11-Physics Part 1-NCERT")
   if (syllabus) {
-    // Try the exact syllabus first
     key = `${selectedClass}-${subject}-${syllabus}`;
-    chapterData = chapterCounts.get(key);
-
-    // If not found, try with NCERT (most common)
-    if (!chapterData) {
-      key = `${selectedClass}-${subject}-NCERT`;
-      chapterData = chapterCounts.get(key);
-    }
-
-    // If still not found, try with Default
-    if (!chapterData) {
-      key = `${selectedClass}-${subject}-Default`;
-      chapterData = chapterCounts.get(key);
-    }
-
-    // If still not found, try with CBSE
-    if (!chapterData) {
-      key = `${selectedClass}-${subject}-CBSE`;
-      chapterData = chapterCounts.get(key);
-    }
-  } else {
-    key = `${selectedClass}-${subject || "Default"}-Default`;
     chapterData = chapterCounts.get(key);
   }
 
+  // 2. Check for generic subject/common syllabus (e.g., "11-Chemistry-NCERT")
+  if (!chapterData) {
+    // Try NCERT first
+    key = `${selectedClass}-${subject}-NCERT`;
+    chapterData = chapterCounts.get(key);
+  }
+
+  // 3. Fallback checks for Default/CBSE if the exact or NCERT key wasn't found
+  if (!chapterData) {
+    key = `${selectedClass}-${subject}-Default`;
+    chapterData = chapterCounts.get(key);
+  }
+  if (!chapterData) {
+    key = `${selectedClass}-${subject}-CBSE`;
+    chapterData = chapterCounts.get(key);
+  }
+
+  // 4. If data is an array (list of chapter names)
   if (Array.isArray(chapterData)) {
-    // Correct logic: value is the chapter name, label is the number
     return chapterData.map((chapterName, index) => ({
       value: chapterName,
       label: (index + 1).toString(),
     }));
-  } else if (typeof chapterData === "number") {
-    // Correct logic: both are the number, as there's no name data
+  }
+  // 5. If data is a number (count of chapters)
+  else if (typeof chapterData === "number") {
     return Array.from({ length: chapterData }, (_, i) => ({
       value: (i + 1).toString(),
       label: (i + 1).toString(),
@@ -285,6 +318,7 @@ const generateChapterOptions = (selectedClass, subject, syllabus) => {
 
   return [];
 };
+// ---------------------------------------------
 
 export const fields = (
   useGetSubjectOptionsMutation,
@@ -304,10 +338,9 @@ export const fields = (
   const subjectOptionsForTopic =
     topicSubjectMapping[currentTopic] || topicSubjectMapping["default"];
 
-  // --- NEW: Derive Topic Options based on Class ---
+  // Derive Topic Options based on Class
   const topicOptionsForClass =
     classTopicMapping[currentClass] || classTopicMapping["default"];
-  // ------------------------------------------------
 
   const chapterOptions = generateChapterOptions(
     currentClass,
@@ -329,7 +362,7 @@ export const fields = (
       getValueCallback: (value) => {
         setCurrentClass(value);
         // Reset topic and subject when class changes
-        setCurrentTopic(null); 
+        setCurrentTopic(null);
         setCurrentSubject(null);
       },
     },
@@ -350,15 +383,14 @@ export const fields = (
       label: "Topic",
       placeholder: "Select Topic ...",
       type: "select",
-      // --- UPDATED: Use class-based topic options ---
-      options: topicOptionsForClass, 
-      // -----------------------------------------------
+      // Use class-based topic options
+      options: topicOptionsForClass,
       wrapperClassName: "mb-6",
       fieldWrapperClassName: "col-span-6",
       getValueCallback: (value) => {
         setCurrentTopic(value);
         // Reset subject when topic changes
-        setCurrentSubject(null); 
+        setCurrentSubject(null);
       },
       // Disable topics if no class is selected or class has no topic options
       disabled: (() => {
