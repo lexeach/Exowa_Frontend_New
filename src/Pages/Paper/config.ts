@@ -17,7 +17,7 @@ const classoptions = [
   //{ value: 12, label: "12" },
 ];
 
-// Define the dynamic subject options based on class (Kept for completeness but not used for subject options)
+// Define the dynamic subject options based on class
 const dynamicSubjectOptions = {
   "11": [
     { value: "Physics Part 1", label: "Physics Part 1" },
@@ -36,17 +36,14 @@ const dynamicSubjectOptions = {
 
 // MAPPING FOR CLASS-BASED TOPICS
 const classTopicMapping = {
-  // If class is 11, show Topic 1 and Topic 2
   "11": [
     { value: "topic_1", label: "Topic 1" },
     { value: "topic_2", label: "Topic 2" },
   ],
-  // If class is 12, show Topic 2 and Topic 3
   "12": [
     { value: "topic_2", label: "Topic 2" },
     { value: "topic_3", label: "Topic 3" },
   ],
-  // Fallback for other classes
   default: [
     { value: "topic_1", label: "Topic 1" },
     { value: "topic_2", label: "Topic 2" },
@@ -55,16 +52,20 @@ const classTopicMapping = {
 };
 
 // MAPPING FOR TOPIC-BASED SUBJECTS
-const topicSubjectMapping = {
-  topic_1: [
+const topic_1_subjects = [
     { value: "Chemistry", label: "Chemistry" },
     { value: "Physics", label: "Physics" },
     { value: "Biology", label: "Biology" },
-  ],
-  topic_2: [
+];
+const topic_2_subjects = [
     { value: "Business Studies Part 1", label: "Business Studies Part 1" },
     { value: "Business Studies Part 2", label: "Business Studies Part 2" },
-  ],
+];
+
+const topicSubjectMapping = {
+  topic_1: topic_1_subjects,
+  topic_2: topic_2_subjects,
+  // MODIFIED: Set default to an empty array so the list is nil when no topic is selected.
   default: [],
 };
 
@@ -92,7 +93,26 @@ const chapterCounts = new Map<string, string[] | number>([
       "Consumer Protection",
     ],
   ],
-
+  // NEW: Generic Subject Key for Class 11 Physics (Combines Part 1 and 2 chapters)
+  [
+    "11-Physics-NCERT",
+    [
+      "Physical World",
+      "Units and Measurements",
+      "Motion in a Straight Line",
+      "Motion in a Plane",
+      "Laws of Motion",
+      "Work, Energy and Power",
+      "System of Particles and Rotational Motion",
+      "Gravitation",
+      "Mechanical Properties of Solids",
+      "Mechanical Properties of Fluids",
+      "Thermal Properties of Matter",
+      "Thermodynamics",
+      "Kinetic Theory",
+      "Oscillations",
+    ],
+  ],
   [
     "11-Physics Part 1-NCERT",
     [
@@ -117,27 +137,6 @@ const chapterCounts = new Map<string, string[] | number>([
       "Oscillations",
     ],
   ],
-  // --- NEW: Generic Subject Key for Class 11 Physics ---
-  [
-    "11-Physics-NCERT",
-    [
-      "Physical World",
-      "Units and Measurements",
-      "Motion in a Straight Line",
-      "Motion in a Plane",
-      "Laws of Motion",
-      "Work, Energy and Power",
-      "System of Particles and Rotational Motion",
-      "Gravitation",
-      "Mechanical Properties of Solids",
-      "Mechanical Properties of Fluids",
-      "Thermal Properties of Matter",
-      "Thermodynamics",
-      "Kinetic Theory",
-      "Oscillations",
-    ],
-  ],
-  // ----------------------------------------------------
   [
     "12-Physics Part 1-NCERT",
     [
@@ -163,6 +162,21 @@ const chapterCounts = new Map<string, string[] | number>([
     ],
   ],
 
+  // NEW: Generic Subject Key for Class 11 Chemistry (Combines Part 1 and 2 chapters)
+  [
+    "11-Chemistry-NCERT",
+    [
+      "Some Basic Concepts of Chemistry",
+      "Structure of Atom",
+      "Classification of Elements and Periodicity in Properties",
+      "Chemical Bonding and Molecular Structure",
+      "Chemical Thermodynamics",
+      "Equilibrium",
+      "Redox Reactions",
+      "Organic Chemistry – Some Basic Principles and Techniques",
+      "Hydrocarbons",
+    ],
+  ],
   [
     "11-Chemistry Part 1-NCERT",
     [
@@ -182,22 +196,6 @@ const chapterCounts = new Map<string, string[] | number>([
       "Hydrocarbons",
     ],
   ],
-  // --- NEW: Generic Subject Key for Class 11 Chemistry ---
-  [
-    "11-Chemistry-NCERT",
-    [
-      "Some Basic Concepts of Chemistry",
-      "Structure of Atom",
-      "Classification of Elements and Periodicity in Properties",
-      "Chemical Bonding and Molecular Structure",
-      "Chemical Thermodynamics",
-      "Equilibrium",
-      "Redox Reactions",
-      "Organic Chemistry – Some Basic Principles and Techniques",
-      "Hydrocarbons",
-    ],
-  ],
-  // ----------------------------------------------------
   [
     "12-Chemistry Part 1-NCERT",
     [
@@ -273,7 +271,6 @@ const chapterCounts = new Map<string, string[] | number>([
   ],
 ]);
 
-// --- UPDATED generateChapterOptions function ---
 const generateChapterOptions = (selectedClass, subject, syllabus) => {
   let key;
   let chapterData = null;
@@ -318,7 +315,6 @@ const generateChapterOptions = (selectedClass, subject, syllabus) => {
 
   return [];
 };
-// ---------------------------------------------
 
 export const fields = (
   useGetSubjectOptionsMutation,
@@ -403,14 +399,14 @@ export const fields = (
       placeholder: "Select Subject ...",
       type: "select",
       autoFocus: true,
-      // Use topic-based subject options
+      // Use topic-based subject options. This is [] if currentTopic is null.
       options: subjectOptionsForTopic,
       wrapperClassName: "mb-6",
       fieldWrapperClassName: "col-span-6",
       className: "mobile-select-no-keyboard",
       getValueCallback: (value) => setCurrentSubject(value),
       disabled: (() => {
-        // Disable if no topic is selected or no options are available for the topic
+        // Disable if no topic is selected or the selected topic has no subjects
         const isDisabled = !currentTopic || subjectOptionsForTopic.length === 0;
         return isDisabled;
       })(),
