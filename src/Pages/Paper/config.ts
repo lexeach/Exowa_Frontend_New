@@ -327,7 +327,7 @@ export const fields = (
 
   // --- UPDATED LOGIC: Calculate Subject Options based on Class and Topic ---
   const subjectKey = `${currentClass}_${currentTopic}`;
-  const subjectOptions = classTopicSubjectMapping[subjectKey] || [];
+  const subjectOptions = classTopicSubjectMapping[subjectKey] ||classTopicSubjectMapping ["default"];
   // --------------------------------------------------------------------------
 
   const chapterOptions = generateChapterOptions(
