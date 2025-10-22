@@ -13,8 +13,7 @@ const classoptions = [
   { value: "12", label: "12" },
 ];
 
-/* ---------- Topic & Subject mapping ---------- */
-/* Topic options organized per class (values are strings "1","2","3" to match your request) */
+/* ---------- Topic & Subject mapping (VERIFIED) ---------- */
 const topicOptionsByClass = {
   "10": [
     { value: "1", label: "Topic 1" },
@@ -35,7 +34,6 @@ const topicOptionsByClass = {
   ],
 };
 
-/* Subjects depend on class AND topic. */
 const dynamicSubjectByClassAndTopic = {
   "11": {
     "1": [
@@ -47,7 +45,7 @@ const dynamicSubjectByClassAndTopic = {
       { value: "Chemistry Part 2", label: "Chemistry Part 2" },
     ],
     "3": [
-      // optional fallback for topic_3 of class 11
+      // optional fallback
     ],
   },
   "12": {
@@ -56,12 +54,12 @@ const dynamicSubjectByClassAndTopic = {
       { value: "Business Studies Part 2", label: "Business Studies Part 2" },
     ],
     "1": [
-      // optional mapping for topic 1 of class 12
+      // optional mapping
     ],
   },
 };
 
-/* ---------- Chapter data (kept as in your original file) ---------- */
+/* ---------- Chapter data (retained) ---------- */
 const chapterCounts = new Map([
   [
     "12-Business Studies Part 1-NCERT",
@@ -187,18 +185,12 @@ const generateChapterOptions = (selectedClass, subject, syllabus) => {
   return [];
 };
 
-/* ---------- Utility getters ---------- */
+/* ---------- Utility getters (ROBUST VALUE EXTRACTION) ---------- */
 
-/**
- * Safely extracts the intended string value from a select input's change event.
- * Handles primitive values, null, and object values {value: 'X', label: 'Y'}.
- * @param {any} value The value received from the select component's onChange/getValueCallback.
- * @returns {string | null} The normalized string value or null.
- */
 const safeExtractValue = (value) => {
-    if (value === null || value === undefined) return null;
+    if (value === null || value === undefined || value === '') return null;
     
-    // If the value is an object (common for React-Select style libraries) and has a 'value' property
+    // If the value is an object (common for select libraries)
     if (typeof value === 'object' && value.value !== undefined) {
         return value.value === null || value.value === undefined ? null : String(value.value);
     }
@@ -209,27 +201,21 @@ const safeExtractValue = (value) => {
 
 const getTopicOptions = (selectedClass) => {
   if (!selectedClass) return [];
-  // Ensure we use the string version for map lookup
   return topicOptionsByClass[String(selectedClass)] || topicOptionsByClass["default"];
 };
 
 const getSubjectOptions = (selectedClass, selectedTopic) => {
-  // Use console.log to inspect values in your running environment
-  // console.log("getSubjectOptions called with:", { selectedClass, selectedTopic });
-
   if (!selectedClass || !selectedTopic) {
-    // console.log("Returning empty array: missing class or topic.");
     return [];
   }
 
-  // Ensure keys are strings for map lookups
   const classKey = String(selectedClass);
   const topicKey = String(selectedTopic);
 
+  // Check if the keys exist in the mapping
   const byClass = dynamicSubjectByClassAndTopic[classKey] || {};
   const subjects = byClass[topicKey] || [];
   
-  // console.log(`Found subjects for [${classKey}][${topicKey}]:`, subjects);
   return subjects;
 };
 
@@ -248,9 +234,16 @@ export const fields = (
   currentTopic,
   setCurrentTopic
 ) => {
+  // CRITICAL DEBUGGING: Check what state values are being used to generate the list
+  console.log("Subject list generation check:");
+  console.log(`  currentClass: ${currentClass} (Type: ${typeof currentClass})`);
+  console.log(`  currentTopic: ${currentTopic} (Type: ${typeof currentTopic})`);
+
   // Derive dynamic options using the helper functions
   const topicOptions = getTopicOptions(currentClass);
   const subjectOptionsForClassTopic = getSubjectOptions(currentClass, currentTopic);
+  
+  console.log(`  Subject Options found: ${subjectOptionsForClassTopic.length}`); // Should be > 0 when valid Class/Topic selected
 
   const chapterOptions = generateChapterOptions(
     currentClass,
@@ -271,8 +264,7 @@ export const fields = (
       className: "mobile-select-no-keyboard",
       getValueCallback: (value) => {
         const classVal = safeExtractValue(value);
-        // Important: check if the value is null/undefined after extraction
-        setCurrentClass(classVal === 'null' ? null : classVal); 
+        setCurrentClass(classVal); 
         // Reset dependent fields
         setCurrentTopic(null);
         setCurrentSubject(null);
@@ -295,18 +287,16 @@ export const fields = (
       label: "Topic",
       placeholder: "Select Topic ...",
       type: "select",
-      // Dynamic Topic options based on Class
       options: topicOptions,
       wrapperClassName: "mb-6",
       fieldWrapperClassName: "col-span-6",
       className: "mobile-select-no-keyboard",
       getValueCallback: (value) => {
         const topicVal = safeExtractValue(value);
-        setCurrentTopic(topicVal === 'null' ? null : topicVal);
+        setCurrentTopic(topicVal);
         // Reset subject when topic changes
         setCurrentSubject(null);
       },
-      // Disable if no class is selected or no topics are available
       disabled: !currentClass || topicOptions.length === 0,
     },
     {
@@ -324,7 +314,7 @@ export const fields = (
         const subjVal = safeExtractValue(value);
         setCurrentSubject(subjVal);
       },
-      // Disable if no topic is selected or no subjects are available
+      // Check if the list is empty or disabled based on state
       disabled: !currentTopic || subjectOptionsForClassTopic.length === 0,
     },
     {
