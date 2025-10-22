@@ -44,18 +44,14 @@ const dynamicSubjectByClassAndTopic = {
       { value: "Chemistry Part 1", label: "Chemistry Part 1" },
       { value: "Chemistry Part 2", label: "Chemistry Part 2" },
     ],
-    "3": [
-      // optional fallback
-    ],
+    "3": [],
   },
   "12": {
     "2": [
       { value: "Business Studies Part 1", label: "Business Studies Part 1" },
       { value: "Business Studies Part 2", label: "Business Studies Part 2" },
     ],
-    "1": [
-      // optional mapping
-    ],
+    "1": [],
   },
 };
 
@@ -195,6 +191,11 @@ const safeExtractValue = (value) => {
         return value.value === null || value.value === undefined ? null : String(value.value);
     }
     
+    // Check for string "null" which can sometimes come from forms
+    if (String(value).toLowerCase() === 'null') {
+      return null;
+    }
+
     // Otherwise, assume it's the primitive value itself (string or number)
     return String(value);
 };
@@ -212,7 +213,6 @@ const getSubjectOptions = (selectedClass, selectedTopic) => {
   const classKey = String(selectedClass);
   const topicKey = String(selectedTopic);
 
-  // Check if the keys exist in the mapping
   const byClass = dynamicSubjectByClassAndTopic[classKey] || {};
   const subjects = byClass[topicKey] || [];
   
@@ -234,16 +234,9 @@ export const fields = (
   currentTopic,
   setCurrentTopic
 ) => {
-  // CRITICAL DEBUGGING: Check what state values are being used to generate the list
-  console.log("Subject list generation check:");
-  console.log(`  currentClass: ${currentClass} (Type: ${typeof currentClass})`);
-  console.log(`  currentTopic: ${currentTopic} (Type: ${typeof currentTopic})`);
-
   // Derive dynamic options using the helper functions
   const topicOptions = getTopicOptions(currentClass);
   const subjectOptionsForClassTopic = getSubjectOptions(currentClass, currentTopic);
-  
-  console.log(`  Subject Options found: ${subjectOptionsForClassTopic.length}`); // Should be > 0 when valid Class/Topic selected
 
   const chapterOptions = generateChapterOptions(
     currentClass,
@@ -292,9 +285,10 @@ export const fields = (
       fieldWrapperClassName: "col-span-6",
       className: "mobile-select-no-keyboard",
       getValueCallback: (value) => {
+        // *** This is the most critical update to ensure currentTopic is set immediately ***
         const topicVal = safeExtractValue(value);
-        setCurrentTopic(topicVal);
-        // Reset subject when topic changes
+        setCurrentTopic(topicVal); 
+        // Reset subject immediately
         setCurrentSubject(null);
       },
       disabled: !currentClass || topicOptions.length === 0,
@@ -305,7 +299,6 @@ export const fields = (
       placeholder: "Select Subject ...",
       type: "select",
       autoFocus: true,
-      // Dynamic Subject options based on Class AND Topic
       options: subjectOptionsForClassTopic,
       wrapperClassName: "mb-6",
       fieldWrapperClassName: "col-span-6",
@@ -314,7 +307,7 @@ export const fields = (
         const subjVal = safeExtractValue(value);
         setCurrentSubject(subjVal);
       },
-      // Check if the list is empty or disabled based on state
+      // Subject is disabled if no topic is selected OR if the dynamic list is empty
       disabled: !currentTopic || subjectOptionsForClassTopic.length === 0,
     },
     {
