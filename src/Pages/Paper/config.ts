@@ -200,7 +200,7 @@ const safeExtractValue = (value) => {
     
     // If the value is an object (common for React-Select style libraries) and has a 'value' property
     if (typeof value === 'object' && value.value !== undefined) {
-        return String(value.value);
+        return value.value === null || value.value === undefined ? null : String(value.value);
     }
     
     // Otherwise, assume it's the primitive value itself (string or number)
@@ -209,13 +209,28 @@ const safeExtractValue = (value) => {
 
 const getTopicOptions = (selectedClass) => {
   if (!selectedClass) return [];
+  // Ensure we use the string version for map lookup
   return topicOptionsByClass[String(selectedClass)] || topicOptionsByClass["default"];
 };
 
 const getSubjectOptions = (selectedClass, selectedTopic) => {
-  if (!selectedClass || !selectedTopic) return [];
-  const byClass = dynamicSubjectByClassAndTopic[String(selectedClass)] || {};
-  return byClass[String(selectedTopic)] || [];
+  // Use console.log to inspect values in your running environment
+  // console.log("getSubjectOptions called with:", { selectedClass, selectedTopic });
+
+  if (!selectedClass || !selectedTopic) {
+    // console.log("Returning empty array: missing class or topic.");
+    return [];
+  }
+
+  // Ensure keys are strings for map lookups
+  const classKey = String(selectedClass);
+  const topicKey = String(selectedTopic);
+
+  const byClass = dynamicSubjectByClassAndTopic[classKey] || {};
+  const subjects = byClass[topicKey] || [];
+  
+  // console.log(`Found subjects for [${classKey}][${topicKey}]:`, subjects);
+  return subjects;
 };
 
 /* ---------- Main exported fields function ---------- */
@@ -255,9 +270,9 @@ export const fields = (
       fieldWrapperClassName: "col-span-12",
       className: "mobile-select-no-keyboard",
       getValueCallback: (value) => {
-        // Use the new utility to safely extract the string value for state
         const classVal = safeExtractValue(value);
-        setCurrentClass(classVal);
+        // Important: check if the value is null/undefined after extraction
+        setCurrentClass(classVal === 'null' ? null : classVal); 
         // Reset dependent fields
         setCurrentTopic(null);
         setCurrentSubject(null);
@@ -286,13 +301,12 @@ export const fields = (
       fieldWrapperClassName: "col-span-6",
       className: "mobile-select-no-keyboard",
       getValueCallback: (value) => {
-        // Use the new utility to safely extract the string value for state
         const topicVal = safeExtractValue(value);
-        setCurrentTopic(topicVal);
+        setCurrentTopic(topicVal === 'null' ? null : topicVal);
         // Reset subject when topic changes
         setCurrentSubject(null);
       },
-      // Disable if no class is selected
+      // Disable if no class is selected or no topics are available
       disabled: !currentClass || topicOptions.length === 0,
     },
     {
@@ -307,11 +321,10 @@ export const fields = (
       fieldWrapperClassName: "col-span-6",
       className: "mobile-select-no-keyboard",
       getValueCallback: (value) => {
-        // Use the new utility to safely extract the string value for state
         const subjVal = safeExtractValue(value);
         setCurrentSubject(subjVal);
       },
-      // Disable if no topic is selected (as subjects depend on topic)
+      // Disable if no topic is selected or no subjects are available
       disabled: !currentTopic || subjectOptionsForClassTopic.length === 0,
     },
     {
