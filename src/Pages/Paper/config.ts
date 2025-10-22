@@ -47,7 +47,7 @@ const dynamicSubjectByClassAndTopic = {
       { value: "Chemistry Part 2", label: "Chemistry Part 2" },
     ],
     "3": [
-      // optional fallback for topic_3 of class 11 - kept for structure
+      // optional fallback for topic_3 of class 11
     ],
   },
   "12": {
@@ -56,7 +56,7 @@ const dynamicSubjectByClassAndTopic = {
       { value: "Business Studies Part 2", label: "Business Studies Part 2" },
     ],
     "1": [
-      // optional mapping for topic 1 of class 12 - kept for structure
+      // optional mapping for topic 1 of class 12
     ],
   },
 };
@@ -144,7 +144,7 @@ const chapterCounts = new Map([
   // ... (retain rest of your earlier large map as needed) ...
 ]);
 
-/* ---------- Chapter helper (your original logic preserved) ---------- */
+/* ---------- Chapter helper (original logic preserved) ---------- */
 const generateChapterOptions = (selectedClass, subject, syllabus) => {
   let key;
   let chapterData = null;
@@ -168,7 +168,6 @@ const generateChapterOptions = (selectedClass, subject, syllabus) => {
       chapterData = chapterCounts.get(key);
     }
   } else {
-    // Attempt to use a default lookup key
     key = `${selectedClass}-${subject || "Default"}-Default`;
     chapterData = chapterCounts.get(key);
   }
@@ -188,7 +187,25 @@ const generateChapterOptions = (selectedClass, subject, syllabus) => {
   return [];
 };
 
-/* ---------- Utility getters (for clarity) ---------- */
+/* ---------- Utility getters ---------- */
+
+/**
+ * Safely extracts the intended string value from a select input's change event.
+ * Handles primitive values, null, and object values {value: 'X', label: 'Y'}.
+ * @param {any} value The value received from the select component's onChange/getValueCallback.
+ * @returns {string | null} The normalized string value or null.
+ */
+const safeExtractValue = (value) => {
+    if (value === null || value === undefined) return null;
+    
+    // If the value is an object (common for React-Select style libraries) and has a 'value' property
+    if (typeof value === 'object' && value.value !== undefined) {
+        return String(value.value);
+    }
+    
+    // Otherwise, assume it's the primitive value itself (string or number)
+    return String(value);
+};
 
 const getTopicOptions = (selectedClass) => {
   if (!selectedClass) return [];
@@ -201,7 +218,7 @@ const getSubjectOptions = (selectedClass, selectedTopic) => {
   return byClass[String(selectedTopic)] || [];
 };
 
-/* ---------- Main exported fields function (signature kept as requested) ---------- */
+/* ---------- Main exported fields function ---------- */
 export const fields = (
   useGetSubjectOptionsMutation,
   useGetSyllabusOptionsMutation,
@@ -238,10 +255,9 @@ export const fields = (
       fieldWrapperClassName: "col-span-12",
       className: "mobile-select-no-keyboard",
       getValueCallback: (value) => {
-        // --- FIX: Defensive normalization for Class ---
-        // If value is an object (e.g., from a Select component: {value: "11", label: "11"}), extract value.value
-        const classVal = (typeof value === "object" && value !== null) ? (value.value ?? value) : value;
-        setCurrentClass(classVal != null ? String(classVal) : null);
+        // Use the new utility to safely extract the string value for state
+        const classVal = safeExtractValue(value);
+        setCurrentClass(classVal);
         // Reset dependent fields
         setCurrentTopic(null);
         setCurrentSubject(null);
@@ -270,10 +286,9 @@ export const fields = (
       fieldWrapperClassName: "col-span-6",
       className: "mobile-select-no-keyboard",
       getValueCallback: (value) => {
-        // --- FIX: Defensive normalization for Topic ---
-        // If value is an object (e.g., from a Select component: {value: "1", label: "Topic 1"}), extract value.value
-        const topicVal = (typeof value === "object" && value !== null) ? (value.value ?? value) : value;
-        setCurrentTopic(topicVal != null ? String(topicVal) : null);
+        // Use the new utility to safely extract the string value for state
+        const topicVal = safeExtractValue(value);
+        setCurrentTopic(topicVal);
         // Reset subject when topic changes
         setCurrentSubject(null);
       },
@@ -292,9 +307,9 @@ export const fields = (
       fieldWrapperClassName: "col-span-6",
       className: "mobile-select-no-keyboard",
       getValueCallback: (value) => {
-        // Simple normalization for subject value
-        const subjVal = typeof value === "object" ? value.value ?? value : value;
-        setCurrentSubject(subjVal != null ? String(subjVal) : null);
+        // Use the new utility to safely extract the string value for state
+        const subjVal = safeExtractValue(value);
+        setCurrentSubject(subjVal);
       },
       // Disable if no topic is selected (as subjects depend on topic)
       disabled: !currentTopic || subjectOptionsForClassTopic.length === 0,
