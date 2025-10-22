@@ -35,12 +35,7 @@ const topicOptionsByClass = {
   ],
 };
 
-/* Subjects depend on class AND topic.
-   Rules you requested:
-   - class 11 & topic 1 -> Physics Part 1, Physics Part 2
-   - class 11 & topic 2 -> Chemistry Part 1, Chemistry Part 2
-   - class 12 & topic 2 -> Business Studies Part 1, Business Studies Part 2
-*/
+/* Subjects depend on class AND topic. */
 const dynamicSubjectByClassAndTopic = {
   "11": {
     "1": [
@@ -52,7 +47,7 @@ const dynamicSubjectByClassAndTopic = {
       { value: "Chemistry Part 2", label: "Chemistry Part 2" },
     ],
     "3": [
-      // optional fallback for topic_3 of class 11 - keep empty or add as needed
+      // optional fallback for topic_3 of class 11 - kept for structure
     ],
   },
   "12": {
@@ -61,12 +56,14 @@ const dynamicSubjectByClassAndTopic = {
       { value: "Business Studies Part 2", label: "Business Studies Part 2" },
     ],
     "1": [
-      // optional mapping for topic 1 of class 12
+      // optional mapping for topic 1 of class 12 - kept for structure
     ],
   },
 };
 
-/* ---------- Chapter data (kept as in your original file; trimmed to relevant entries for brevity) ---------- */
+/* ---------- Chapter data (kept as in your original file) ---------- */
+// NOTE: I've kept the original chapterCounts map as provided, including its key structure (e.g., "11-Physics Part 1-NCERT").
+// This is necessary for the `generateChapterOptions` logic to continue working as it did previously.
 const chapterCounts = new Map([
   [
     "12-Business Studies Part 1-NCERT",
@@ -173,6 +170,7 @@ const generateChapterOptions = (selectedClass, subject, syllabus) => {
       chapterData = chapterCounts.get(key);
     }
   } else {
+    // Attempt to use a default lookup key
     key = `${selectedClass}-${subject || "Default"}-Default`;
     chapterData = chapterCounts.get(key);
   }
@@ -193,18 +191,30 @@ const generateChapterOptions = (selectedClass, subject, syllabus) => {
 };
 
 /* ---------- Utility getters (for clarity) ---------- */
+
+/**
+ * Gets topic options based on the selected class.
+ * @param {string | number} selectedClass The current class value.
+ * @returns {Array<object>} List of topic options.
+ */
 const getTopicOptions = (selectedClass) => {
   if (!selectedClass) return [];
   return topicOptionsByClass[String(selectedClass)] || topicOptionsByClass["default"];
 };
 
+/**
+ * Gets subject options based on the selected class AND topic.
+ * @param {string | number} selectedClass The current class value.
+ * @param {string | number} selectedTopic The current topic value.
+ * @returns {Array<object>} List of subject options.
+ */
 const getSubjectOptions = (selectedClass, selectedTopic) => {
   if (!selectedClass || !selectedTopic) return [];
   const byClass = dynamicSubjectByClassAndTopic[String(selectedClass)] || {};
   return byClass[String(selectedTopic)] || [];
 };
 
-/* ---------- Main exported fields function (signature kept as requested) ---------- */
+/* ---------- Main exported fields function ---------- */
 export const fields = (
   useGetSubjectOptionsMutation,
   useGetSyllabusOptionsMutation,
@@ -219,7 +229,7 @@ export const fields = (
   currentTopic,
   setCurrentTopic
 ) => {
-  // derive dynamic options
+  // Derive dynamic options using the helper functions
   const topicOptions = getTopicOptions(currentClass);
   const subjectOptionsForClassTopic = getSubjectOptions(currentClass, currentTopic);
 
@@ -235,16 +245,17 @@ export const fields = (
       label: "Class",
       placeholder: "Class ...",
       type: "select",
-      options: childrenListClass?.data?.data?.length ? childrenListClass.data.data : classoptions,
+      // Fallback to static classoptions if data is not available
+      options: childrenListClass?.data?.data?.length ? childrenListClass.data.data : classoptions, 
       autoFocus: true,
       wrapperClassName: "mb-6",
       fieldWrapperClassName: "col-span-12",
       className: "mobile-select-no-keyboard",
       getValueCallback: (value) => {
-        // ensure consistent string type
+        // Ensure consistent string type for map lookups
         const val = value != null ? String(value) : value;
         setCurrentClass(val);
-        // reset dependent fields
+        // Reset dependent fields
         setCurrentTopic(null);
         setCurrentSubject(null);
       },
@@ -266,16 +277,19 @@ export const fields = (
       label: "Topic",
       placeholder: "Select Topic ...",
       type: "select",
+      // Dynamic Topic options based on Class
       options: topicOptions,
       wrapperClassName: "mb-6",
       fieldWrapperClassName: "col-span-6",
       className: "mobile-select-no-keyboard",
       getValueCallback: (value) => {
-        // topic value could be object or string depending on UI; normalize
+        // Normalize value and set state
         const topicVal = typeof value === "object" ? value.value ?? value : value;
         setCurrentTopic(topicVal != null ? String(topicVal) : null);
+        // Reset subject when topic changes
         setCurrentSubject(null);
       },
+      // Disable if no class is selected
       disabled: !currentClass || topicOptions.length === 0,
     },
     {
@@ -284,6 +298,7 @@ export const fields = (
       placeholder: "Select Subject ...",
       type: "select",
       autoFocus: true,
+      // Dynamic Subject options based on Class AND Topic
       options: subjectOptionsForClassTopic,
       wrapperClassName: "mb-6",
       fieldWrapperClassName: "col-span-6",
@@ -292,6 +307,7 @@ export const fields = (
         const subjVal = typeof value === "object" ? value.value ?? value : value;
         setCurrentSubject(subjVal != null ? String(subjVal) : null);
       },
+      // Disable if no topic is selected (as subjects depend on topic)
       disabled: !currentTopic || subjectOptionsForClassTopic.length === 0,
     },
     {
@@ -304,8 +320,7 @@ export const fields = (
       wrapperClassName: "mb-6",
       fieldWrapperClassName: "col-span-6",
       className: "mobile-select-no-keyboard",
-      disabled:
-        !currentClass || !currentSubject || chapterOptions.length === 0,
+      disabled: !currentClass || !currentSubject || chapterOptions.length === 0,
     },
     {
       name: "chapter_to",
@@ -317,8 +332,7 @@ export const fields = (
       wrapperClassName: "mb-6",
       fieldWrapperClassName: "col-span-6",
       className: "mobile-select-no-keyboard",
-      disabled:
-        !currentClass || !currentSubject || chapterOptions.length === 0,
+      disabled: !currentClass || !currentSubject || chapterOptions.length === 0,
     },
     {
       name: "language",
@@ -381,7 +395,7 @@ export const schema = yup
               } = this.parent;
 
               if (!chapter_from || !chapter_to) {
-                return true; // Pass validation if one is missing
+                return true;
               }
 
               const numChapterFrom = parseInt(chapter_from);
