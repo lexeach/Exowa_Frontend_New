@@ -62,8 +62,6 @@ const dynamicSubjectByClassAndTopic = {
 };
 
 /* ---------- Chapter data (kept as in your original file) ---------- */
-// NOTE: I've kept the original chapterCounts map as provided, including its key structure (e.g., "11-Physics Part 1-NCERT").
-// This is necessary for the `generateChapterOptions` logic to continue working as it did previously.
 const chapterCounts = new Map([
   [
     "12-Business Studies Part 1-NCERT",
@@ -192,29 +190,18 @@ const generateChapterOptions = (selectedClass, subject, syllabus) => {
 
 /* ---------- Utility getters (for clarity) ---------- */
 
-/**
- * Gets topic options based on the selected class.
- * @param {string | number} selectedClass The current class value.
- * @returns {Array<object>} List of topic options.
- */
 const getTopicOptions = (selectedClass) => {
   if (!selectedClass) return [];
   return topicOptionsByClass[String(selectedClass)] || topicOptionsByClass["default"];
 };
 
-/**
- * Gets subject options based on the selected class AND topic.
- * @param {string | number} selectedClass The current class value.
- * @param {string | number} selectedTopic The current topic value.
- * @returns {Array<object>} List of subject options.
- */
 const getSubjectOptions = (selectedClass, selectedTopic) => {
   if (!selectedClass || !selectedTopic) return [];
   const byClass = dynamicSubjectByClassAndTopic[String(selectedClass)] || {};
   return byClass[String(selectedTopic)] || [];
 };
 
-/* ---------- Main exported fields function ---------- */
+/* ---------- Main exported fields function (signature kept as requested) ---------- */
 export const fields = (
   useGetSubjectOptionsMutation,
   useGetSyllabusOptionsMutation,
@@ -245,16 +232,16 @@ export const fields = (
       label: "Class",
       placeholder: "Class ...",
       type: "select",
-      // Fallback to static classoptions if data is not available
       options: childrenListClass?.data?.data?.length ? childrenListClass.data.data : classoptions, 
       autoFocus: true,
       wrapperClassName: "mb-6",
       fieldWrapperClassName: "col-span-12",
       className: "mobile-select-no-keyboard",
       getValueCallback: (value) => {
-        // Ensure consistent string type for map lookups
-        const val = value != null ? String(value) : value;
-        setCurrentClass(val);
+        // --- FIX: Defensive normalization for Class ---
+        // If value is an object (e.g., from a Select component: {value: "11", label: "11"}), extract value.value
+        const classVal = (typeof value === "object" && value !== null) ? (value.value ?? value) : value;
+        setCurrentClass(classVal != null ? String(classVal) : null);
         // Reset dependent fields
         setCurrentTopic(null);
         setCurrentSubject(null);
@@ -283,8 +270,9 @@ export const fields = (
       fieldWrapperClassName: "col-span-6",
       className: "mobile-select-no-keyboard",
       getValueCallback: (value) => {
-        // Normalize value and set state
-        const topicVal = typeof value === "object" ? value.value ?? value : value;
+        // --- FIX: Defensive normalization for Topic ---
+        // If value is an object (e.g., from a Select component: {value: "1", label: "Topic 1"}), extract value.value
+        const topicVal = (typeof value === "object" && value !== null) ? (value.value ?? value) : value;
         setCurrentTopic(topicVal != null ? String(topicVal) : null);
         // Reset subject when topic changes
         setCurrentSubject(null);
@@ -304,6 +292,7 @@ export const fields = (
       fieldWrapperClassName: "col-span-6",
       className: "mobile-select-no-keyboard",
       getValueCallback: (value) => {
+        // Simple normalization for subject value
         const subjVal = typeof value === "object" ? value.value ?? value : value;
         setCurrentSubject(subjVal != null ? String(subjVal) : null);
       },
