@@ -1,108 +1,40 @@
 import * as yup from "yup";
 
 const options = [
-  //{ value: 5, label: "5" },
   { value: 10, label: "10" },
   { value: 15, label: "15" },
   { value: 20, label: "20" },
 ];
 
-const classoptions = [
-  //{ value: 6, label: "6" },
-  //{ value: 7, label: "7" },
-  //{ value: 8, label: "8" },
-  //{ value: 9, label: "9" },
-  { value: 10, label: "10" },
-  //{ value: 11, label: "11" },
-  //{ value: 12, label: "12" },
-];
+/* ---------- Topic Mapping (NEW) ---------- */
+// Topic options based on Class selection
+const topicOptionsByClass = {
+  "11": [
+    { value: "topic_1", label: "Topic 1" },
+    { value: "topic_2", label: "Topic 2" },
+  ],
+  "12": [
+    { value: "topic_2", label: "Topic 2" },
+    { value: "topic_3", label: "Topic 3" },
+  ],
+  // Default list if class is not 11 or 12
+  default: [
+    { value: "topic_1", label: "Topic 1" },
+    { value: "topic_2", label: "Topic 2" },
+    { value: "topic_3", label: "Topic 3" },
+  ],
+};
+
+const getTopicOptions = (selectedClass) => {
+    if (!selectedClass) return topicOptionsByClass.default;
+    // Safely look up the class-specific topic list
+    return topicOptionsByClass[String(selectedClass)] || topicOptionsByClass.default;
+};
+/* ------------------------------------------- */
+
 
 // Define the dynamic subject options based on class
 const dynamicSubjectOptions = {
-  "6": [
-    { value: "English", label: "English" },
-    { value: "Hindi", label: "Hindi" },
-    { value: "Mathematics", label: "Mathematics" },
-    { value: "Science", label: "Science" },
-    { value: "Social Science", label: "Social Science" },
-    { value: "Urdu", label: "Urdu" },
-    { value: "Sanskrit", label: "Sanskrit" },
-  ],
-  "7": [
-    { value: "English", label: "English" },
-    { value: "Hindi", label: "Hindi" },
-    { value: "Mathematics", label: "Mathematics" },
-    { value: "Science", label: "Science" },
-    { value: "Social Science", label: "Social Science" },
-    { value: "Urdu", label: "Urdu" },
-    { value: "Sanskrit", label: "Sanskrit" },
-  ],
-  "8": [
-    { value: "English It So Happened", label: "English It So Happened" },
-    { value: "English HoneyDew", label: "English HoneyDew" },
-    { value: "Hindi", label: "Hindi" },
-    { value: "Mathematics", label: "Mathematics" },
-    { value: "Science", label: "Science" },
-    { value: "Political Science", label: "Political Science" },
-    { value: "History", label: "History" },
-    { value: "Geography", label: "Geography" },
-    { value: "Urdu", label: "Urdu" },
-    { value: "Sanskrit", label: "Sanskrit" },
-  ],
-  "9": [
-    { value: "English Beehive", label: "English Beehive" },
-    {
-      value: "English Moments Supplementary Reader",
-      label: "English Moments Supplementary Reader",
-    },
-    {
-      value: "English Words and Expressions 1",
-      label: "English Words and Expressions 1",
-    },
-    { value: "Hindi Kshitij", label: "Hindi Kshitij" },
-    { value: "Hindi Sprash", label: "Hindi Sprash" },
-    { value: "Hindi Kritika", label: "Hindi Kritika" },
-    { value: "Hindi Sanchayan", label: "Hindi Sanchayan" },
-    { value: "Mathematics", label: "Mathematics" },
-    { value: "Science", label: "Science" },
-    { value: "Political Science", label: "Political Science" },
-    { value: "History", label: "History" },
-    { value: "Geography", label: "Geography" },
-    { value: "Economics", label: "Economics" },
-    { value: "Urdu", label: "Urdu" },
-    { value: "Sanskrit Shemushi Prathmo", label: "Sanskrit Shemushi Prathmo" },
-    { value: "Sanskrit Vyakranavithi", label: "Sanskrit Vyakranavithi" },
-    { value: "Sanskrit Abhyaswaan Bhav", label: "Sanskrit Abhyaswaan Bhav" },
-    {
-      value: "Information and Communication Technology",
-      label: "Information and Communication Technology",
-    },
-  ],
-  "10": [
-    { value: "English First Flight", label: "English First Flight" },
-    {
-      value: "English Foot Prints Without Feet",
-      label: "English Foot Prints Without Feet",
-    },
-    {
-      value: "English Words and Expressions 2",
-      label: "English Words and Expressions 2",
-    },
-    { value: "Hindi Kshitij", label: "Hindi Kshitij" },
-    { value: "Hindi Sprash", label: "Hindi Sprash" },
-    { value: "Hindi Kritika", label: "Hindi Kritika" },
-    { value: "Hindi Sanchayan", label: "Hindi Sanchayan" },
-    { value: "Mathematics", label: "Mathematics" },
-    { value: "Science", label: "Science" },
-    { value: "Political Science", label: "Political Science" },
-    { value: "History", label: "History" },
-    { value: "Geography", label: "Geography" },
-    { value: "Economics", label: "Economics" },
-    { value: "Urdu", label: "Urdu" },
-    { value: "Sanskrit Shemushi Part 2", label: "Sanskrit Shemushi Prathmo" },
-    { value: "Sanskrit Vyakranavithi", label: "Sanskrit Vyakranavithi" },
-    { value: "Sanskrit Abhyaswaan Bhav", label: "Sanskrit Abhyaswaan Bhav" },
-  ],
   "11": [
     { value: "English Woven Words", label: "English Woven Words" },
     { value: "English Hornbill", label: "English Hornbill" },
@@ -267,106 +199,7 @@ const dynamicSubjectOptions = {
   default: [],
 };
 
-const chapterCounts = new Map<string, string[] | number>([
-  [
-    "6-Mathematics-NCERT",
-    [
-      "Knowing Our Numbers",
-      "Whole Numbers",
-      "Playing with Numbers",
-      "Basic Geometrical Ideas",
-      "Understanding Elementary Shapes",
-      "Integers",
-      "Fractions",
-      "Decimals",
-      "Data Handling",
-      "Mensuration",
-      "Algebra",
-      "Ratio and Proportion",
-      "Symmetry",
-      "Practical Geometry",
-    ],
-  ],
-  [
-    "7-Mathematics-NCERT",
-    [
-      "Integers",
-      "Fractions and Decimals",
-      "Data Handling",
-      "Simple Equations",
-      "Lines and Angles",
-      "The Triangle and its Properties",
-      "Congruence of Triangles",
-      "Comparing Quantities",
-      "Rational Numbers",
-      "Practical Geometry",
-      "Perimeter and Area",
-      "Algebraic Expressions",
-      "Exponents and Powers",
-      "Symmetry",
-      "Visualising Solid Shapes",
-    ],
-  ],
-  [
-    "8-Mathematics-NCERT",
-    [
-      "Rational Numbers",
-      "Linear Equations in One Variable",
-      "Understanding Quadrilaterals",
-      "Practical Geometry",
-      "Data Handling",
-      "Squares and Square Roots",
-      "Cubes and Cube Roots",
-      "Comparing Quantities",
-      "Algebraic Expressions and Identities",
-      "Visualising Solid Shapes",
-      "Mensuration",
-      "Exponents and Powers",
-      "Direct and Inverse Proportions",
-      "Factorisation",
-      "Introduction to Graphs",
-      "Playing with Numbers",
-    ],
-  ],
-  [
-    "9-Mathematics-NCERT",
-    [
-      "Number Systems",
-      "Polynomials",
-      "Coordinate Geometry",
-      "Linear Equations in Two Variables",
-      "Introduction to Euclid’s Geometry",
-      "Lines and Angles",
-      "Triangles",
-      "Quadrilaterals",
-      "Areas of Parallelograms and Triangles",
-      "Circles",
-      "Constructions",
-      "Heron’s Formula",
-      "Surface Areas and Volumes",
-      "Statistics",
-      "Probability",
-    ],
-  ],
-  [
-    "10-Mathematics-NCERT",
-    [
-      "Real Numbers",
-      "Polynomials",
-      "Pair of Linear Equations in Two Variables",
-      "Quadratic Equations",
-      "Arithmetic Progressions",
-      "Triangles",
-      "Coordinate Geometry",
-      "Introduction to Trigonometry",
-      "Some Applications of Trigonometry",
-      "Circles",
-      "Areas Related to Circles",
-      "Surface Areas and Volumes",
-      "Statistics",
-      "Probability",
-    ],
-  ],
+const chapterCounts = new Map([
   [
     "11-Mathematics-NCERT",
     [
@@ -413,123 +246,22 @@ const chapterCounts = new Map<string, string[] | number>([
   ],
 
   [
-    "6-Urdu-NCERT",
-    [
-      "हमद",
-      "नाथ",
-      "आओ हिन्दी सीखें",
-      "रंग-बिरंगा",
-      "ख़ुदा की कुदरत",
-      "पौधे",
-      "एक कहानी",
-      "इंसाफ़",
-      "पहेलियाँ",
-      "क़िस्सा",
-      "ख़ूबियाँ",
-      "दोस्ती",
-      "मेरा घर",
-      "आज़ादी",
-    ],
-  ],
-  [
-    "7-Urdu-NCERT",
-    [
-      "अल्लाह",
-      "पहाड़ और गिलहरी",
-      "ख़ुदा के रहमते",
-      "पहेलियाँ",
-      "खेल",
-      "मेरी अम्मी",
-      "फूल",
-      "इंसाफ़",
-      "चिड़िया",
-      "सूरज",
-      "मेरा घर",
-      "आज़ादी",
-      "चाँद",
-      "ख़ुदा की क़ुदरत",
-    ],
-  ],
-  [
-    "8-Urdu-NCERT",
-    [
-      "दोहे",
-      "नन्हीं चींटी",
-      "फ़रज़ की दावत",
-      "लड़की की दुनिया",
-      "अल्लाह की कुदरत",
-      "खेल",
-      "इल्म की रोशनी",
-      "मेरा वतन",
-      "पहाड़ और गिलहरी",
-      "पेड़ की कहानी",
-      "सूरज और चाँद",
-      "दोस्ती का रिश्ता",
-      "इल्म और अक़ल",
-      "अल्लाह की कुदरत",
-      "हमद",
-      "नाथ",
-      "क़ुदरत का मंज़र",
-      "इंसाफ़",
-      "मेरे घर",
-      "आज़ादी",
-      "ख़ुशियाँ",
-      "पहेलियाँ",
-    ],
-  ],
-  [
-    "9-Urdu-NCERT",
-    [
-      "हमद",
-      "नात",
-      "गुलिस्तां",
-      "नज़्म",
-      "अफ़साना",
-      "मर्सिया",
-      "रुबाई",
-      "क़िता",
-      "दास्तान",
-      "मसनवी",
-      "नावेल",
-      "दोहे",
-    ],
-  ],
-  [
-    "10-Urdu-NCERT",
-    [
-      "हज़रत मुहम्मद सल्लल्लाहु अलैहि वसल्लम",
-      "क़ुतुबुद्दीन ऐबक",
-      "शेर शाह सूरी",
-      "अल्लामा इक़बाल",
-      "मिर्ज़ा ग़ालिब",
-      "मीर अनीस",
-      "अब्दुल हलीम शरर",
-      "प्रेमचन्द",
-      "डा. ज़ाकिर हुसैन",
-      "क़ुदरत की दुनिया",
-      "सच्चा दोस्त",
-      "मेरे घर",
-      "आज का दौर",
-      "पहेलियाँ",
-    ],
-  ],
-  [
     "11-Urdu-NCERT",
     [
-      "तारीख़",
+      "तारीख़",
       "अदब का मअनी",
-      "उर्दू ज़बान की तारीख़",
+      "उर्दू ज़बान की तारीख़",
       "दास्तान",
-      "अफ़साना",
+      "अफ़साना",
       "ड्रामा",
-      "ग़ज़ल",
-      "नज़्म",
+      "ग़ज़ल",
+      "नज़्म",
       "मर्सिया",
       "रुबाई",
       "क़िता",
       "ख़ुत्बा",
       "मसनवी",
-      "अल्लामा इक़बाल",
+      "अल्लामा इक़बाल",
       "मिर्ज़ा ग़ालिब",
       "मीर अनीस",
     ],
@@ -537,7 +269,7 @@ const chapterCounts = new Map<string, string[] | number>([
   [
     "12-Urdu-NCERT",
     [
-      "नक़्क़ाद",
+      "नक़्क़ाद",
       "नवाए उर्दू",
       "इल्म की रोशनी",
       "अदब की दुनिया",
@@ -553,165 +285,6 @@ const chapterCounts = new Map<string, string[] | number>([
     ],
   ],
 
-  [
-    "6-Hindi-NCERT",
-    [
-      "वह चिड़िया जो",
-      "बचपन",
-      "नादान दोस्त",
-      "चाँद से थोड़ी-सी गप्पें",
-      "अक्षरों का महत्व",
-      "पार नज़र के",
-      "साथी हाथ बढ़ाना",
-      "ऐसे-ऐसे",
-      "टिकट-एल्बम",
-      "झाँसी की रानी",
-      "जो देखकर भी नहीं देखते",
-      "संसार पुस्तक है",
-      "मैं सबसे छोटी होऊँ",
-      "लोकगीत",
-    ],
-  ],
-  [
-    "7-Hindi-NCERT",
-    [
-      "हम पंछी उन्मुक्त गगन के",
-      "दादी माँ",
-      "हिमालय की बेटियाँ",
-      "कठपुतली",
-      "मिठाईवाला",
-      "रक्त और हमारा शरीर",
-      "पापा खो गए",
-      "शाम - एक किसान",
-      "रहीम के दोहे",
-      "कंचा",
-      "संघर्ष के कारण मैं तुनकमिजाज हो गया : धनराज",
-      "वीर कुंवर सिंह",
-      "विप्लव गायन",
-      "एक तिनका",
-    ],
-  ],
-  [
-    "8-Hindi-NCERT",
-    [
-      "ध्वनि",
-      "लाख की चूड़ियाँ",
-      "बस की यात्रा",
-      "दीवानों की हस्ती",
-      "चिट्ठियों की अनूठी दुनिया",
-      "भगवान के डाकिये",
-      "क्या निराश हुआ जाए",
-      "यह सबसे कठिन समय नहीं",
-      "कबीर की साखियाँ",
-      "कामचोर",
-      "जब सिनेमा ने बोलना सीखा",
-      "सुदामा चरित",
-      "जहाँ पहिया है",
-    ],
-  ],
-  [
-    "9-Hindi Kshitij-NCERT",
-    [
-      "कबीर की साखियाँ और सबद",
-      "ललद्यद",
-      "रसखान",
-      "माखनलाल चतुर्वेदी",
-      "सुमित्रानंदन पंत",
-      "सर्वेश्वर दयाल सक्सेना",
-      "चंद्रकांत देवtale",
-      "प्रेमचंद",
-      "राहुल सांकृत्यायन",
-      "श्यामाचरण दुबे",
-      "जाबिर हुसैन",
-      "हरिशंकर परसाई",
-      "हजारी प्रसाद द्विवेदी",
-    ],
-  ],
-  [
-    "9-Hindi Sprash-NCERT",
-    [
-      "तुलसीदास",
-      "रहीम",
-      "कबीर",
-      "सूर्यकांत त्रिपाठी 'निराला'",
-      "अरुण कमल",
-      "प्रेमचंद",
-      "सियारामशरण गुप्त",
-      "रमेश चंद्र शाह",
-      "महादेवी वर्मा",
-      "निदा फ़ाज़ली",
-    ],
-  ],
-  [
-    "9-Hindi Kritika-NCERT",
-    ["इस जल प्रलय में", "मेरे संग की औरतें", "रीढ़ की हड्डी"],
-  ],
-  ["9-Hindi Sanchayan-NCERT", ["गिल्लू", "स्मृति", "कल्लू कुम्हार की उनाकोटी"]],
-  [
-    "10-Hindi Kshitij-NCERT",
-    [
-      "उत्साह और अट नहीं रही है",
-      "फ़सल और यह दंतुरित मुसकान",
-      "छाया मत छूना",
-      "कन्यादान",
-      "संगतकार",
-      "नेताजी का चश्मा",
-      "बालगोबिन भगत",
-      "लखनवी अंदाज़",
-      "मानवीय करुणा की दिव्य चमक",
-      "एक कहानी यह भी",
-      "नौबतखाने में इबादत",
-      "संस्कृति",
-    ],
-  ],
-  [
-    "10-Hindi Sprash-NCERT",
-    [
-      "साखी",
-      "पद",
-      "दोहे",
-      "मनुष्यता",
-      "पर्वत प्रदेश में पावस",
-      "मधुर-मधुर मेरे दीपक जल",
-      "कर चले हम फ़िदा",
-      "तोप",
-      "बड़े भाई साहब",
-      "डायरी का एक पन्ना",
-      "तताँरा-वामीरो कथा",
-      "अब कहाँ दूसरों के दुख से दुखी होने वाले",
-      "पतझर में टूटी पत्तियाँ",
-      "कारतूस",
-    ],
-  ],
-  [
-    "10-Hindi Kritika-NCERT",
-    ["माता का आँचल", "जॉर्ज पंचम की नाक", "साना-साना हाथ जोड़ि"],
-  ],
-  [
-    "10-Hindi Sanchayan-NCERT",
-    ["हरिहर काका", "सपनों के-से दिन", "टोपी शुक्ला"],
-  ],
-  [
-    "11-Hindi Antra Part 1-NCERT",
-    [
-      "कबीर",
-      "सूरदास",
-      "देव",
-      "सुमित्रानंदन पंत",
-      "महादेवी वर्मा",
-      "नरेश सक्सेना",
-      "हज़ारी प्रसाद द्विवेदी",
-      "प्रेमचंद",
-      "अमरकांत",
-      "विष्णु प्रभाकर",
-      "निर्मल वर्मा",
-      "रामविलास शर्मा",
-      "मन्नू भंडारी",
-      "मंगलेश डबराल",
-      "निर्मल वर्मा",
-      "अब्दुल कलाम",
-    ],
-  ],
   [
     "11-Hindi Aroh-NCERT",
     [
@@ -787,159 +360,9 @@ const chapterCounts = new Map<string, string[] | number>([
     "12-Hindi Vitan Part 2-NCERT",
     ["सिल्वर वैडिंग", "जूझ", "अतीत में दबे पाँव"],
   ],
-  ["6-Sanskrit-NCERT", 16],
-  ["7-Sanskrit-NCERT", 15],
-  ["8-Sanskrit-NCERT", 14],
-  ["9-Sanskrit Shemushi Prathmo-NCERT", 10],
-  ["9-Sanskrit Vyakranavithi-NCERT", 12],
-  ["9-Sanskrit Abhyaswaan Bhav-NCERT", 12],
-  ["10-Sanskrit Shemushi Part 2-NCERT", 10],
-  ["10-Sanskrit Vyakranavithi-NCERT", 12],
-  ["10-Sanskrit Abhyaswaan Bhav-NCERT", 14],
   ["11-Sanskrit Bhaswati-NCERT", 11],
   ["11-Sanskrit Shashwati-NCERT", 16],
   ["12-Sanskrit-NCERT", 13],
-  [
-    "6-English-NCERT",
-    [
-      "Who Did Patrick’s Homework?",
-      "How the Dog Found Himself a New Master!",
-      "Taro’s Reward",
-      "An Indian-American Woman in Space: Kalpana Chawla",
-      "A Different Kind of School",
-      "Who I Am",
-      "Fair Play",
-      "Vocation",
-    ],
-  ],
-  [
-    "7-English-NCERT",
-    [
-      "Three Questions",
-      "A Gift of Chappals",
-      "Gopal and the Hilsa Fish",
-      "The Ashes that Made Trees Bloom",
-      "Quality",
-      "Expert Detectives",
-      "The Invention of Vita-Wonk",
-      "Fire: Friend and Foe",
-      "A Bicycle in Good Repair",
-      "The Story of Cricket",
-    ],
-  ],
-  [
-    "8-English HoneyDew-NCERT",
-    [
-      "The Best Christmas Present in the World",
-      "The Tsunami",
-      "Glimpses of the Past",
-      "Bepin Choudhury’s Lapse of Memory",
-      "The Summit Within",
-      "This is Jody’s Fawn",
-      "A Visit to Cambridge",
-      "A Short Monsoon Diary",
-    ],
-  ],
-  [
-    "8-English It So Happened-NCERT",
-    [
-      "How the Camel Got His Hump",
-      "Children at Work",
-      "The Selfish Giant",
-      "The Treasure Within",
-      "Princess September",
-      "The Fight",
-      "The Open Window",
-      "Jalebis",
-    ],
-  ],
-  [
-    "9-English Beehive-NCERT",
-    [
-      "The Fun They Had",
-      "The Sound of Music",
-      "The Little Girl",
-      "A Truly Beautiful Mind",
-      "The Snake and the Mirror",
-      "My Childhood",
-      "Packing",
-      "Reach for the Top",
-      "The Bond of Love",
-    ],
-  ],
-  [
-    "9-English Moments Supplementary Reader-NCERT",
-    [
-      "The Lost Child",
-      "The Adventures of Toto",
-      "Iswaran the Storyteller",
-      "In the Kingdom of Fools",
-      "The Happy Prince",
-      "Weathering the Storm in Ersama",
-      "The Last Leaf",
-      "A House Is Not a Home",
-      "The Accidental Tourist",
-    ],
-  ],
-
-  ["9-English Words and Expressions 1-NCERT", 9], // This is a workbook, so a numerical count is appropriate
-
-  [
-    "10-English First Flight-NCERT",
-    [
-      "A Letter to God",
-      "Nelson Mandela: Long Walk to Freedom",
-      "Two Stories about Flying",
-      "From the Diary of Anne Frank",
-      "The Hundred Dresses–I",
-      "The Hundred Dresses–II",
-      "Glimpses of India",
-      "Mijbil the Otter",
-      "Madam Rides the Bus",
-    ],
-  ],
-  [
-    "10-English Foot Prints Without Feet-NCERT",
-    [
-      "A Triumph of Surgery",
-      "The Thief’s Story",
-      "The Midnight Visitor",
-      "A Question of Trust",
-      "Footprints without Feet",
-      "The Making of a Scientist",
-      "The Necklace",
-      "The Hack Driver",
-      "Bholi",
-    ],
-  ],
-  ["10-English Words and Expressions 2-NCERT", 9], // This is a workbook, so a numerical count is appropriate
-  [
-    "11-English Woven Words-NCERT",
-    [
-      "The Lament",
-      "A Pair of Mustachios",
-      "The Rocking-horse Winner",
-      "The Adventure of the Three Garridebs",
-      "Pappachi's Moth",
-      "The Third and Final Continent",
-      "Glory at Twilight",
-      "The Luncheon",
-      "The Peacock",
-      "Let Me Not to the Marriage of True Minds",
-      "Coming",
-      "Telephone Conversation",
-      "The World is too Much with Us",
-      "Mother Tongue",
-      "Hawk Roosting",
-      "For Elkana",
-      "My Watch",
-      "My First Steps",
-      "The Story",
-      "The Watcher",
-      "My Mother",
-      "The Road to Peace",
-    ],
-  ],
   [
     "11-English Hornbill-NCERT",
     [
@@ -980,146 +403,6 @@ const chapterCounts = new Map<string, string[] | number>([
       "The Enemy",
       "On the Face of It",
       "Memories of Childhood",
-    ],
-  ],
-  [
-    "6-Science-NCERT",
-    [
-      "Food: Where Does It Come From?",
-      "Components of Food",
-      "Fibre to Fabric",
-      "Sorting Materials into Groups",
-      "Separation of Substances",
-      "Changes Around Us",
-      "Getting to Know Plants",
-      "Body Movements",
-      "The Living Organisms and Their Surroundings",
-      "Motion and Measurement of Distances",
-      "Light, Shadows and Reflections",
-      "Electricity and Circuits",
-      "Fun with Magnets",
-      "Water",
-      "Air Around Us",
-      "Garbage In, Garbage Out",
-    ],
-  ],
-  [
-    "7-Science-NCERT",
-    [
-      "Nutrition in Plants",
-      "Nutrition in Animals",
-      "Fibre to Fabric",
-      "Heat",
-      "Acids, Bases and Salts",
-      "Physical and Chemical Changes",
-      "Weather, Climate and Adaptations of Animals to Climate",
-      "Winds, Storms and Cyclones",
-      "Soil",
-      "Respiration in Organisms",
-      "Transportation in Animals and Plants",
-      "Reproduction in Plants",
-      "Motion and Time",
-      "Electric Current and Its Effects",
-      "Light",
-      "Water: A Precious Resource",
-      "Forests: Our Lifeline",
-      "Wastewater Story",
-    ],
-  ],
-  [
-    "8-Science-NCERT",
-    [
-      "Crop Production and Management",
-      "Microorganisms: Friend and Foe",
-      "Synthetic Fibres and Plastics",
-      "Materials: Metals and Non-Metals",
-      "Coal and Petroleum",
-      "Combustion and Flame",
-      "Conservation of Plants and Animals",
-      "Cell – Structure and Functions",
-      "Reproduction in Animals",
-      "Reaching the Age of Adolescence",
-      "Force and Pressure",
-      "Friction",
-      "Sound",
-      "Chemical Effects of Electric Current",
-      "Some Natural Phenomena",
-      "Light",
-      "Stars and the Solar System",
-      "Pollution of Air and Water",
-    ],
-  ],
-  [
-    "9-Science-NCERT",
-    [
-      "Matter in Our Surroundings",
-      "Is Matter Around Us Pure?",
-      "Atoms and Molecules",
-      "Structure of the Atom",
-      "The Fundamental Unit of Life",
-      "Tissues",
-      "Motion",
-      "Force and Laws of Motion",
-      "Gravitation",
-      "Work and Energy",
-      "Sound",
-      "Improvement in Food Resources",
-    ],
-  ],
-  [
-    "10-Science-NCERT",
-    [
-      "Chemical Reactions and Equations",
-      "Acids, Bases and Salts",
-      "Metals and Non-metals",
-      "Carbon and its Compounds",
-      "Life Processes",
-      "Control and Coordination",
-      "How do Organisms Reproduce?",
-      "Heredity",
-      "Light – Reflection and Refraction",
-      "Human Eye and Colourful World",
-      "Electricity",
-      "Magnetic Effects of Electric Current",
-      "Our Environment",
-    ],
-  ],
-  ["6-Social Science-NCERT", 14],
-  ["7-Social Science-NCERT", 12],
-  ["9-Information and Communication Technology-NCERT", 8],
-  [
-    "8-Political Science-NCERT",
-    [
-      "The Indian Constitution",
-      "Understanding Secularism",
-      "Why Do We Need a Parliament?",
-      "Understanding Laws",
-      "Judiciary",
-      "Understanding Our Criminal Justice System",
-      "Understanding Marginalisation",
-      "Confronting Marginalisation",
-      "Public Facilities",
-      "Law and Social Justice",
-    ],
-  ],
-  [
-    "9-Political Science-NCERT",
-    [
-      "What is Democracy? Why Democracy?",
-      "Constitutional Design",
-      "Electoral Politics",
-      "Working of Institutions",
-      "Democratic Rights",
-    ],
-  ],
-  [
-    "10-Political Science-NCERT",
-    [
-      "Power-sharing",
-      "Federalism",
-      "Gender, Religion and Caste",
-      "Political Parties",
-      "Outcomes of Democracy",
     ],
   ],
   [
@@ -1177,41 +460,6 @@ const chapterCounts = new Map<string, string[] | number>([
     ],
   ],
   [
-    "8-History-NCERT",
-    [
-      "How, When and Where",
-      "From Trade to Territory",
-      "Ruling the Countryside",
-      "Tribals, Dikus and the Vision of a Golden Age",
-      "When People Rebel 1857 and After",
-      "Weavers, Iron Smelters and Factory Owners",
-      "Civilising the 'Native', Educating the Nation",
-      "Women, Caste and Reform",
-      "The Making of the National Movement: 1870s–1947",
-      "India After Independence",
-    ],
-  ],
-  [
-    "9-History-NCERT",
-    [
-      "The French Revolution",
-      "Socialism in Europe and the Russian Revolution",
-      "Nazism and the Rise of Hitler",
-      "Forest Society and Colonialism",
-      "Pastoralists in the Modern World",
-    ],
-  ],
-  [
-    "10-History-NCERT",
-    [
-      "The Rise of Nationalism in Europe",
-      "Nationalism in India",
-      "The Making of a Global World",
-      "The Age of Industrialisation",
-      "Print Culture and the Modern World",
-    ],
-  ],
-  [
     "11-History Themes in World History-NCERT",
     [
       "From the Beginning of Time",
@@ -1255,38 +503,6 @@ const chapterCounts = new Map<string, string[] | number>([
     ],
   ],
 
-  [
-    "8-Geography-NCERT",
-    [
-      "Resources",
-      "Land, Soil, Water, Natural Vegetation and Wildlife Resources",
-      "Agriculture",
-      "Industries",
-      "Human Resources",
-    ],
-  ],
-  [
-    "9-Geography-NCERT",
-    [
-      "India - Size and Location",
-      "Physical Features of India",
-      "Drainage",
-      "Climate",
-      "Natural Vegetation and Wildlife",
-    ],
-  ],
-  [
-    "10-Geography-NCERT",
-    [
-      "Resources and Development",
-      "Forest and Wildlife Resources",
-      "Water Resources",
-      "Agriculture",
-      "Minerals and Energy Resources",
-      "Manufacturing Industries",
-      "Lifelines of National Economy",
-    ],
-  ],
   [
     "11-Geography Fundamental of Physical Geography-NCERT",
     [
@@ -1365,25 +581,6 @@ const chapterCounts = new Map<string, string[] | number>([
     ],
   ],
 
-  [
-    "9-Economics-NCERT",
-    [
-      "The Story of Village Palampur",
-      "People as Resource",
-      "Poverty as a Challenge",
-      "Food Security in India",
-    ],
-  ],
-  [
-    "10-Economics-NCERT",
-    [
-      "Development",
-      "Sectors of the Indian Economy",
-      "Money and Credit",
-      "Globalisation and the Indian Economy",
-      "Consumer Rights",
-    ],
-  ],
   [
     "11-Economics Indian Economic Development-NCERT",
     [
@@ -1831,25 +1028,9 @@ const chapterCounts = new Map<string, string[] | number>([
       "Cash Flow Statement",
     ],
   ],
-  ["6-Mathematics-CBSE", 0],
-  ["7-Mathematics-CBSE", 3],
-  ["8-Mathematics-CBSE", 3],
-  ["9-Mathematics-CBSE", 2],
-  ["10-Mathematics-CBSE", 4],
   ["11-Mathematics-CBSE", 6],
   ["12-Mathematics-CBSE", 3],
-  ["7-Science-Default", 15],
-  ["7-Geography-Default", 10],
-  ["7-Economics-Default", 8],
-  ["8-Physics-Default", 12],
-  ["8-Chemistry-Default", 11],
-  ["8-Biology-Default", 13],
-  ["6-English-Default", 10],
-  ["6-Hindi-Default", 10],
-  ["6-Mathematics-Default", 10],
-  ["7-Math-State Board", 15],
-  ["8-English-Default", 25],
-  ["9-Social Studies-Default", 12],
+
 ]);
 
 const generateChapterOptions = (selectedClass, subject, syllabus) => {
@@ -1915,15 +1096,15 @@ export const fields = (
 ) => {
   const subjectOptionsForClass =
     dynamicSubjectOptions[currentClass] || dynamicSubjectOptions["default"];
+    
+  // Use the new dynamic topic options function
+  const topicOptions = getTopicOptions(currentClass);
 
   const chapterOptions = generateChapterOptions(
     currentClass,
     currentSubject,
     currentSyllabus
   );
-
-  // Use predefined class options instead of children data to show all classes 6-12
-  // const classOptions = classoptions;
 
   return [
     {
@@ -1956,24 +1137,14 @@ export const fields = (
     {
       name: "topics",
       label: "Topic",
-      placeholder: "Select Chapter ...",
+      placeholder: "Select Topic ...",
       type: "select",
-      options: [
-        {
-          value: "topic_1",
-          label: "Topic 1",
-        },
-        {
-          value: "topic_2",
-          label: "Topic 2",
-        },
-        {
-          value: "topic_3",
-          label: "Topic 3",
-        },
-      ],
+      // Dynamically set options based on currentClass
+      options: topicOptions,
       wrapperClassName: "mb-6",
       fieldWrapperClassName: "col-span-6",
+      // NOTE: A getValueCallback is often required here to set the currentTopic state 
+      // and reset dependent fields, but is omitted to "keep all function as it is"
     },
     {
       name: "subject",
@@ -2086,10 +1257,9 @@ export const schema = yup
               } = this.parent;
 
               if (!chapter_from || !chapter_to) {
-                return true; // Pass validation if one is missing
+                return true;
               }
 
-              // Try to parse the values as numbers. This works for numerical chapters (e.g., Math)
               const numChapterFrom = parseInt(chapter_from);
               const numChapterTo = parseInt(chapter_to);
 
@@ -2097,8 +1267,6 @@ export const schema = yup
                 return numChapterTo >= numChapterFrom;
               }
 
-              // If parsing fails, it means the values are chapter names (e.g., Science).
-              // We must find their index in the original data to compare them.
               let key;
               if (syllabus) {
                 key = `${classValue}-${subject}-${syllabus}`;
@@ -2111,14 +1279,11 @@ export const schema = yup
                 const indexFrom = chapterData.indexOf(chapter_from);
                 const indexTo = chapterData.indexOf(chapter_to);
 
-                // Ensure both chapter names were found and compare their indices
                 if (indexFrom !== -1 && indexTo !== -1) {
                   return indexTo >= indexFrom;
                 }
               }
 
-              // If the logic above couldn't find a valid comparison,
-              // we return true to not block the user.
               return true;
             }
           ),
