@@ -1,11 +1,11 @@
 import { ErrorToaster, SuccessToaster } from "@/UI/Elements/Toast";
-import { useForm } from "react-hook-form";
+import { Resolver, useForm } from "react-hook-form";
 import {
   useAddChildrenMutation,
   useUpdateChildrenMutation,
   useGetSingleChildrenQuery,
 } from "@/service/children";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import DynamicForm from "@/UI/Form/DynamicForm";
 import FixedButtons from "@/UI/Form/FixedButton";
@@ -21,46 +21,98 @@ type PaperFormProps = {
   sheet: { id?: string };
 };
 
+type ChildrenFormValues = {
+  name?: string;
+  age?: string;
+  grade?: string;
+  topics?: string[];
+};
+
 const PapersForm: React.FC<PaperFormProps> = ({ handleCancel, sheet }) => {
   const dispatch = useDispatch();
-  const [data, setData] = useState({});
+  const [topicLimit, setTopicLimit] = useState(1);
+
   const { data: singleChildren } = useGetSingleChildrenQuery(sheet?.id, {
     skip: !sheet?.id,
   });
   const [createChildren, { isLoading: isCreateLoading }] =
     useAddChildrenMutation();
 
-  const [updateChildren] =
-    useUpdateChildrenMutation();
+  const [updateChildren] = useUpdateChildrenMutation();
 
-  const methods = useForm({
-    resolver: yupResolver(schema),
+  const methods = useForm<ChildrenFormValues>({
+    resolver: yupResolver(schema) as Resolver<ChildrenFormValues>,
+    defaultValues: {
+      topics: [],
+    },
   });
-  //name age grade
 
   useEffect(() => {
     if (singleChildren?.data) {
-      const { name, age, grade, topics } = singleChildren?.data;
-      methods.reset({ name, age, grade });
+      const { name, age, grade, topics, topicLimit: limit } = singleChildren?.data;
+      setTopicLimit(
+        Number.isFinite(Number(limit)) && Number(limit) > 0 ? Number(limit) : 1
+      );
+
+      methods.reset({
+        name,
+        age,
+        grade,
+        topics: topics ?? [],
+      });
+    } else {
+      setTopicLimit(1);
+      methods.reset({
+        topics: [],
+      });
     }
-  }, [singleChildren?.data]);
+  }, [singleChildren?.data, methods]);
 
   const onSubmit = async (formData) => {
     try {
+      const payload = { ...formData };
       // return;
       if (sheet?.id) {
-        await updateChildren({ id: sheet?.id, ...formData }).unwrap();
+        await updateChildren({ id: sheet?.id, ...payload }).unwrap();
         SuccessToaster("Records Update Successfully");
       } else {
-        await createChildren(formData).unwrap();
+        await createChildren(payload).unwrap();
         SuccessToaster("Records Created Successfully");
       }
       handleCancel();
       dispatch(setRefresh());
     } catch (error) {
+      
       ErrorToaster(error?.data?.message || "Something Went Wrong");
     }
   };
+
+  const baseTopicOptions = useMemo(() => {
+    const topicField = fields.find((field) => field.name === "topics");
+    return topicField?.options || [];
+  }, []);
+
+  const limitedTopicOptions = useMemo(() => {
+    const numericLimit = Number(topicLimit);
+    const limit = Number.isFinite(numericLimit)
+      ? Math.max(0, Math.min(baseTopicOptions.length, Math.floor(numericLimit)))
+      : baseTopicOptions.length;
+
+    return baseTopicOptions.slice(0, limit);
+  }, [topicLimit, baseTopicOptions]);
+
+  const childFormFields = useMemo(
+    () =>
+      fields.map((field) =>
+        field.name === "topics"
+          ? {
+              ...field,
+              options: limitedTopicOptions,
+            }
+          : field
+      ),
+    [limitedTopicOptions]
+  );
 
   const Footer = () => (
     <div className="flex justify-end mt-3 layout-container">
@@ -91,11 +143,8 @@ const PapersForm: React.FC<PaperFormProps> = ({ handleCancel, sheet }) => {
               <div>
                 {
                   <DynamicForm
-                    fields={fields}
-                    onSubmit={(val) => {
-                      setData({ ...data, ...val });
-                    }}
-                    loading={false}
+                    fields={childFormFields}
+                    onSubmit={onSubmit}
                     useFormMethods={methods}
                     showButton={false}
                   />
@@ -105,7 +154,7 @@ const PapersForm: React.FC<PaperFormProps> = ({ handleCancel, sheet }) => {
           </div>
         </div>
       </div>
-      <FixedButtons CustomComponent={Footer} />
+      <FixedButtons CustomComponent={Footer} nextLabel="" prevLabel="" />
     </div>
   );
 };

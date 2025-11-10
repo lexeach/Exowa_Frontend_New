@@ -6,6 +6,8 @@ import PaperForm from "@/Pages/Paper/form";
 import ChildrenForm from "@/Pages/Children/form";
 import SyllabusForm from "@/Pages/Syllabus/form";
 import SubjectForm from "@/Pages/Subject/form";
+import UpdateLimit from "@/Pages/User/form";
+
 import { setSheetClose } from "@/slice/layoutSlice";
 
 const UISheet: React.FC = () => {
@@ -26,11 +28,14 @@ const UISheet: React.FC = () => {
           {sheetComponent === "addChildren" && (
             <ChildrenForm handleCancel={handleCancel} sheet={sheet} />
           )}
-          
+          {sheetComponent === "updateLimit" && (
+            <UpdateLimit handleCancel={handleCancel} sheet={sheet} />
+          )}
+
           {sheetComponent === "addSubject" && (
             <SubjectForm handleCancel={handleCancel} sheet={sheet} />
           )}
-           {sheetComponent === "addSyllabus" && (
+          {sheetComponent === "addSyllabus" && (
             <SyllabusForm handleCancel={handleCancel} sheet={sheet} />
           )}
         </div>

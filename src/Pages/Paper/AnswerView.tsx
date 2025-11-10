@@ -1,12 +1,22 @@
 import UILayout from "@/UI/Elements/Layout";
 import { useGetSinglePaperQuery } from "@/service/paper";
-import { useParams } from "react-router-dom";
+import { useEffect } from "react";
+import { Link, useParams } from "react-router-dom";
 import { CheckCircleIcon, XCircleIcon } from "lucide-react";
 
 const PaperView = () => {
   const { id } = useParams();
 
-  const { data: singlePaper } = useGetSinglePaperQuery(id, { skip: !id });
+  const {
+    data: singlePaper,
+    refetch: refetchSinglePaper,
+  } = useGetSinglePaperQuery(id, { skip: !id });
+  
+  useEffect(() => {
+    if (id) {
+      refetchSinglePaper();
+    }
+  }, [id, refetchSinglePaper]);
   const questions = singlePaper?.data?.questions ?? [];
   const answers = singlePaper?.data?.answers ?? [];
   const childName = singlePaper?.data?.children?.name || "";
@@ -100,9 +110,17 @@ const PaperView = () => {
   return (
     <UILayout>
       <div className="max-h-[100vh] overflow-y-auto px-4 md:px-0">
-        <p className="text-center p-4 md:p-6 font-semibold text-2xl md:text-4xl text-content leading-tight md:leading-[70px]">
-          Result Detail
-        </p>
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between p-4 md:p-6 gap-4">
+          <Link
+            to="/papers"
+            className="inline-flex items-center justify-center rounded-md border border-blue-600 px-4 py-2 text-sm font-semibold text-blue-600 transition hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+          >
+            Back to Papers
+          </Link>
+          <p className="text-center md:text-right font-semibold text-2xl md:text-4xl text-content leading-tight md:leading-[70px] flex-1">
+            Result Detail
+          </p>
+        </div>
         <div className="flex flex-col md:flex-row px-0 md:px-12 py-4 space-y-6 md:space-y-0 md:space-x-8 mb-10 md:mb-40">
           <div className="w-full md:w-3/5">
             <div className="border border-dark p-4 md:p-6 rounded-lg shadow">

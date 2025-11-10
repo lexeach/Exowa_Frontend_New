@@ -16,6 +16,7 @@ import Children from "./Pages/Children";
 import Subject from "./Pages/Subject";
 import Syllabus from "./Pages/Syllabus";
 import Answer from "./Pages/Answer";
+import Users from "./Pages/User";
 import Dashboard from "./Pages/Dashboard";
 import { loadTokenFromStorage } from "./slice/authSlice";
 import { useEffect } from "react";
@@ -43,7 +44,11 @@ const router = createHashRouter([
             path: "papers",
             element: <Paper />,
           },
-             {
+          {
+            path: "users",
+            element: <Users />,
+          },
+          {
             path: "student-answer/:id",
             element: <AnswerByStudent />,
           },
@@ -51,7 +56,7 @@ const router = createHashRouter([
             path: "papers/:id",
             element: <PaperView />,
           },
-           {
+          {
             path: "papers/learning/:id",
             element: <LearningView />,
           },

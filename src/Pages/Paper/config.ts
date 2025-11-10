@@ -1,20 +1,20 @@
 import * as yup from "yup";
 
 const options = [
-  //{ value: 5, label: "5" },
+  { value: 5, label: "5" },
   { value: 10, label: "10" },
   { value: 15, label: "15" },
   { value: 20, label: "20" },
 ];
 
 const classoptions = [
-  //{ value: 6, label: "6" },
-  //{ value: 7, label: "7" },
-  //{ value: 8, label: "8" },
-  //{ value: 9, label: "9" },
+  { value: 6, label: "6" },
+  { value: 7, label: "7" },
+  { value: 8, label: "8" },
+  { value: 9, label: "9" },
   { value: 10, label: "10" },
-  //{ value: 11, label: "11" },
-  //{ value: 12, label: "12" },
+  { value: 11, label: "11" },
+  { value: 12, label: "12" },
 ];
 
 // Define the dynamic subject options based on class
@@ -1911,7 +1911,8 @@ export const fields = (
   currentSyllabus,
   setCurrentSyllabus,
   childrenListData,
-  childrenListClass
+  childrenListClass,
+  selectedTopic
 ) => {
   const subjectOptionsForClass =
     dynamicSubjectOptions[currentClass] || dynamicSubjectOptions["default"];
@@ -1958,7 +1959,8 @@ export const fields = (
       label: "Topic",
       placeholder: "Select Chapter ...",
       type: "select",
-      options: [
+      // hide: !currentClass,
+      options: !currentClass ? [] : [
         {
           value: "topic_1",
           label: "Topic 1",
@@ -1981,13 +1983,16 @@ export const fields = (
       placeholder: "Select Subject ...",
       type: "select",
       autoFocus: true,
-      options: subjectOptionsForClass,
+      options: selectedTopic ? subjectOptionsForClass : [],
       wrapperClassName: "mb-6",
       fieldWrapperClassName: "col-span-6",
       className: "mobile-select-no-keyboard",
       getValueCallback: (value) => setCurrentSubject(value),
       disabled: (() => {
-        const isDisabled = !currentClass || subjectOptionsForClass.length === 0;
+        const isDisabled =
+          !currentClass ||
+          subjectOptionsForClass.length === 0 ||
+          !selectedTopic;
         return isDisabled;
       })(),
     },

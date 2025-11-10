@@ -15,7 +15,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 
 interface Option {
   label: string;
-  value: string;
+  value: string | number;
 }
 
 interface Field {
@@ -49,6 +49,7 @@ interface DynamicFormProps<T> {
   showRepeaterButton?: boolean;
   defaultValues?: any;
   beforeButtonComponent?: any;
+  fetchData?: any;
 }
 const DynamicForm = <T,>({
   fields = [],

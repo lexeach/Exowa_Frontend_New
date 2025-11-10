@@ -37,6 +37,7 @@ const PapersForm: React.FC<PaperFormProps> = ({ handleCancel, sheet }) => {
   const methods = useForm({
     resolver: yupResolver(schema),
   });
+  const selectedTopic = methods.watch("topics");
 
   const onSubmit = async (formData) => {
     try {
@@ -102,7 +103,8 @@ const PapersForm: React.FC<PaperFormProps> = ({ handleCancel, sheet }) => {
                       currentSyllabus, // Pass currentSyllabus
                       setCurrentSyllabus, // <-- Missing comma added here
                       childrenListData?.data,
-                      childrenListClass
+                      childrenListClass,
+                      selectedTopic
                     )}
                     fetchData={useGetChildrenListQuery}
                     onSubmit={(val) => {

@@ -138,10 +138,10 @@ const PaperView = () => {
         return;
       }
       
-      const newURL = `${BaseURL}/#/student-answer/${id}`;
+      const newURL = `/student-answer/${id}`;
       
       // 1. Open the new tab instantly
-      window.open(newURL, "_blank");
+      navigate(newURL);
       
       // 2. Then, fire off the API call in the background without waiting
       assignPaper({

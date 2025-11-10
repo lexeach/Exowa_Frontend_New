@@ -1,10 +1,10 @@
 import UILayout from "@/UI/Elements/Layout";
-import { BaseURL } from "../../config";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const ThankYouPage = () => {
   const location = useLocation();
-  const AnswerURL = `${BaseURL}/#/auth/result/${location.state}`;
+  const AnswerURL = `/auth/result/${location.state}`;
+  const navigate = useNavigate();
   return (
     <UILayout>
       <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
@@ -17,7 +17,7 @@ const ThankYouPage = () => {
           <button
             className="mt-6 px-6 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition"
             type="button"
-            onClick={() => window.open(AnswerURL, "_blank")}
+            onClick={() => navigate(AnswerURL)}
           >
             See Result
           </button>

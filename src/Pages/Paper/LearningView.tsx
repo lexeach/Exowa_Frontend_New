@@ -4,7 +4,6 @@ import {
   useGetSinglePaperQuery,
   useGetQuestionExplanationQuery,
 } from "@/service/paper";
-import { useGetChildrenListQuery } from "@/service/children";
 import {  useParams } from "react-router-dom";
 import { CheckCircleIcon, XCircleIcon, BookOpen } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -15,11 +14,31 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
+const isExplanationGenerationPending = (error: unknown): boolean => {
+  if (!error || typeof error !== "object") {
+    return false;
+  }
+
+  const { status, data } = error as { status?: number; data?: unknown };
+
+  if (status === 404) {
+    return true;
+  }
+
+  if (data && typeof data === "object") {
+    const { code } = data as { code?: number };
+    if (code === 404) {
+      return true;
+    }
+  }
+
+  return false;
+};
+
 const PaperView = () => {
   const param = useParams();
   const { id } = param;
   
-  const [urlDate, setUrlUpdate] = useState(false);
   const [selectedQuestionForLearning, setSelectedQuestionForLearning] = useState(null);
   const [openAccordion, setOpenAccordion] = useState("");
   const { data: singlePaper, refetch: DetailRefetch } = useGetSinglePaperQuery(
@@ -27,7 +46,13 @@ const PaperView = () => {
     { skip: !id }
   );
 
-  const { data: explanationData, isLoading: loadingExplanation, isFetching: fetchingExplanation } = useGetQuestionExplanationQuery(
+  const {
+    data: explanationData,
+    error: explanationError,
+    isError: explanationIsError,
+    isLoading: loadingExplanation,
+    isFetching: fetchingExplanation,
+  } = useGetQuestionExplanationQuery(
     {
       questionId: id,
       questionNumber: selectedQuestionForLearning?.questionNumber
@@ -35,48 +60,20 @@ const PaperView = () => {
     { skip: !id || !selectedQuestionForLearning?.questionNumber }
   );
 
-  const { data: children, refetch } = useGetChildrenListQuery({});
-  useEffect(() => {
-    refetch();
-  }, [refetch]);
-
   useEffect(() => {
     DetailRefetch();
-  }, [urlDate]);
+  }, [DetailRefetch]);
 
   const questions = singlePaper?.data?.questions ?? [];
   const answers = singlePaper?.data?.answers ?? [];
-
-  
-  
-
-  const totalMarks = questions.length;
-  const obtainedMarks = answers.reduce((score, answer) => {
-    const question = questions.find(
-      (q) => q.questionNumber === answer.questionNumber
-    );
-
-    if (answer.option === "E") {
-      return score;
-    }
-
-    if (question?.correctAnswer === answer.option) {
-      return score + 1;
-    }
-
-    return score - 2;
-  }, 0);
 
   // Filter only wrong answers
   const wrongAnswers = answers.filter((answer) => {
     const question = questions.find(
       (q) => q.questionNumber === answer.questionNumber
     );
-    return question?.correctAnswer !== answer.option && answer.option !== "E";
+    return question?.correctAnswer !== answer.option;
   });
-
-  
-
   // Set default selected question to first wrong answer when answers exist
   useEffect(() => {
     if (wrongAnswers.length > 0 && !selectedQuestionForLearning) {
@@ -218,17 +215,6 @@ const PaperView = () => {
   };
 
   const renderQuestions = () => {
-    const [childOptions, setChildOptions] = useState([]);
-
-    useEffect(() => {
-      const options = children?.data?.map((child) => ({
-        label: child.name,
-        value: child._id,
-      }));
-      setChildOptions(options);
-    }, [children?.data]);
-    
-
     return (
       <div className="space-y-4">
         {/* Questions */}
@@ -309,121 +295,177 @@ const PaperView = () => {
                   </div>
 
                   {/* Accordion for Learning Content */}
-                  <Accordion
-                    type="single"
-                    collapsible
-                    value={openAccordion}
-                    onValueChange={() => handleLearning(question, `question-${question.questionNumber}`)}
-                    className="mt-4"
-                  >
-                    <AccordionItem value={`question-${question.questionNumber}`} className="border-none">
-                      <AccordionTrigger 
-                        className="text-sm font-semibold text-blue-600 hover:text-blue-800 hover:no-underline py-2 justify-start gap-2"
-                        disabled={(loadingExplanation || fetchingExplanation) && selectedQuestionForLearning?.questionNumber === question.questionNumber}
+                  {(() => {
+                    const isSelected =
+                      selectedQuestionForLearning?.questionNumber === question.questionNumber;
+                    const showPendingMessage =
+                      isSelected &&
+                      (
+                        (explanationIsError &&
+                          isExplanationGenerationPending(explanationError)) ||
+                        explanationData?.code === 404
+                      );
+
+                    if (showPendingMessage) {
+                      return (
+                        <div className="mt-4 rounded-md border border-yellow-200 bg-yellow-50 p-4">
+                          <h4 className="font-semibold text-yellow-900 text-base">
+                            Explanation in progress
+                          </h4>
+                          <p className="mt-2 text-sm text-yellow-800">
+                            Explanation generation in progress. Please try again later.
+                          </p>
+                        </div>
+                      );
+                    }
+
+                    return (
+                      <Accordion
+                        type="single"
+                        collapsible
+                        value={openAccordion}
+                        onValueChange={() =>
+                          handleLearning(
+                            question,
+                            `question-${question.questionNumber}`
+                          )
+                        }
+                        className="mt-4"
                       >
-                        {(loadingExplanation || fetchingExplanation) && selectedQuestionForLearning?.questionNumber === question.questionNumber ? (
-                          <>
-                            <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600"></div>
-                            <span>Loading Learning Content...</span>
-                          </>
-                        ) : (
-                          <>
-                            <BookOpen size={16} />
-                            <span>Learning Content</span>
-                          </>
-                        )}
-                      </AccordionTrigger>
-                      <AccordionContent>
-                        {(loadingExplanation || fetchingExplanation) && selectedQuestionForLearning?.questionNumber === question.questionNumber ? (
-                          <div className="text-center py-4">
-                            <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600 mx-auto"></div>
-                            <p className="text-gray-500 text-sm mt-2">Loading explanation...</p>
-                          </div>
-                        ) : selectedQuestionForLearning?.questionNumber === question.questionNumber && explanationData?.data && explanationData.data.questionNumber === question.questionNumber ? (
-                          <div className="space-y-4">
-                            {/* Explanation Section */}
-                            {explanationData.data?.explanation && (
-                              <div className="bg-gradient-to-br from-blue-50 to-indigo-50 p-4 rounded-lg border border-blue-200">
-                                <h4 className="font-bold text-blue-900 text-base mb-3 flex items-center gap-2">
-                                  <BookOpen size={18} />
-                                  Detailed Explanation
-                                </h4>
-                                <div className="text-sm text-gray-800">
-                                  {parseExplanationContent(explanationData.data.explanation)}
-                                </div>
+                        <AccordionItem
+                          value={`question-${question.questionNumber}`}
+                          className="border-none"
+                        >
+                          <AccordionTrigger
+                            className="text-sm font-semibold text-blue-600 hover:text-blue-800 hover:no-underline py-2 justify-start gap-2"
+                            disabled={
+                              (loadingExplanation || fetchingExplanation) &&
+                              selectedQuestionForLearning?.questionNumber ===
+                                question.questionNumber
+                            }
+                          >
+                            {(loadingExplanation || fetchingExplanation) &&
+                            selectedQuestionForLearning?.questionNumber ===
+                              question.questionNumber ? (
+                              <>
+                                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600"></div>
+                                <span>Loading Learning Content...</span>
+                              </>
+                            ) : (
+                              <>
+                                <BookOpen size={16} />
+                                <span>Learning Content</span>
+                              </>
+                            )}
+                          </AccordionTrigger>
+                          <AccordionContent>
+                            {(loadingExplanation || fetchingExplanation) &&
+                            selectedQuestionForLearning?.questionNumber ===
+                              question.questionNumber ? (
+                              <div className="text-center py-4">
+                                <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600 mx-auto"></div>
+                                <p className="text-gray-500 text-sm mt-2">
+                                  Loading explanation...
+                                </p>
+                              </div>
+                            ) : selectedQuestionForLearning?.questionNumber ===
+                                question.questionNumber &&
+                              explanationData?.data &&
+                              explanationData.data.questionNumber ===
+                                question.questionNumber ? (
+                              <div className="space-y-4">
+                                {/* Explanation Section */}
+                                {explanationData.data?.explanation && (
+                                  <div className="bg-gradient-to-br from-blue-50 to-indigo-50 p-4 rounded-lg border border-blue-200">
+                                    <h4 className="font-bold text-blue-900 text-base mb-3 flex items-center gap-2">
+                                      <BookOpen size={18} />
+                                      Detailed Explanation
+                                    </h4>
+                                    <div className="text-sm text-gray-800">
+                                      {parseExplanationContent(
+                                        explanationData.data.explanation
+                                      )}
+                                    </div>
+                                  </div>
+                                )}
+                                
+                                {/* References Section */}
+                                {/* {explanationData.data?.references && (
+                                  <div className="bg-gradient-to-br from-purple-50 to-pink-50 p-4 rounded-lg border border-purple-200"> */}
+                                  {/* <h4 className="font-bold text-purple-900 text-base mb-3">
+                                    📚 Additional Learning Resources
+                                  </h4> */}
+                                  
+                                  {/* Videos */}
+                                  {/* {explanationData.data.references.videos && explanationData.data.references.videos.length > 0 && (
+                                    <div className="mb-4">
+                                      <h5 className="font-semibold text-purple-800 text-sm mb-2 flex items-center gap-2">
+                                        🎥 Recommended Videos
+                                      </h5>
+                                      <ul className="space-y-2">
+                                        {explanationData.data.references.videos.map((video, index) => (
+                                          <li key={index} className="text-sm text-gray-700 pl-4 border-l-2 border-purple-300">
+                                            {video}
+                                          </li>
+                                        ))}
+                                      </ul>
+                                    </div>
+                                  )} */}
+                                  
+                                  {/* Articles */}
+                                  {/* {explanationData.data.references.articles && explanationData.data.references.articles.length > 0 && (
+                                    <div className="mb-4">
+                                      <h5 className="font-semibold text-purple-800 text-sm mb-2 flex items-center gap-2">
+                                        📄 Helpful Articles
+                                      </h5>
+                                      <ul className="space-y-2">
+                                        {explanationData.data.references.articles.map((article, index) => (
+                                          <li key={index} className="text-sm text-gray-700 pl-4 border-l-2 border-purple-300">
+                                            {article}
+                                          </li>
+                                        ))}
+                                      </ul>
+                                    </div>
+                                  )} */}
+                                  
+                                  {/* Books */}
+                                  {/* {explanationData.data.references.books && explanationData.data.references.books.length > 0 && (
+                                    <div>
+                                      <h5 className="font-semibold text-purple-800 text-sm mb-2 flex items-center gap-2">
+                                        📖 Reference Books
+                                      </h5>
+                                      <ul className="space-y-2">
+                                        {explanationData.data.references.books.map((book, index) => (
+                                          <li key={index} className="text-sm text-gray-700 pl-4 border-l-2 border-purple-300">
+                                            {book}
+                                          </li>
+                                        ))}
+                                      </ul>
+                                    </div>
+                                  )} */}
+                                {/* </div>
+                              )} */}
+                              </div>
+                            ) : selectedQuestionForLearning?.questionNumber ===
+                                question.questionNumber && !explanationData ? (
+                              <div className="text-center py-4">
+                                <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600 mx-auto"></div>
+                                <p className="text-gray-500 text-sm mt-2">
+                                  Loading explanation...
+                                </p>
+                              </div>
+                            ) : (
+                              <div className="text-center text-gray-500 py-4">
+                                <p className="text-sm">
+                                  No learning content available
+                                </p>
                               </div>
                             )}
-                            
-                            {/* References Section */}
-                            {/* {explanationData.data?.references && (
-                              <div className="bg-gradient-to-br from-purple-50 to-pink-50 p-4 rounded-lg border border-purple-200"> */}
-                                {/* <h4 className="font-bold text-purple-900 text-base mb-3">
-                                  📚 Additional Learning Resources
-                                </h4> */}
-                                
-                                {/* Videos */}
-                                {/* {explanationData.data.references.videos && explanationData.data.references.videos.length > 0 && (
-                                  <div className="mb-4">
-                                    <h5 className="font-semibold text-purple-800 text-sm mb-2 flex items-center gap-2">
-                                      🎥 Recommended Videos
-                                    </h5>
-                                    <ul className="space-y-2">
-                                      {explanationData.data.references.videos.map((video, index) => (
-                                        <li key={index} className="text-sm text-gray-700 pl-4 border-l-2 border-purple-300">
-                                          {video}
-                                        </li>
-                                      ))}
-                                    </ul>
-                                  </div>
-                                )} */}
-                                
-                                {/* Articles */}
-                                {/* {explanationData.data.references.articles && explanationData.data.references.articles.length > 0 && (
-                                  <div className="mb-4">
-                                    <h5 className="font-semibold text-purple-800 text-sm mb-2 flex items-center gap-2">
-                                      📄 Helpful Articles
-                                    </h5>
-                                    <ul className="space-y-2">
-                                      {explanationData.data.references.articles.map((article, index) => (
-                                        <li key={index} className="text-sm text-gray-700 pl-4 border-l-2 border-purple-300">
-                                          {article}
-                                        </li>
-                                      ))}
-                                    </ul>
-                                  </div>
-                                )} */}
-                                
-                                {/* Books */}
-                                {/* {explanationData.data.references.books && explanationData.data.references.books.length > 0 && (
-                                  <div>
-                                    <h5 className="font-semibold text-purple-800 text-sm mb-2 flex items-center gap-2">
-                                      📖 Reference Books
-                                    </h5>
-                                    <ul className="space-y-2">
-                                      {explanationData.data.references.books.map((book, index) => (
-                                        <li key={index} className="text-sm text-gray-700 pl-4 border-l-2 border-purple-300">
-                                          {book}
-                                        </li>
-                                      ))}
-                                    </ul>
-                                  </div>
-                                )} */}
-                              {/* </div>
-                            )} */}
-                          </div>
-                        ) : selectedQuestionForLearning?.questionNumber === question.questionNumber && !explanationData ? (
-                          <div className="text-center py-4">
-                            <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600 mx-auto"></div>
-                            <p className="text-gray-500 text-sm mt-2">Loading explanation...</p>
-                          </div>
-                        ) : (
-                          <div className="text-center text-gray-500 py-4">
-                            <p className="text-sm">No learning content available</p>
-                          </div>
-                        )}
-                      </AccordionContent>
-                    </AccordionItem>
-                  </Accordion>
+                          </AccordionContent>
+                        </AccordionItem>
+                      </Accordion>
+                    );
+                  })()}
                 </div>
               );
             })}

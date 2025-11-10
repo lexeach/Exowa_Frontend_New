@@ -12,7 +12,7 @@ export const fields = [
     name: "age",
     label: "Age",
     placeholder: "Enter Age ...",
-    type: "text",
+    type: "number",
     wrapperClassName: "mb-6",
     fieldWrapperClassName: "col-span-6",
   },
@@ -76,6 +76,14 @@ export const fields = [
       {
         value: "topic_3",
         label: "Topic 3",
+      },
+         {
+        value: "topic_4",
+        label: "Topic 4",
+      },
+         {
+        value: "topic_5",
+        label: "Topic 5",
       },
     ],
     wrapperClassName: "mb-6",

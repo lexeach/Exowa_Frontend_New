@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 
 interface Option {
   label: string;
-  value: string;
+  value: string | number;
   icon?: React.ReactNode;
 }
 
