@@ -1,11 +1,11 @@
 import { ErrorToaster, SuccessToaster } from "@/UI/Elements/Toast";
-import { Resolver, useForm } from "react-hook-form";
+import { Resolver, useForm, useWatch } from "react-hook-form";
 import {
   useAddChildrenMutation,
   useUpdateChildrenMutation,
   useGetSingleChildrenQuery,
 } from "@/service/children";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import DynamicForm from "@/UI/Form/DynamicForm";
 import FixedButtons from "@/UI/Form/FixedButton";
@@ -50,15 +50,19 @@ const PapersForm: React.FC<PaperFormProps> = ({ handleCancel, sheet }) => {
   useEffect(() => {
     if (singleChildren?.data) {
       const { name, age, grade, topics, topicLimit: limit } = singleChildren?.data;
-      setTopicLimit(
-        Number.isFinite(Number(limit)) && Number(limit) > 0 ? Number(limit) : 1
-      );
+      const resolvedLimit =
+        Number.isFinite(Number(limit)) && Number(limit) > 0 ? Number(limit) : 1;
+      setTopicLimit(resolvedLimit);
+
+      const sanitizedTopics = Array.isArray(topics)
+        ? topics.slice(0, resolvedLimit)
+        : [];
 
       methods.reset({
         name,
         age,
         grade,
-        topics: topics ?? [],
+        topics: sanitizedTopics,
       });
     } else {
       setTopicLimit(1);
@@ -68,9 +72,90 @@ const PapersForm: React.FC<PaperFormProps> = ({ handleCancel, sheet }) => {
     }
   }, [singleChildren?.data, methods]);
 
-  const onSubmit = async (formData) => {
+  const selectedTopics = useWatch({
+    control: methods.control,
+    name: "topics",
+    defaultValue: [],
+  });
+
+  const handleTopicSelection = useCallback(
+    (value?: string[]) => {
+      if (!Array.isArray(value)) {
+        return;
+      }
+
+      if (value.length > topicLimit) {
+        const limitedValues = value.slice(0, topicLimit);
+        methods.setValue("topics", limitedValues, {
+          shouldTouch: true,
+          shouldDirty: true,
+        });
+      }
+    },
+    [methods, topicLimit]
+  );
+
+  const limitReachedRef = useRef(false);
+
+  useEffect(() => {
+    if (!Array.isArray(selectedTopics)) {
+      return;
+    }
+
+    if (selectedTopics.length < topicLimit) {
+      methods.setError("topics", {
+        type: "manual",
+        message: `Please select ${topicLimit} topic${topicLimit > 1 ? "s" : ""} to reach your topic limit`,
+      });
+      limitReachedRef.current = false;
+    } else {
+      methods.clearErrors("topics");
+
+      if (
+        topicLimit > 0 &&
+        selectedTopics.length === topicLimit &&
+        !limitReachedRef.current
+      ) {
+        SuccessToaster("You have reached your limit");
+        limitReachedRef.current = true;
+      }
+    }
+  }, [methods, selectedTopics, topicLimit]);
+
+  const topicLimitMessage = useMemo(() => {
+    if (!Array.isArray(selectedTopics)) {
+      return "";
+    }
+
+    if (selectedTopics.length === topicLimit && topicLimit > 0) {
+      return "You have reached your limit";
+    }
+
+    return "";
+  }, [selectedTopics, topicLimit]);
+
+  const onSubmit = async (formData: ChildrenFormValues) => {
     try {
-      const payload = { ...formData };
+      const topics = Array.isArray(formData.topics) ? formData.topics : [];
+
+      if (topics.length < topicLimit) {
+        methods.setError("topics", {
+          type: "manual",
+          message: `Please select ${topicLimit} topic${topicLimit > 1 ? "s" : ""} to reach your topic limit`,
+        });
+        return;
+      }
+
+      let normalizedTopics = topics;
+
+      if (topics.length > topicLimit) {
+        normalizedTopics = topics.slice(0, topicLimit);
+        methods.setValue("topics", normalizedTopics, {
+          shouldDirty: true,
+        });
+      }
+
+      const payload = { ...formData, topics: normalizedTopics };
       // return;
       if (sheet?.id) {
         await updateChildren({ id: sheet?.id, ...payload }).unwrap();
@@ -92,26 +177,19 @@ const PapersForm: React.FC<PaperFormProps> = ({ handleCancel, sheet }) => {
     return topicField?.options || [];
   }, []);
 
-  const limitedTopicOptions = useMemo(() => {
-    const numericLimit = Number(topicLimit);
-    const limit = Number.isFinite(numericLimit)
-      ? Math.max(0, Math.min(baseTopicOptions.length, Math.floor(numericLimit)))
-      : baseTopicOptions.length;
-
-    return baseTopicOptions.slice(0, limit);
-  }, [topicLimit, baseTopicOptions]);
-
   const childFormFields = useMemo(
     () =>
       fields.map((field) =>
         field.name === "topics"
           ? {
               ...field,
-              options: limitedTopicOptions,
+              options: baseTopicOptions,
+              getValueCallback: handleTopicSelection,
+              caption: topicLimitMessage,
             }
           : field
       ),
-    [limitedTopicOptions]
+    [baseTopicOptions, handleTopicSelection, topicLimitMessage]
   );
 
   const Footer = () => (

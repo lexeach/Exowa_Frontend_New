@@ -189,6 +189,11 @@ export default function UISelect({
         isSearchable={false}
         blurInputOnSelect={true}
       />
+      {caption && !error && (
+        <p className="mt-1 text-gray-500 text-sm">
+          {caption}
+        </p>
+      )}
       {error && (
         <>
           <p className="mt-1 text-gray-500 text-sm">

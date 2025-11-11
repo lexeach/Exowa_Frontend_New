@@ -1917,6 +1917,41 @@ export const fields = (
   const subjectOptionsForClass =
     dynamicSubjectOptions[currentClass] || dynamicSubjectOptions["default"];
 
+  const subjectOptionsToShow = (() => {
+    if (String(currentClass) === "11") {
+      if (selectedTopic === "topic_1") {
+        return (subjectOptionsForClass || []).filter(
+          (option) =>
+            option?.value === "Physics Part 1" ||
+            option?.value === "Physics Part 2"
+        );
+      }
+
+      if (selectedTopic === "topic_2") {
+        return (subjectOptionsForClass || []).filter(
+          (option) =>
+            option?.value === "Chemistry Part 1" ||
+            option?.value === "Chemistry Part 2"
+        );
+      }
+    }
+
+    if (String(currentClass) === "12") {
+      if (selectedTopic === "topic_1") {
+        const allowedMathValues = new Set([
+          "Mathematics Part 1",
+          "Mathematics Part 2",
+        ]);
+
+        return (subjectOptionsForClass || []).filter((option) =>
+          allowedMathValues.has(option?.value)
+        );
+      }
+    }
+
+    return subjectOptionsForClass;
+  })();
+
   const chapterOptions = generateChapterOptions(
     currentClass,
     currentSubject,
@@ -1973,6 +2008,14 @@ export const fields = (
           value: "topic_3",
           label: "Topic 3",
         },
+           {
+          value: "topic_4",
+          label: "Topic 4",
+        },
+           {
+          value: "topic_5",
+          label: "Topic 5",
+        },
       ],
       wrapperClassName: "mb-6",
       fieldWrapperClassName: "col-span-6",
@@ -1983,7 +2026,7 @@ export const fields = (
       placeholder: "Select Subject ...",
       type: "select",
       autoFocus: true,
-      options: selectedTopic ? subjectOptionsForClass : [],
+      options: selectedTopic ? subjectOptionsToShow : [],
       wrapperClassName: "mb-6",
       fieldWrapperClassName: "col-span-6",
       className: "mobile-select-no-keyboard",

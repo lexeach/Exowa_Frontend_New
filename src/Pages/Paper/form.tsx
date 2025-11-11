@@ -32,7 +32,6 @@ const PapersForm: React.FC<PaperFormProps> = ({ handleCancel, sheet }) => {
   const [currentSubject, setCurrentSubject] = useState(null);
   const [currentSyllabus, setCurrentSyllabus] = useState(null); // Add state for syllabus
   const { data: childrenListClass } = useGetChildrenListClassQuery({});
-  
 
   const methods = useForm({
     resolver: yupResolver(schema),
