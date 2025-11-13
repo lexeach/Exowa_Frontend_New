@@ -52,7 +52,8 @@ const ActionCell: React.FC<ActionCellProps> = ({
           tooltipContent={('View Details')}
           onClick={() => navigate(`/${viewUrl}/${selectedRow._id}`)}
         >
-          <EyeIcon width={20} />
+          {/* <EyeIcon width={20} /> */}
+          View
         </UIButton>
       )}
       {actions?.update && (
@@ -70,7 +71,8 @@ const ActionCell: React.FC<ActionCellProps> = ({
             );
           }}
         >
-          <PencilSquareIcon width={20} />
+          {/* <PencilSquareIcon width={20} /> */}
+          Edit
         </UIButton>
       )}
       {actions?.delete && (
@@ -88,7 +90,8 @@ const ActionCell: React.FC<ActionCellProps> = ({
             );
           }}
         >
-          <TrashIcon width={20} />
+          {/* <TrashIcon width={20} /> */}
+          Delete
         </UIButton>
       )}
       {actionsConfig?.map(action =>

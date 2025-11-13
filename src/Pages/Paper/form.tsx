@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useAddPaperMutation } from "@/service/paper";
+import { useAddPaperMutation, useGetChildrenListClassQuery } from "@/service/paper";
 import { ErrorToaster, SuccessToaster } from "@/UI/Elements/Toast";
 import { useGetSubjectOptionsMutation } from "@/service/subject";
 import { useGetSyllabusOptionsMutation } from "@/service/syllabus";
@@ -8,11 +8,14 @@ import DynamicForm from "@/UI/Form/DynamicForm";
 import FixedButtons from "@/UI/Form/FixedButton";
 import SheetHeader from "@/UI/Sheet/header";
 import UIButton from "@/UI/Elements/Button";
-import { setRefresh, setDialogClose } from "@/slice/layoutSlice";
+import { setRefresh } from "@/slice/layoutSlice";
 import { useDispatch } from "react-redux";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { fields, schema } from "./config";
+import { fields, schema } from "./config"; // Assuming the config file is in the same directory
 import { Loader } from "lucide-react";
+import { useGetChildrenListQuery } from "@/service/children";
+import { useNavigate } from "react-router-dom";
+import { useMobileKeyboardPrevention } from "@/Hooks/useMobileKeyboardPrevention";
 
 type PaperFormProps = {
   handleCancel: () => void;
@@ -21,19 +24,27 @@ type PaperFormProps = {
 
 const PapersForm: React.FC<PaperFormProps> = ({ handleCancel, sheet }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  useMobileKeyboardPrevention(); // Add the hook to prevent keyboard on mobile
   const [data, setData] = useState({});
   const [createPaper, { isLoading: isCreateLoading }] = useAddPaperMutation();
+  const [currentClass, setCurrentClass] = useState(null);
+  const [currentSubject, setCurrentSubject] = useState(null);
+  const [currentSyllabus, setCurrentSyllabus] = useState(null); // Add state for syllabus
+  const { data: childrenListClass } = useGetChildrenListClassQuery({});
 
   const methods = useForm({
     resolver: yupResolver(schema),
   });
+  const selectedTopic = methods.watch("topics");
 
   const onSubmit = async (formData) => {
     try {
-      await createPaper(formData).unwrap();
+
+      const result = await createPaper(formData).unwrap();
       SuccessToaster("Records Created Successfully");
       dispatch(setRefresh());
-      dispatch(setDialogClose());
+      navigate(`/papers/${result?.data?._id}`);
       handleCancel();
     } catch (error) {
       ErrorToaster(error?.data?.message || "Something Went Wrong");
@@ -62,14 +73,18 @@ const PapersForm: React.FC<PaperFormProps> = ({ handleCancel, sheet }) => {
         ) : sheet?.id ? (
           "Save Changes"
         ) : (
-          "Generate Questions"
+          "Generate Quiz"
         )}
       </UIButton>
     </div>
   );
+  const { data: childrenListData } = useGetChildrenListQuery({
+    refetchOnMountOrArgChange: true,
+  });
+
   return (
     <div className="">
-      <SheetHeader title={"Generate New Questions"} />
+      <SheetHeader title={"Generate New Quiz"} />
       <div className="layout-container h-[75vh] overflow-auto">
         <div className="mt-6">
           <div className="layout-container mt-6">
@@ -79,12 +94,21 @@ const PapersForm: React.FC<PaperFormProps> = ({ handleCancel, sheet }) => {
                   <DynamicForm
                     fields={fields(
                       useGetSubjectOptionsMutation,
-                      useGetSyllabusOptionsMutation
+                      useGetSyllabusOptionsMutation,
+                      currentClass,
+                      setCurrentClass,
+                      currentSubject,
+                      setCurrentSubject,
+                      currentSyllabus, // Pass currentSyllabus
+                      setCurrentSyllabus, // <-- Missing comma added here
+                      childrenListData?.data,
+                      childrenListClass,
+                      selectedTopic
                     )}
+                    fetchData={useGetChildrenListQuery}
                     onSubmit={(val) => {
                       setData({ ...data, ...val });
                     }}
-                    // loading={false}
                     useFormMethods={methods}
                     showButton={false}
                   />

@@ -7,6 +7,8 @@ import {
   API_GET_PAPER_LIST,
   API_POST_ASSIGN_PAPER,
   API_UPDATE_PAPER_DETAIL,
+  API_GET_QUESTION_EXPLANATION,
+  API_GET_CHILDREN_LIST_CLASS,
 } from '@/config/url-constants';
 import baseQuery from './baseQuery';
 import { createApi } from '@reduxjs/toolkit/query/react';
@@ -70,11 +72,25 @@ export const paperSlice = createApi({
         method: 'POST',
       }),
     }),
+    getQuestionExplanation: builder.query({
+      query: ({ questionId, questionNumber }) => ({
+        url: API_GET_QUESTION_EXPLANATION(questionId, questionNumber),
+        method: 'GET',
+      }),
+    }),
+    getChildrenListClass: builder.query({
+      query: () => ({
+        url: API_GET_CHILDREN_LIST_CLASS,
+        method: 'GET',
+      }),
+    }),
+
   
   }),
 });
 
 export const {
+  useGetChildrenListClassQuery,
   useGenerateNewOTPMutation,
   useAnswerPaperMutation,
   useAssignPaperMutation,
@@ -83,4 +99,5 @@ export const {
   useGetPaperListQuery,
   useUpdatePaperMutation,
   useDeletePaperMutation,
+  useGetQuestionExplanationQuery,
 } = paperSlice;

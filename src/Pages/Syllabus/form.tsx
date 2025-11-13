@@ -3,9 +3,7 @@ import { useForm } from "react-hook-form";
 import {
   useAddSyllabusMutation,
   useGetSingleSyllabusQuery,
-  useGetSyllabusListQuery,
   useUpdateSyllabusMutation,
-  useDeleteSyllabusMutation,
 } from "@/service/syllabus";
 import { useEffect, useState } from "react";
 
@@ -33,15 +31,9 @@ const SyllabusForm: React.FC<SyllabusFormProps> = ({ handleCancel, sheet }) => {
   useAddSyllabusMutation();
 
   const [updateChildren] = useUpdateSyllabusMutation();
-
-  console.log("<< sheet >>> ", sheet);
-  console.log("<< singleChildren >>> ", singleChildren?.data);
-
   const methods = useForm({
     resolver: yupResolver(schema),
   });
-  //name age grade
-
   useEffect(() => {
     if (singleChildren?.data) {
       const { name } = singleChildren?.data;
@@ -51,9 +43,6 @@ const SyllabusForm: React.FC<SyllabusFormProps> = ({ handleCancel, sheet }) => {
 
   const onSubmit = async (formData) => {
     try {
-      console.log("fromData >> ", formData);
-
-      // return;
       if (sheet?.id) {
         await updateChildren({ id: sheet?.id, ...formData }).unwrap();
         SuccessToaster("Records Update Successfully");
@@ -101,7 +90,6 @@ const SyllabusForm: React.FC<SyllabusFormProps> = ({ handleCancel, sheet }) => {
                     onSubmit={(val) => {
                       setData({ ...data, ...val });
                     }}
-                    // loading={false}
                     useFormMethods={methods}
                     showButton={false}
                   />

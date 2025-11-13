@@ -201,7 +201,7 @@ const UITable = ({
   return (
     <div className="h-full w-full">
       <div className="responsive-table">
-        <Table className="h-full">
+        <Table className="h-full text-center">
           <TableHeader className="bg-gray-100">
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id} className="h-40px">
@@ -225,7 +225,7 @@ const UITable = ({
                         }
                       }}
                     >
-                      <div className="flex items-center">
+                      <div className="flex items-center justify-center">
                         {header.isPlaceholder
                           ? null
                           : flexRender(

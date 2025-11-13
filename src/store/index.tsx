@@ -4,6 +4,7 @@ import authReducer from "../slice/authSlice";
 import { configureStore } from "@reduxjs/toolkit";
 import { paperSlice } from "@/service/paper";
 import { childrenSlice } from "@/service/children";
+import { userSlice } from "@/service/user";
 import { subjectSlice } from "@/service/subject";
 import { syllabusSlice } from "@/service/syllabus";
 
@@ -14,6 +15,7 @@ export const store = configureStore({
     [apiSlice.reducerPath]: apiSlice.reducer,
     [paperSlice.reducerPath]: paperSlice.reducer,
     [childrenSlice.reducerPath]: childrenSlice.reducer,
+    [userSlice.reducerPath]: userSlice.reducer,
     [subjectSlice.reducerPath]: subjectSlice.reducer,
     [syllabusSlice.reducerPath]: syllabusSlice.reducer,
   },
@@ -22,6 +24,7 @@ export const store = configureStore({
       apiSlice.middleware,
       paperSlice.middleware,
       childrenSlice.middleware,
+      userSlice.middleware,
       subjectSlice.middleware,
       syllabusSlice.middleware,
     ),

@@ -6,9 +6,9 @@ import PaperForm from "@/Pages/Paper/form";
 import ChildrenForm from "@/Pages/Children/form";
 import SyllabusForm from "@/Pages/Syllabus/form";
 import SubjectForm from "@/Pages/Subject/form";
-import { setSheetClose } from "@/slice/layoutSlice";
+import UpdateLimit from "@/Pages/User/form";
 
-// import ResponsiveFilter from '../Elements/Table/ResponsiveFilter';
+import { setSheetClose } from "@/slice/layoutSlice";
 
 const UISheet: React.FC = () => {
   const { isSheetOpen, sheetSide, sheetStyle, sheetComponent, sheet } =
@@ -28,11 +28,14 @@ const UISheet: React.FC = () => {
           {sheetComponent === "addChildren" && (
             <ChildrenForm handleCancel={handleCancel} sheet={sheet} />
           )}
-          
+          {sheetComponent === "updateLimit" && (
+            <UpdateLimit handleCancel={handleCancel} sheet={sheet} />
+          )}
+
           {sheetComponent === "addSubject" && (
             <SubjectForm handleCancel={handleCancel} sheet={sheet} />
           )}
-           {sheetComponent === "addSyllabus" && (
+          {sheetComponent === "addSyllabus" && (
             <SyllabusForm handleCancel={handleCancel} sheet={sheet} />
           )}
         </div>

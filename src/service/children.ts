@@ -3,55 +3,72 @@ import {
   API_DELETE_CHILDREN_DETAIL,
   API_GET_CHILDREN_DETAIL,
   API_GET_CHILDREN_LIST,
+  API_GET_USER_LIST,
   API_UPDATE_CHILDREN_DETAIL,
-} from '@/config/url-constants';
-import baseQuery from './baseQuery';
-import { createApi } from '@reduxjs/toolkit/query/react';
+} from "@/config/url-constants";
+import baseQuery from "./baseQuery";
+import { createApi } from "@reduxjs/toolkit/query/react";
 
 export const childrenSlice = createApi({
-  reducerPath: 'childrenApi',
+  reducerPath: "childrenApi",
   baseQuery,
-  endpoints: builder => ({
-   
-
+  endpoints: (builder) => ({
     getChildrenList: builder.query({
-      query: ({ page = 1, pageSize = 10, search = '', filter = {}, sorting = {} }) => ({
+      query: ({
+        page = 1,
+        pageSize = 10,
+        search = "",
+        filter = {},
+        sorting = {},
+      }) => ({
         url: API_GET_CHILDREN_LIST(page, pageSize, search, filter, sorting),
-        method: 'GET',
+        method: "GET",
       }),
     }),
     addChildren: builder.mutation({
-      query: newData => ({
+      query: (newData) => ({
         url: API_ADD_CHILDREN,
-        method: 'POST',
+        method: "POST",
         body: newData,
       }),
     }),
     getSingleChildren: builder.query({
-      query: id => ({
+      query: (id) => ({
         url: API_GET_CHILDREN_DETAIL(id),
-        method: 'GET',
+        method: "GET",
       }),
     }),
     updateChildren: builder.mutation({
       query: ({ id, ...updatedData }) => ({
         url: API_UPDATE_CHILDREN_DETAIL(id),
-        method: 'PUT',
+        method: "PUT",
         body: updatedData,
       }),
     }),
     deleteChildren: builder.mutation({
-      query: id => ({
+      query: (id) => ({
         url: API_DELETE_CHILDREN_DETAIL(id),
-        method: 'DELETE',
+        method: "DELETE",
       }),
     }),
 
-  
+    getUserList: builder.query({
+      query: ({
+        page = 1,
+        pageSize = 1000,
+        search = "",
+        filter = {},
+        sorting = {},
+      }) => ({
+        url: API_GET_USER_LIST(page, pageSize, search, filter, sorting),
+        method: "GET",
+      }),
+    }),
   }),
 });
 
 export const {
+  useGetUserListQuery,
   useAddChildrenMutation,
   useGetSingleChildrenQuery,
   useGetChildrenListQuery,

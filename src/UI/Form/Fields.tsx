@@ -1,6 +1,5 @@
-import { Controller, FieldError, Path } from 'react-hook-form';
+import { FieldError } from 'react-hook-form';
 
-import { UIAutoComplete } from '../Elements/AutoComplete';
 import UICheckbox from '../Elements/Checkbox';
 import UIDatepicker from '../Elements/Datepicker';
 import UIDropdown from '../Elements/Dropdown';
@@ -145,23 +144,6 @@ const FieldRender = ({
                 isFutureDates={field.isFutureDates || false}
                 className={field.className}
                 error={errors[fieldName] as FieldError}
-              />
-            );
-
-          case 'autocomplete':
-            return (
-              <UIAutoComplete
-                {...controllerField}
-                label={field.label}
-                fetchData={field.fetchData}
-                placeholder={field.placeholder}
-                fetchId={field.fetchId}
-                multi={field.multi}
-                className={field.className}
-                error={errors[fieldName] as FieldError}
-                getValueCallback={value => {
-                  if (field.getValueCallback) field.getValueCallback(value);
-                }}
               />
             );
 

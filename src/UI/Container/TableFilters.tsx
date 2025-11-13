@@ -3,9 +3,7 @@ import { format } from "date-fns";
 
 import Button from "@/UI/Elements/Button";
 import SearchInput from "../Elements/Input/search";
-import { UIAutoComplete } from "../Elements/AutoComplete";
 import UIFilter from "../Elements/Popover/Filter";
-import { useTranslation } from "react-i18next";
 
 export default function TableFilters({
   filtersConfig,
@@ -16,7 +14,6 @@ export default function TableFilters({
   setSearch,
   search,
 }) {
-  const { t } = useTranslation();
   const [filters, setFilters] = useState({});
   const [reset, setReset] = useState(false);
 
@@ -95,22 +92,7 @@ export default function TableFilters({
 
       return (
         <div key={`filter-${index}`} className="mx-2">
-          {config.type === "autocomplete" ? (
-            <div className="min-w-[230px]">
-              <UIAutoComplete
-                placeholder={config.label}
-                fetchData={config.fetchData}
-                name={config.name}
-                value={filters[config.label]}
-                label=""
-                style={"mb-0"}
-                onChange={(selectedOptions) => {
-                  handleFilterChange(config.filterName, selectedOptions);
-                }}
-                reset={reset}
-              />
-            </div>
-          ) : (
+          {
             <UIFilter
               options={config.options}
               name={config.name}
@@ -120,7 +102,7 @@ export default function TableFilters({
               }
               reset={reset}
             />
-          )}
+          }
         </div>
       );
     });
@@ -153,7 +135,7 @@ export default function TableFilters({
           setSearch={setSearch}
           search={search}
           wrapperClassName="min-w-[302px] ml-0 w-full md:w-auto"
-          placeholder={t("search")}
+          placeholder={("Search")}
         />
 
         <div className="items-center w-full md:w-auto sm:flex hidden mt-2 md:mt-0">
@@ -167,7 +149,7 @@ export default function TableFilters({
           {hasNonEmptyValues && (
             <div className="w-full md:w-auto mx-2 mt-2 md:mt-0">
               <Button variant="outline" size="sm" onClick={handleClearAll}>
-                {t("clear_all")}
+                {("Clear All")}
               </Button>
             </div>
           )}

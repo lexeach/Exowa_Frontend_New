@@ -16,6 +16,7 @@ import Children from "./Pages/Children";
 import Subject from "./Pages/Subject";
 import Syllabus from "./Pages/Syllabus";
 import Answer from "./Pages/Answer";
+import Users from "./Pages/User";
 import Dashboard from "./Pages/Dashboard";
 import { loadTokenFromStorage } from "./slice/authSlice";
 import { useEffect } from "react";
@@ -24,6 +25,8 @@ import ResultView from "./Pages/Paper/AnswerView";
 import OtpExpire from "./Pages/Answer/expireOTP";
 import ThankYouPage from "./Pages/Answer/thankyou";
 import LogOut from "./Pages/Auth/LogOut";
+import AnswerByStudent from "./Pages/Answer/answerByStudent";
+import LearningView from "./Pages/Paper/LearningView";
 
 const router = createHashRouter([
   {
@@ -42,8 +45,20 @@ const router = createHashRouter([
             element: <Paper />,
           },
           {
+            path: "users",
+            element: <Users />,
+          },
+          {
+            path: "student-answer/:id",
+            element: <AnswerByStudent />,
+          },
+          {
             path: "papers/:id",
             element: <PaperView />,
+          },
+          {
+            path: "papers/learning/:id",
+            element: <LearningView />,
           },
           {
             path: "children",
@@ -65,7 +80,6 @@ const router = createHashRouter([
             path: "logout",
             element: <LogOut />,
           },
-          
         ],
       },
     ],
@@ -102,6 +116,10 @@ const router = createHashRouter([
         element: <ThankYouPage />,
       },
     ],
+  },
+  {
+    path: "/thankyou",
+    element: <ThankYouPage />,
   },
 ]);
 
