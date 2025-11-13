@@ -12,7 +12,7 @@ export const fields = [
     name: "age",
     label: "Age",
     placeholder: "Enter Age ...",
-    type: "number",
+    type: "text",
     wrapperClassName: "mb-6",
     fieldWrapperClassName: "col-span-6",
   },
@@ -42,49 +42,6 @@ export const fields = [
         value: "9th Grade",
         label: "9th Grade",
       },
-      {
-        value: "10th Grade",
-        label: "10th Grade",
-      },
-      {
-        value: "11th Grade",
-        label: "11th Grade",
-      },
-      {
-        value: "12th Grade",
-        label: "12th Grade",
-      },
-    ],
-    wrapperClassName: "mb-6",
-    fieldWrapperClassName: "col-span-6",
-  },
-  {
-    name: "topics",
-    label: "Topic",
-    placeholder: "Select Chapter ...",
-    type: "select",
-    multi: true,
-    options: [
-      {
-        value: "topic_1",
-        label: "Topic 1",
-      },
-      {
-        value: "topic_2",
-        label: "Topic 2",
-      },
-      {
-        value: "topic_3",
-        label: "Topic 3",
-      },
-         {
-        value: "topic_4",
-        label: "Topic 4",
-      },
-         {
-        value: "topic_5",
-        label: "Topic 5",
-      },
     ],
     wrapperClassName: "mb-6",
     fieldWrapperClassName: "col-span-6",
@@ -94,8 +51,8 @@ export const fields = [
 export const schema = yup
   .object()
   .shape({
-    name: yup.string().required("This field required"),
-    age: yup.string().required("This field required"),
-    grade: yup.string().required("This field required"),
+    name: yup.string().required("this_field_required"),
+    age: yup.string().required("this_field_required"),
+    grade: yup.string().required("this_field_required")
   })
   .required();

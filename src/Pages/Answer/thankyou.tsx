@@ -1,10 +1,6 @@
 import UILayout from "@/UI/Elements/Layout";
-import { useLocation, useNavigate } from "react-router-dom";
 
 const ThankYouPage = () => {
-  const location = useLocation();
-  const AnswerURL = `/auth/result/${location.state}`;
-  const navigate = useNavigate();
   return (
     <UILayout>
       <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
@@ -14,13 +10,6 @@ const ThankYouPage = () => {
             Your answers have been submitted successfully. We appreciate your
             time and effort.
           </p>
-          <button
-            className="mt-6 px-6 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition"
-            type="button"
-            onClick={() => navigate(AnswerURL)}
-          >
-            See Result
-          </button>
         </div>
       </div>
     </UILayout>

@@ -36,7 +36,7 @@ const initialState: LayoutState = {
   isDialogOpen: false,
   dialog: {
     type: 'delete',
-    module: '',
+    module: 'dictionary',
     actionButton: 'delete',
     cancelButton: 'cancel',
     actionCallbackId: '',
@@ -52,7 +52,7 @@ const initialState: LayoutState = {
     entity: {},
   },
   sheetStyle: '',
-  sheetComponent: '',
+  sheetComponent: 'addDataSource',
   refresh: false,
   hideSidebar: false,
 };
@@ -82,7 +82,7 @@ export const layoutSlice = createSlice({
     setDialogClose: state => {
       state.dialog = {
         type: 'delete',
-        module: '',
+        module: 'dictionary',
         actionButton: 'Delete',
         cancelButton: 'Cancel',
         actionCallbackId: '',
@@ -108,6 +108,11 @@ export const layoutSlice = createSlice({
     showSidebar: state => {
       state.hideSidebar = false;
     },
+    // setDialogClose: state => {
+    //   state.isDialogOpen = false;
+    //   state.dialog.actionCallbackId = null;
+    //   state.dialog.data = null;
+    // },
     setActionTrigger: state => {
       state.dialog.actionTrigger = !state.dialog.actionTrigger;
     },
@@ -115,6 +120,7 @@ export const layoutSlice = createSlice({
       state.isSheetOpen = !state.isSheetOpen;
       state.sheetSide = 'bottom';
       state.sheetStyle = 'max-h-[80%] p-0';
+      // state.filterConfig = payload.payload;
     },
     setRefresh: state => {
       state.refresh = !state.refresh;

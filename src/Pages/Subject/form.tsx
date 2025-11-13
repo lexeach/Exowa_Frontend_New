@@ -29,10 +29,17 @@ const SubjectForm: React.FC<SubjectFormProps> = ({ handleCancel, sheet }) => {
   });
   const [createChildren, { isLoading: isCreateLoading }] =
     useAddSubjectMutation();
+
   const [updateChildren] = useUpdateSubjectMutation();
+
+  console.log("<< sheet >>> ", sheet);
+  console.log("<< singleChildren >>> ", singleChildren?.data);
+
   const methods = useForm({
     resolver: yupResolver(schema),
   });
+  //name age grade
+
   useEffect(() => {
     if (singleChildren?.data) {
       const { name } = singleChildren?.data;
@@ -42,6 +49,9 @@ const SubjectForm: React.FC<SubjectFormProps> = ({ handleCancel, sheet }) => {
 
   const onSubmit = async (formData) => {
     try {
+      console.log("fromData >> ", formData);
+
+      // return;
       if (sheet?.id) {
         await updateChildren({ id: sheet?.id, ...formData }).unwrap();
         SuccessToaster("Records Update Successfully");

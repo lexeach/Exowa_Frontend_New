@@ -16,45 +16,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Mobile keyboard prevention for select fields */
-.mobile-select-no-keyboard .react-select__input input {
-  inputmode: none !important;
-  -webkit-user-select: none !important;
-  -moz-user-select: none !important;
-  -ms-user-select: none !important;
-  user-select: none !important;
-}
-
-/* Prevent keyboard on mobile for react-select inputs */
-.mobile-select-no-keyboard .react-select__input input:focus {
-  inputmode: none !important;
-  -webkit-user-select: none !important;
-  -moz-user-select: none !important;
-  -ms-user-select: none !important;
-  user-select: none !important;
-}
-
-/* Additional mobile-specific styles */
-@media (max-width: 768px) {
-  .mobile-select-no-keyboard .react-select__input input {
-    inputmode: none !important;
-    -webkit-user-select: none !important;
-    -moz-user-select: none !important;
-    -ms-user-select: none !important;
-    user-select: none !important;
-    caret-color: transparent !important;
-  }
-  
-  .mobile-select-no-keyboard .react-select__input input:focus {
-    inputmode: none !important;
-    -webkit-user-select: none !important;
-    -moz-user-select: none !important;
-    -ms-user-select: none !important;
-    user-select: none !important;
-    caret-color: transparent !important;
-  }
-}
-
 /* html {
   overflow: hidden;
 } */

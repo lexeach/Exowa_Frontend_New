@@ -9,13 +9,31 @@ import UIButton from "@/UI/Elements/Button";
 import UISelect from "@/UI/Elements/Select";
 const PaperView = () => {
   const { id } = useParams();
-  const { data: singlePaper } = useGetSinglePaperQuery(id, { skip: !id });
-  const { data: children } = useGetChildrenListQuery({});
-  const [toolTipText, setTooltip] = useState("Click to copy OTP");
+  const {
+    data: singlePaper,
+    error,
+    isLoading,
+  } = useGetSinglePaperQuery(id, { skip: !id });
+
+ 
+
+  const {
+    data: children,
+    error: childrenError,
+    isLoading: childrenLoading,
+  } = useGetChildrenListQuery({});
+
+  console.log("children?.data", children?.data);
+
+
 
   const questions = singlePaper?.data?.questions ?? [];
   const answers = singlePaper?.data?.answers ?? [];
   const OTP = singlePaper?.data?.otp || "";
+  // console.log("singlePaper?.data", singlePaper?.data);
+
+  const [toolTipText, setTooltip] = useState("Click to copy OTP");
+  // Calculate Total Marks, Obtained Marks, and Percentage
   const totalMarks = questions.length;
   const obtainedMarks = answers.reduce((score, answer) => {
     const question = questions.find(
@@ -30,15 +48,17 @@ const PaperView = () => {
     const [selectedOption, setSelectedOption] = useState<string | string[]>("");
     const [childOptions, setChildOptions] = useState([]);
 
+
     useEffect(() => {
       const options = children?.data?.map((child) => ({
         label: child.name,
         value: child._id,
       }));
-
+  
       setChildOptions(options);
+      console.log("options >> ", options);
     }, [children?.data]);
-
+    
     const handleCopyOtp = () => {
       if (OTP) {
         navigator.clipboard.writeText(OTP);
@@ -46,10 +66,14 @@ const PaperView = () => {
       } else {
         setTooltip("Not Copied!");
       }
+      // Reset the tooltip after a short delay
       setTimeout(() => setTooltip("Click to copy OTP"), 5000);
     };
 
+ 
+
     const handleSelectChange = (value: string | string[]) => {
+      console.log("Selected value:", value);
       setSelectedOption(value); // Update the state with the selected value
       setSelectedChild(value); // Update the selected child
     };
@@ -116,10 +140,10 @@ const PaperView = () => {
                     onClick={() => navigator.clipboard.writeText(generatedLink)}
                   >
                     {generatedLink}
+                   
                   </p>
-                  <span>
-                    <ClipboardPaste width={20} />
-                  </span>
+                  <span> 
+                  <ClipboardPaste width={20} /></span>
                 </div>
               )}
             </div>
@@ -220,6 +244,8 @@ const PaperView = () => {
         {answers.length > 0 && (
           <div className="w-1/3">
             <div className="border border-dark shadow rounded-lg  p-6">
+              {/* <div className="w-1/3 px-6 py-4">
+          <div className="border shadow-lg rounded-lg bg-gray-50 p-6"> */}
               <h3 className="text-xl font-bold text-center text-gray-800 border-b pb-3 mb-4">
                 Result Summary
               </h3>

@@ -1,22 +1,12 @@
 import UILayout from "@/UI/Elements/Layout";
 import { useGetSinglePaperQuery } from "@/service/paper";
-import { useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { CheckCircleIcon, XCircleIcon } from "lucide-react";
 
 const PaperView = () => {
   const { id } = useParams();
 
-  const {
-    data: singlePaper,
-    refetch: refetchSinglePaper,
-  } = useGetSinglePaperQuery(id, { skip: !id });
-  
-  useEffect(() => {
-    if (id) {
-      refetchSinglePaper();
-    }
-  }, [id, refetchSinglePaper]);
+  const { data: singlePaper } = useGetSinglePaperQuery(id, { skip: !id });
   const questions = singlePaper?.data?.questions ?? [];
   const answers = singlePaper?.data?.answers ?? [];
   const childName = singlePaper?.data?.children?.name || "";
@@ -26,22 +16,9 @@ const PaperView = () => {
     const question = questions.find(
       (q) => q.questionNumber === answer.questionNumber
     );
-    
-    // If answer is "E" (no answer/skip), don't add or subtract marks
-    if (answer.option === "E") {
-      return score;
-    }
-    
-    // If answer is correct, add 1 mark
-    if (question?.correctAnswer === answer.option) {
-      return score + 1;
-    }
-    
-    // If answer is wrong, subtract 1 mark (negative marking)
-    return score - 2;
+    return question?.correctAnswer === answer.option ? score + 1 : score;
   }, 0);
-  // Calculate percentage, ensuring it doesn't go below 0
-  const percentage = Math.max(0, (obtainedMarks / totalMarks) * 100).toFixed(2);
+  const percentage = ((obtainedMarks / totalMarks) * 100).toFixed(2);
 
   const renderQuestions = () => {
     return (
@@ -64,7 +41,6 @@ const PaperView = () => {
                   {Object.entries(question.choices).map(([key, value]) => {
                     const isCorrect = key === question.correctAnswer;
                     const isUserAnswer = userAnswer?.option === key;
-                    const isNoAnswer = userAnswer?.option === "E";
 
                     return (
                       <div
@@ -81,12 +57,10 @@ const PaperView = () => {
                           type="checkbox"
                           checked={isUserAnswer}
                           readOnly
-                          className={`h-4 w-4 flex-shrink-0 ${
-                            isNoAnswer ? 'accent-gray-400' : 'accent-blue-600'
-                          }`}
+                          className="h-4 w-4 accent-blue-600 flex-shrink-0"
                         />
                         <span className="font-medium">{key}:</span>
-                        <span className="text-sm md:text-base break-words">{String(value)}</span>
+                        <span className="text-sm md:text-base break-words">{value}</span>
                         {isUserAnswer &&
                           (isCorrect ? (
                             <CheckCircleIcon className="h-5 w-5 text-green-600 flex-shrink-0" />
@@ -110,17 +84,9 @@ const PaperView = () => {
   return (
     <UILayout>
       <div className="max-h-[100vh] overflow-y-auto px-4 md:px-0">
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between p-4 md:p-6 gap-4">
-          <Link
-            to="/papers"
-            className="inline-flex items-center justify-center rounded-md border border-blue-600 px-4 py-2 text-sm font-semibold text-blue-600 transition hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-          >
-            Back to Papers
-          </Link>
-          <p className="text-center md:text-right font-semibold text-2xl md:text-4xl text-content leading-tight md:leading-[70px] flex-1">
-            Result Detail
-          </p>
-        </div>
+        <p className="text-center p-4 md:p-6 font-semibold text-2xl md:text-4xl text-content leading-tight md:leading-[70px]">
+          Result Detail
+        </p>
         <div className="flex flex-col md:flex-row px-0 md:px-12 py-4 space-y-6 md:space-y-0 md:space-x-8 mb-10 md:mb-40">
           <div className="w-full md:w-3/5">
             <div className="border border-dark p-4 md:p-6 rounded-lg shadow">
@@ -147,9 +113,7 @@ const PaperView = () => {
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-600">Marks Obtained:</span>
-                    <span className={`font-semibold ${obtainedMarks >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-                      {obtainedMarks}
-                    </span>
+                    <span className="font-semibold text-green-600">{obtainedMarks}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-600">Percentage:</span>

@@ -1,5 +1,5 @@
 import DashboardSvg from "../assets/Dashboard.svg?react";
-import { NotepadText, Baby, FileSymlink, Book, User } from "lucide-react";
+import { NotepadText, Baby, FileSymlink, Book } from "lucide-react";
 
 export const sidebarItems = [
   {
@@ -15,14 +15,6 @@ export const sidebarItems = [
     slug: "Papers",
     url: "/papers",
     divider: true,
-  },
-  {
-    name: "User",
-    icon: User,
-    slug: "user",
-    url: "/users",
-    divider: true,
-     roles: ["admin"], // Only for admin
   },
   {
     name: "Children",

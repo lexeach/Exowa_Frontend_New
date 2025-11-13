@@ -1,5 +1,5 @@
 import { Outlet, useLocation } from "react-router-dom";
-import { showSidebar } from "@/slice/layoutSlice";
+import { removeSidebar, showSidebar } from "@/slice/layoutSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 import { DeleteDialog } from "@/UI/Elements/Dialog/delete";
@@ -12,7 +12,7 @@ import { useEffect } from "react";
 const Layout = () => {
   const dispatch = useDispatch();
   const location = useLocation();
-  const { hideSidebar } = useSelector((item) => item.layout);
+  const { hideSidebar, dialog } = useSelector((item) => item.layout);
 
   useEffect(() => {
     if (hideSidebar) {

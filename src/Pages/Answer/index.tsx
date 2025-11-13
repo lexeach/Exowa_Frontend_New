@@ -1,8 +1,7 @@
 import UILayout from "@/UI/Elements/Layout";
 import { useGetSinglePaperQuery } from "@/service/paper";
 import { useNavigate, useParams } from "react-router-dom";
-// Import useEffect along with useState
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { CheckCircleIcon } from "lucide-react";
 import { ErrorToaster, SuccessToaster } from "@/UI/Elements/Toast";
 import { useChildrenloginMutation } from "@/service/apiSlice";
@@ -24,39 +23,19 @@ const Answer = () => {
     { skip: !id }
   );
 
+  // Move all useState hooks to the top, before any returns
   const [answers, setAnswers] = useState<Record<number, string>>({});
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isOTPVerified, setIsOTPVerified] = useState(false);
   const [isAnswered, setIsAnswered] = useState(false);
 
-  // START: Code to refresh on tab switch
-  useEffect(() => {
-    const handleVisibilityChange = () => {
-      // The 'document.hidden' property is true when the page is not the active tab.
-      if (document.hidden) {
-        // Optional: Show a message to the user before reloading.
-        ErrorToaster("Cheating is not allowed. The page will now refresh.");
-        // Reload the page.
-        window.location.reload();
-      }
-    };
-
-    // Add an event listener that calls the function when tab visibility changes.
-    document.addEventListener("visibilitychange", handleVisibilityChange);
-
-    // This is a cleanup function. It removes the event listener when the
-    // component is unmounted to prevent memory leaks.
-    return () => {
-      document.removeEventListener("visibilitychange", handleVisibilityChange);
-    };
-  }, []); // The empty dependency array [] ensures this effect runs only once.
-  // END: Code to refresh on tab switch
-
+  // Extract data after hooks
   const questions = singlePaper?.data?.questions ?? [];
   const OTP = singlePaper?.data?.otp;
   const parentId = singlePaper?.data?.author?._id;
   const childID = singlePaper?.data?.children?._id;
 
+  // Define functions after hooks
   const handleOptionChange = (
     questionNumber: number,
     selectedOption: string
@@ -154,7 +133,7 @@ const Answer = () => {
           dispatch(handleLogout());
           SuccessToaster("Login Out");
           localStorage.removeItem("token");
-          navigate("/auth/thankyou", { state: id });
+          navigate("/auth/thankyou");
           setIsAnswered(true);
         }, 1000);
       } catch (error) {
@@ -163,6 +142,7 @@ const Answer = () => {
     }
   };
 
+  // Conditional rendering after all hooks and logic
   if (paperLoading) {
     return <div>Loading...</div>;
   }

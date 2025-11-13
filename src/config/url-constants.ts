@@ -13,7 +13,6 @@ export const API_ANSWER_PAPER_DETAIL = `/api/papers/answer`;
 export const API_DELETE_PAPER_DETAIL = (id) => `/api/papers/${id}`;
 export const API_POST_ASSIGN_PAPER = (id) =>
   `/api/papers/assign?questionId=${id}`;
-export const API_GET_QUESTION_EXPLANATION = (questionId, questionNumber) => `/api/papers/${questionId}/explanation?questionNumber=${questionNumber}`;
 export const API_GET_PAPER_LIST = (
   page = 1,
   pageSize = 10,
@@ -39,8 +38,6 @@ export const API_GET_PAPER_LIST = (
 
 /****** Children  ********/
 export const API_ADD_CHILDREN = "/api/children";
-export const API_GET_CHILDREN_LIST_CLASS = "api/children/classes/list";
-
 export const API_GET_CHILDREN_DETAIL = (id) => `/api/children/${id}`;
 export const API_UPDATE_CHILDREN_DETAIL = (id) => `/api/children/${id}`;
 export const API_DELETE_CHILDREN_DETAIL = (id) => `/api/children/${id}`;
@@ -125,36 +122,3 @@ export const API_GET_SYLLABUS_LIST = (
     search !== "" ? `&search=${search} ${filterString}` : ` ${filterString}`
   }`;
 };
-
-
-
-/****** User  ********/
-export const API_GET_USER_LIST = (
-  page = 1,
-  pageSize = 10,
-  search = "",
-  filter = {},
-  sorting = {}
-) => {
-  let filterString = "&";
-  for (const key in filter) {
-    if (filter[key]) {
-      filterString = filterString + `&${key}=${filter[key]}&`;
-    }
-  }
-
-  const sortingString = sorting?.id
-    ? `&sort=${sorting.id}&order=${sorting.desc ? "desc" : "asc"}`
-    : `&sort=id&order=desc`; // Default sorting if no sorting provided
-
-  return `/api/users?page=${page}&limit=${pageSize}${sortingString}${
-    search !== "" ? `&search=${search} ${filterString}` : ` ${filterString}`
-  }`;
-};
-
-export const API_GET_USER_DETAIL = (id) => `/api/users/detail/${id}`;
-
-export const API_UPDATE_USER_LIMIT = (id) => `/api/users/${id}/limits`;
-
-export const API_UPDATE_TOPIC_LIMIT = (id) => `/api/users/topic/${id}/limits`;
-

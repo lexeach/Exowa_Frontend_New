@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { Input } from '@/components/ui/input';
+import FileUpload from '../Elements/FileUpload';
+import { useTranslation } from 'react-i18next';
 
 interface CustomInputProps {
   englishLabel: string;
@@ -32,6 +34,7 @@ const CustomInput: React.FC<CustomInputProps> = ({
     formState: { errors },
     getValues,
   } = useFormContext();
+  const { t } = useTranslation();
   const renderInputField = (
     name: string,
     placeholder: string,
@@ -74,7 +77,28 @@ const CustomInput: React.FC<CustomInputProps> = ({
       <div className="w-full md:w-1/2 text-left mr-5">
         <p className="text-sm leading-5  font-medium pb-1">{englishLabel}:</p>
         <div className="w-full mb-4">
-          {(
+          {type === 'file' ? (
+            <div className="p-6 border border-gray-300 rounded">
+              <>
+                {getValues()?.logo && (
+                  <img
+                    height={100}
+                    width={100}
+                    className="my-3"
+                    src={getValues().logo}
+                    alt="logo"
+                  />
+                )}
+                <p className="text-base leading-6 font-semibold mb-1">
+                  {t('attached_any')}
+                </p>
+                <p className="pb-16 text-sm leading-5 font-normal">
+                  {t('attached_any_description')}
+                </p>
+              </>
+              <FileUpload setFile={setFile} />
+            </div>
+          ) : (
             renderInputField(
               englishName,
               englishPlaceholder,
@@ -88,6 +112,26 @@ const CustomInput: React.FC<CustomInputProps> = ({
             </p>
           )}
         </div>
+      </div>
+      <div className="w-full md:w-1/2  text-right">
+        {arabicInput && arabicName && (
+          <>
+            <p className="text-sm leading-5 font-medium pb-1">:{arabicLabel}</p>
+            <div className="w-full mb-4">
+              {renderInputField(
+                arabicName,
+                arabicPlaceholder,
+                'rtl',
+                errors[arabicName]
+              )}
+              {errors[arabicName] && (
+                <p className="mt-1 text-gray-500 text-sm">
+                  {errors[arabicName]?.message?.toString()}
+                </p>
+              )}
+            </div>
+          </>
+        )}
       </div>
     </div>
   );
