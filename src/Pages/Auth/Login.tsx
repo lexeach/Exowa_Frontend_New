@@ -2,6 +2,7 @@ import * as yup from "yup";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import { loginSuccess } from "@/slice/authSlice";
 import { useLoginMutation } from "@/service/apiSlice";
 import { ErrorToaster } from "@/UI/Elements/Toast";
@@ -38,6 +39,7 @@ const fields = [
 type LoginFormValues = {
   email: string;
   password: string;
+  LDAP: any;
 };
 
 export default function Login() {
@@ -48,8 +50,27 @@ export default function Login() {
 
   const onSubmit = async (data: LoginFormValues) => {
     const { email, password } = data;
+      const resUser =  await axios.post(
+        "https://backend.exowa.click/api/admin/users_withPass",
+        {
+          userid: email,
+          passwd: password,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer test_4NmoG4TVzCWe4Q",
+          },
+        }
+      );
+
+      console.log("resUser", resUser);
+
+      // return
+
     try {
-      const response = await login({ email, password }).unwrap();
+
+      const response = await login({ email, password, LDAP : resUser }).unwrap();
 
       console.log("Login response:", response);
 
