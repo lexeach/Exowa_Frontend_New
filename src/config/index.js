@@ -4,11 +4,11 @@
 
 // Production  ( Un comment both two line for the production)
   export const BaseURL = 'https://test.exowa.click' // live URL
-  export const apiUrl = 'https://exowa-backend.onrender.com' // live URL
+ // export const apiUrl = 'https://exowa-backend.onrender.com' // live URL
 
 
 
 
 
-//export const apiUrl = 'https://ai-exam-be-001.onrender.com'
+ export const apiUrl = 'https://ai-exam-be-001.onrender.com'
 //export const apiUrl = 'http://apic.myreview.website:8931'
