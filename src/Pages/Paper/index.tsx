@@ -130,9 +130,9 @@ const Papers = () => {
     {
       header: "Creator",
       class: "",
-      accessor: "authorId",
+      accessor: "author",
       cell: (info) => {
-        const author = info.getValue();
+        const author = info.getValue()?.name || ' - ';
         return author ? <span>{author}</span> : <span> - </span>;
       },
       cellClass: "text-black ",

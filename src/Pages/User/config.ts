@@ -8,20 +8,11 @@ export const fields = [
     wrapperClassName: "mb-6",
     fieldWrapperClassName: "col-span-6",
   },
-  // {
-  //   name: "topicLimit",
-  //   label: "Topic Limit",
-  //   placeholder: "Enter Limit ...",
-  //   type: "number",
-  //   wrapperClassName: "mb-6",
-  //   fieldWrapperClassName: "col-span-6",
-  // },
 ];
 
 export const schema = yup
   .object()
   .shape({
     childLimit: yup.string().required("This field required"),
-    topicLimit: yup.string().required("This field required"),
   })
   .required();

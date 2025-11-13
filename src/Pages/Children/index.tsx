@@ -40,6 +40,14 @@ const Departments = () => {
       headerClass: "pl-4 ",
     },
     {
+      header: "User",
+      class: "pl-5",
+      accessor: "owner",
+      cell: (info) => <span>{info.getValue()?.name || ' - '}</span>,
+      cellClass: "pl-4 text-black ",
+      headerClass: "pl-4",
+    },
+    {
       header: "Age",
       class: "pl-5",
       accessor: "age",

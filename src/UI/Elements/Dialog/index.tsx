@@ -50,7 +50,7 @@ const UIDialog: React.FC<UIDialogProps> = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className={`w-[512px] flex flex-col ${customClass} `}>
+      <DialogContent className={`w-full flex flex-col ${customClass} `}>
         {header && (
           <DialogHeader>
             <DialogTitle className={`${headerClassName}`}>
