@@ -3,6 +3,7 @@ import { useGetSinglePaperQuery } from "@/service/paper";
 import { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { CheckCircleIcon, XCircleIcon } from "lucide-react";
+import Logo from "@/UI/Container/Logo";
 
 const PaperView = () => {
   const { id } = useParams();
@@ -10,6 +11,7 @@ const PaperView = () => {
   const {
     data: singlePaper,
     refetch: refetchSinglePaper,
+    isLoading
   } = useGetSinglePaperQuery(id, { skip: !id });
   
   useEffect(() => {
@@ -106,6 +108,10 @@ const PaperView = () => {
       </div>
     );
   };
+
+  if(isLoading) {
+     return <Logo />;
+  }
 
   return (
     <UILayout>
