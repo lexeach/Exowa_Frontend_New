@@ -7,8 +7,8 @@ import * as yup from "yup";
  */
 export const GRADE_TOPICS_MAP = {
   "5th Grade": [
-    { value: "5_topic_1", label: "5th Grade - Topic A" },
-    { value: "5_topic_2", label: "5th Grade - Topic B" },
+    { value: "topic_1", label: "Topic 1" },
+    { value: "topic_2", label: "Topic 2" },
   ],
   "6th Grade": [
     { value: "6_topic_1", label: "6th Grade - Topic X" },
