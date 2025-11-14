@@ -8,8 +8,8 @@ export const getTopicsByGrade = (selectedGrade) => {
   if (selectedGrade === "5th Grade") {
     return [
       { value: "topic_1", label: "Topic 1" },
-      { value: "topic_2", label: "Topic 1" },
-      { value: "topic_3", label: "Topic 1" },
+      { value: "topic_2", label: "Topic 2" },
+      { value: "topic_3", label: "Topic 3" },
     ];
   } else if (selectedGrade === "6th Grade") {
     return [
