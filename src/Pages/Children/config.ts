@@ -7,9 +7,9 @@ import * as yup from "yup";
 export const getTopicsByGrade = (selectedGrade) => {
   if (selectedGrade === "5th Grade") {
     return [
-      { value: "5_math_frac", label: "Math: Fractions" },
-      { value: "5_sci_machines", label: "Science: Simple Machines" },
-      { value: "5_hist_ancient", label: "History: Ancient Civilizations" },
+      { value: "topic_1", label: "Topic 1" },
+      { value: "topic_2", label: "Topic 1" },
+      { value: "topic_3", label: "Topic 1" },
     ];
   } else if (selectedGrade === "6th Grade") {
     return [
