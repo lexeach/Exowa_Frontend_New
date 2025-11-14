@@ -2,14 +2,14 @@ import * as yup from "yup";
 
 // ====================================================================
 // DYNAMIC TOPIC LOGIC (Using if/else)
-// Your form component must call this function based on the selected grade.
+// This function determines the options based on the selected grade.
 // ====================================================================
 export const getTopicsByGrade = (selectedGrade) => {
   if (selectedGrade === "5th Grade") {
     return [
-      { value: "topic_1", label: "Topic 1" },
-      { value: "topic_2", label: "Topic 2" },
-      { value: "topic_3", label: "Topic 3" },
+      { value: "5_math_frac", label: "Math: Fractions" },
+      { value: "5_sci_machines", label: "Science: Simple Machines" },
+      { value: "5_hist_ancient", label: "History: Ancient Civilizations" },
     ];
   } else if (selectedGrade === "6th Grade") {
     return [
@@ -28,30 +28,20 @@ export const getTopicsByGrade = (selectedGrade) => {
       { value: "8_math_lin_eq", label: "Math: Linear Equations" },
       { value: "8_sci_current", label: "Science: Chemical Effects of Current" },
     ];
-  } else if (selectedGrade === "9th Grade") {
+  } else if (selectedGrade === "9th Grade" || selectedGrade === "10th Grade") {
     return [
-      { value: "9_phys_motion", label: "Physics: Motion" },
-      { value: "9_econ_palampur", label: "Economics: Palampur Village" },
+      { value: "secondary_math", label: "Secondary Math" },
+      { value: "secondary_sci", label: "Secondary Science" },
+      { value: "secondary_ss", label: "Secondary Social Science" },
     ];
-  } else if (selectedGrade === "10th Grade") {
+  } else if (selectedGrade === "11th Grade" || selectedGrade === "12th Grade") {
     return [
-      { value: "10_bio_life", label: "Biology: Life Processes" },
-      { value: "10_pol_power", label: "Pol. Sc: Power Sharing" },
-    ];
-  } else if (selectedGrade === "11th Grade") {
-    return [
-      { value: "11_pcb", label: "Science Stream Topics" },
-      { value: "11_comm", label: "Commerce Stream Topics" },
-      { value: "11_hum", label: "Humanities Stream Topics" },
-    ];
-  } else if (selectedGrade === "12th Grade") {
-    return [
-      { value: "12_calc", label: "Math: Calculus" },
-      { value: "12_acct", label: "Accountancy: Partnership" },
-      { value: "12_hist", label: "History: Themes in Indian History" },
+      { value: "hsc_science", label: "HSC Science Stream" },
+      { value: "hsc_commerce", label: "HSC Commerce Stream" },
+      { value: "hsc_arts", label: "HSC Arts Stream" },
     ];
   } else {
-    // Default or fallback options
+    // Default options when no grade is selected
     return [
       { value: "", label: "← Select a Grade first" },
     ];
@@ -102,11 +92,8 @@ export const fields = [
     placeholder: "Select Topic(s) ...",
     type: "select",
     multi: true,
-    // Options are set to an empty array here. Your form component must 
-    // dynamically override this by calling getTopicsByGrade().
+    // Options are set to an empty array here. THE FORM COMPONENT MUST OVERRIDE THIS.
     options: [], 
-    // This property is a hint for your rendering component
-    dependsOn: "grade",
     wrapperClassName: "mb-6",
     fieldWrapperClassName: "col-span-6",
   },
