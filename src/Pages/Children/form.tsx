@@ -14,8 +14,7 @@ import UIButton from "@/UI/Elements/Button";
 import { setRefresh } from "@/slice/layoutSlice";
 import { useDispatch } from "react-redux";
 import { yupResolver } from "@hookform/resolvers/yup";
-// IMPORT getTopicsByGrade here
-import { fields, schema, getTopicsByGrade } from "./config"; 
+import { fields, schema } from "./config";
 
 type PaperFormProps = {
   handleCancel: () => void;
@@ -48,19 +47,6 @@ const PapersForm: React.FC<PaperFormProps> = ({ handleCancel, sheet }) => {
     },
   });
 
-  // Watch the 'grade' field to trigger dynamic topic loading
-  const selectedGrade = useWatch({
-    control: methods.control,
-    name: "grade",
-  });
-  
-  // Watch the 'topics' field for limit enforcement
-  const selectedTopics = useWatch({
-    control: methods.control,
-    name: "topics",
-    defaultValue: [],
-  });
-
   useEffect(() => {
     if (singleChildren?.data) {
       const { name, age, grade, topics, topicLimit: limit } = singleChildren?.data;
@@ -68,13 +54,8 @@ const PapersForm: React.FC<PaperFormProps> = ({ handleCancel, sheet }) => {
         Number.isFinite(Number(limit)) && Number(limit) > 0 ? Number(limit) : 1;
       setTopicLimit(resolvedLimit);
 
-      // IMPORTANT: When pre-filling data, topics must be filtered against the current grade's valid topics
-      // and also limited by the topic limit.
-      const currentGradeTopics = getTopicsByGrade(grade);
-      const validTopicValues = currentGradeTopics.map(t => t.value);
-
       const sanitizedTopics = Array.isArray(topics)
-        ? topics.filter(topic => validTopicValues.includes(topic)).slice(0, resolvedLimit)
+        ? topics.slice(0, resolvedLimit)
         : [];
 
       methods.reset({
@@ -90,18 +71,12 @@ const PapersForm: React.FC<PaperFormProps> = ({ handleCancel, sheet }) => {
       });
     }
   }, [singleChildren?.data, methods]);
-  
-  // Reset topics when the grade changes to avoid invalid selections
-  useEffect(() => {
-      // Only reset topics if a grade is newly selected or changed to a non-empty value
-      if (selectedGrade) {
-          methods.setValue("topics", [], {
-              shouldValidate: true,
-              shouldDirty: true,
-          });
-      }
-  }, [selectedGrade, methods]);
 
+  const selectedTopics = useWatch({
+    control: methods.control,
+    name: "topics",
+    defaultValue: [],
+  });
 
   const handleTopicSelection = useCallback(
     (value?: string[]) => {
@@ -197,16 +172,10 @@ const PapersForm: React.FC<PaperFormProps> = ({ handleCancel, sheet }) => {
     }
   };
 
-  // --- Dynamic Topic Options Calculation ---
-  const dynamicTopicOptions = useMemo(() => {
-      return getTopicsByGrade(selectedGrade);
-  }, [selectedGrade]);
-  
-  // This is no longer needed since we dynamically generate options
-  // const baseTopicOptions = useMemo(() => {
-  //   const topicField = fields.find((field) => field.name === "topics");
-  //   return topicField?.options || [];
-  // }, []);
+  const baseTopicOptions = useMemo(() => {
+    const topicField = fields.find((field) => field.name === "topics");
+    return topicField?.options || [];
+  }, []);
 
   const childFormFields = useMemo(
     () =>
@@ -214,14 +183,13 @@ const PapersForm: React.FC<PaperFormProps> = ({ handleCancel, sheet }) => {
         field.name === "topics"
           ? {
               ...field,
-              // *** FIX: Pass the dynamic options here ***
-              options: dynamicTopicOptions,
+              options: baseTopicOptions,
               getValueCallback: handleTopicSelection,
               caption: topicLimitMessage,
             }
           : field
       ),
-    [dynamicTopicOptions, handleTopicSelection, topicLimitMessage]
+    [baseTopicOptions, handleTopicSelection, topicLimitMessage]
   );
 
   const Footer = () => (
