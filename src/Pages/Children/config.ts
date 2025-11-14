@@ -1,235 +1,170 @@
-import React, { useEffect, useState } from "react";
-import { useForm, Controller } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
+import React, { useState, useEffect } from "react";
 
-// ————————————————————————
-// 1. Field Definitions (same as yours)
-// ————————————————————————
-const baseFields = [
-  {
-    name: "name",
-    label: "Name",
-    placeholder: "Enter Name ...",
-    type: "text",
-    wrapperClassName: "mb-6",
-    fieldWrapperClassName: "col-span-6",
-  },
-  {
-    name: "age",
-    label: "Age",
-    placeholder: "Enter Age ...",
-    type: "number",
-    wrapperClassName: "mb-6",
-    fieldWrapperClassName: "col-span-6",
-  },
-  {
-    name: "grade",
-    label: "Grade",
-    placeholder: "Select Grade ...",
-    type: "select",
-    options: [
-      { value: "5th Grade", label: "5th Grade" },
-      { value: "6th Grade", label: "6th Grade" },
-      { value: "7th Grade", label: "7th Grade" },
-      { value: "8th Grade", label: "8th Grade" },
-      { value: "9th Grade", label: "9th Grade" },
-      { value: "10th Grade", label: "10th Grade" },
-      { value: "11th Grade", label: "11th Grade" },
-      { value: "12th Grade", label: "12th Grade" },
-    ],
-    wrapperClassName: "mb-6",
-    fieldWrapperClassName: "col-span-6",
-  },
-  {
-    name: "topics",
-    label: "Topic",
-    placeholder: "Select Topics ...",
-    type: "select",
-    multi: true,
-    options: [], // Will be filled dynamically
-    wrapperClassName: "mb-6",
-    fieldWrapperClassName: "col-span-6",
-  },
-];
-
-// ————————————————————————
-// 2. Dynamic Topics per Grade
-// ————————————————————————
-const topicsByGrade: Record<string, { value: string; label: string }[]> = {
-  "6th Grade": [
-    { value: "topic_1", label: "Topic 1" },
-    { value: "topic_2", label: "Topic 2" },
-  ],
-  "7th Grade": [
-    { value: "topic_3", label: "Topic 3" },
-    { value: "topic_4", label: "Topic 4" },
-  ],
-  "8th Grade": [
-    { value: "topic_5", label: "Topic 5" },
-  ],
-  // Add more if needed
-};
-
-// ————————————————————————
-// 3. Validation Schema
-// ————————————————————————
-const schema = yup.object().shape({
-  name: yup.string().required("Name is required"),
-  age: yup
-    .number()
-    .required("Age is required")
-    .positive()
-    .integer()
-    .typeError("Age must be a number"),
-  grade: yup.string().required("Grade is required"),
-  topics: yup
-    .array()
-    .of(yup.string())
-    .min(1, "Select at least one topic")
-    .required("Topics are required"),
-});
-
-// ————————————————————————
-// 4. Main Form Component
-// ————————————————————————
-export default function DynamicTopicsForm() {
-  const [topicOptions, setTopicOptions] = useState<{ value: string; label: string }[]>([]);
-
-  const {
-    register,
-    control,
-    handleSubmit,
-    watch,
-    setValue,
-    formState: { errors },
-  } = useForm({
-    resolver: yupResolver(schema),
-    defaultValues: {
-      name: "",
-      age: "",
-      grade: "",
-      topics: [],
-    },
+export default function NoDependencyForm() {
+  // Form state
+  const [formData, setFormData] = useState({
+    name: "",
+    age: "",
+    grade: "",
+    topics: [],
   });
 
-  const selectedGrade = watch("grade");
+  const [errors, setErrors] = useState({});
+  const [topicOptions, setTopicOptions] = useState([]);
+
+  // Dynamic topics per grade
+  const topicsByGrade = {
+    "6th Grade": [
+      { value: "topic_1", label: "Topic 1" },
+      { value: "topic_2", label: "Topic 2" },
+    ],
+    "7th Grade": [
+      { value: "topic_3", label: "Topic 3" },
+      { value: "topic_4", label: "Topic 4" },
+    ],
+    "8th Grade": [
+      { value: "topic_5", label: "Topic 5" },
+    ],
+  };
 
   // Update topics when grade changes
   useEffect(() => {
-    const options = topicsByGrade[selectedGrade] || [];
+    const options = topicsByGrade[formData.grade] || [];
     setTopicOptions(options);
-    setValue("topics", [], { shouldValidate: true }); // Clear previous selection
-  }, [selectedGrade, setValue]);
+    setFormData((prev) => ({ ...prev, topics: [] })); // clear old selection
+  }, [formData.grade]);
 
-  const onSubmit = (data: any) => {
-    console.log("Submitted:", data);
-    alert(JSON.stringify(data, null, 2));
+  // Handle input change
+  const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
+
+    if (type === "checkbox") {
+      setFormData((prev) => ({
+        ...prev,
+        topics: checked
+          ? [...prev.topics, value]
+          : prev.topics.filter((t) => t !== value),
+      }));
+    } else {
+      setFormData((prev) => ({ ...prev, [name]: value }));
+    }
+  };
+
+  // Validate form
+  const validate = () => {
+    const newErrors = {};
+
+    if (!formData.name.trim()) newErrors.name = "Name is required";
+    if (!formData.age || formData.age <= 0) newErrors.age = "Valid age is required";
+    if (!formData.grade) newErrors.grade = "Grade is required";
+    if (formData.topics.length === 0) newErrors.topics = "Select at least one topic";
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  // Submit
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (validate()) {
+      console.log("Submitted:", formData);
+      alert("Form Submitted!\n" + JSON.stringify(formData, null, 2));
+    }
   };
 
   return (
     <form
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={handleSubmit}
       className="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-md grid grid-cols-12 gap-4"
     >
       <h2 className="col-span-12 text-2xl font-bold text-center mb-6">Student Form</h2>
 
-      {baseFields.map((field) => {
-        // Text / Number inputs
-        if (field.type !== "select") {
-          return (
-            <div
-              key={field.name}
-              className={`${field.wrapperClassName} ${field.fieldWrapperClassName}`}
-            >
-              <label className="block text-sm font-medium mb-1">{field.label}</label>
-              <input
-                type={field.type}
-                {...register(field.name as any)}
-                placeholder={field.placeholder}
-                className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500"
-              />
-              {errors[field.name] && (
-                <p className="text-red-500 text-xs mt-1">
-                  {(errors[field.name] as any)?.message}
-                </p>
-              )}
-            </div>
-          );
-        }
+      {/* Name */}
+      <div className="mb-6 col-span-6">
+        <label className="block text-sm font-medium mb-1">Name</label>
+        <input
+          type="text"
+          name="name"
+          value={formData.name}
+          onChange={handleChange}
+          placeholder="Enter Name ..."
+          className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500"
+        />
+        {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
+      </div>
 
-        // Grade select
-        if (!field.multi) {
-          return (
-            <div
-              key={field.name}
-              className={`${field.wrapperClassName} ${field.fieldWrapperClassName}`}
-            >
-              <label className="block text-sm font-medium mb-1">{field.label}</label>
-              <select
-                {...register(field.name)}
-                className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500"
+      {/* Age */}
+      <div className="mb-6 col-span-6">
+        <label className="block text-sm font-medium mb-1">Age</label>
+        <input
+          type="number"
+          name="age"
+          value={formData.age}
+          onChange={handleChange}
+          placeholder="Enter Age ..."
+          className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500"
+        />
+        {errors.age && <p className="text-red-500 text-xs mt-1">{errors.age}</p>}
+      </div>
+
+      {/* Grade */}
+      <div className="mb-6 col-span-6">
+        <label className="block text-sm font-medium mb-1">Grade</label>
+        <select
+          name="grade"
+          value={formData.grade}
+          onChange={handleChange}
+          className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500"
+        >
+          <option value="">Select Grade ...</option>
+          {[
+            "5th Grade",
+            "6th Grade",
+            "7th Grade",
+            "8th Grade",
+            "9th Grade",
+            "10th Grade",
+            "11th Grade",
+            "12th Grade",
+          ].map((g) => (
+            <option key={g} value={g}>
+              {g}
+            </option>
+          ))}
+        </select>
+        {errors.grade && <p className="text-red-500 text-xs mt-1">{errors.grade}</p>}
+      </div>
+
+      {/* Topics (Multi-select using checkboxes) */}
+      <div className="mb-6 col-span-6">
+        <label className="block text-sm font-medium mb-1">Topics</label>
+        <div className="border rounded-md p-3 max-h-32 overflow-y-auto bg-gray-50">
+          {topicOptions.length === 0 ? (
+            <p className="text-gray-500 text-sm">
+              {formData.grade ? "No topics available" : "Select a grade first"}
+            </p>
+          ) : (
+            topicOptions.map((topic) => (
+              <label
+                key={topic.value}
+                className="flex items-center space-x-2 text-sm cursor-pointer"
               >
-                <option value="">{field.placeholder}</option>
-                {field.options.map((opt: any) => (
-                  <option key={opt.value} value={opt.value}>
-                    {opt.label}
-                  </option>
-                ))}
-              </select>
-              {errors[field.name] && (
-                <p className="text-red-500 text-xs mt-1">
-                  {(errors[field.name] as any)?.message}
-                </p>
-              )}
-            </div>
-          );
-        }
+                <input
+                  type="checkbox"
+                  value={topic.value}
+                  checked={formData.topics.includes(topic.value)}
+                  onChange={handleChange}
+                  className="rounded text-blue-600 focus:ring-blue-500"
+                />
+                <span>{topic.label}</span>
+              </label>
+            ))
+          )}
+        </div>
+        {errors.topics && <p className="text-red-500 text-xs mt-1">{errors.topics}</p>}
+      </div>
 
-        // Topics multi-select
-        return (
-          <div
-            key={field.name}
-            className={`${field.wrapperClassName} ${field.fieldWrapperClassName}`}
-          >
-            <label className="block text-sm font-medium mb-1">{field.label}</label>
-            <Controller
-              control={control}
-              name="topics"
-              render={({ field: { onChange, value = [] } }) => (
-                <select
-                  multiple
-                  value={value}
-                  onChange={(e) =>
-                    onChange(Array.from(e.target.selectedOptions, (opt) => opt.value))
-                  }
-                  className="w-full p-2 border rounded-md h-32 focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100"
-                  disabled={topicOptions.length === 0}
-                >
-                  {topicOptions.length === 0 ? (
-                    <option disabled>
-                      {selectedGrade ? "No topics for this grade" : "Select grade first"}
-                    </option>
-                  ) : (
-                    topicOptions.map((opt) => (
-                      <option key={opt.value} value={opt.value}>
-                        {opt.label}
-                      </option>
-                    ))
-                  )}
-                </select>
-              )}
-            />
-            {errors.topics && (
-              <p className="text-red-500 text-xs mt-1">
-                {(errors.topics as any)?.message}
-              </p>
-            )}
-          </div>
-        );
-      })}
-
-      {/* Submit Button */}
+      {/* Submit */}
       <div className="col-span-12 text-center mt-6">
         <button
           type="submit"
