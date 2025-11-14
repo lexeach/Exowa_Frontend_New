@@ -34,11 +34,17 @@ export const getTopicsByGrade = (selectedGrade?: string) => {
       { value: "secondary_sci", label: "Secondary Science" },
       { value: "secondary_ss", label: "Secondary Social Science" },
     ];
-  } else if (selectedGrade === "11th Grade" || selectedGrade === "12th Grade") {
+   } else if (selectedGrade === "11th Science Grade" || selectedGrade === "10th Grade") {
     return [
-      { value: "hsc_science", label: "HSC Science Stream" },
-      { value: "hsc_commerce", label: "HSC Commerce Stream" },
-      { value: "hsc_arts", label: "HSC Arts Stream" },
+      { value: "secondary_Phy", label: "Secondary Phy" },
+      { value: "secondary_Chem", label: "Secondary Chem" },
+      { value: "secondary_Bio", label: "Secondary Bio" },
+    ]; 
+  } else if (selectedGrade === "11th Commerce Grade" || selectedGrade === "12th Grade") {
+    return [
+      { value: "hsc_Economic", label: "HSC Economic" },
+      { value: "hsc_Account", label: "HSC Account" },
+      { value: "hsc_Math", label: "HSC Math" },
     ];
   } else {
     // Default options when no grade is selected
@@ -98,7 +104,15 @@ export const fields = [
       },
       {
         value: "11th Grade",
-        label: "11th Grade",
+        label: "11th Commerce Grade",
+      },
+      {
+        value: "11th Grade",
+        label: "11th Science Grade",
+      },
+      {
+        value: "11th Grade",
+        label: "11th Humanity Grade",
       },
       {
         value: "12th Grade",
