@@ -180,7 +180,8 @@ const dynamicSubjectOptions = {
     { value: "Informatics Practices", label: "Informatics Practices" },
     { value: "Computer Science", label: "Computer Science" },
     { value: "Financial Accounting", label: "Financial Accounting" },
-    { value: "Accountancy", label: "Accountancy" },
+    { value: "Accountancy Part 1", label: "Accountancy Part 1" },
+    { value: "Accountancy Part 2", label: "Accountancy Part 2" },
   ],
   "12": [
     { value: "English Vistas", label: "English Vistas" },
