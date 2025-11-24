@@ -2124,38 +2124,6 @@ export const fields = (
   ];
 };
 
-
-export function sortSubjectsAlphabetically(subjects) {
-  if (!Array.isArray(subjects)) {
-    console.error("Input must be an array to sort.");
-    return [];
-  }
-
-  return [...subjects].sort((a, b) => {
-    let nameA, nameB;
-
-    // Handle both string arrays and object arrays (e.g., [{id: 1, name: 'Math'}])
-    if (typeof a === 'string') {
-      nameA = a.toUpperCase();
-      nameB = b.toUpperCase();
-    } else if (a && typeof a === 'object' && 'name' in a) {
-      nameA = a.name.toUpperCase();
-      nameB = b.name.toUpperCase();
-    } else {
-      // Fallback for unexpected data structure, treat as strings
-      nameA = String(a).toUpperCase();
-      nameB = String(b).toUpperCase();
-    }
-
-    if (nameA < nameB) {
-      return -1;
-    }
-    if (nameA > nameB) {
-      return 1;
-    }
-    return 0; // names must be equal
-  });
-}
 export const schema = yup
   .object()
   .shape({
