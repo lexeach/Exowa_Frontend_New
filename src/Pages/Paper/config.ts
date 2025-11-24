@@ -189,14 +189,16 @@ const dynamicSubjectOptions = {
     { value: "Physics Part 2", label: "Physics Part 2" },
     { value: "Mathematics Part 1", label: "Mathematics Part 1" },
     { value: "Mathematics Part 2", label: "Mathematics Part 2" },
-    { value: "Chemistry", label: "Chemistry" },
+    { value: "Chemistry Part 1", label: "Chemistry Part 1" },
+    { value: "Chemistry Part 2", label: "Chemistry Part 2" },
     { value: "Biology", label: "Biology" },
     { value: "Sanskrit", label: "Sanskrit" },
     {
       value: "Computerised Accounting System",
       label: "Computerised Accounting System",
     },
-    { value: "Accountancy", label: "Accountancy" },
+    { value: "Accountancy Part 1", label: "Accountancy Part 1" },
+    { value: "Accountancy Part 2", label: "Accountancy Part 2" },
     { value: "Psychology", label: "Psychology" },
     { value: "Biotechnology", label: "Biotechnology" },
     {
@@ -1821,6 +1823,15 @@ const chapterCounts = new Map<string, string[] | number>([
       "Accounting Application of Electronic Spreadsheet",
       "Using Computerised Accounting System",
       "Database Management System for Accounting",
+    ],
+  ],
+  [
+    "12-Accountancy Part 1-NCERT",
+    [
+      "Accounting for Partnership: Basic Concepts",
+      "Reconstitution of a Partnership Firm – Admission of a Partner",
+      "Reconstitution of a Partnership Firm – Retirement/Death of a Partner",
+      "Dissolution of Partnership Firm",
     ],
   ],
   [
