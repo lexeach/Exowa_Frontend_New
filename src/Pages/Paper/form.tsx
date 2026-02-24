@@ -31,6 +31,7 @@ const PapersForm: React.FC<PaperFormProps> = ({ handleCancel, sheet }) => {
   const [currentClass, setCurrentClass] = useState(null);
   const [currentSubject, setCurrentSubject] = useState(null);
   const [currentSyllabus, setCurrentSyllabus] = useState(null); // Add state for syllabus
+  const [currentTopics, setCurrentTopics] = useState([]); // Add state for topics
   const { data: childrenListClass } = useGetChildrenListClassQuery({});
 
   const methods = useForm({
@@ -103,7 +104,9 @@ const PapersForm: React.FC<PaperFormProps> = ({ handleCancel, sheet }) => {
                       setCurrentSyllabus, // <-- Missing comma added here
                       childrenListData?.data,
                       childrenListClass,
-                      selectedTopic
+                      selectedTopic,
+                      currentTopics,
+                      setCurrentTopics,
                     )}
                     fetchData={useGetChildrenListQuery}
                     onSubmit={(val) => {

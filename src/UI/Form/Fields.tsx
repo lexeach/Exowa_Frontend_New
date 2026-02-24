@@ -121,6 +121,7 @@ const FieldRender = ({
             return (
               <UISelect
                 {...controllerField}
+                {...field}
                 label={field.label}
                 options={field.options}
                 fetchData={field.fetchData}

@@ -1924,7 +1924,9 @@ export const fields = (
   setCurrentSyllabus,
   childrenListData,
   childrenListClass,
-  selectedTopic
+  selectedTopic,
+  currentTopics,
+  setCurrentTopics,
 ) => {
   const subjectOptionsForClass =
     dynamicSubjectOptions[currentClass] || dynamicSubjectOptions["default"];
@@ -1970,8 +1972,14 @@ export const fields = (
     currentSyllabus
   );
 
-  // Use predefined class options instead of children data to show all classes 6-12
-  // const classOptions = classoptions;
+
+    const childOptions = childrenListData?.map(e => {
+    return {
+      id: e._id,
+      value: e.grade,
+      label: e.name,
+    }
+  })
 
   return [
     {
@@ -1979,11 +1987,20 @@ export const fields = (
       label: "Class",
       placeholder: "Class ...",
       type: "select",
-      options: childrenListClass?.data?.data || [],
+      options: childOptions || [],
       autoFocus: true,
       wrapperClassName: "mb-6",
       fieldWrapperClassName: "col-span-12",
       className: "mobile-select-no-keyboard",
+      getSelectedOption: (option) => {
+      const child = childrenListData?.find(e => e._id === option.id);
+      if (child?.topics) {
+        const topicOpts = child.topics.map(t => ({ value: t, label: t }));
+        setCurrentTopics(topicOpts);
+      } else {
+        setCurrentTopics([]);
+      }
+    },
       getValueCallback: (value) => {
         setCurrentClass(value);
         setCurrentSubject(null);
@@ -2007,28 +2024,7 @@ export const fields = (
       placeholder: "Select Chapter ...",
       type: "select",
       // hide: !currentClass,
-      options: !currentClass ? [] : [
-        {
-          value: "topic_1",
-          label: "Topic 1",
-        },
-        {
-          value: "topic_2",
-          label: "Topic 2",
-        },
-        {
-          value: "topic_3",
-          label: "Topic 3",
-        },
-           {
-          value: "topic_4",
-          label: "Topic 4",
-        },
-           {
-          value: "topic_5",
-          label: "Topic 5",
-        },
-      ],
+      options: currentTopics || [],
       wrapperClassName: "mb-6",
       fieldWrapperClassName: "col-span-6",
     },

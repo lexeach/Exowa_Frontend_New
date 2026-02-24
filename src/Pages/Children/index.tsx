@@ -12,6 +12,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useUpdateTopicLimitMutation } from "@/service/user";
 import { SuccessToaster } from "@/UI/Elements/Toast";
+import UIBadge from "@/UI/Elements/Badge";
 
 const Departments = () => {
   const dispatch = useDispatch();
@@ -40,14 +41,6 @@ const Departments = () => {
       headerClass: "pl-4 ",
     },
     {
-      header: "User",
-      class: "pl-5",
-      accessor: "owner",
-      cell: (info) => <span>{info.getValue()?.name || ' - '}</span>,
-      cellClass: "pl-4 text-black ",
-      headerClass: "pl-4",
-    },
-    {
       header: "Age",
       class: "pl-5",
       accessor: "age",
@@ -60,6 +53,29 @@ const Departments = () => {
       class: "pl-5",
       accessor: "grade",
       cell: (info) => <span>{info.getValue()}</span>,
+      cellClass: "pl-4 text-black ",
+      headerClass: "pl-4",
+    },
+     {
+      header: "Topics",
+      class: "pl-5",
+      accessor: "topics",
+      cell: (info) => {
+        const topics = info.getValue();
+        return (
+          <div className="flex flex-wrap gap-2">
+            {Array.isArray(topics) && topics.length > 0 ? (
+              topics.map((topic: string, index: number) => (
+                <UIBadge key={index} colorStyle="blue" size="small">
+                  {topic}
+                </UIBadge>
+              ))
+            ) : (
+              <span className="text-gray-400">No topics</span>
+            )}
+          </div>
+        );
+      },
       cellClass: "pl-4 text-black ",
       headerClass: "pl-4",
     },
