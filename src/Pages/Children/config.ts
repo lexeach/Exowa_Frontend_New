@@ -1,4 +1,58 @@
 import * as yup from "yup";
+// ====================================================================
+// DYNAMIC TOPIC LOGIC (Using if/else)
+// This function determines the options based on the selected grade.
+// ====================================================================
+export const getTopicsByGrade = (selectedGrade?: string) => {
+  if (selectedGrade === "5th Grade") {
+    return [
+      { value: "5_math_frac", label: "Math: Fractions" },
+      { value: "5_sci_machines", label: "Science: Simple Machines" },
+      { value: "5_hist_ancient", label: "History: Ancient Civilizations" },
+    ];
+  } else if (selectedGrade === "6th Grade") {
+    return [
+      { value: "6_math_int", label: "Math: Integers" },
+      { value: "6_sci_food", label: "Science: Components of Food" },
+      { value: "6_geo_maps", label: "Geography: Globe and Maps" },
+    ];
+  } else if (selectedGrade === "7th Grade") {
+    return [
+      { value: "7_math_rational", label: "Math: Rational Numbers" },
+      { value: "7_sci_climate", label: "Science: Weather and Climate" },
+      { value: "7_hist_med", label: "History: Medieval India" },
+    ];
+  } else if (selectedGrade === "8th Grade") {
+    return [
+      { value: "8_math_lin_eq", label: "Math: Linear Equations" },
+      { value: "8_sci_current", label: "Science: Chemical Effects of Current" },
+    ];
+  } else if (selectedGrade === "9th Grade" || selectedGrade === "10th Grade") {
+    return [
+      { value: "secondary_math", label: "Secondary Math" },
+      { value: "secondary_sci", label: "Secondary Science" },
+      { value: "secondary_ss", label: "Secondary Social Science" },
+    ];
+   } else if (selectedGrade === "11th Science Grade" || selectedGrade === "10th Grade") {
+    return [
+      { value: "secondary_Phy", label: "Secondary Phy" },
+      { value: "secondary_Chem", label: "Secondary Chem" },
+      { value: "secondary_Bio", label: "Secondary Bio" },
+    ]; 
+  } else if (selectedGrade === "11th Commerce Grade" || selectedGrade === "12th Grade") {
+    return [
+      { value: "hsc_Economic", label: "HSC Economic" },
+      { value: "hsc_Account", label: "HSC Account" },
+      { value: "hsc_Math", label: "HSC Math" },
+    ];
+  } else {
+    // Default options when no grade is selected
+    return [
+      { value: "", label: "← Select a Grade first" },
+    ];
+  }
+};
+
 export const fields = [
   {
     name: "name",
