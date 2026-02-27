@@ -14,7 +14,8 @@ import UIButton from "@/UI/Elements/Button";
 import { setRefresh } from "@/slice/layoutSlice";
 import { useDispatch } from "react-redux";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { fields, schema } from "./config";
+// Import the dynamic logic helper from config
+import { fields, schema, getTopicsByGrade } from "./config"; 
 
 type PaperFormProps = {
   handleCancel: () => void;
@@ -35,9 +36,7 @@ const PapersForm: React.FC<PaperFormProps> = ({ handleCancel, sheet }) => {
   const { data: singleChildren } = useGetSingleChildrenQuery(sheet?.id, {
     skip: !sheet?.id,
   });
-  const [createChildren, { isLoading: isCreateLoading }] =
-    useAddChildrenMutation();
-
+  const [createChildren, { isLoading: isCreateLoading }] = useAddChildrenMutation();
   const [updateChildren] = useUpdateChildrenMutation();
 
   const methods = useForm<ChildrenFormValues>({
@@ -47,46 +46,40 @@ const PapersForm: React.FC<PaperFormProps> = ({ handleCancel, sheet }) => {
     },
   });
 
+  // Watch grade to update options and topics to manage validation
+  const selectedGrade = useWatch({ control: methods.control, name: "grade" });
+  const selectedTopics = useWatch({ control: methods.control, name: "topics", defaultValue: [] });
+
+  // Handle Edit Mode Reset
   useEffect(() => {
     if (singleChildren?.data) {
       const { name, age, grade, topics, topicLimit: limit } = singleChildren?.data;
-      const resolvedLimit =
-        Number.isFinite(Number(limit)) && Number(limit) > 0 ? Number(limit) : 1;
+      const resolvedLimit = Number.isFinite(Number(limit)) && Number(limit) > 0 ? Number(limit) : 1;
       setTopicLimit(resolvedLimit);
-
-      const sanitizedTopics = Array.isArray(topics)
-        ? topics.slice(0, resolvedLimit)
-        : [];
 
       methods.reset({
         name,
         age,
         grade,
-        topics: sanitizedTopics,
-      });
-    } else {
-      setTopicLimit(1);
-      methods.reset({
-        topics: [],
+        topics: Array.isArray(topics) ? topics.slice(0, resolvedLimit) : [],
       });
     }
   }, [singleChildren?.data, methods]);
 
-  const selectedTopics = useWatch({
-    control: methods.control,
-    name: "topics",
-    defaultValue: [],
-  });
+  // IMPORTANT: Clear topics selection when grade changes to prevent mismatched data
+  const prevGradeRef = useRef(selectedGrade);
+  useEffect(() => {
+    if (prevGradeRef.current !== selectedGrade) {
+      methods.setValue("topics", []);
+      prevGradeRef.current = selectedGrade;
+    }
+  }, [selectedGrade, methods]);
 
   const handleTopicSelection = useCallback(
     (value?: string[]) => {
-      if (!Array.isArray(value)) {
-        return;
-      }
-
+      if (!Array.isArray(value)) return;
       if (value.length > topicLimit) {
-        const limitedValues = value.slice(0, topicLimit);
-        methods.setValue("topics", limitedValues, {
+        methods.setValue("topics", value.slice(0, topicLimit), {
           shouldTouch: true,
           shouldDirty: true,
         });
@@ -95,12 +88,10 @@ const PapersForm: React.FC<PaperFormProps> = ({ handleCancel, sheet }) => {
     [methods, topicLimit]
   );
 
+  // Limit enforcement logic
   const limitReachedRef = useRef(false);
-
   useEffect(() => {
-    if (!Array.isArray(selectedTopics)) {
-      return;
-    }
+    if (!Array.isArray(selectedTopics)) return;
 
     if (selectedTopics.length < topicLimit) {
       methods.setError("topics", {
@@ -110,53 +101,33 @@ const PapersForm: React.FC<PaperFormProps> = ({ handleCancel, sheet }) => {
       limitReachedRef.current = false;
     } else {
       methods.clearErrors("topics");
-
-      if (
-        topicLimit > 0 &&
-        selectedTopics.length === topicLimit &&
-        !limitReachedRef.current
-      ) {
+      if (topicLimit > 0 && selectedTopics.length === topicLimit && !limitReachedRef.current) {
         SuccessToaster("You have reached your limit");
         limitReachedRef.current = true;
       }
     }
   }, [methods, selectedTopics, topicLimit]);
 
-  const topicLimitMessage = useMemo(() => {
-    if (!Array.isArray(selectedTopics)) {
-      return "";
-    }
+  // Generate dynamic fields based on selectedGrade
+  const childFormFields = useMemo(() => {
+    // Get dynamic options based on current grade selection
+    const dynamicOptions = getTopicsByGrade(selectedGrade);
 
-    if (selectedTopics.length === topicLimit && topicLimit > 0) {
-      return "You have reached your limit";
-    }
-
-    return "";
-  }, [selectedTopics, topicLimit]);
+    return fields.map((field) =>
+      field.name === "topics"
+        ? {
+            ...field,
+            options: dynamicOptions, // Pass the grade-specific options here
+            getValueCallback: handleTopicSelection,
+            caption: selectedTopics.length === topicLimit ? "You have reached your limit" : "",
+          }
+        : field
+    );
+  }, [selectedGrade, handleTopicSelection, selectedTopics.length, topicLimit]);
 
   const onSubmit = async (formData: ChildrenFormValues) => {
     try {
-      const topics = Array.isArray(formData.topics) ? formData.topics : [];
-
-      if (topics.length < topicLimit) {
-        methods.setError("topics", {
-          type: "manual",
-          message: `Please select ${topicLimit} topic${topicLimit > 1 ? "s" : ""} to reach your topic limit`,
-        });
-        return;
-      }
-
-      let normalizedTopics = topics;
-
-      if (topics.length > topicLimit) {
-        normalizedTopics = topics.slice(0, topicLimit);
-        methods.setValue("topics", normalizedTopics, {
-          shouldDirty: true,
-        });
-      }
-
-      const payload = { ...formData, topics: normalizedTopics };
-      // return;
+      const payload = { ...formData, topics: (formData.topics || []).slice(0, topicLimit) };
       if (sheet?.id) {
         await updateChildren({ id: sheet?.id, ...payload }).unwrap();
         SuccessToaster("Records Update Successfully");
@@ -166,70 +137,31 @@ const PapersForm: React.FC<PaperFormProps> = ({ handleCancel, sheet }) => {
       }
       handleCancel();
       dispatch(setRefresh());
-    } catch (error) {
-      
+    } catch (error: any) {
       ErrorToaster(error?.data?.message || "Something Went Wrong");
     }
   };
 
-  const baseTopicOptions = useMemo(() => {
-    const topicField = fields.find((field) => field.name === "topics");
-    return topicField?.options || [];
-  }, []);
-
-  const childFormFields = useMemo(
-    () =>
-      fields.map((field) =>
-        field.name === "topics"
-          ? {
-              ...field,
-              options: baseTopicOptions,
-              getValueCallback: handleTopicSelection,
-              caption: topicLimitMessage,
-            }
-          : field
-      ),
-    [baseTopicOptions, handleTopicSelection, topicLimitMessage]
-  );
-
   const Footer = () => (
     <div className="flex justify-end mt-3 layout-container">
-      <UIButton
-        variant="outline"
-        className="mr-4 rtl:ml-4"
-        onClick={handleCancel}
-      >
-        {"Cancel"}
-      </UIButton>
-      <UIButton
-        type="submit"
-        onClick={methods.handleSubmit(onSubmit)}
-        disabled={isCreateLoading}
-      >
+      <UIButton variant="outline" className="mr-4 rtl:ml-4" onClick={handleCancel}>Cancel</UIButton>
+      <UIButton type="submit" onClick={methods.handleSubmit(onSubmit)} disabled={isCreateLoading}>
         {sheet?.id ? "Save Changes" : "Save"}
       </UIButton>
     </div>
   );
 
   return (
-    <div className="">
+    <div>
       <SheetHeader title={sheet?.id ? "Edit children" : "Add New children"} />
       <div className="layout-container h-[75vh] overflow-auto">
         <div className="mt-6">
-          <div className="layout-container mt-6">
-            <div className="grid md:grid-cols-1 grid-cols-1 gap-6">
-              <div>
-                {
-                  <DynamicForm
-                    fields={childFormFields}
-                    onSubmit={onSubmit}
-                    useFormMethods={methods}
-                    showButton={false}
-                  />
-                }
-              </div>
-            </div>
-          </div>
+          <DynamicForm
+            fields={childFormFields}
+            onSubmit={onSubmit}
+            useFormMethods={methods}
+            showButton={false}
+          />
         </div>
       </div>
       <FixedButtons CustomComponent={Footer} nextLabel="" prevLabel="" />
