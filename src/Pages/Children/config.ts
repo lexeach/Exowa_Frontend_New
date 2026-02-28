@@ -40,11 +40,11 @@ export const getTopicsByGrade = (selectedGrade?: string) => {
       { value: "secondary_Chem", label: "Secondary Chemistry" },
       { value: "secondary_Bio", label: "Secondary Biology" },
     ];
-  } else if (selectedGrade === "11th Commerce" || selectedGrade === "11th Commerce") {
+  } else if (selectedGrade === "11th Commerce" || selectedGrade === "12th Commerce") {
     return [
-      { value: "hsc_Economic", label: "HSC Economics" },
-      { value: "hsc_Account", label: "HSC Accountancy" },
-      { value: "hsc_Math", label: "HSC Math" },
+      { value: "Economic", label: "Economics" },
+      { value: "Account", label: "Accountancy" },
+      { value: "Math", label: "Math" },
     ];
   } else {
     // Default fallback
