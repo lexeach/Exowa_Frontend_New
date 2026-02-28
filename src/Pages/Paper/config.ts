@@ -1933,7 +1933,7 @@ export const fields = (
 
   const subjectOptionsToShow = (() => {
     if (String(currentClass) === "11") {
-      if (selectedTopic === "topic_1") {
+      if (selectedTopic === "secondary_Phy") {
         return (subjectOptionsForClass || []).filter(
           (option) =>
             option?.value === "Physics Part 1" ||
