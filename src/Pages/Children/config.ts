@@ -63,9 +63,34 @@ export const getTopicsByGrade = (selectedGrade?: string) => {
     { value: "Mathematics", label: "Mathematics" },
     { value: "Chemistry", label: "Chemistry" },
     { value: "Biology", label: "Biology" },
-    { value: "Sanskrit", label: "Sanskrit" },
     { value: "Psychology", label: "Psychology" },
     { value: "Biotechnology", label: "Biotechnology" },
+    { value: "Hindi", label: "Hindi" },
+    {value: "Home Science", label: "Home Science"},
+    
+    { value: "Informatics Practices", label: "Informatics Practices" },
+    { value: "Computer Science", label: "Computer Science" },
+    
+    ];
+  } else if (selectedGrade === "11th Commerce" || selectedGrade === "12th Commerce") {
+    return [
+      
+    { value: "English", label: "English" },
+    { value: "Hindi", label: "Hindi" },
+    {value: "Economics", label: "Economics"},
+    { value: "Business Studies", label: "Business Studies"},
+    
+    { value: "Informatics Practices", label: "Informatics Practices" },
+    { value: "Computer Science", label: "Computer Science" },
+    { value: "Financial Accounting", label: "Financial Accounting" },
+    { value: "Accountancy", label: "Accountancy" },
+    ];
+    } else if (selectedGrade === "11th Humanity" || selectedGrade === "12th Humanity") {
+    return [
+      
+    { value: "English", label: "English" },
+    { value: "Sanskrit", label: "Sanskrit" },
+    { value: "Psychology", label: "Psychology" },
     { value: "Geography", label: "Geography"},
     { value: "Hindi", label: "Hindi" },
     {value: "Sociology", label: "Sociology"},
@@ -73,23 +98,10 @@ export const getTopicsByGrade = (selectedGrade?: string) => {
     {value: "Political Science", label: "Political Science"},
     
     {value: "History", label: "History"},
-    {value: "Economics", label: "Economics"},
-    { value: "Business Studies", label: "Business Studies"},
     { value: "Urdu", label: "Urdu" },
-    {value: "Home Science", label: "Home Science"},
     
     {value: "Creative Writing and Translation", label: "Creative Writing and Translation"},
-    { value: "Informatics Practices", label: "Informatics Practices" },
-    { value: "Computer Science", label: "Computer Science" },
-    { value: "Financial Accounting", label: "Financial Accounting" },
-    { value: "Accountancy", label: "Accountancy" },
     
-    ];
-  } else if (selectedGrade === "11th Commerce" || selectedGrade === "12th Commerce") {
-    return [
-      { value: "Economic", label: "Economics" },
-      { value: "Account", label: "Accountancy" },
-      { value: "Math", label: "Math" },
     ];
   } else {
     // Default fallback
