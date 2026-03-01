@@ -1950,6 +1950,24 @@ export const fields = (
       }
     }
 
+    if (String(currentClass) === "10") {
+      if (selectedTopic === "Mathematics") {
+        return (subjectOptionsForClass || []).filter(
+          (option) =>
+            option?.value === "Mathematics" ||
+            option?.value === "Mathematics"
+        );
+      }
+
+      if (selectedTopic === "Science") {
+        return (subjectOptionsForClass || []).filter(
+          (option) =>
+            option?.value === "Science" ||
+            option?.value === "Science"
+        );
+      }
+    }
+
     if (String(currentClass) === "12") {
       if (selectedTopic === "topic_1") {
         const allowedMathValues = new Set([
