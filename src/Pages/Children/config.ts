@@ -13,32 +13,77 @@ export const getTopicsByGrade = (selectedGrade?: string) => {
     ];
   } else if (selectedGrade === "6") {
     return [
-      { value: "6_math_int", label: "Math: Integers" },
-      { value: "6_sci_food", label: "Science: Components of Food" },
-      { value: "6_geo_maps", label: "Geography: Globe and Maps" },
+    { value: "English", label: "English" },
+    { value: "Hindi", label: "Hindi" },
+    { value: "Mathematics", label: "Mathematics" },
+    { value: "Science", label: "Science" },
+    { value: "Social Science", label: "Social Science" },
+    { value: "Urdu", label: "Urdu" },
+    { value: "Sanskrit", label: "Sanskrit" },
     ];
   } else if (selectedGrade === "7") {
     return [
-      { value: "7_math_rational", label: "Math: Rational Numbers" },
-      { value: "7_sci_climate", label: "Science: Weather and Climate" },
-      { value: "7_hist_med", label: "History: Medieval India" },
+      { value: "English", label: "English" },
+    { value: "Hindi", label: "Hindi" },
+    { value: "Mathematics", label: "Mathematics" },
+    { value: "Science", label: "Science" },
+    { value: "Social Science", label: "Social Science" },
+    { value: "Urdu", label: "Urdu" },
+    { value: "Sanskrit", label: "Sanskrit" },
     ];
   } else if (selectedGrade === "8") {
     return [
-      { value: "8_math_lin_eq", label: "Math: Linear Equations" },
-      { value: "8_sci_current", label: "Science: Chemical Effects of Current" },
+      { value: "English", label: "English" },
+        { value: "Hindi", label: "Hindi" },
+    { value: "Mathematics", label: "Mathematics" },
+    { value: "Science", label: "Science" },
+    { value: "Political Science", label: "Political Science" },
+    { value: "History", label: "History" },
+    { value: "Geography", label: "Geography" },
+    { value: "Urdu", label: "Urdu" },
+    { value: "Sanskrit", label: "Sanskrit" },
     ];
   } else if (selectedGrade === "9" || selectedGrade === "10") {
     return [
-      { value: "Mathematics", label: "Mathematics" },
-      { value: "Science", label: "Science" },
-      { value: "secondary_ss", label: "Secondary Social Science" },
+    { value: "English", label: "English" },
+    { value: "Hindi", label: "Hindi" },
+    { value: "Mathematics", label: "Mathematics" },
+    { value: "Science", label: "Science" },
+    { value: "Political Science", label: "Political Science" },
+    { value: "History", label: "History" },
+    { value: "Geography", label: "Geography" },
+    { value: "Urdu", label: "Urdu" },
+    { value: "Sanskrit", label: "Sanskrit" },
+    { value: "Information and Communication Technology", label: "Information and Communication Technology",}
     ];
   } else if (selectedGrade === "11th Science" || selectedGrade === "12th Science") {
     return [
-      { value: "secondary_Phy", label: "Secondary Physics" },
-      { value: "secondary_Chem", label: "Secondary Chemistry" },
-      { value: "secondary_Bio", label: "Secondary Biology" },
+    { value: "English", label: "English" },
+    { value: "Physics", label: "Physics" },
+    { value: "Mathematics", label: "Mathematics" },
+    { value: "Chemistry", label: "Chemistry" },
+    { value: "Biology", label: "Biology" },
+    { value: "Sanskrit", label: "Sanskrit" },
+    { value: "Psychology", label: "Psychology" },
+    { value: "Biotechnology", label: "Biotechnology" },
+    { value: "Geography", label: "Geography"},
+    { value: "Hindi", label: "Hindi" },
+    {value: "Sociology", label: "Sociology"},
+    
+    {value: "Political Science", label: "Political Science"},
+    
+    {value: "History", label: "History"},
+    {value: "Economics", label: "Economics"},
+    { value: "Business Studies", label: "Business Studies"},
+    { value: "Urdu", label: "Urdu" },
+    {value: "Home Science", label: "Home Science"},
+    
+    {value: "Creative Writing and Translation", label: "Creative Writing and Translation"},
+    { value: "Informatics Practices", label: "Informatics Practices" },
+    { value: "Computer Science", label: "Computer Science" },
+    { value: "Financial Accounting", label: "Financial Accounting" },
+    { value: "Accountancy", label: "Accountancy" },
+    
     ];
   } else if (selectedGrade === "11th Commerce" || selectedGrade === "12th Commerce") {
     return [
