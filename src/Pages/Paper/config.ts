@@ -1933,7 +1933,7 @@ export const fields = (
 
   const subjectOptionsToShow = (() => {
     if (String(currentClass) === "11") {
-      if (selectedTopic === "secondary_Phy") {
+      if (selectedTopic === "Physics") {
         return (subjectOptionsForClass || []).filter(
           (option) =>
             option?.value === "Physics Part 1" ||
@@ -1941,7 +1941,7 @@ export const fields = (
         );
       }
 
-      if (selectedTopic === "topic_2") {
+      if (selectedTopic === "Chemistry") {
         return (subjectOptionsForClass || []).filter(
           (option) =>
             option?.value === "Chemistry Part 1" ||
@@ -1969,7 +1969,7 @@ export const fields = (
     }
 
     if (String(currentClass) === "12") {
-      if (selectedTopic === "topic_1") {
+      if (selectedTopic === "Mathematics") {
         const allowedMathValues = new Set([
           "Mathematics Part 1",
           "Mathematics Part 2",
