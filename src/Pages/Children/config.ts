@@ -30,8 +30,8 @@ export const getTopicsByGrade = (selectedGrade?: string) => {
     ];
   } else if (selectedGrade === "9" || selectedGrade === "10") {
     return [
-      { value: "secondary_math", label: "Secondary Math" },
-      { value: "secondary_sci", label: "Secondary Science" },
+      { value: "Mathematics", label: "Mathematics" },
+      { value: "Science", label: "Science" },
       { value: "secondary_ss", label: "Secondary Social Science" },
     ];
   } else if (selectedGrade === "11th Science" || selectedGrade === "12th Science") {
