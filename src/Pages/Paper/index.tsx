@@ -270,7 +270,7 @@ const Papers = () => {
 
   const buttons = [
     {
-      label: "Generate New Quiz",
+      label: "Generate Mock Test",
       icon: <Plus />,
       onClick: () => dispatch(setFormOpen({ sheetComponent: "addPaper" })),
     },
