@@ -50,7 +50,7 @@ export const getTopicsByGrade = (selectedGrade?: string) => {
     { value: "Sanskrit", label: "Sanskrit" },
     { value: "Information and Communication Technology", label: "Information and Communication Technology",}
     ];
-  } else if (selectedGrade === "11th Science" || selectedGrade === "12th Science") {
+  } else if (selectedGrade === "11" || selectedGrade === "12") {
     return [
     { value: "English", label: "English" },
     { value: "Physics", label: "Physics" },
