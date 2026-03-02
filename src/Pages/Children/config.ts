@@ -180,7 +180,7 @@ export const fields = [
   },
   {
     name: "topics",
-    label: "Topic",
+    label: "Subject",
     placeholder: "Select Topics ...",
     type: "select",
     multi: true,
