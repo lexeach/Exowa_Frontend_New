@@ -50,46 +50,95 @@ export const getTopicsByGrade = (selectedGrade?: string) => {
     { value: "Sanskrit", label: "Sanskrit" },
     { value: "Information and Communication Technology", label: "Information and Communication Technology",}
     ];
-  }else if (selectedGrade?.startsWith("11") || selectedGrade?.startsWith("12")) {
+  } else if (selectedGrade === "11" || selectedGrade === "12") {
+
     return [
-      // --- Green Section (First 11) ---
-      { value: "English_Sci", label: "English", color: "green" },
-      { value: "Physics", label: "Physics", color: "green" },
-      { value: "Mathematics", label: "Mathematics", color: "green" },
-      { value: "Chemistry", label: "Chemistry", color: "green" },
-      { value: "Biology", label: "Biology", color: "green" },
-      { value: "Psychology_Sci", label: "Psychology", color: "green" },
-      { value: "Biotechnology", label: "Biotechnology", color: "green" },
-      { value: "Hindi_Sci", label: "Hindi", color: "green" },
-      { value: "Home Science", label: "Home Science", color: "green" },
-      { value: "Informatics Practices_Sci", label: "Informatics Practices", color: "green" },
-      { value: "Computer Science_Sci", label: "Computer Science", color: "green" },
 
-      // --- Red Section (Next 10) ---
-      { value: "English_Com", label: "English", color: "red" },
-      { value: "Hindi_Com", label: "Hindi", color: "red" },
-      { value: "Economics", label: "Economics", color: "red" },
-      { value: "Business Studies", label: "Business Studies", color: "red" },
-      { value: "Informatics Practices_Com", label: "Informatics Practices", color: "red" },
-      { value: "Computer Science_Com", label: "Computer Science", color: "red" },
-      { value: "Financial Accounting", label: "Financial Accounting", color: "red" },
-      { value: "Accountancy", label: "Accountancy", color: "red" },
-      { value: "English_Arts", label: "English", color: "red" },
-      { value: "Sanskrit", label: "Sanskrit", color: "red" },
+    { value: "English", label: "English" },
 
-      // --- Dark Yellow Section (The Rest) ---
-      { value: "Psychology_Arts", label: "Psychology", color: "#cc9900" },
-      { value: "Geography", label: "Geography", color: "#cc9900" },
-      { value: "Hindi_Arts", label: "Hindi", color: "#cc9900" },
-      { value: "Sociology", label: "Sociology", color: "#cc9900" },
-      { value: "Political Science", label: "Political Science", color: "#cc9900" },
-      { value: "History", label: "History", color: "#cc9900" },
-      { value: "Urdu", label: "Urdu", color: "#cc9900" },
-      { value: "Creative Writing and Translation", label: "Creative Writing and Translation", color: "#cc9900" }
+    { value: "Physics", label: "Physics" },
+
+    { value: "Mathematics", label: "Mathematics" },
+
+    { value: "Chemistry", label: "Chemistry" },
+
+    { value: "Biology", label: "Biology" },
+
+    { value: "Psychology", label: "Psychology" },
+
+    { value: "Biotechnology", label: "Biotechnology" },
+
+    { value: "Hindi", label: "Hindi" },
+
+    {value: "Home Science", label: "Home Science"},
+
+    
+
+    { value: "Informatics Practices", label: "Informatics Practices" },
+
+    { value: "Computer Science", label: "Computer Science" },
+
+    
+
+      
+
+    { value: "English", label: "English" },
+
+    { value: "Hindi", label: "Hindi" },
+
+    {value: "Economics", label: "Economics"},
+
+    { value: "Business Studies", label: "Business Studies"},
+
+    
+
+    { value: "Informatics Practices", label: "Informatics Practices" },
+
+    { value: "Computer Science", label: "Computer Science" },
+
+    { value: "Financial Accounting", label: "Financial Accounting" },
+
+    { value: "Accountancy", label: "Accountancy" },
+
+      
+
+    { value: "English", label: "English" },
+
+    { value: "Sanskrit", label: "Sanskrit" },
+
+    { value: "Psychology", label: "Psychology" },
+
+    { value: "Geography", label: "Geography"},
+
+    { value: "Hindi", label: "Hindi" },
+
+    {value: "Sociology", label: "Sociology"},
+
+    
+
+    {value: "Political Science", label: "Political Science"},
+
+    
+
+    {value: "History", label: "History"},
+
+    { value: "Urdu", label: "Urdu" },
+
+    
+
+    {value: "Creative Writing and Translation", label: "Creative Writing and Translation"},
+
+    
+
     ];
+
+  } else {
+
+    // Default fallback
+
+    return [{ value: "", label: "← Select a Grade first", disabled: true }];
+
   }
-  return [{ value: "", label: "← Select a Grade first", disabled: true }];
-}
 };
 
 // ====================================================================
