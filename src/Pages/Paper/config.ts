@@ -1968,7 +1968,7 @@ export const fields = (
       }
     }
 
-    if (String(currentClass) === "12th Science") {
+    if (String(currentClass) === "12") {
       if (selectedTopic === "Mathematics") {
         const allowedMathValues = new Set([
           "Mathematics Part 1",
