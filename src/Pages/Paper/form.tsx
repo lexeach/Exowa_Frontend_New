@@ -74,7 +74,7 @@ const PapersForm: React.FC<PaperFormProps> = ({ handleCancel, sheet }) => {
         ) : sheet?.id ? (
           "Save Changes"
         ) : (
-          "Generate Quiz"
+          "Generate Test"
         )}
       </UIButton>
     </div>
