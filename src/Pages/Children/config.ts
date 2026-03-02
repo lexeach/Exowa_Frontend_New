@@ -50,44 +50,45 @@ export const getTopicsByGrade = (selectedGrade?: string) => {
     { value: "Sanskrit", label: "Sanskrit" },
     { value: "Information and Communication Technology", label: "Information and Communication Technology",}
     ];
-  } else if (selectedGrade === "11" || selectedGrade === "12") {
-    const topics = [
-        // --- First 11 values (Green) ---
-        { value: "English_Sci", label: "English", color: "green" },
-        { value: "Physics", label: "Physics", color: "green" },
-        { value: "Mathematics", label: "Mathematics", color: "green" },
-        { value: "Chemistry", label: "Chemistry", color: "green" },
-        { value: "Biology", label: "Biology", color: "green" },
-        { value: "Psychology_Sci", label: "Psychology", color: "green" },
-        { value: "Biotechnology", label: "Biotechnology", color: "green" },
-        { value: "Hindi_Sci", label: "Hindi", color: "green" },
-        { value: "Home Science", label: "Home Science", color: "green" },
-        { value: "Informatics Practices_Sci", label: "Informatics Practices", color: "green" },
-        { value: "Computer Science_Sci", label: "Computer Science", color: "green" },
+  }else if (selectedGrade?.startsWith("11") || selectedGrade?.startsWith("12")) {
+    return [
+      // --- Green Section (First 11) ---
+      { value: "English_Sci", label: "English", color: "green" },
+      { value: "Physics", label: "Physics", color: "green" },
+      { value: "Mathematics", label: "Mathematics", color: "green" },
+      { value: "Chemistry", label: "Chemistry", color: "green" },
+      { value: "Biology", label: "Biology", color: "green" },
+      { value: "Psychology_Sci", label: "Psychology", color: "green" },
+      { value: "Biotechnology", label: "Biotechnology", color: "green" },
+      { value: "Hindi_Sci", label: "Hindi", color: "green" },
+      { value: "Home Science", label: "Home Science", color: "green" },
+      { value: "Informatics Practices_Sci", label: "Informatics Practices", color: "green" },
+      { value: "Computer Science_Sci", label: "Computer Science", color: "green" },
 
-        // --- Next 10 values (Red) ---
-        { value: "English_Com", label: "English", color: "red" },
-        { value: "Hindi_Com", label: "Hindi", color: "red" },
-        { value: "Economics", label: "Economics", color: "red" },
-        { value: "Business Studies", label: "Business Studies", color: "red" },
-        { value: "Informatics Practices_Com", label: "Informatics Practices", color: "red" },
-        { value: "Computer Science_Com", label: "Computer Science", color: "red" },
-        { value: "Financial Accounting", label: "Financial Accounting", color: "red" },
-        { value: "Accountancy", label: "Accountancy", color: "red" },
-        { value: "English_Arts", label: "English", color: "red" },
-        { value: "Sanskrit", label: "Sanskrit", color: "red" },
+      // --- Red Section (Next 10) ---
+      { value: "English_Com", label: "English", color: "red" },
+      { value: "Hindi_Com", label: "Hindi", color: "red" },
+      { value: "Economics", label: "Economics", color: "red" },
+      { value: "Business Studies", label: "Business Studies", color: "red" },
+      { value: "Informatics Practices_Com", label: "Informatics Practices", color: "red" },
+      { value: "Computer Science_Com", label: "Computer Science", color: "red" },
+      { value: "Financial Accounting", label: "Financial Accounting", color: "red" },
+      { value: "Accountancy", label: "Accountancy", color: "red" },
+      { value: "English_Arts", label: "English", color: "red" },
+      { value: "Sanskrit", label: "Sanskrit", color: "red" },
 
-        // --- Rest of the values (Dark Yellow) ---
-        { value: "Psychology_Arts", label: "Psychology", color: "#cc9900" },
-        { value: "Geography", label: "Geography", color: "#cc9900" },
-        { value: "Hindi_Arts", label: "Hindi", color: "#cc9900" },
-        { value: "Sociology", label: "Sociology", color: "#cc9900" },
-        { value: "Political Science", label: "Political Science", color: "#cc9900" },
-        { value: "History", label: "History", color: "#cc9900" },
-        { value: "Urdu", label: "Urdu", color: "#cc9900" },
-        { value: "Creative Writing and Translation", label: "Creative Writing and Translation", color: "#cc9900" }
+      // --- Dark Yellow Section (The Rest) ---
+      { value: "Psychology_Arts", label: "Psychology", color: "#cc9900" },
+      { value: "Geography", label: "Geography", color: "#cc9900" },
+      { value: "Hindi_Arts", label: "Hindi", color: "#cc9900" },
+      { value: "Sociology", label: "Sociology", color: "#cc9900" },
+      { value: "Political Science", label: "Political Science", color: "#cc9900" },
+      { value: "History", label: "History", color: "#cc9900" },
+      { value: "Urdu", label: "Urdu", color: "#cc9900" },
+      { value: "Creative Writing and Translation", label: "Creative Writing and Translation", color: "#cc9900" }
     ];
-    return topics;
+  }
+  return [{ value: "", label: "← Select a Grade first", disabled: true }];
 }
 };
 
