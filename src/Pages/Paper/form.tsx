@@ -85,7 +85,7 @@ const PapersForm: React.FC<PaperFormProps> = ({ handleCancel, sheet }) => {
 
   return (
     <div className="">
-      <SheetHeader title={"Generate New Quiz"} />
+      <SheetHeader title={"Generate Mock Test"} />
       <div className="layout-container h-[75vh] overflow-auto">
         <div className="mt-6">
           <div className="layout-container mt-6">
