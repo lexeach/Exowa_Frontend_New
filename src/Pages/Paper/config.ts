@@ -2038,7 +2038,7 @@ export const fields = (
     },
     {
       name: "topics",
-      label: "Topic",
+      label: "Subject",
       placeholder: "Select Chapter ...",
       type: "select",
       // hide: !currentClass,
@@ -2048,7 +2048,7 @@ export const fields = (
     },
     {
       name: "subject",
-      label: "Subject",
+      label: "Book",
       placeholder: "Select Subject ...",
       type: "select",
       autoFocus: true,
