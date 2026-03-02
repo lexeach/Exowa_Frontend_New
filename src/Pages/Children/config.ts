@@ -5,13 +5,7 @@ import * as yup from "yup";
 // Values here must match the 'value' property in the grade options below.
 // ====================================================================
 export const getTopicsByGrade = (selectedGrade?: string) => {
-  if (selectedGrade === "5") {
-    return [
-      { value: "5_math_frac", label: "Math: Fractions" },
-      { value: "5_sci_machines", label: "Science: Simple Machines" },
-      { value: "5_hist_ancient", label: "History: Ancient Civilizations" },
-    ];
-  } else if (selectedGrade === "6") {
+   if (selectedGrade === "6") {
     return [
     { value: "English", label: "English" },
     { value: "Hindi", label: "Hindi" },
