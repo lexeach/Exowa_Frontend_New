@@ -129,7 +129,6 @@ export const fields = [
     placeholder: "Select Grade ...",
     type: "select",
     options: [
-      { value: "5", label: "5th Grade" },
       { value: "6", label: "6th Grade" },
       { value: "7", label: "7th Grade" },
       { value: "8", label: "8th Grade" },
