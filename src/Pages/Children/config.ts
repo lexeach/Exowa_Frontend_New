@@ -50,7 +50,7 @@ export const getTopicsByGrade = (selectedGrade?: string) => {
     { value: "Sanskrit", label: "Sanskrit" },
     { value: "Information and Communication Technology", label: "Information and Communication Technology",}
     ];
-  } else if (selectedGrade === "11" || selectedGrade === "12") {
+  } else if (selectedGrade === "11th Science" || selectedGrade === "12th Science") {
     return [
     { value: "English", label: "English" },
     { value: "Physics", label: "Physics" },
@@ -137,9 +137,9 @@ export const fields = [
       { value: "11th Science", label: "11th Science" },
       { value: "11th Commerce", label: "11th Commerce" },
       { value: "11th Humanity", label: "11th Humanity" },
-      { value: "12", label: "12th Science" },
-      { value: "12", label: "12th Commerce" },
-      { value: "12", label: "12th Humanity" },
+      { value: "12th Science", label: "12th Science" },
+      { value: "12th Commerce", label: "12th Commerce" },
+      { value: "12th Humanity", label: "12th Humanity" },
     ],
     wrapperClassName: "mb-6",
     fieldWrapperClassName: "col-span-6",
