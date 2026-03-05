@@ -1929,94 +1929,85 @@ export const fields = (
   setCurrentTopics,
 ) => {
   const subjectOptionsForClass =
-    dynamicSubjectOptions[currentClass] || dynamicSubjectOptions["default"];
+  dynamicSubjectOptions[currentClass] || dynamicSubjectOptions["default"];
 
-  const subjectOptionsToShow = (() => {
-    if (String(currentClass) === "12") {
+const subjectOptionsToShow = (() => {
   const options = subjectOptionsForClass || [];
+  const classKey = String(currentClass);
 
-  // Define which books belong to which subject
-  const subjectMapping = {
-    "Physics": ["Physics Part 1", "Physics Part 2"],
-    "Chemistry": ["Chemistry Part 1", "Chemistry Part 2"],
-    "Mathematics": ["Mathematics Part 1", "Mathematics Part 2"],
-    "Biology": ["Biology", "Biotechnology"],
-    "English": ["English Vistas"],
-    "Accountancy": ["Accountancy Part 1", "Accountancy Part 2", "Computerised Accounting System"],
-    "History": [
-      "History Themes in Indian History Part 1", 
-      "History Themes in Indian History Part 2", 
-      "History Themes in Indian History Part 3"
-    ],
-    "Geography": [
-      "Geography Fundamentals of Human Geography", 
-      "Geography Pratical Work in Geography", 
-      "Geography India People And Economy"
-    ],
-    "Political Science": [
-      "Political Science Politics in India Since Independence", 
-      "Political Science Contemporary World Politics"
-    ],
-    "Economics": [
-      "Economics Introductory Microeconomics", 
-      "Economics Introductory Macroeconomics"
-    ],
-    "Sociology": [
-      "Sociology Indian Society", 
-      "Sociology Social Change and Development in India"
-    ],
-    "Hindi": ["Hindi Antra Part 2", "Hindi Aroh Part 2", "Hindi Vitan Part 2"],
-    "Business Studies": ["Business Studies Part 1", "Business Studies Part 2"],
-    "Home Science": [
-      "Home Science Human Ecology and Family Sciences Part 1", 
-      "Home Science Human Ecology and Family Sciences Part 2"
-    ],
-    "Computer Science": ["Computer Science", "Informatics Practices"],
-    "Other": ["Sanskrit", "Psychology", "Urdu", "Creative Writing and Translation"]
-  };
+  switch (classKey) {
+    case "11":
+    case "12": {
+      const subjectMapping = {
+        "Physics": ["Physics Part 1", "Physics Part 2"],
+        "Chemistry": ["Chemistry Part 1", "Chemistry Part 2"],
+        "Mathematics": ["Mathematics Part 1", "Mathematics Part 2"],
+        "Biology": ["Biology", "Biotechnology"],
+        "English": ["English Vistas", "Flamingo", "Hornbill", "Snapshots"],
+        "Accountancy": ["Accountancy Part 1", "Accountancy Part 2", "Computerised Accounting System"],
+        "History": [
+          "History Themes in Indian History Part 1",
+          "History Themes in Indian History Part 2",
+          "History Themes in Indian History Part 3"
+        ],
+        "Geography": [
+          "Geography Fundamentals of Human Geography",
+          "Geography Pratical Work in Geography",
+          "Geography India People And Economy"
+        ],
+        "Political Science": [
+          "Political Science Politics in India Since Independence",
+          "Political Science Contemporary World Politics"
+        ],
+        "Economics": [
+          "Economics Introductory Microeconomics",
+          "Economics Introductory Macroeconomics"
+        ],
+        "Sociology": [
+          "Sociology Indian Society",
+          "Sociology Social Change and Development in India"
+        ],
+        "Hindi": ["Hindi Antra Part 2", "Hindi Aroh Part 2", "Hindi Vitan Part 2"],
+        "Business Studies": ["Business Studies Part 1", "Business Studies Part 2"],
+        "Home Science": [
+          "Home Science Human Ecology and Family Sciences Part 1",
+          "Home Science Human Ecology and Family Sciences Part 2"
+        ],
+        "Computer Science": ["Computer Science", "Informatics Practices"],
+        "Other": ["Sanskrit", "Psychology", "Urdu", "Creative Writing and Translation"]
+      };
 
-  // Get the allowed list of books for the selected topic
-  const allowedBooks = subjectMapping[selectedTopic] || [];
+      const allowedBooks = subjectMapping[selectedTopic] || [];
+      return allowedBooks.length > 0 
+        ? options.filter(opt => allowedBooks.includes(opt.value)) 
+        : options;
+    }
 
-  // If the topic is in our map, filter the options list
-  if (allowedBooks.length > 0) {
-    return options.filter(option => allowedBooks.includes(option.value));
+    case "9":
+    case "10": {
+      // Typically 1:1 matching, but Social Science usually has multiple books
+      if (selectedTopic === "Social Science") {
+        const sstBooks = ["History", "Geography", "Political Science", "Economics"];
+        return options.filter(opt => sstBooks.some(book => opt.value.includes(book)));
+      }
+      // Direct filter for Math, Science, and Languages
+      return options.filter(opt => opt.value === selectedTopic);
+    }
+
+    case "6":
+    case "7":
+    case "8": {
+      // Direct matches for Class 6-8 (English, Hindi, Mathematics, Science, etc.)
+      const validSubjects = ["English", "Hindi", "Mathematics", "Science", "Social Science", "Urdu", "Sanskrit"];
+      return validSubjects.includes(selectedTopic)
+        ? options.filter(opt => opt.value === selectedTopic)
+        : options;
+    }
+
+    default:
+      return options;
   }
-}
-    if (String(currentClass) === "10") {
-      if (selectedTopic === "Mathematics") {
-        return (subjectOptionsForClass || []).filter(
-          (option) =>
-            option?.value === "Mathematics" ||
-            option?.value === "Mathematics"
-        );
-      }
-
-      if (selectedTopic === "Science") {
-        return (subjectOptionsForClass || []).filter(
-          (option) =>
-            option?.value === "Science" ||
-            option?.value === "Science"
-        );
-      }
-    }
-
-    if (String(currentClass) === "11") {
-      if (selectedTopic === "Mathematics") {
-        const allowedMathValues = new Set([
-          "Mathematics Part 1",
-          "Mathematics Part 2",
-        ]);
-
-        return (subjectOptionsForClass || []).filter((option) =>
-          allowedMathValues.has(option?.value)
-        );
-      }
-    }
-
-    return subjectOptionsForClass;
-  })();
-
+})();
   const chapterOptions = generateChapterOptions(
     currentClass,
     currentSubject,
