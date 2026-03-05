@@ -1931,92 +1931,65 @@ export const fields = (
   const subjectOptionsForClass =
     dynamicSubjectOptions[currentClass] || dynamicSubjectOptions["default"];
 
-  const subjectOptionsToShow = (() => {
-    if (String(currentClass) === "12") {
+  const getFilteredBooks = (currentClass, selectedTopic, subjectOptionsForClass) => {
   const options = subjectOptionsForClass || [];
+  const classKey = String(currentClass);
 
-  // Define which books belong to which subject
-  const subjectMapping = {
-    "Physics": ["Physics Part 1", "Physics Part 2"],
-    "Chemistry": ["Chemistry Part 1", "Chemistry Part 2"],
-    "Mathematics": ["Mathematics Part 1", "Mathematics Part 2"],
-    "Biology": ["Biology", "Biotechnology"],
-    "English": ["English Vistas"],
-    "Accountancy": ["Accountancy Part 1", "Accountancy Part 2", "Computerised Accounting System"],
-    "History": [
-      "History Themes in Indian History Part 1", 
-      "History Themes in Indian History Part 2", 
-      "History Themes in Indian History Part 3"
-    ],
-    "Geography": [
-      "Geography Fundamentals of Human Geography", 
-      "Geography Pratical Work in Geography", 
-      "Geography India People And Economy"
-    ],
-    "Political Science": [
-      "Political Science Politics in India Since Independence", 
-      "Political Science Contemporary World Politics"
-    ],
-    "Economics": [
-      "Economics Introductory Microeconomics", 
-      "Economics Introductory Macroeconomics"
-    ],
-    "Sociology": [
-      "Sociology Indian Society", 
-      "Sociology Social Change and Development in India"
-    ],
-    "Hindi": ["Hindi Antra Part 2", "Hindi Aroh Part 2", "Hindi Vitan Part 2"],
-    "Business Studies": ["Business Studies Part 1", "Business Studies Part 2"],
-    "Home Science": [
-      "Home Science Human Ecology and Family Sciences Part 1", 
-      "Home Science Human Ecology and Family Sciences Part 2"
-    ],
-    "Computer Science": ["Computer Science", "Informatics Practices"],
-    "Other": ["Sanskrit", "Psychology", "Urdu", "Creative Writing and Translation"]
-  };
+  switch (classKey) {
+    case "12":
+    case "11": {
+      const mapHighSchool = {
+        "Physics": [`Physics Part 1`, `Physics Part 2`],
+        "Chemistry": [`Chemistry Part 1`, `Chemistry Part 2`],
+        "Mathematics": [`Mathematics Part 1`, `Mathematics Part 2`],
+        "Biology": ["Biology", "Biotechnology"],
+        "History": ["Themes in Indian History Part 1", "Themes in Indian History Part 2", "Themes in Indian History Part 3", "Themes in World History"],
+        "Geography": ["Fundamentals of Human Geography", "India People And Economy", "Practical Work in Geography", "Fundamentals of Physical Geography"],
+        "Political Science": ["Politics in India Since Independence", "Contemporary World Politics", "Indian Constitution at Work", "Political Theory"],
+        "Economics": ["Introductory Microeconomics", "Introductory Macroeconomics", "Indian Economic Development", "Statistics for Economics"],
+        "Accountancy": ["Accountancy Part 1", "Accountancy Part 2", "Computerised Accounting System", "Financial Accounting"],
+        "Sociology": ["Indian Society", "Social Change and Development in India", "Introducing Sociology", "Understanding Society"],
+        "Hindi": ["Antra", "Aroh", "Vitan", "Antral"],
+        "English": ["Flamingo", "Vistas", "Hornbill", "Snapshots"],
+        "Computer Science": ["Computer Science", "Informatics Practices"]
+      };
 
-  // Get the allowed list of books for the selected topic
-  const allowedBooks = subjectMapping[selectedTopic] || [];
+      // Find allowed books: Check if selectedTopic exists in map, else use exact match
+      const allowed = mapHighSchool[selectedTopic] || [selectedTopic];
+      return options.filter(opt => allowed.some(val => opt.value.includes(val)));
+    }
 
-  // If the topic is in our map, filter the options list
-  if (allowedBooks.length > 0) {
-    return options.filter(option => allowedBooks.includes(option.value));
+    case "10":
+    case "9": {
+      const mapMiddleHigh = {
+        "Social Science": ["Contemporary India", "Democratic Politics", "Understanding Economic Development", "India and the Contemporary World", "Economics"],
+        "English": ["First Flight", "Footprints Without Feet", "Beehive", "Moments"],
+        "Hindi": ["Kshitij", "Kritika", "Sparsh", "Sanchayan"]
+      };
+      const allowed = mapMiddleHigh[selectedTopic] || [selectedTopic];
+      return options.filter(opt => allowed.some(val => opt.value.includes(val)));
+    }
+
+    case "8":
+    case "7":
+    case "6": {
+      // 2025-26 New Curriculum Names (e.g., Class 6 Science is now "Curiosity")
+      const mapPrimary = {
+        "Science": ["Science", "Curiosity", "Jigyasa"],
+        "Mathematics": ["Mathematics", "Ganit Prakash"],
+        "Social Science": ["Social Science", "Exploring Society", "Our Past", "The Earth Our Habitat", "Social and Political Life"],
+        "English": ["English", "Poorvi", "Honey Suckle", "A Pact with the Sun", "Honeycomb", "Honey Dew"],
+        "Hindi": ["Hindi", "Malhaar", "Vasant", "Durva"]
+      };
+      const allowed = mapPrimary[selectedTopic] || [selectedTopic];
+      return options.filter(opt => allowed.some(val => opt.value.includes(val)));
+    }
+
+    default:
+      // If the class is not 6-12, return only the direct match
+      return options.filter(opt => opt.value === selectedTopic);
   }
-}
-    if (String(currentClass) === "10") {
-      if (selectedTopic === "Mathematics") {
-        return (subjectOptionsForClass || []).filter(
-          (option) =>
-            option?.value === "Mathematics" ||
-            option?.value === "Mathematics"
-        );
-      }
-
-      if (selectedTopic === "Science") {
-        return (subjectOptionsForClass || []).filter(
-          (option) =>
-            option?.value === "Science" ||
-            option?.value === "Science"
-        );
-      }
-    }
-
-    if (String(currentClass) === "11") {
-      if (selectedTopic === "Mathematics") {
-        const allowedMathValues = new Set([
-          "Mathematics Part 1",
-          "Mathematics Part 2",
-        ]);
-
-        return (subjectOptionsForClass || []).filter((option) =>
-          allowedMathValues.has(option?.value)
-        );
-      }
-    }
-
-    return subjectOptionsForClass;
-  })();
-
+};
   const chapterOptions = generateChapterOptions(
     currentClass,
     currentSubject,
