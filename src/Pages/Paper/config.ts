@@ -1931,7 +1931,7 @@ export const fields = (
   const subjectOptionsForClass =
     dynamicSubjectOptions[currentClass] || dynamicSubjectOptions["default"];
 
-  const getFilteredBooks = (currentClass, selectedTopic, subjectOptionsForClass) => {
+  const subjectOptionsToShow = (currentClass, selectedTopic, subjectOptionsForClass) => {
   const options = subjectOptionsForClass || [];
   const classKey = String(currentClass);
 
