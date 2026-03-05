@@ -1976,7 +1976,10 @@ const subjectOptionsToShow = (() => {
         "Computer Science": ["Computer Science", "Informatics Practices"],
         "Other": ["Sanskrit", "Psychology", "Urdu", "Creative Writing and Translation"]
       };
-
+    const allowedBooks = subjectMapping[selectedTopic] || [];
+      return allowedBooks.length > 0 
+        ? options.filter(opt => allowedBooks.includes(opt.value)) 
+        : options;
      
     }
 
