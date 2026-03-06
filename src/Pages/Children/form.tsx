@@ -14,7 +14,6 @@ import UIButton from "@/UI/Elements/Button";
 import { setRefresh } from "@/slice/layoutSlice";
 import { useDispatch } from "react-redux";
 import { yupResolver } from "@hookform/resolvers/yup";
-// Import the dynamic logic helper from config
 import { fields, schema, getTopicsByGrade } from "./config"; 
 
 type PaperFormProps = {
@@ -26,6 +25,7 @@ type ChildrenFormValues = {
   name?: string;
   age?: string;
   grade?: string;
+  stream?: string;
   topics?: string[];
 };
 
@@ -43,17 +43,17 @@ const PapersForm: React.FC<PaperFormProps> = ({ handleCancel, sheet }) => {
     resolver: yupResolver(schema) as Resolver<ChildrenFormValues>,
     defaultValues: {
       topics: [],
+      stream: "",
     },
   });
 
-  // Watch grade to update options and topics to manage validation
   const selectedGrade = useWatch({ control: methods.control, name: "grade" });
+  const selectedStream = useWatch({ control: methods.control, name: "stream" });
   const selectedTopics = useWatch({ control: methods.control, name: "topics", defaultValue: [] });
 
-  // Handle Edit Mode Reset
   useEffect(() => {
     if (singleChildren?.data) {
-      const { name, age, grade, topics, topicLimit: limit } = singleChildren?.data;
+      const { name, age, grade, stream, topics, topicLimit: limit } = singleChildren?.data;
       const resolvedLimit = Number.isFinite(Number(limit)) && Number(limit) > 0 ? Number(limit) : 1;
       setTopicLimit(resolvedLimit);
 
@@ -61,19 +61,19 @@ const PapersForm: React.FC<PaperFormProps> = ({ handleCancel, sheet }) => {
         name,
         age,
         grade,
+        stream: stream || "",
         topics: Array.isArray(topics) ? topics.slice(0, resolvedLimit) : [],
       });
     }
   }, [singleChildren?.data, methods]);
 
-  // IMPORTANT: Clear topics selection when grade changes to prevent mismatched data
-  const prevGradeRef = useRef(selectedGrade);
+  // Clear stream and topics if grade changes, or clear topics if stream changes
   useEffect(() => {
-    if (prevGradeRef.current !== selectedGrade) {
-      methods.setValue("topics", []);
-      prevGradeRef.current = selectedGrade;
+    methods.setValue("topics", []);
+    if (selectedGrade !== "11" && selectedGrade !== "12") {
+      methods.setValue("stream", "");
     }
-  }, [selectedGrade, methods]);
+  }, [selectedGrade, selectedStream, methods]);
 
   const handleTopicSelection = useCallback(
     (value?: string[]) => {
@@ -88,52 +88,49 @@ const PapersForm: React.FC<PaperFormProps> = ({ handleCancel, sheet }) => {
     [methods, topicLimit]
   );
 
-  // Limit enforcement logic
-  const limitReachedRef = useRef(false);
   useEffect(() => {
     if (!Array.isArray(selectedTopics)) return;
-
     if (selectedTopics.length < topicLimit) {
       methods.setError("topics", {
         type: "manual",
-        message: `Please select ${topicLimit} topic${topicLimit > 1 ? "s" : ""} to reach your topic limit`,
+        message: `Please select ${topicLimit} topic${topicLimit > 1 ? "s" : ""}`,
       });
-      limitReachedRef.current = false;
     } else {
       methods.clearErrors("topics");
-      if (topicLimit > 0 && selectedTopics.length === topicLimit && !limitReachedRef.current) {
-        SuccessToaster("You have reached your limit");
-        limitReachedRef.current = true;
-      }
     }
   }, [methods, selectedTopics, topicLimit]);
 
-  // Generate dynamic fields based on selectedGrade
   const childFormFields = useMemo(() => {
-    // Get dynamic options based on current grade selection
-    const dynamicOptions = getTopicsByGrade(selectedGrade);
+    const dynamicOptions = getTopicsByGrade(selectedGrade, selectedStream);
+    const isHighSchool = selectedGrade === "11" || selectedGrade === "12";
 
-    return fields.map((field) =>
-      field.name === "topics"
-        ? {
-            ...field,
-            options: dynamicOptions, // Pass the grade-specific options here
-            getValueCallback: handleTopicSelection,
-            caption: selectedTopics.length === topicLimit ? "You have reached your limit" : "",
-          }
-        : field
-    );
-  }, [selectedGrade, handleTopicSelection, selectedTopics.length, topicLimit]);
+    return fields
+      .filter((field) => {
+        // Hide stream field if not 11th or 12th grade
+        if (field.name === "stream") return isHighSchool;
+        return true;
+      })
+      .map((field) =>
+        field.name === "topics"
+          ? {
+              ...field,
+              options: dynamicOptions,
+              getValueCallback: handleTopicSelection,
+              caption: selectedTopics.length === topicLimit ? "Limit reached" : "",
+            }
+          : field
+      );
+  }, [selectedGrade, selectedStream, handleTopicSelection, selectedTopics.length, topicLimit]);
 
   const onSubmit = async (formData: ChildrenFormValues) => {
     try {
       const payload = { ...formData, topics: (formData.topics || []).slice(0, topicLimit) };
       if (sheet?.id) {
         await updateChildren({ id: sheet?.id, ...payload }).unwrap();
-        SuccessToaster("Records Update Successfully");
+        SuccessToaster("Updated Successfully");
       } else {
         await createChildren(payload).unwrap();
-        SuccessToaster("Records Created Successfully");
+        SuccessToaster("Created Successfully");
       }
       handleCancel();
       dispatch(setRefresh());
@@ -144,7 +141,7 @@ const PapersForm: React.FC<PaperFormProps> = ({ handleCancel, sheet }) => {
 
   const Footer = () => (
     <div className="flex justify-end mt-3 layout-container">
-      <UIButton variant="outline" className="mr-4 rtl:ml-4" onClick={handleCancel}>Cancel</UIButton>
+      <UIButton variant="outline" className="mr-4" onClick={handleCancel}>Cancel</UIButton>
       <UIButton type="submit" onClick={methods.handleSubmit(onSubmit)} disabled={isCreateLoading}>
         {sheet?.id ? "Save Changes" : "Save"}
       </UIButton>
