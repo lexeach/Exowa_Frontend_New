@@ -102,7 +102,7 @@ const dynamicSubjectOptions = {
     { value: "Sanskrit Shemushi Part 2", label: "Sanskrit Shemushi Prathmo" },
     { value: "Sanskrit Vyakranavithi", label: "Sanskrit Vyakranavithi" },
     { value: "Sanskrit Abhyaswaan Bhav", label: "Sanskrit Abhyaswaan Bhav" },
-    
+    { value: "All Subject", label: "All Subject" },
   ],
   "11": [
     { value: "English Woven Words", label: "English Woven Words" },
@@ -1942,9 +1942,8 @@ const subjectOptionsToShow = (() => {
         "Physics": ["Physics Part 1", "Physics Part 2"],
         "Chemistry": ["Chemistry Part 1", "Chemistry Part 2"],
         "Mathematics": ["Mathematics Part 1", "Mathematics Part 2"],
-        "Biology": ["Biology"],
-        "Biotechnology": ["Biotechnology"],
-        "English": ["English Vistas"],
+        "Biology": ["Biology", "Biotechnology"],
+        "English": ["English Woven Words", "English Hornbill", "English Snapshots Supplementary Reader"],
         "Accountancy": ["Accountancy Part 1", "Accountancy Part 2", "Computerised Accounting System"],
         "History": [
           "History Themes in Indian History Part 1",
@@ -1974,13 +1973,8 @@ const subjectOptionsToShow = (() => {
           "Home Science Human Ecology and Family Sciences Part 1",
           "Home Science Human Ecology and Family Sciences Part 2"
         ],
-        "Computer Science": ["Computer Science"],
-        "Informatics Practices": ["Informatics Practices"],
-        "Psychology": ["Psychology"],
-        "Sanskrit": ["Sanskrit"],
-        "Urdu": ["Urdu"],
-        "Creative Writing and Translation": ["Creative Writing and Translation"],
-        
+        "Computer Science": ["Computer Science", "Informatics Practices"],
+        "Other": ["Sanskrit", "Psychology", "Urdu", "Creative Writing and Translation"]
       };
     const allowedBooks = subjectMapping[selectedTopic] || [];
       return allowedBooks.length > 0 
@@ -1993,41 +1987,40 @@ const subjectOptionsToShow = (() => {
       const subjectMapping = {
         "Physics": ["Physics Part 1", "Physics Part 2"],
         "Chemistry": ["Chemistry Part 1", "Chemistry Part 2"],
-        "Mathematics": ["Mathematics],
-        "Biology": ["Biology"],
-        "Biotechnology": ["Biotechnology"],                
+        "Mathematics": ["Mathematics Part 1", "Mathematics Part 2"],
+        "Biology": ["Biology", "Biotechnology"],
         "English": ["English Woven Words", "English Hornbill", "English Snapshots Supplementary Reader"],
-        "Accountancy": ["Accountancy Part 1", "Accountancy Part 2", "Financial Accounting"],
-        "History": ["History Themes in World History"],
+        "Accountancy": ["Accountancy Part 1", "Accountancy Part 2", "Computerised Accounting System"],
+        "History": [
+          "History Themes in Indian History Part 1",
+          "History Themes in Indian History Part 2",
+          "History Themes in Indian History Part 3"
+        ],
         "Geography": [
-          "Geography Fundamental of Physical Geography",
+          "Geography Fundamentals of Human Geography",
           "Geography Pratical Work in Geography",
-          "Geography India Physical Environment"
+          "Geography India People And Economy"
         ],
         "Political Science": [
-          "Political Science Political Theory",
-          "Political Science India Constitution at Work"
+          "Political Science Politics in India Since Independence",
+          "Political Science Contemporary World Politics"
         ],
         "Economics": [
-          "Economics Indian Economic Development",
-          "Economics Statistics for Economics"
+          "Economics Introductory Microeconomics",
+          "Economics Introductory Macroeconomics"
         ],
         "Sociology": [
-          "Sociology Introducing Sociology",
-          "Sociology Understanding Society"
+          "Sociology Indian Society",
+          "Sociology Social Change and Development in India"
         ],
-        "Hindi": ["Hindi Antra Part 1", "Hindi Aroh", "Hindi Vitan Part 1"],
-        "Business Studies": ["Business Studies"],
+        "Hindi": ["Hindi Antra Part 2", "Hindi Aroh Part 2", "Hindi Vitan Part 2"],
+        "Business Studies": ["Business Studies Part 1", "Business Studies Part 2"],
         "Home Science": [
           "Home Science Human Ecology and Family Sciences Part 1",
           "Home Science Human Ecology and Family Sciences Part 2"
         ],
-        "Computer Science": ["Computer Science"],
-        "Informatics Practices": ["Informatics Practices"],
-        "Urdu": ["Urdu"],
-        "Psychology": ["Psychology"],
-        "Sanskrit": ["Sanskrit Bhaswati", "Sanskrit Shashwati"],                
-        "Creative Writing and Translation": ["Creative Writing and Translation"]
+        "Computer Science": ["Computer Science", "Informatics Practices"],
+        "Other": ["Sanskrit", "Psychology", "Urdu", "Creative Writing and Translation"]
       };
     const allowedBooks = subjectMapping[selectedTopic] || [];
       return allowedBooks.length > 0 
@@ -2037,36 +2030,23 @@ const subjectOptionsToShow = (() => {
     }
 
     case "10": {
-       const subjectMapping = {
-        "English": ["English First Flight", "English Foot Prints Without Feet", "English Words and Expressions 2"],
-        "Hindi": ["Hindi Kshitij", "Hindi Sprash", "Hindi Kritika", "Hindi Sanchayan"],            
-        "Mathematics": ["Mathematics"],
-        "Science": ["Science"],
-        "Social Science": ["Political Science", "History", "Geography", "Economics"],
-        "Urdu": ["Urdu"],
-        "Sanskrit": ["Sanskrit Shemushi Part 2", "Sanskrit Vyakranavithi", "Sanskrit Abhyaswaan Bhav"],      };
-    const allowedBooks = subjectMapping[selectedTopic] || [];
-      return allowedBooks.length > 0 
-        ? options.filter(opt => allowedBooks.includes(opt.value)) 
-        : options;
+      // Typically 1:1 matching, but Social Science usually has multiple books
+      if (selectedTopic === "Social Science") {
+        const sstBooks = ["History", "Geography", "Political Science", "Economics"];
+        return options.filter(opt => sstBooks.some(book => opt.value.includes(book)));
       }
+      // Direct filter for Math, Science, and Languages
+      return options.filter(opt => opt.value === selectedTopic);
+    }
 
       case "9": {
-      const subjectMapping = {
-        "English": ["English Beehive", "English Moments Supplementary Reader", "English Words and Expressions 1"],
-        "Hindi": ["Hindi Kshitij", "Hindi Sprash", "Hindi Kritika", "Hindi Sanchayan"],            
-        "Mathematics": ["Mathematics"],
-        "Science": ["Science"],
-        "Social Science": ["Political Science", "History", "Geography", "Economics"],
-        "Urdu": ["Urdu"],
-        "Information and Communication Technology": ["Information and Communication Technology"],
-        "Sanskrit": ["Sanskrit Shemushi Prathmo", "Sanskrit Vyakranavithi", "Sanskrit Abhyaswaan Bhav"],     
-      
-      };
-    const allowedBooks = subjectMapping[selectedTopic] || [];
-      return allowedBooks.length > 0 
-        ? options.filter(opt => allowedBooks.includes(opt.value)) 
-        : options;
+      // Typically 1:1 matching, but Social Science usually has multiple books
+      if (selectedTopic === "Social Science") {
+        const sstBooks = ["History", "Geography", "Political Science", "Economics"];
+        return options.filter(opt => sstBooks.some(book => opt.value.includes(book)));
+      }
+      // Direct filter for Math, Science, and Languages
+      return options.filter(opt => opt.value === selectedTopic);
     }
 
     case "6":
