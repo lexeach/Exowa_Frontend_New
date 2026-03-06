@@ -2045,13 +2045,18 @@ const subjectOptionsToShow = (() => {
       }
 
       case "9": {
-      // Typically 1:1 matching, but Social Science usually has multiple books
-      if (selectedTopic === "Social Science") {
-        const sstBooks = ["History", "Geography", "Political Science", "Economics"];
-        return options.filter(opt => sstBooks.some(book => opt.value.includes(book)));
-      }
-      // Direct filter for Math, Science, and Languages
-      return options.filter(opt => opt.value === selectedTopic);
+      const subjectMapping = {
+        "English": ["English Beehive", "English Moments Supplementary Reader", "English Words and Expressions 1"],
+        "Hindi": ["Hindi Kshitij", "Hindi Sprash", "Hindi Kritika", "Hindi Sanchayan"],            
+        "Mathematics": ["Mathematics"],
+        "Science": ["Science"],
+        "Social Science": ["Political Science", "History", "Geography", "Economics"],
+        "Urdu": ["Urdu"],
+        "Sanskrit": ["Sanskrit Shemushi Prathmo", "Sanskrit Vyakranavithi", "Sanskrit Abhyaswaan Bhav"],      };
+    const allowedBooks = subjectMapping[selectedTopic] || [];
+      return allowedBooks.length > 0 
+        ? options.filter(opt => allowedBooks.includes(opt.value)) 
+        : options;
     }
 
     case "6":
