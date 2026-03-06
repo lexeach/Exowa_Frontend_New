@@ -1936,7 +1936,6 @@ const subjectOptionsToShow = (() => {
   const classKey = String(currentClass);
 
   switch (classKey) {
-    case "11":
     case "12": {
       const subjectMapping = {
         "Physics": ["Physics Part 1", "Physics Part 2"],
@@ -1983,8 +1982,63 @@ const subjectOptionsToShow = (() => {
      
     }
 
-    case "9":
+      case "11": {
+      const subjectMapping = {
+        "Physics": ["Physics Part 1", "Physics Part 2"],
+        "Chemistry": ["Chemistry Part 1", "Chemistry Part 2"],
+        "Mathematics": ["Mathematics Part 1", "Mathematics Part 2"],
+        "Biology": ["Biology", "Biotechnology"],
+        "English": ["English Woven Words", "English Hornbill", "English Snapshots Supplementary Reader"],
+        "Accountancy": ["Accountancy Part 1", "Accountancy Part 2", "Computerised Accounting System"],
+        "History": [
+          "History Themes in Indian History Part 1",
+          "History Themes in Indian History Part 2",
+          "History Themes in Indian History Part 3"
+        ],
+        "Geography": [
+          "Geography Fundamentals of Human Geography",
+          "Geography Pratical Work in Geography",
+          "Geography India People And Economy"
+        ],
+        "Political Science": [
+          "Political Science Politics in India Since Independence",
+          "Political Science Contemporary World Politics"
+        ],
+        "Economics": [
+          "Economics Introductory Microeconomics",
+          "Economics Introductory Macroeconomics"
+        ],
+        "Sociology": [
+          "Sociology Indian Society",
+          "Sociology Social Change and Development in India"
+        ],
+        "Hindi": ["Hindi Antra Part 2", "Hindi Aroh Part 2", "Hindi Vitan Part 2"],
+        "Business Studies": ["Business Studies Part 1", "Business Studies Part 2"],
+        "Home Science": [
+          "Home Science Human Ecology and Family Sciences Part 1",
+          "Home Science Human Ecology and Family Sciences Part 2"
+        ],
+        "Computer Science": ["Computer Science", "Informatics Practices"],
+        "Other": ["Sanskrit", "Psychology", "Urdu", "Creative Writing and Translation"]
+      };
+    const allowedBooks = subjectMapping[selectedTopic] || [];
+      return allowedBooks.length > 0 
+        ? options.filter(opt => allowedBooks.includes(opt.value)) 
+        : options;
+     
+    }
+
     case "10": {
+      // Typically 1:1 matching, but Social Science usually has multiple books
+      if (selectedTopic === "Social Science") {
+        const sstBooks = ["History", "Geography", "Political Science", "Economics"];
+        return options.filter(opt => sstBooks.some(book => opt.value.includes(book)));
+      }
+      // Direct filter for Math, Science, and Languages
+      return options.filter(opt => opt.value === selectedTopic);
+    }
+
+      case "9": {
       // Typically 1:1 matching, but Social Science usually has multiple books
       if (selectedTopic === "Social Science") {
         const sstBooks = ["History", "Geography", "Political Science", "Economics"];
