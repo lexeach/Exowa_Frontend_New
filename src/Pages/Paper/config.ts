@@ -1993,40 +1993,41 @@ const subjectOptionsToShow = (() => {
       const subjectMapping = {
         "Physics": ["Physics Part 1", "Physics Part 2"],
         "Chemistry": ["Chemistry Part 1", "Chemistry Part 2"],
-        "Mathematics": ["Mathematics Part 1", "Mathematics Part 2"],
-        "Biology": ["Biology", "Biotechnology"],
+        "Mathematics": ["Mathematics],
+        "Biology": ["Biology"],
+        "Biotechnology": ["Biotechnology"],                
         "English": ["English Woven Words", "English Hornbill", "English Snapshots Supplementary Reader"],
-        "Accountancy": ["Accountancy Part 1", "Accountancy Part 2", "Computerised Accounting System"],
-        "History": [
-          "History Themes in Indian History Part 1",
-          "History Themes in Indian History Part 2",
-          "History Themes in Indian History Part 3"
-        ],
+        "Accountancy": ["Accountancy Part 1", "Accountancy Part 2", "Financial Accounting"],
+        "History": ["History Themes in World History"],
         "Geography": [
-          "Geography Fundamentals of Human Geography",
+          "Geography Fundamental of Physical Geography",
           "Geography Pratical Work in Geography",
-          "Geography India People And Economy"
+          "Geography India Physical Environment"
         ],
         "Political Science": [
-          "Political Science Politics in India Since Independence",
-          "Political Science Contemporary World Politics"
+          "Political Science Political Theory",
+          "Political Science India Constitution at Work"
         ],
         "Economics": [
-          "Economics Introductory Microeconomics",
-          "Economics Introductory Macroeconomics"
+          "Economics Indian Economic Development",
+          "Economics Statistics for Economics"
         ],
         "Sociology": [
-          "Sociology Indian Society",
-          "Sociology Social Change and Development in India"
+          "Sociology Introducing Sociology",
+          "Sociology Understanding Society"
         ],
-        "Hindi": ["Hindi Antra Part 2", "Hindi Aroh Part 2", "Hindi Vitan Part 2"],
-        "Business Studies": ["Business Studies Part 1", "Business Studies Part 2"],
+        "Hindi": ["Hindi Antra Part 1", "Hindi Aroh", "Hindi Vitan Part 1"],
+        "Business Studies": ["Business Studies"],
         "Home Science": [
           "Home Science Human Ecology and Family Sciences Part 1",
           "Home Science Human Ecology and Family Sciences Part 2"
         ],
-        "Computer Science": ["Computer Science", "Informatics Practices"],
-        "Other": ["Sanskrit", "Psychology", "Urdu", "Creative Writing and Translation"]
+        "Computer Science": ["Computer Science"],
+        "Informatics Practices": ["Informatics Practices"],
+        "Urdu": ["Urdu"],
+        "Psychology": ["Psychology"],
+        "Sanskrit": ["Sanskrit Bhaswati", "Sanskrit Shashwati"],                
+        "Creative Writing and Translation": ["Creative Writing and Translation"]
       };
     const allowedBooks = subjectMapping[selectedTopic] || [];
       return allowedBooks.length > 0 
