@@ -2027,7 +2027,7 @@ const subjectOptionsToShow = (() => {
         "Urdu": ["Urdu"],
         "Psychology": ["Psychology"],
         "Sanskrit": ["Sanskrit Bhaswati", "Sanskrit Shashwati"],                
-        "Creative Writing and Translation": ["Creative Writing and Translation"]
+        "Creative Writing and Translation": ["Creative Writing and Translation"],
       };
     const allowedBooks = subjectMapping[selectedTopic] || [];
       return allowedBooks.length > 0 
