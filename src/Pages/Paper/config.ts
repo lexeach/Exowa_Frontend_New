@@ -1943,7 +1943,7 @@ const subjectOptionsToShow = (() => {
         "Chemistry": ["Chemistry Part 1", "Chemistry Part 2"],
         "Mathematics": ["Mathematics Part 1", "Mathematics Part 2"],
         "Biology": ["Biology", "Biotechnology"],
-        "English": ["English Vistas", "Flamingo", "Hornbill", "Snapshots"],
+        "English": ["English Woven Words", "English Hornbill", "English Snapshots Supplementary Reader"],
         "Accountancy": ["Accountancy Part 1", "Accountancy Part 2", "Computerised Accounting System"],
         "History": [
           "History Themes in Indian History Part 1",
