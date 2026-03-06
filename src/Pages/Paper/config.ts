@@ -102,7 +102,7 @@ const dynamicSubjectOptions = {
     { value: "Sanskrit Shemushi Part 2", label: "Sanskrit Shemushi Prathmo" },
     { value: "Sanskrit Vyakranavithi", label: "Sanskrit Vyakranavithi" },
     { value: "Sanskrit Abhyaswaan Bhav", label: "Sanskrit Abhyaswaan Bhav" },
-    { value: "All Subject", label: "All Subject" },
+    
   ],
   "11": [
     { value: "English Woven Words", label: "English Woven Words" },
@@ -1993,7 +1993,7 @@ const subjectOptionsToShow = (() => {
       const subjectMapping = {
         "Physics": ["Physics Part 1", "Physics Part 2"],
         "Chemistry": ["Chemistry Part 1", "Chemistry Part 2"],
-        "Mathematics": ["Mathematics],
+        "Mathematics": ["Mathematics"],
         "Biology": ["Biology"],
         "Biotechnology": ["Biotechnology"],                
         "English": ["English Woven Words", "English Hornbill", "English Snapshots Supplementary Reader"],
@@ -2027,7 +2027,7 @@ const subjectOptionsToShow = (() => {
         "Urdu": ["Urdu"],
         "Psychology": ["Psychology"],
         "Sanskrit": ["Sanskrit Bhaswati", "Sanskrit Shashwati"],                
-        "Creative Writing and Translation": ["Creative Writing and Translation"],
+        "Creative Writing and Translation": ["Creative Writing and Translation"]
       };
     const allowedBooks = subjectMapping[selectedTopic] || [];
       return allowedBooks.length > 0 
@@ -2037,23 +2037,36 @@ const subjectOptionsToShow = (() => {
     }
 
     case "10": {
-      // Typically 1:1 matching, but Social Science usually has multiple books
-      if (selectedTopic === "Social Science") {
-        const sstBooks = ["History", "Geography", "Political Science", "Economics"];
-        return options.filter(opt => sstBooks.some(book => opt.value.includes(book)));
+       const subjectMapping = {
+        "English": ["English First Flight", "English Foot Prints Without Feet", "English Words and Expressions 2"],
+        "Hindi": ["Hindi Kshitij", "Hindi Sprash", "Hindi Kritika", "Hindi Sanchayan"],            
+        "Mathematics": ["Mathematics"],
+        "Science": ["Science"],
+        "Social Science": ["Political Science", "History", "Geography", "Economics"],
+        "Urdu": ["Urdu"],
+        "Sanskrit": ["Sanskrit Shemushi Part 2", "Sanskrit Vyakranavithi", "Sanskrit Abhyaswaan Bhav"],      };
+    const allowedBooks = subjectMapping[selectedTopic] || [];
+      return allowedBooks.length > 0 
+        ? options.filter(opt => allowedBooks.includes(opt.value)) 
+        : options;
       }
-      // Direct filter for Math, Science, and Languages
-      return options.filter(opt => opt.value === selectedTopic);
-    }
 
       case "9": {
-      // Typically 1:1 matching, but Social Science usually has multiple books
-      if (selectedTopic === "Social Science") {
-        const sstBooks = ["History", "Geography", "Political Science", "Economics"];
-        return options.filter(opt => sstBooks.some(book => opt.value.includes(book)));
-      }
-      // Direct filter for Math, Science, and Languages
-      return options.filter(opt => opt.value === selectedTopic);
+      const subjectMapping = {
+        "English": ["English Beehive", "English Moments Supplementary Reader", "English Words and Expressions 1"],
+        "Hindi": ["Hindi Kshitij", "Hindi Sprash", "Hindi Kritika", "Hindi Sanchayan"],            
+        "Mathematics": ["Mathematics"],
+        "Science": ["Science"],
+        "Social Science": ["Political Science", "History", "Geography", "Economics"],
+        "Urdu": ["Urdu"],
+        "Information and Communication Technology": ["Information and Communication Technology"],
+        "Sanskrit": ["Sanskrit Shemushi Prathmo", "Sanskrit Vyakranavithi", "Sanskrit Abhyaswaan Bhav"],     
+      
+      };
+    const allowedBooks = subjectMapping[selectedTopic] || [];
+      return allowedBooks.length > 0 
+        ? options.filter(opt => allowedBooks.includes(opt.value)) 
+        : options;
     }
 
     case "6":
