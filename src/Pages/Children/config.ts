@@ -33,7 +33,6 @@ export const getTopicsByGrade = (selectedGrade?: string, selectedStream?: string
       { value: "Mathematics", label: "Mathematics" },
       { value: "Science", label: "Science" },
       { value: "Social Science", label: "Social Science" },
-      { value: "Geography", label: "Geography" },
       { value: "Urdu", label: "Urdu" },
       { value: "Sanskrit", label: "Sanskrit" },
       { value: "Information and Communication Technology", label: "Information and Communication Technology" },
