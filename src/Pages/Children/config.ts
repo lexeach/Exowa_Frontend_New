@@ -40,6 +40,7 @@ export const getTopicsByGrade = (selectedGrade?: string, selectedStream?: string
       { value: "Urdu", label: "Urdu" },
       { value: "Sanskrit", label: "Sanskrit" },
       { value: "Information and Communication Technology", label: "Information and Communication Technology" },
+      { value: "All Subject", label: "All Subject" },
     ];
   } else if (grade === "11" || grade === "12") {
     const commonLanguages = [
