@@ -102,6 +102,7 @@ const dynamicSubjectOptions = {
     { value: "Sanskrit Shemushi Part 2", label: "Sanskrit Shemushi Prathmo" },
     { value: "Sanskrit Vyakranavithi", label: "Sanskrit Vyakranavithi" },
     { value: "Sanskrit Abhyaswaan Bhav", label: "Sanskrit Abhyaswaan Bhav" },
+    { value: "All Subject", label: "All Subject" },
   ],
   "11": [
     { value: "English Woven Words", label: "English Woven Words" },
