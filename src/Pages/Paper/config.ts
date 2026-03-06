@@ -2059,7 +2059,10 @@ const subjectOptionsToShow = (() => {
         "Science": ["Science"],
         "Social Science": ["Political Science", "History", "Geography", "Economics"],
         "Urdu": ["Urdu"],
-        "Sanskrit": ["Sanskrit Shemushi Prathmo", "Sanskrit Vyakranavithi", "Sanskrit Abhyaswaan Bhav"],      };
+        "Information and Communication Technology": ["Information and Communication Technology"],
+        "Sanskrit": ["Sanskrit Shemushi Prathmo", "Sanskrit Vyakranavithi", "Sanskrit Abhyaswaan Bhav"],     
+      
+      };
     const allowedBooks = subjectMapping[selectedTopic] || [];
       return allowedBooks.length > 0 
         ? options.filter(opt => allowedBooks.includes(opt.value)) 
