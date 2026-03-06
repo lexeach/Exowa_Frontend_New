@@ -1942,8 +1942,9 @@ const subjectOptionsToShow = (() => {
         "Physics": ["Physics Part 1", "Physics Part 2"],
         "Chemistry": ["Chemistry Part 1", "Chemistry Part 2"],
         "Mathematics": ["Mathematics Part 1", "Mathematics Part 2"],
-        "Biology": ["Biology", "Biotechnology"],
-        "English": ["English Woven Words", "English Hornbill", "English Snapshots Supplementary Reader"],
+        "Biology": ["Biology"],
+        "Biotechnology": ["Biotechnology"],
+        "English": ["English Vistas"],
         "Accountancy": ["Accountancy Part 1", "Accountancy Part 2", "Computerised Accounting System"],
         "History": [
           "History Themes in Indian History Part 1",
@@ -1973,8 +1974,13 @@ const subjectOptionsToShow = (() => {
           "Home Science Human Ecology and Family Sciences Part 1",
           "Home Science Human Ecology and Family Sciences Part 2"
         ],
-        "Computer Science": ["Computer Science", "Informatics Practices"],
-        "Other": ["Sanskrit", "Psychology", "Urdu", "Creative Writing and Translation"]
+        "Computer Science": ["Computer Science"],
+        "Informatics Practices": ["Informatics Practices"],
+        "Psychology": ["Psychology"],
+        "Sanskrit": ["Sanskrit"],
+        "Urdu": ["Urdu"],
+        "Creative Writing and Translation": ["Creative Writing and Translation"],
+        
       };
     const allowedBooks = subjectMapping[selectedTopic] || [];
       return allowedBooks.length > 0 
