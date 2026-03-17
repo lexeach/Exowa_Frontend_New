@@ -3,7 +3,10 @@ import CustomTableWrapper from "@/UI/Container/CustomTableWrapper";
 import UILayout from "@/UI/Elements/Layout";
 import { setFormOpen, setRefresh } from "@/slice/layoutSlice";
 import { useDispatch } from "react-redux";
-import { useGetChildrenListQuery, useGetUserListQuery } from "@/service/children";
+import {
+  useGetChildrenListQuery,
+  useGetUserListQuery,
+} from "@/service/children";
 import { Plus } from "lucide-react";
 import UIButton from "@/UI/Elements/Button";
 import UIDialog from "@/UI/Elements/Dialog";
@@ -17,13 +20,11 @@ import UIBadge from "@/UI/Elements/Badge";
 const Departments = () => {
   const dispatch = useDispatch();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [childId, setChildId] = useState('');
-  const { data: userData } = useGetUserListQuery({});
-  console.log('userData >>> ', userData);
+  const [childId, setChildId] = useState("");
 
-  const [updateTopicLimit, { isLoading: isUpdateLoading }] =
-  useUpdateTopicLimitMutation();
-  
+  const [updateTopicLimit] =
+    useUpdateTopicLimitMutation();
+
   const modalMethods = useForm({
     defaultValues: {
       topicLimit: "",
@@ -33,37 +34,44 @@ const Departments = () => {
   const childrenTableColumns: ColumnDefinition<RowData>[] = [
     {
       header: "Name",
-      class: "pl-5",
-      enableSorting: true,
+      class: "",
       accessor: "name",
       cell: (info) => <span>{info.getValue()}</span>,
-      cellClass: "pl-4 text-black",
-      headerClass: "pl-4 ",
+      cellClass: "text-black",
+      headerClass: "",
+    },
+    {
+      header: "Parent",
+      class: "",
+      accessor: "owner",
+      cell: (info) => <span>{info.getValue()?.name || "-"}</span>,
+      cellClass: "",
+      headerClass: "",
     },
     {
       header: "Age",
-      class: "pl-5",
+      class: "",
       accessor: "age",
       cell: (info) => <span>{info.getValue()}</span>,
-      cellClass: "pl-4 text-black ",
-      headerClass: "pl-4",
+      cellClass: "",
+      headerClass: "",
     },
     {
       header: "Grade",
-      class: "pl-5",
+      class: "",
       accessor: "grade",
       cell: (info) => <span>{info.getValue()}</span>,
-      cellClass: "pl-4 text-black ",
-      headerClass: "pl-4",
+      cellClass: "",
+      headerClass: "",
     },
-     {
+    {
       header: "Topics",
-      class: "pl-5",
+      class: "",
       accessor: "topics",
       cell: (info) => {
         const topics = info.getValue();
         return (
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap gap-2 justify-center">
             {Array.isArray(topics) && topics.length > 0 ? (
               topics.map((topic: string, index: number) => (
                 <UIBadge key={index} colorStyle="blue" size="small">
@@ -76,16 +84,16 @@ const Departments = () => {
           </div>
         );
       },
-      cellClass: "pl-4 text-black ",
-      headerClass: "pl-4",
+      cellClass: "",
+      headerClass: "w-1/4",
     },
     {
       header: "Topic Limit",
-      class: "pl-5",
+      class: "",
       accessor: "topicLimit",
       cell: (info) => <span>{info.getValue()}</span>,
-      cellClass: "pl-4 text-black ",
-      headerClass: "pl-4",
+      cellClass: "",
+      headerClass: "",
     },
     {
       header: "actions",
@@ -94,7 +102,7 @@ const Departments = () => {
       headerClass: "flex justify-center",
       cellClass: "flex justify-center",
       cell: ({ row }) => {
-        const userRole = localStorage.getItem('role');
+        const userRole = localStorage.getItem("role");
         const updatedRow = {
           ...row,
           original: {
@@ -102,36 +110,36 @@ const Departments = () => {
             available_actions: {
               view: false,
               update: true,
-              delete: userRole=== 'admin',
+              delete: userRole === "admin",
             },
           },
         };
-        
 
         return (
           <>
-          <ActionCell
-            row={updatedRow}
-            viewUrl="children"
-            formComponent="addChildren"
-            deleteComponent={userRole === 'admin' ? 'deleteChildren' : undefined}
-          />
-          {userRole === 'admin' &&  (
-        <UIButton
-          variant="sky"
-          size="xs"
-          className="ml-3 rounded-full"
-          tooltipContent={('View Details')}
-          onClick={() => {
-            modalMethods.reset({ topicLimit: row.original.topicLimit });
-            setIsModalOpen(true);
-            setChildId(row.original._id);
-          }}
-        >
-          Update Topics
-        </UIButton>
-          )
-      }
+            <ActionCell
+              row={updatedRow}
+              viewUrl="children"
+              formComponent="addChildren"
+              deleteComponent={
+                userRole === "admin" ? "deleteChildren" : undefined
+              }
+            />
+            {userRole === "admin" && (
+              <UIButton
+                variant="sky"
+                size="xs"
+                className="ml-3 rounded-full"
+                tooltipContent={"View Details"}
+                onClick={() => {
+                  modalMethods.reset({ topicLimit: row.original.topicLimit });
+                  setIsModalOpen(true);
+                  setChildId(row.original._id);
+                }}
+              >
+                Update Topics
+              </UIButton>
+            )}
           </>
         );
       },
@@ -147,8 +155,8 @@ const Departments = () => {
   ];
 
   const handleModalFormSubmit = async (modalValues) => {
-      await updateTopicLimit({id: childId, ...modalValues}).unwrap();
-      SuccessToaster("Records Update Successfully");
+    await updateTopicLimit({ id: childId, ...modalValues }).unwrap();
+    SuccessToaster("Records Update Successfully");
     setIsModalOpen(false);
     dispatch(setRefresh());
   };
@@ -177,12 +185,10 @@ const Departments = () => {
       <UIDialog
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        onConfirm={()=>{}}
+        onConfirm={() => {}}
         showFooter={false}
-        header={ "Confirm Update"}
-        description={
-         "Are you sure you want to update this record?"
-        }
+        header={"Confirm Update"}
+        description={"Are you sure you want to update this record?"}
       >
         <DynamicForm
           fields={modalFields}
