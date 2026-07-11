@@ -2184,23 +2184,23 @@ const subjectOptionsToShow = (() => {
         return isDisabled;
       })(),
     },
-    {
-      name: "chapter_to",
-      label: "Chapter To",
-      placeholder: "Select Chapter ...",
-      type: "select",
-      autoFocus: true,
-      options: chapterOptions,
-      wrapperClassName: "mb-6",
-      fieldWrapperClassName: "col-span-6",
-      className: "mobile-select-no-keyboard",
-      disabled: (() => {
-        const isDisabled =
-          !currentClass || !currentSubject || chapterOptions.length === 0;
+    //{
+      //name: "chapter_to",
+      //label: "Chapter To",
+      //placeholder: "Select Chapter ...",
+      //type: "select",
+      //autoFocus: true,
+      //options: chapterOptions,
+      //wrapperClassName: "mb-6",
+      //fieldWrapperClassName: "col-span-6",
+      //className: "mobile-select-no-keyboard",
+      //disabled: (() => {
+        //const isDisabled =
+          //!currentClass || !currentSubject || chapterOptions.length === 0;
 
-        return isDisabled;
-      })(),
-    },
+        //return isDisabled;
+      //})(),
+    //},
     {
       name: "language",
       label: "Language",
