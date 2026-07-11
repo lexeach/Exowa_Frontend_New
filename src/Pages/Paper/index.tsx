@@ -1,3 +1,4 @@
+//src/Pages/Paper/index.tsx
 import ActionCell from "@/UI/Elements/Table/ActionCell";
 import CustomTableWrapper from "@/UI/Container/CustomTableWrapper";
 import UILayout from "@/UI/Elements/Layout";
@@ -53,14 +54,14 @@ const Papers = () => {
       cellClass: " text-black ",
       headerClass: "",
     },
-    {
-      header: "Chapter To",
-      class: "",
-      accessor: "chapter_to",
-      cell: (info) => <span>{info.getValue()}</span>,
-      cellClass: " text-black ",
-      headerClass: "",
-    },
+   // {
+     // header: "Chapter To",
+      //class: "",
+      //accessor: "chapter_to",
+      //cell: (info) => <span>{info.getValue()}</span>,
+      //cellClass: " text-black ",
+      //headerClass: "",
+    //},
     {
       header: "OTP",
       class: "",
