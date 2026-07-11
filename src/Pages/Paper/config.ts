@@ -1898,12 +1898,14 @@ const generateChapterOptions = (selectedClass, subject, syllabus) => {
   }
 
   if (Array.isArray(chapterData)) {
-    // Correct logic: value is the chapter name, label is the number
-    return chapterData.map((chapterName, index) => ({
-      value: chapterName,
-      label: (index + 1).toString(),
-    }));
-  } else if (typeof chapterData === "number") {
+  return chapterData.map((chapterName, index) => ({
+    value: chapterName,
+    label: chapterName,
+    chapterNumber: index + 1,
+  }));
+} 
+  
+  else if (typeof chapterData === "number") {
     // Correct logic: both are the number, as there's no name data
     return Array.from({ length: chapterData }, (_, i) => ({
       value: (i + 1).toString(),
