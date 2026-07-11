@@ -54,14 +54,14 @@ const Papers = () => {
       cellClass: " text-black ",
       headerClass: "",
     },
-   // {
-     // header: "Chapter To",
-      //class: "",
-      //accessor: "chapter_to",
-      //cell: (info) => <span>{info.getValue()}</span>,
-      //cellClass: " text-black ",
-      //headerClass: "",
-    //},
+    {
+      header: "Chapter To",
+      class: "",
+      accessor: "chapter_to",
+      cell: (info) => <span>{info.getValue()}</span>,
+      cellClass: " text-black ",
+      headerClass: "",
+    },
     {
       header: "OTP",
       class: "",
