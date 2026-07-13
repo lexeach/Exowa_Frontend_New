@@ -2239,20 +2239,10 @@ const subjectOptionsToShow = (() => {
   ];
 };
 
-chapter_to: yup.string().when("chapter_from", {
-  is: (chapter_from) => chapter_from,
-  then: (schema) =>
-    schema
-      .required("This field required")
-      .test(
-        "is-greater-or-equal",
-        "Chapter to cannot be less than Chapter from",
-        function (chapter_to) {
-          ...
-        }
-      ),
-  otherwise: (schema) => schema.required("This field required"),
-}),    syllabus: yup.string().required("This field required"),
+chapter_from: yup
+  .string()
+  .required("This field required"),
+  syllabus: yup.string().required("This field required"),
     subject: yup.string().required("This field required"),
     no_of_question: yup.string().required("This field required"),
     class: yup.string().required("This field required"),
