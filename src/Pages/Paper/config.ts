@@ -2239,13 +2239,23 @@ const subjectOptionsToShow = (() => {
   ];
 };
 
-chapter_from: yup
-  .string()
-  .required("This field required"),
-  syllabus: yup.string().required("This field required"),
+export const schema = yup
+  .object()
+  .shape({
+    language: yup.string().required("This field required"),
+
+    chapter_from: yup
+      .string()
+      .required("This field required"),
+
+    syllabus: yup.string().required("This field required"),
+
     subject: yup.string().required("This field required"),
+
     no_of_question: yup.string().required("This field required"),
+
     class: yup.string().required("This field required"),
+
     topics: yup.string().required("This field required"),
   })
   .required();
