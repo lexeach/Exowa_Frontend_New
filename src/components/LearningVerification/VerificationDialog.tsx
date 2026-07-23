@@ -234,7 +234,7 @@ const VerificationDialog = ({
       setQuestions(response.data.questions);
 
       setAnswers(
-        new Array(response.data.questions.length).fill("")
+        new Array(data.questions.length).fill("")
       );
 
       setCurrentQuestion(0);
