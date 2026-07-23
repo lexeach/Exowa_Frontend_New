@@ -7,6 +7,7 @@ import { childrenSlice } from "@/service/children";
 import { userSlice } from "@/service/user";
 import { subjectSlice } from "@/service/subject";
 import { syllabusSlice } from "@/service/syllabus";
+import { learningVerificationApi } from "@/service/learningVerification";
 
 export const store = configureStore({
   reducer: {
@@ -18,6 +19,7 @@ export const store = configureStore({
     [userSlice.reducerPath]: userSlice.reducer,
     [subjectSlice.reducerPath]: subjectSlice.reducer,
     [syllabusSlice.reducerPath]: syllabusSlice.reducer,
+    [learningVerificationApi.reducerPath]: learningVerificationApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
@@ -27,6 +29,7 @@ export const store = configureStore({
       userSlice.middleware,
       subjectSlice.middleware,
       syllabusSlice.middleware,
+      learningVerificationApi.middleware,
     ),
 });
 
