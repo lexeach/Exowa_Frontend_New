@@ -1,3 +1,10 @@
+import UIButton from "@/UI/Elements/Button";
+
+import VerificationDialog from "@/components/LearningVerification/VerificationDialog";
+
+import {
+  useGetLearningVerificationQuery,
+} from "@/service/learningVerification";
 import UILayout from "@/UI/Elements/Layout";
 import ViewHeader from "@/UI/Container/ViewHeader";
 import {
@@ -7,6 +14,7 @@ import {
 import {  useParams } from "react-router-dom";
 import { CheckCircleIcon, XCircleIcon, BookOpen } from "lucide-react";
 import { useEffect, useState } from "react";
+
 import {
   Accordion,
   AccordionContent,
@@ -41,6 +49,14 @@ const PaperView = () => {
   
   const [selectedQuestionForLearning, setSelectedQuestionForLearning] = useState(null);
   const [openAccordion, setOpenAccordion] = useState("");
+  const [verificationOpen, setVerificationOpen] =
+  useState(false);
+
+const [verificationQuestion, setVerificationQuestion] =
+  useState(null);
+
+const [completedQuestions, setCompletedQuestions] =
+  useState<Record<number, boolean>>({});
   const { data: singlePaper, refetch: DetailRefetch } = useGetSinglePaperQuery(
     id,
     { skip: !id }
