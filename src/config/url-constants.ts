@@ -13,7 +13,27 @@ export const API_ANSWER_PAPER_DETAIL = `/api/papers/answer`;
 export const API_DELETE_PAPER_DETAIL = (id) => `/api/papers/${id}`;
 export const API_POST_ASSIGN_PAPER = (id) =>
   `/api/papers/assign?questionId=${id}`;
-export const API_GET_QUESTION_EXPLANATION = (questionId, questionNumber) => `/api/papers/${questionId}/explanation?questionNumber=${questionNumber}`;
+export const API_GET_QUESTION_EXPLANATION = (
+  questionId,
+  questionNumber
+) =>
+  `/api/papers/${questionId}/explanation?questionNumber=${questionNumber}`;
+
+/****** Learning Verification ********/
+
+export const API_GENERATE_LEARNING_VERIFICATION =
+  "/api/learning-verification/generate";
+
+export const API_SUBMIT_LEARNING_VERIFICATION =
+  "/api/learning-verification/submit";
+
+export const API_GET_LEARNING_VERIFICATION = (
+  paperId,
+  questionNumber
+) =>
+  `/api/learning-verification/${paperId}/${questionNumber}`;
+
+//export const API_GET_PAPER_LIST = (
 export const API_GET_PAPER_LIST = (
   page = 1,
   pageSize = 10,
