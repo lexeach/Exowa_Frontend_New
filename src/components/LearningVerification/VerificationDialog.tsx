@@ -90,8 +90,9 @@ const VerificationDialog = ({
             questionNumber,
           }).unwrap();
 
-        setVerificationId(response.data._id);
+        const data = response.data || response;
 
+        setVerificationId(data._id);
         setQuestions(response.data.questions || []);
 
         setAnswers(
