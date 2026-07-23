@@ -331,10 +331,10 @@ const VerificationDialog = ({
               className="bg-blue-600 h-2 rounded-full transition-all duration-300"
               style={{
                 width: `${
-                  ((currentQuestion + 1) /
-                    questions.length) *
-                  100
-                }%`,
+               questions.length
+               ? ((currentQuestion + 1)/questions.length)*100
+               :0
+               }%`,
               }}
             />
 
