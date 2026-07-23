@@ -357,10 +357,11 @@ const VerificationDialog = ({
           {currentQuestion === questions.length - 1 ? (
 
             <UIButton
-              variant="success"
-              onClick={handleSubmit}
-              loading={submittingPaper}
-            >
+  variant="success"
+  onClick={handleSubmit}
+  loading={submittingPaper}
+  disabled={!answers[currentQuestion]}
+   >
               Submit
             </UIButton>
 
