@@ -298,7 +298,7 @@ const VerificationDialog = ({
 
         <div className="mt-4">
 
-          {questions.length > 0 && (
+          {questions.length > currentQuestion && (
             <VerificationQuestion
               questionNumber={currentQuestion + 1}
               questions[currentQuestion] ?? {}
