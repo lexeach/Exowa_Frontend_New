@@ -367,9 +367,10 @@ const VerificationDialog = ({
           ) : (
 
             <UIButton
-              variant="primary"
-              onClick={handleNext}
-            >
+  variant="primary"
+  onClick={handleNext}
+  disabled={!answers[currentQuestion]}
+    >
               Next
             </UIButton>
 
