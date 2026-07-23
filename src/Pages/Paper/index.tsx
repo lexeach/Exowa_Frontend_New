@@ -63,6 +63,25 @@ const Papers = () => {
       //headerClass: "",
     //},
     {
+  header: "Status",
+  accessor: "paperStatus",
+  cell: (info) => {
+    const status = info.row.original.paperStatus || "Pending";
+
+    return (
+      <span
+        className={`px-2 py-1 rounded text-white text-xs font-semibold ${
+          status === "Completed"
+            ? "bg-green-600"
+            : "bg-red-500"
+        }`}
+      >
+        {status}
+      </span>
+    );
+  },
+},
+    {
       header: "OTP",
       class: "",
       accessor: "otp",
