@@ -76,6 +76,21 @@ const [completedQuestions, setCompletedQuestions] =
     { skip: !id || !selectedQuestionForLearning?.questionNumber }
   );
 
+  const {
+  data: verificationStatus,
+} = useGetLearningVerificationQuery(
+  {
+    paperId: id,
+    questionNumber:
+      verificationQuestion?.questionNumber,
+  },
+  {
+    skip:
+      !id ||
+      !verificationQuestion?.questionNumber,
+  }
+);
+
   useEffect(() => {
     DetailRefetch();
   }, [DetailRefetch]);
