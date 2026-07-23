@@ -301,7 +301,7 @@ const VerificationDialog = ({
           {questions.length > 0 && (
             <VerificationQuestion
               questionNumber={currentQuestion + 1}
-              question={questions[currentQuestion]}
+              questions[currentQuestion] ?? {}
               selectedAnswer={answers[currentQuestion]}
               onSelect={handleSelectAnswer}
             />
