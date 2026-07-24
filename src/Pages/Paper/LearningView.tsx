@@ -90,37 +90,7 @@ const [completedQuestions, setCompletedQuestions] =
   }
 );
 
-const {
-  data: verificationStatus,
-} = useGetLearningVerificationQuery(
-  {
-    paperId: id,
-    questionNumber: verificationQuestion?.questionNumber,
-  },
-  {
-    skip: !id || !verificationQuestion?.questionNumber,
-  }
-);
-  useEffect(() => {
-    DetailRefetch();
-  }, [DetailRefetch]);
 
-  useEffect(() => {
-  if (
-    verificationStatus?.data &&
-    verificationQuestion?.questionNumber
-  ) {
-    const status =
-      verificationStatus.data.status;
-
-    if (status === "Completed") {
-      setCompletedQuestions((prev) => ({
-        ...prev,
-        [verificationQuestion.questionNumber]: true,
-      }));
-    }
-  }
-}, [verificationStatus, verificationQuestion]);
   const questions = singlePaper?.data?.questions ?? [];
   const answers = singlePaper?.data?.answers ?? [];
 
