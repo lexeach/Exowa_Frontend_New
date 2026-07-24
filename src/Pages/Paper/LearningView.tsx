@@ -441,7 +441,29 @@ const {
                                     </div>
                                   </div>
                                 )}
-                                
+                                {/* Learning Verification Button */}
+
+<div className="flex justify-end">
+  {completedQuestions[question.questionNumber] ? (
+    <UIButton
+      type="button"
+      disabled
+      className="bg-green-600 text-white cursor-default"
+    >
+      ✓ Learning Verified
+    </UIButton>
+  ) : (
+    <UIButton
+      type="button"
+      onClick={() => {
+        setVerificationQuestion(question);
+        setVerificationOpen(true);
+      }}
+    >
+      I Learnt
+    </UIButton>
+  )}
+</div>
                                 {/* References Section */}
                                 {/* {explanationData.data?.references && (
                                   <div className="bg-gradient-to-br from-purple-50 to-pink-50 p-4 rounded-lg border border-purple-200"> */}
