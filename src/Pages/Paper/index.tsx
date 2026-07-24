@@ -62,11 +62,43 @@ const Papers = () => {
       //cellClass: " text-black ",
       //headerClass: "",
     //},
-    {
+   {
   header: "Status",
   accessor: "paperStatus",
   cell: (info) => {
-    const status = info.row.original.paperStatus || "Pending";
+    const paper = info.row.original;
+
+    const questions = paper.questions || [];
+    const answers = paper.answers || [];
+
+    const totalMarks = questions.length;
+
+    const obtainedMarks = answers.reduce((score, answer) => {
+      const question = questions.find(
+        (q) => q.questionNumber === answer.questionNumber
+      );
+
+      if (answer.option === "E") {
+        return score;
+      }
+
+      if (question?.correctAnswer === answer.option) {
+        return score + 1;
+      }
+
+      return score - 2;
+    }, 0);
+
+    const percentage =
+      totalMarks > 0
+        ? Math.max(0, (obtainedMarks / totalMarks) * 100)
+        : 0;
+
+    // ✅ Auto Complete if 100% score
+    const status =
+      percentage === 100
+        ? "Completed"
+        : paper.paperStatus || "Pending";
 
     return (
       <span
