@@ -19,14 +19,9 @@ import {
 
 interface VerificationDialogProps {
   open: boolean;
-
   onClose: () => void;
-
   paperId: string;
-
   questionNumber: number;
-
- 
   onCompleted?: () => void;
 }
 
@@ -35,7 +30,7 @@ const VerificationDialog = ({
   onClose,
   paperId,
   questionNumber,
-   onCompleted,
+  onCompleted,
 }: VerificationDialogProps) => {
   /**
    * APIs
@@ -61,59 +56,73 @@ const VerificationDialog = ({
 
   const [questions, setQuestions] = useState<any[]>([]);
 
-  const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [currentQuestion, setCurrentQuestion] =
+    useState(0);
 
-  const [answers, setAnswers] = useState<string[]>([]);
+  const [answers, setAnswers] =
+    useState<string[]>([]);
 
   const [verificationId, setVerificationId] =
-    useState<string>("");
+    useState("");
 
   const [showResult, setShowResult] =
     useState(false);
 
-  const [result, setResult] = useState<any>(null);
+  const [result, setResult] =
+    useState<any>(null);
 
   /**
    * Generate Verification Paper
    */
 
   useEffect(() => {
+
     if (!open) return;
 
     const generatePaper = async () => {
+
       try {
+
         const response: any =
           await generateVerification({
             paperId,
             questionNumber,
           }).unwrap();
 
-       const data = response.data || response;
+        const data =
+          response.data || response;
 
-setVerificationId(data._id);
+        setVerificationId(data._id);
 
-setQuestions(data.questions || []);
+        setQuestions(
+          data.questions || []
+        );
 
-setAnswers(
-  new Array(
-    data.questions?.length || 3
-  ).fill("")
-);
+        setAnswers(
+          new Array(
+            data.questions?.length || 3
+          ).fill("")
+        );
 
         setCurrentQuestion(0);
 
         setShowResult(false);
 
         setResult(null);
+
       } catch (error) {
+
         console.error(
           "Unable to generate verification paper",
           error
         );
+
       }
+
     };
 
     generatePaper();
+
   }, [
     open,
     paperId,
@@ -122,18 +131,50 @@ setAnswers(
   ]);
 
   /**
-   * Loading UI
+   * Reset Dialog
+   */
+
+  useEffect(() => {
+
+    if (!open) {
+
+      setQuestions([]);
+
+      setAnswers([]);
+
+      setCurrentQuestion(0);
+
+      setVerificationId("");
+
+      setShowResult(false);
+
+      setResult(null);
+
+    }
+
+  }, [open]);
+
+  /**
+   * Loading
    */
 
   if (generatingPaper) {
+
     return (
-      <Dialog open={open} onOpenChange={onClose}>
+
+      <Dialog
+        open={open}
+        onOpenChange={onClose}
+      >
+
         <DialogContent className="sm:max-w-2xl">
 
           <DialogHeader>
+
             <DialogTitle>
               Learning Verification
             </DialogTitle>
+
           </DialogHeader>
 
           <div className="py-16 flex flex-col items-center">
@@ -141,169 +182,247 @@ setAnswers(
             <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-blue-600" />
 
             <p className="mt-6 text-gray-500">
+
               Preparing your verification questions...
+
             </p>
 
           </div>
 
         </DialogContent>
+
       </Dialog>
+
     );
+
   }
 
-    /**
+  /**
    * Select Answer
    */
-  const handleSelectAnswer = (answer: string) => {
+
+  const handleSelectAnswer = (
+    answer: string
+  ) => {
+
     const updatedAnswers = [...answers];
+
     updatedAnswers[currentQuestion] = answer;
+
     setAnswers(updatedAnswers);
+
   };
 
   /**
-   * Previous Question
+   * Previous
    */
+
   const handlePrevious = () => {
+
     if (currentQuestion === 0) return;
 
     setCurrentQuestion((prev) => prev - 1);
+
   };
 
   /**
-   * Next Question
+   * Next
    */
+
   const handleNext = () => {
-    if (!answers[currentQuestion]) {
-      alert("Please select an answer before continuing.");
-      return;
+
+    if (!answers[currentQuestion]) return;
+
+    if (
+      currentQuestion <
+      questions.length - 1
+    ) {
+
+      setCurrentQuestion(
+        (prev) => prev + 1
+      );
+
     }
 
-    if (currentQuestion < questions.length - 1) {
-      setCurrentQuestion((prev) => prev + 1);
-    }
   };
 
-  /**
-   * Submit Verification Paper
-   */
-  const handleSubmit = async () => {
-    const unanswered = answers.some((answer) => !answer);
 
-    if (unanswered) {
-      alert("Please answer all questions.");
-      return;
-    }
+    /**
+   * Submit Verification
+   */
+
+  const handleSubmit = async () => {
+
+    const unanswered =
+      answers.some((answer) => !answer);
+
+    if (unanswered) return;
 
     try {
-      const response: any = await submitVerification({
-        verificationId,
-        answers,
-      }).unwrap();
 
-      setResult(response.data);
+      const response: any =
+        await submitVerification({
+          verificationId,
+          answers,
+        }).unwrap();
+
+      const data =
+        response.data || response;
+
+      setResult(data);
 
       setShowResult(true);
 
-      if (
-        response.data?.status === "Completed" &&
-        onCompleted
-      ) {
-        onCompleted();
+      if (data.status === "Completed") {
+
+        onCompleted?.();
+
       }
+
     } catch (error) {
+
       console.error(
         "Unable to submit verification paper",
         error
       );
+
     }
+
   };
 
   /**
    * Retry
    */
+
   const handleRetry = async () => {
+
     try {
-      const response: any = await generateVerification({
-        paperId,
-        questionNumber,
-      }).unwrap();
-
-      setVerificationId(response.data._id);
-
-      setQuestions(response.data.questions);
-
-      setAnswers(
-        new Array(data.questions.length).fill("")
-      );
-
-      setCurrentQuestion(0);
 
       setShowResult(false);
 
       setResult(null);
+
+      const response: any =
+        await generateVerification({
+          paperId,
+          questionNumber,
+        }).unwrap();
+
+      const data =
+        response.data || response;
+
+      setVerificationId(data._id);
+
+      setQuestions(
+        data.questions || []
+      );
+
+      setAnswers(
+        new Array(
+          data.questions?.length || 3
+        ).fill("")
+      );
+
+      setCurrentQuestion(0);
+
     } catch (error) {
+
       console.error(error);
+
     }
+
   };
 
   /**
-   * Render Result Screen
+   * Result Screen
    */
+
   if (showResult && result) {
+
     return (
+
       <Dialog
         open={open}
         onOpenChange={onClose}
       >
+
         <DialogContent className="sm:max-w-2xl">
 
           <DialogHeader>
+
             <DialogTitle>
+
               Learning Verification
+
             </DialogTitle>
+
           </DialogHeader>
 
           <VerificationResult
             score={result.score}
-            totalQuestions={result.totalQuestions}
+            totalQuestions={
+              result.totalQuestions
+            }
             isCompleted={
-              result.status === "Completed"
+              result.status ===
+              "Completed"
             }
             onClose={onClose}
             onRetry={handleRetry}
           />
 
         </DialogContent>
+
       </Dialog>
+
     );
+
   }
 
-    /**
+  /**
    * Main Dialog
    */
 
   return (
+
     <Dialog
       open={open}
       onOpenChange={onClose}
     >
+
       <DialogContent className="sm:max-w-3xl">
 
         <DialogHeader>
+
           <DialogTitle className="text-xl">
+
             Learning Verification
+
           </DialogTitle>
+
         </DialogHeader>
 
         <div className="mt-4">
 
-          {questions.length > currentQuestion && (
+          {questions.length >
+            currentQuestion && (
+
             <VerificationQuestion
-              questionNumber={currentQuestion + 1}
-              questions[currentQuestion] ?? {}
-              selectedAnswer={answers[currentQuestion]}
-              onSelect={handleSelectAnswer}
+              question={
+                questions[currentQuestion] ??
+                {}
+              }
+              questionNumber={
+                currentQuestion + 1
+              }
+              selectedAnswer={
+                answers[currentQuestion]
+              }
+              onSelect={
+                handleSelectAnswer
+              }
             />
+
           )}
 
         </div>
@@ -315,11 +434,17 @@ setAnswers(
           <div className="flex justify-between text-sm text-gray-500 mb-2">
 
             <span>
+
               Progress
+
             </span>
 
             <span>
-              {currentQuestion + 1} / {questions.length}
+
+              {currentQuestion + 1}
+              {" / "}
+              {questions.length}
+
             </span>
 
           </div>
@@ -330,10 +455,12 @@ setAnswers(
               className="bg-blue-600 h-2 rounded-full transition-all duration-300"
               style={{
                 width: `${
-               questions.length
-               ? ((currentQuestion + 1)/questions.length)*100
-               :0
-               }%`,
+                  questions.length
+                    ? ((currentQuestion + 1) /
+                        questions.length) *
+                      100
+                    : 0
+                }%`,
               }}
             />
 
@@ -348,30 +475,45 @@ setAnswers(
           <UIButton
             variant="secondary"
             onClick={handlePrevious}
-            disabled={currentQuestion === 0}
+            disabled={
+              currentQuestion === 0
+            }
           >
+
             Previous
+
           </UIButton>
 
-          {currentQuestion === questions.length - 1 ? (
+          {currentQuestion ===
+          questions.length - 1 ? (
 
             <UIButton
-  variant="success"
-  onClick={handleSubmit}
-  loading={submittingPaper}
-  disabled={!answers[currentQuestion]}
-   >
+              variant="success"
+              onClick={handleSubmit}
+              loading={
+                submittingPaper
+              }
+              disabled={
+                !answers[currentQuestion]
+              }
+            >
+
               Submit
+
             </UIButton>
 
           ) : (
 
             <UIButton
-  variant="primary"
-  onClick={handleNext}
-  disabled={!answers[currentQuestion]}
-    >
+              variant="primary"
+              onClick={handleNext}
+              disabled={
+                !answers[currentQuestion]
+              }
+            >
+
               Next
+
             </UIButton>
 
           )}
@@ -379,8 +521,11 @@ setAnswers(
         </div>
 
       </DialogContent>
+
     </Dialog>
+
   );
+
 };
 
 export default VerificationDialog;
