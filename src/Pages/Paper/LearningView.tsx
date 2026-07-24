@@ -5,9 +5,8 @@ import {
   useGetQuestionExplanationQuery,
 } from "@/service/paper";
 import {
-  useGetLearningVerificationQuery,
+  useLazyGetLearningVerificationQuery,
 } from "@/service/learningVerification";
-
 import VerificationDialog from "@/components/LearningVerification/VerificationDialog";
 
 import UIButton from "@/UI/Elements/Button";
