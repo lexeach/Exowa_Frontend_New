@@ -1,26 +1,28 @@
-import UIButton from "@/UI/Elements/Button";
-
-import VerificationDialog from "@/components/LearningVerification/VerificationDialog";
-
-import {
-  useGetLearningVerificationQuery,
-} from "@/service/learningVerification";
 import UILayout from "@/UI/Elements/Layout";
 import ViewHeader from "@/UI/Container/ViewHeader";
 import {
   useGetSinglePaperQuery,
   useGetQuestionExplanationQuery,
 } from "@/service/paper";
+import {
+  useGetLearningVerificationQuery,
+} from "@/service/learningVerification";
+
+import VerificationDialog from "@/components/LearningVerification/VerificationDialog";
+
+import UIButton from "@/UI/Elements/Button";
+
 import {  useParams } from "react-router-dom";
 import { CheckCircleIcon, XCircleIcon, BookOpen } from "lucide-react";
 import { useEffect, useState } from "react";
-
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+
+
 
 const isExplanationGenerationPending = (error: unknown): boolean => {
   if (!error || typeof error !== "object") {
@@ -42,55 +44,59 @@ const isExplanationGenerationPending = (error: unknown): boolean => {
 
   return false;
 };
-
+interface CompletedQuestions {
+  [key: number]: boolean;
+}
 const PaperView = () => {
   const param = useParams();
   const { id } = param;
   
-  const [selectedQuestionForLearning, setSelectedQuestionForLearning] = useState(null);
-  const [openAccordion, setOpenAccordion] = useState("");
-  const [verificationOpen, setVerificationOpen] =
+  const [selectedQuestionForLearning, setSelectedQuestionForLearning] =
+  useState(null);
+
+const [openAccordion, setOpenAccordion] =
+  useState("");
+
+const [verificationOpen, setVerificationOpen] =
   useState(false);
 
 const [verificationQuestion, setVerificationQuestion] =
   useState(null);
 
 const [completedQuestions, setCompletedQuestions] =
-  useState<Record<number, boolean>>({});
+  useState<CompletedQuestions>({});
   const { data: singlePaper, refetch: DetailRefetch } = useGetSinglePaperQuery(
     id,
     { skip: !id }
   );
 
   const {
-    data: explanationData,
-    error: explanationError,
-    isError: explanationIsError,
-    isLoading: loadingExplanation,
-    isFetching: fetchingExplanation,
-  } = useGetQuestionExplanationQuery(
-    {
-      questionId: id,
-      questionNumber: selectedQuestionForLearning?.questionNumber
-    },
-    { skip: !id || !selectedQuestionForLearning?.questionNumber }
-  );
+  data: explanationData,
+  error: explanationError,
+  isError: explanationIsError,
+  isLoading: loadingExplanation,
+  isFetching: fetchingExplanation,
+} = useGetQuestionExplanationQuery(
+  {
+    questionId: id,
+    questionNumber: selectedQuestionForLearning?.questionNumber,
+  },
+  {
+    skip: !id || !selectedQuestionForLearning?.questionNumber,
+  }
+);
 
-  const {
+const {
   data: verificationStatus,
 } = useGetLearningVerificationQuery(
   {
     paperId: id,
-    questionNumber:
-      verificationQuestion?.questionNumber,
+    questionNumber: verificationQuestion?.questionNumber,
   },
   {
-    skip:
-      !id ||
-      !verificationQuestion?.questionNumber,
+    skip: !id || !verificationQuestion?.questionNumber,
   }
 );
-
   useEffect(() => {
     DetailRefetch();
   }, [DetailRefetch]);
