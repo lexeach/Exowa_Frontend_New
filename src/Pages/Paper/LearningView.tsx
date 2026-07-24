@@ -568,21 +568,23 @@ const {
     </div>
 
     {verificationQuestion && (
-      <VerificationDialog
-        open={verificationOpen}
-        onOpenChange={setVerificationOpen}
-        paperId={id}
-        questionNumber={verificationQuestion.questionNumber}
-        onCompleted={() => {
-          setCompletedQuestions((prev) => ({
-            ...prev,
-            [verificationQuestion.questionNumber]: true,
-          }));
+  <VerificationDialog
+    open={verificationOpen}
+    onClose={() => {
+      setVerificationOpen(false);
+    }}
+    paperId={id as string}
+    questionNumber={verificationQuestion.questionNumber}
+    onCompleted={() => {
+      setCompletedQuestions((prev) => ({
+        ...prev,
+        [verificationQuestion.questionNumber]: true,
+      }));
 
-          setVerificationOpen(false);
-        }}
-      />
-    )}
+      setVerificationOpen(false);
+    }}
+  />
+)}
   </UILayout>
 );
 
