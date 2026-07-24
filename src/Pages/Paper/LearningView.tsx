@@ -69,6 +69,8 @@ useState<VerificationQuestionState | null>(null);
 
 const [completedQuestions, setCompletedQuestions] =
   useState<CompletedQuestions>({});
+  const [getVerificationStatus] =
+  useLazyGetLearningVerificationQuery();
   const { data: singlePaper, refetch: DetailRefetch } = useGetSinglePaperQuery(
     id,
     { skip: !id }
