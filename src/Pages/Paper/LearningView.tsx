@@ -60,8 +60,13 @@ const [openAccordion, setOpenAccordion] =
 const [verificationOpen, setVerificationOpen] =
   useState(false);
 
-const [verificationQuestion, setVerificationQuestion] =
-  useState(null);
+interface VerificationQuestionState {
+    questionNumber:number;
+    [key:string]:any;
+}
+
+const [verificationQuestion,setVerificationQuestion]=
+useState<VerificationQuestionState | null>(null);
 
 const [completedQuestions, setCompletedQuestions] =
   useState<CompletedQuestions>({});
