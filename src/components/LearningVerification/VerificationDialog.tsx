@@ -88,16 +88,17 @@ const VerificationDialog = ({
             questionNumber,
           }).unwrap();
 
-        const data = response.data || response;
+       const data = response.data || response;
 
-        setVerificationId(data._id);
-        setQuestions(response.data.questions || []);
+setVerificationId(data._id);
 
-        setAnswers(
-          new Array(
-            response.data.questions?.length || 3
-          ).fill("")
-        );
+setQuestions(data.questions || []);
+
+setAnswers(
+  new Array(
+    data.questions?.length || 3
+  ).fill("")
+);
 
         setCurrentQuestion(0);
 
