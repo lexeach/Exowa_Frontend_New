@@ -551,19 +551,40 @@ const {
 
 
   return (
-    <UILayout>
-      <div className="p-4 md:p-6">
-        <ViewHeader heading="Question Detail" backUrl="/papers" />
-      </div>
-      <div className="px-4 md:px-12 py-4">
-        <div className="w-full">
-          <div className="border border-dark p-4 md:p-6 rounded-lg shadow">
-            {renderQuestions()}
-          </div>
+  <UILayout>
+    <div className="p-4 md:p-6">
+      <ViewHeader
+        heading="Question Detail"
+        backUrl="/papers"
+      />
+    </div>
+
+    <div className="px-4 md:px-12 py-4">
+      <div className="w-full">
+        <div className="border border-dark p-4 md:p-6 rounded-lg shadow">
+          {renderQuestions()}
         </div>
       </div>
-    </UILayout>
-  );
+    </div>
+
+    {verificationQuestion && (
+      <VerificationDialog
+        open={verificationOpen}
+        onOpenChange={setVerificationOpen}
+        paperId={id}
+        questionNumber={verificationQuestion.questionNumber}
+        onCompleted={() => {
+          setCompletedQuestions((prev) => ({
+            ...prev,
+            [verificationQuestion.questionNumber]: true,
+          }));
+
+          setVerificationOpen(false);
+        }}
+      />
+    )}
+  </UILayout>
+);
 
 }
 
