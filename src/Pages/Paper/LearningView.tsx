@@ -103,6 +103,65 @@ const [completedQuestions, setCompletedQuestions] =
     );
     return question?.correctAnswer !== answer.option;
   });
+  useEffect(() => {
+
+  if (!id || wrongAnswers.length === 0)
+    return;
+
+  const loadVerificationStatus =
+    async () => {
+
+      const completed = {};
+
+      for (const answer of wrongAnswers) {
+
+        try {
+
+          const response: any =
+            await getVerificationStatus({
+
+              paperId: id,
+
+              questionNumber:
+                answer.questionNumber,
+
+            }).unwrap();
+
+          if (
+            response?.data?.status ===
+            "Completed"
+          ) {
+
+            completed[
+              answer.questionNumber
+            ] = true;
+
+          }
+
+        } catch (error) {
+
+          console.error(
+            "Verification status error",
+            error
+          );
+
+        }
+
+      }
+
+      setCompletedQuestions(
+        completed
+      );
+
+    };
+
+  loadVerificationStatus();
+
+}, [
+  id,
+  wrongAnswers,
+  getVerificationStatus,
+]);
   // Set default selected question to first wrong answer when answers exist
   useEffect(() => {
     if (wrongAnswers.length > 0 && !selectedQuestionForLearning) {
