@@ -26,8 +26,7 @@ interface VerificationDialogProps {
 
   questionNumber: number;
 
-  learningContent: string;
-
+ 
   onCompleted?: () => void;
 }
 
@@ -36,8 +35,7 @@ const VerificationDialog = ({
   onClose,
   paperId,
   questionNumber,
-  learningContent,
-  onCompleted,
+   onCompleted,
 }: VerificationDialogProps) => {
   /**
    * APIs
