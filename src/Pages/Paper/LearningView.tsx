@@ -612,11 +612,13 @@ const [completedQuestions, setCompletedQuestions] =
     questionNumber={verificationQuestion.questionNumber}
     onCompleted={() => {
       setCompletedQuestions((prev) => ({
-        ...prev,
-        [verificationQuestion.questionNumber]: true,
-      }));
+  ...prev,
+  [verificationQuestion.questionNumber]: true,
+}));
 
-      setVerificationOpen(false);
+setVerificationOpen(false);
+
+DetailRefetch();
     }}
   />
 )}
