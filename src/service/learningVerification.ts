@@ -59,4 +59,5 @@ export const {
   useGenerateLearningVerificationMutation,
   useSubmitLearningVerificationMutation,
   useGetLearningVerificationQuery,
+  useLazyGetLearningVerificationQuery,
 } = learningVerificationApi;
