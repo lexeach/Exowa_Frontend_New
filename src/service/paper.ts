@@ -11,8 +11,8 @@ import {
   API_GET_CHILDREN_LIST_CLASS,
   API_GET_LEARNING_RESOURCES,
   API_GET_ALL_LEARNING_RESOURCES,
-  API_GENERATE_VERIFICATION_QUIZ,
-  API_SUBMIT_VERIFICATION_QUIZ,
+  API_GENERATE_LEARNING_VERIFICATION,
+API_SUBMIT_LEARNING_VERIFICATION,
 } from '@/config/url-constants';
 import baseQuery from './baseQuery';
 import { createApi } from '@reduxjs/toolkit/query/react';
@@ -91,17 +91,24 @@ getAllLearningResources: builder.query({
 }),
 
 generateVerificationQuiz: builder.mutation({
-  query: learningId => ({
-    url: API_GENERATE_VERIFICATION_QUIZ(learningId),
+  query: ({ paperId, questionNumber }) => ({
+    url: API_GENERATE_LEARNING_VERIFICATION,
     method: "POST",
+    body: {
+      paperId,
+      questionNumber,
+    },
   }),
 }),
 
 submitVerificationQuiz: builder.mutation({
-  query: ({ learningId, answers }) => ({
-    url: API_SUBMIT_VERIFICATION_QUIZ(learningId),
+  query: ({ verificationId, answers }) => ({
+    url: API_SUBMIT_LEARNING_VERIFICATION,
     method: "POST",
-    body: { answers },
+    body: {
+      verificationId,
+      answers,
+    },
   }),
 }),
     getChildrenListClass: builder.query({
