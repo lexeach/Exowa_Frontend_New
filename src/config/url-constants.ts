@@ -170,6 +170,11 @@ export const API_UPDATE_TOPIC_LIMIT = (id) => `/api/users/topic/${id}/limits`;
 export const API_GENERATE_LEARNING_VERIFICATION =
   "/learning-verification/generate";
 
+export const API_GET_LEARNING_VERIFICATION = (
+  paperId,
+  questionNumber
+) =>
+  `/learning-verification/${paperId}/${questionNumber}`;
+
 export const API_SUBMIT_LEARNING_VERIFICATION =
   "/learning-verification/submit";
-
