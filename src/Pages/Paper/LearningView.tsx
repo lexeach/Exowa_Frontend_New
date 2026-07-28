@@ -167,8 +167,8 @@ const {
   getVerificationStatus,
 ]);
   // Set default selected question to first wrong answer when answers exist
-  useEffect(() => {
-   useEffect(() => {
+ // Set default selected question to first wrong answer when answers exist
+useEffect(() => {
   if (
     wrongAnswers.length > 0 &&
     !selectedQuestionForLearning &&
