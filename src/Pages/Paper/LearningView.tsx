@@ -454,7 +454,7 @@ const [completedQuestions, setCompletedQuestions] =
                               </div>
                             ) : selectedQuestionForLearning?.questionNumber ===
                                 question.questionNumber &&
-                              learningData?.data (
+                              learningData?.data ? (
                               <div className="space-y-4">
                                 {/* Explanation Section */}
                                 {learningData?.data && (
