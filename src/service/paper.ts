@@ -7,8 +7,12 @@ import {
   API_GET_PAPER_LIST,
   API_POST_ASSIGN_PAPER,
   API_UPDATE_PAPER_DETAIL,
-  API_GET_QUESTION_EXPLANATION,
+  
   API_GET_CHILDREN_LIST_CLASS,
+  API_GET_LEARNING_RESOURCES,
+  API_GET_ALL_LEARNING_RESOURCES,
+  API_GENERATE_VERIFICATION_QUIZ,
+  API_SUBMIT_VERIFICATION_QUIZ,
 } from '@/config/url-constants';
 import baseQuery from './baseQuery';
 import { createApi } from '@reduxjs/toolkit/query/react';
@@ -72,12 +76,34 @@ export const paperSlice = createApi({
         method: 'POST',
       }),
     }),
-    getQuestionExplanation: builder.query({
-      query: ({ questionId, questionNumber }) => ({
-        url: API_GET_QUESTION_EXPLANATION(questionId, questionNumber),
-        method: 'GET',
-      }),
-    }),
+    getLearningResources: builder.query({
+  query: id => ({
+    url: API_GET_LEARNING_RESOURCES(id),
+    method: "GET",
+  }),
+}),
+
+getAllLearningResources: builder.query({
+  query: paperId => ({
+    url: API_GET_ALL_LEARNING_RESOURCES(paperId),
+    method: "GET",
+  }),
+}),
+
+generateVerificationQuiz: builder.mutation({
+  query: learningId => ({
+    url: API_GENERATE_VERIFICATION_QUIZ(learningId),
+    method: "POST",
+  }),
+}),
+
+submitVerificationQuiz: builder.mutation({
+  query: ({ learningId, answers }) => ({
+    url: API_SUBMIT_VERIFICATION_QUIZ(learningId),
+    method: "POST",
+    body: { answers },
+  }),
+}),
     getChildrenListClass: builder.query({
       query: () => ({
         url: API_GET_CHILDREN_LIST_CLASS,
@@ -99,5 +125,9 @@ export const {
   useGetPaperListQuery,
   useUpdatePaperMutation,
   useDeletePaperMutation,
-  useGetQuestionExplanationQuery,
+  
+  useGetLearningResourcesQuery,
+useGetAllLearningResourcesQuery,
+useGenerateVerificationQuizMutation,
+useSubmitVerificationQuizMutation,
 } = paperSlice;
