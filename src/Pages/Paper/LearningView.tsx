@@ -72,12 +72,19 @@ const [completedQuestions, setCompletedQuestions] =
   useState<CompletedQuestions>({});
   const [getVerificationStatus] =
   useLazyGetLearningVerificationQuery();
-  const { data: singlePaper, refetch: DetailRefetch } = useGetSinglePaperQuery(
-    id,
-    { skip: !id }
-  );
 
-  const {
+const { data: singlePaper, refetch: DetailRefetch } =
+  useGetSinglePaperQuery(id, {
+    skip: !id,
+  });
+
+const {
+  data: allLearningResources,
+} = useGetAllLearningResourcesQuery(id, {
+  skip: !id,
+});
+
+const {
   data: learningData,
   error: learningError,
   isError: learningIsError,
@@ -161,36 +168,59 @@ const [completedQuestions, setCompletedQuestions] =
 ]);
   // Set default selected question to first wrong answer when answers exist
   useEffect(() => {
-    if (wrongAnswers.length > 0 && !selectedQuestionForLearning) {
-      const firstWrongQuestion = questions.find(
-        (q) => q.questionNumber === wrongAnswers[0].questionNumber
-      );
-      
-      if (firstWrongQuestion) {
-        setSelectedQuestionForLearning(firstWrongQuestion);
-      }
-    }
-  }, [wrongAnswers, questions, selectedQuestionForLearning]);
+   useEffect(() => {
+  if (
+    wrongAnswers.length > 0 &&
+    !selectedQuestionForLearning &&
+    allLearningResources?.data
+  ) {
+    const firstWrongQuestion = questions.find(
+      (q) => q.questionNumber === wrongAnswers[0].questionNumber
+    );
+
+    if (!firstWrongQuestion) return;
+
+    const learningItem = allLearningResources.data.find(
+      (item) =>
+        item.questionIndex ===
+        firstWrongQuestion.questionNumber
+    );
+
+    setSelectedQuestionForLearning({
+      ...firstWrongQuestion,
+      learningId: learningItem?._id,
+    });
+  }
+}, [
+  wrongAnswers,
+  questions,
+  selectedQuestionForLearning,
+  allLearningResources,
+]);
 
 
 
   const handleLearning = (question, accordionValue) => {
-    
-    // If accordion is being closed, just close it
-    if (openAccordion === accordionValue) {
-      setOpenAccordion("");
-      return;
-    }
-    
-    // If content is not loaded for this question, load it
-    if (selectedQuestionForLearning?.questionNumber !== question.questionNumber) {
-      
-      setSelectedQuestionForLearning(question);
-    }
-    
-    // Open the accordion
-    setOpenAccordion(accordionValue);
-  };
+
+  if (openAccordion === accordionValue) {
+    setOpenAccordion("");
+    return;
+  }
+
+  const learningItem =
+    allLearningResources?.data?.find(
+      (item) =>
+        item.questionIndex ===
+        question.questionNumber
+    );
+
+  setSelectedQuestionForLearning({
+    ...question,
+    learningId: learningItem?._id,
+  });
+
+  setOpenAccordion(accordionValue);
+};
 
   
   // Function to parse and render markdown-like content
