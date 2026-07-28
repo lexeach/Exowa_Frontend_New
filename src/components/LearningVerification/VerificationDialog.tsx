@@ -24,8 +24,7 @@ interface VerificationDialogProps {
   questionNumber: number;
   onCompleted?: () => void;
 }
-const [verificationId, setVerificationId] =
-  useState<string>("");
+
 const VerificationDialog = ({
   open,
   onClose,
@@ -70,6 +69,8 @@ const VerificationDialog = ({
 
   const [result, setResult] =
     useState<any>(null);
+  const [verificationId, setVerificationId] =
+  useState<string>("");
 
   /**
    * Generate Verification Paper
