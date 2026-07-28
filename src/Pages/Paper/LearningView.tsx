@@ -2,7 +2,7 @@ import UILayout from "@/UI/Elements/Layout";
 import ViewHeader from "@/UI/Container/ViewHeader";
 import {
   useGetSinglePaperQuery,
-  useGetQuestionExplanationQuery,
+  useGetLearningResourcesQuery,
 } from "@/service/paper";
 import {
   useLazyGetLearningVerificationQuery,
@@ -77,18 +77,15 @@ const [completedQuestions, setCompletedQuestions] =
   );
 
   const {
-  data: explanationData,
-  error: explanationError,
-  isError: explanationIsError,
-  isLoading: loadingExplanation,
-  isFetching: fetchingExplanation,
-} = useGetQuestionExplanationQuery(
+  data: learningData,
+  error: learningError,
+  isError: learningIsError,
+  isLoading: loadingLearning,
+  isFetching: fetchingLearning,
+} = useGetLearningResourcesQuery(
+  selectedQuestionForLearning?._id,
   {
-    questionId: id,
-    questionNumber: selectedQuestionForLearning?.questionNumber,
-  },
-  {
-    skip: !id || !selectedQuestionForLearning?.questionNumber,
+    skip: !selectedQuestionForLearning?._id,
   }
 );
 
@@ -389,9 +386,9 @@ const [completedQuestions, setCompletedQuestions] =
                     const showPendingMessage =
                       isSelected &&
                       (
-                        (explanationIsError &&
-                          isExplanationGenerationPending(explanationError)) ||
-                        explanationData?.code === 404
+                        (learningIsError &&
+                          isExplanationGenerationPending(learningError)) ||
+                        learningData?.code === 404
                       );
 
                     if (showPendingMessage) {
@@ -427,12 +424,12 @@ const [completedQuestions, setCompletedQuestions] =
                           <AccordionTrigger
                             className="text-sm font-semibold text-blue-600 hover:text-blue-800 hover:no-underline py-2 justify-start gap-2"
                             disabled={
-                              (loadingExplanation || fetchingExplanation) &&
+                              (loadingLearning || fetchingLearning) &&
                               selectedQuestionForLearning?.questionNumber ===
                                 question.questionNumber
                             }
                           >
-                            {(loadingExplanation || fetchingExplanation) &&
+                            {(loadingLearning || fetchingLearning) &&
                             selectedQuestionForLearning?.questionNumber ===
                               question.questionNumber ? (
                               <>
@@ -447,7 +444,7 @@ const [completedQuestions, setCompletedQuestions] =
                             )}
                           </AccordionTrigger>
                           <AccordionContent>
-                            {(loadingExplanation || fetchingExplanation) &&
+                            {(loadingLearning || fetchingLearning) &&
                             selectedQuestionForLearning?.questionNumber ===
                               question.questionNumber ? (
                               <div className="text-center py-4">
@@ -458,12 +455,12 @@ const [completedQuestions, setCompletedQuestions] =
                               </div>
                             ) : selectedQuestionForLearning?.questionNumber ===
                                 question.questionNumber &&
-                              explanationData?.data &&
-                              explanationData.data.questionNumber ===
+                              learningData?.data &&
+                              learningData.data.questionNumber ===
                                 question.questionNumber ? (
                               <div className="space-y-4">
                                 {/* Explanation Section */}
-                                {explanationData.data?.explanation && (
+                                {learningData.data?.explanation && (
                                   <div className="bg-gradient-to-br from-blue-50 to-indigo-50 p-4 rounded-lg border border-blue-200">
                                     <h4 className="font-bold text-blue-900 text-base mb-3 flex items-center gap-2">
                                       <BookOpen size={18} />
@@ -471,7 +468,7 @@ const [completedQuestions, setCompletedQuestions] =
                                     </h4>
                                     <div className="text-sm text-gray-800">
                                       {parseExplanationContent(
-                                        explanationData.data.explanation
+                                        learningData.data.explanation
                                       )}
                                     </div>
                                   </div>
@@ -500,20 +497,20 @@ const [completedQuestions, setCompletedQuestions] =
   )}
 </div>
                                 {/* References Section */}
-                                {/* {explanationData.data?.references && (
+                                {/* {learningData.data?.references && (
                                   <div className="bg-gradient-to-br from-purple-50 to-pink-50 p-4 rounded-lg border border-purple-200"> */}
                                   {/* <h4 className="font-bold text-purple-900 text-base mb-3">
                                     📚 Additional Learning Resources
                                   </h4> */}
                                   
                                   {/* Videos */}
-                                  {/* {explanationData.data.references.videos && explanationData.data.references.videos.length > 0 && (
+                                  {/* {learningData.data.references.videos && learningData.data.references.videos.length > 0 && (
                                     <div className="mb-4">
                                       <h5 className="font-semibold text-purple-800 text-sm mb-2 flex items-center gap-2">
                                         🎥 Recommended Videos
                                       </h5>
                                       <ul className="space-y-2">
-                                        {explanationData.data.references.videos.map((video, index) => (
+                                        {learningData.data.references.videos.map((video, index) => (
                                           <li key={index} className="text-sm text-gray-700 pl-4 border-l-2 border-purple-300">
                                             {video}
                                           </li>
@@ -523,13 +520,13 @@ const [completedQuestions, setCompletedQuestions] =
                                   )} */}
                                   
                                   {/* Articles */}
-                                  {/* {explanationData.data.references.articles && explanationData.data.references.articles.length > 0 && (
+                                  {/* {learningData.data.references.articles && learningData.data.references.articles.length > 0 && (
                                     <div className="mb-4">
                                       <h5 className="font-semibold text-purple-800 text-sm mb-2 flex items-center gap-2">
                                         📄 Helpful Articles
                                       </h5>
                                       <ul className="space-y-2">
-                                        {explanationData.data.references.articles.map((article, index) => (
+                                        {learningData.data.references.articles.map((article, index) => (
                                           <li key={index} className="text-sm text-gray-700 pl-4 border-l-2 border-purple-300">
                                             {article}
                                           </li>
@@ -539,13 +536,13 @@ const [completedQuestions, setCompletedQuestions] =
                                   )} */}
                                   
                                   {/* Books */}
-                                  {/* {explanationData.data.references.books && explanationData.data.references.books.length > 0 && (
+                                  {/* {learningData.data.references.books && learningData.data.references.books.length > 0 && (
                                     <div>
                                       <h5 className="font-semibold text-purple-800 text-sm mb-2 flex items-center gap-2">
                                         📖 Reference Books
                                       </h5>
                                       <ul className="space-y-2">
-                                        {explanationData.data.references.books.map((book, index) => (
+                                        {learningData.data.references.books.map((book, index) => (
                                           <li key={index} className="text-sm text-gray-700 pl-4 border-l-2 border-purple-300">
                                             {book}
                                           </li>
@@ -557,7 +554,7 @@ const [completedQuestions, setCompletedQuestions] =
                               )} */}
                               </div>
                             ) : selectedQuestionForLearning?.questionNumber ===
-                                question.questionNumber && !explanationData ? (
+                                question.questionNumber && !learningData ? (
                               <div className="text-center py-4">
                                 <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600 mx-auto"></div>
                                 <p className="text-gray-500 text-sm mt-2">
