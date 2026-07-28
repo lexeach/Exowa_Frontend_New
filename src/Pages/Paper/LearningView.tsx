@@ -3,6 +3,7 @@ import ViewHeader from "@/UI/Container/ViewHeader";
 import {
   useGetSinglePaperQuery,
   useGetLearningResourcesQuery,
+  useGetAllLearningResourcesQuery,
 } from "@/service/paper";
 import {
   useLazyGetLearningVerificationQuery,
@@ -183,6 +184,7 @@ const [completedQuestions, setCompletedQuestions] =
     
     // If content is not loaded for this question, load it
     if (selectedQuestionForLearning?.questionNumber !== question.questionNumber) {
+      
       setSelectedQuestionForLearning(question);
     }
     
