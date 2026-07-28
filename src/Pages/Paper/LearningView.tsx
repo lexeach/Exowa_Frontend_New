@@ -200,23 +200,33 @@ useEffect(() => {
 
 
 
-  const handleLearning = (question, accordionValue) => {
-
+ const handleLearning = (question, accordionValue) => {
   if (openAccordion === accordionValue) {
     setOpenAccordion("");
     return;
   }
 
+  console.log("All Learning Resources:", allLearningResources?.data);
+
   const learningItem =
     allLearningResources?.data?.find(
       (item) =>
-        item.questionIndex ===
-        question.questionNumber
+        item.questionIndex === question.questionNumber
     );
+
+  console.log("Learning Item:", learningItem);
+
+  if (!learningItem) {
+    console.error(
+      "No LearningVerification found for question:",
+      question.questionNumber
+    );
+    return;
+  }
 
   setSelectedQuestionForLearning({
     ...question,
-    learningId: learningItem?._id,
+    learningId: learningItem._id,
   });
 
   setOpenAccordion(accordionValue);
