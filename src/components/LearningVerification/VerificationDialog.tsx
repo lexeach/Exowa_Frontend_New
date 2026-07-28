@@ -304,7 +304,10 @@ const VerificationDialog = ({
       setResult(null);
 
       const response: any =
-        await generateVerification(learningId).unwrap();
+        await generateVerification({
+  paperId,
+  questionNumber,
+}).unwrap();
 
       const data =
         response.data || response;
