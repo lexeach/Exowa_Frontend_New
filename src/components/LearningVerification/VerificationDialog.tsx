@@ -261,9 +261,9 @@ const VerificationDialog = ({
     try {
 
       const response: any =
-        await submitVerification({
-    learningId,
-    answers,
+       await submitVerification({
+  learningId: verificationId,
+  answers,
 }).unwrap();
 
       const data =
