@@ -20,9 +20,12 @@ import {
 interface VerificationDialogProps {
   open: boolean;
   onClose: () => void;
-  learningId: string;
+  paperId: string;
+  questionNumber: number;
   onCompleted?: () => void;
 }
+const [verificationId, setVerificationId] =
+  useState<string>("");
 const VerificationDialog = ({
   open,
   onClose,
