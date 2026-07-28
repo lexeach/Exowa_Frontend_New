@@ -13,26 +13,21 @@ export const API_ANSWER_PAPER_DETAIL = `/api/papers/answer`;
 export const API_DELETE_PAPER_DETAIL = (id) => `/api/papers/${id}`;
 export const API_POST_ASSIGN_PAPER = (id) =>
   `/api/papers/assign?questionId=${id}`;
-export const API_GET_QUESTION_EXPLANATION = (
-  questionId,
-  questionNumber
-) =>
-  `/api/papers/${questionId}/explanation?questionNumber=${questionNumber}`;
+/****** Learning Center ********/
 
-/****** Learning Verification ********/
+export const API_GET_LEARNING_RESOURCES = (learningId) =>
+  `/api/learning-resources/${learningId}`;
 
-export const API_GENERATE_LEARNING_VERIFICATION =
-  "/api/learning-verification/generate";
+export const API_GET_ALL_LEARNING_RESOURCES = (paperId) =>
+  `/api/learning-resources/paper/${paperId}`;
 
-export const API_SUBMIT_LEARNING_VERIFICATION =
-  "/api/learning-verification/submit";
+/****** Verification Quiz ********/
 
-export const API_GET_LEARNING_VERIFICATION = (
-  paperId,
-  questionNumber
-) =>
-  `/api/learning-verification/${paperId}/${questionNumber}`;
+export const API_GENERATE_VERIFICATION_QUIZ = (learningId) =>
+  `/api/learning-verification/${learningId}/generate`;
 
+export const API_SUBMIT_VERIFICATION_QUIZ = (learningId) =>
+  `/api/learning-verification/${learningId}/submit`;
 //export const API_GET_PAPER_LIST = (
 export const API_GET_PAPER_LIST = (
   page = 1,
