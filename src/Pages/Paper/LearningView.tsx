@@ -200,19 +200,26 @@ useEffect(() => {
 
 
 
- const handleLearning = (question, accordionValue) => {
-  if (openAccordion === accordionValue) {
-    setOpenAccordion("");
-    return;
-  }
+ const handleLearning = async (
+    question,
+    accordionValue
+) => {
 
-  console.log("All Learning Resources:", allLearningResources?.data);
+    if (openAccordion === accordionValue) {
 
-  const learningItem =
-    allLearningResources?.data?.find(
-      (item) =>
-        item.questionIndex === question.questionNumber
-    );
+        setOpenAccordion("");
+
+        return;
+    }
+
+    await refetchLearningResources();
+
+    const learningItem =
+        allLearningResources?.data?.find(
+            item =>
+                Number(item.questionIndex) ===
+                Number(question.questionNumber)
+        );
 
   console.log("Learning Item:", learningItem);
 
