@@ -83,12 +83,11 @@ const [completedQuestions, setCompletedQuestions] =
   isLoading: loadingLearning,
   isFetching: fetchingLearning,
 } = useGetLearningResourcesQuery(
-  selectedQuestionForLearning?._id,
+  selectedQuestionForLearning?.learningId,
   {
-    skip: !selectedQuestionForLearning?._id,
+    skip: !selectedQuestionForLearning?.learningId,
   }
 );
-
 
   const questions = singlePaper?.data?.questions ?? [];
   const answers = singlePaper?.data?.answers ?? [];
@@ -455,12 +454,10 @@ const [completedQuestions, setCompletedQuestions] =
                               </div>
                             ) : selectedQuestionForLearning?.questionNumber ===
                                 question.questionNumber &&
-                              learningData?.data &&
-                              learningData.data.questionNumber ===
-                                question.questionNumber ? (
+                              learningData?.data (
                               <div className="space-y-4">
                                 {/* Explanation Section */}
-                                {learningData.data?.explanation && (
+                                {learningData?.data && (
                                   <div className="bg-gradient-to-br from-blue-50 to-indigo-50 p-4 rounded-lg border border-blue-200">
                                     <h4 className="font-bold text-blue-900 text-base mb-3 flex items-center gap-2">
                                       <BookOpen size={18} />
@@ -468,7 +465,7 @@ const [completedQuestions, setCompletedQuestions] =
                                     </h4>
                                     <div className="text-sm text-gray-800">
                                       {parseExplanationContent(
-                                        learningData.data.explanation
+                                        learningData.data.learningContent
                                       )}
                                     </div>
                                   </div>
