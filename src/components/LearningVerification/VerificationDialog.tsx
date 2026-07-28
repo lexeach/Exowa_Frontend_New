@@ -20,11 +20,9 @@ import {
 interface VerificationDialogProps {
   open: boolean;
   onClose: () => void;
-  paperId: string;
-  questionNumber: number;
+  learningId: string;
   onCompleted?: () => void;
 }
-
 const VerificationDialog = ({
   open,
   onClose,
@@ -62,8 +60,7 @@ const VerificationDialog = ({
   const [answers, setAnswers] =
     useState<string[]>([]);
 
-  const [verificationId, setVerificationId] =
-    useState("");
+  
 
   const [showResult, setShowResult] =
     useState(false);
@@ -262,9 +259,9 @@ const VerificationDialog = ({
 
       const response: any =
         await submitVerification({
-          verificationId,
-          answers,
-        }).unwrap();
+    learningId,
+    answers,
+}).unwrap();
 
       const data =
         response.data || response;
@@ -303,10 +300,7 @@ const VerificationDialog = ({
       setResult(null);
 
       const response: any =
-        await generateVerification({
-          paperId,
-          questionNumber,
-        }).unwrap();
+        await generateVerification(learningId).unwrap();
 
       const data =
         response.data || response;
