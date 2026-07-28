@@ -15,19 +15,13 @@ export const API_POST_ASSIGN_PAPER = (id) =>
   `/api/papers/assign?questionId=${id}`;
 /****** Learning Center ********/
 
-export const API_GET_LEARNING_RESOURCES = (learningId) =>
-  `/api/learning-resources/${learningId}`;
+/****** Learning Center ********/
 
 export const API_GET_ALL_LEARNING_RESOURCES = (paperId) =>
-  `/api/learning-resources/paper/${paperId}`;
+  `/api/papers/learning/${paperId}`;
 
-/****** Verification Quiz ********/
-
-export const API_GENERATE_VERIFICATION_QUIZ = (learningId) =>
-  `/api/learning-verification/${learningId}/generate`;
-
-export const API_SUBMIT_VERIFICATION_QUIZ = (learningId) =>
-  `/api/learning-verification/${learningId}/submit`;
+export const API_GET_LEARNING_RESOURCES = (id) =>
+  `/api/papers/learning/resource/${id}`;
 //export const API_GET_PAPER_LIST = (
 export const API_GET_PAPER_LIST = (
   page = 1,
