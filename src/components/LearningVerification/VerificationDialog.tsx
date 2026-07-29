@@ -263,8 +263,8 @@ const VerificationDialog = ({
 
       const response: any =
        await submitVerification({
-  learningId: verificationId,
-  answers,
+    verificationId,
+    answers,
 }).unwrap();
 
       const data =
