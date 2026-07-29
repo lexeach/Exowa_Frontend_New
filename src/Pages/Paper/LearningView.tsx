@@ -85,16 +85,17 @@ const {
 });
 
 const {
-  data: learningData,
-  error: learningError,
-  isError: learningIsError,
-  isLoading: loadingLearning,
-  isFetching: fetchingLearning,
+    data: learningData,
+    error: learningError,
+    isError: learningIsError,
+    isLoading: loadingLearning,
+    isFetching: fetchingLearning,
+    refetch: refetchLearningResources,
 } = useGetLearningResourcesQuery(
-  selectedQuestionForLearning?.learningId,
-  {
-    skip: !selectedQuestionForLearning?.learningId,
-  }
+    selectedQuestionForLearning?.learningId,
+    {
+        skip: !selectedQuestionForLearning?.learningId,
+    }
 );
 
   const questions = singlePaper?.data?.questions ?? [];
@@ -212,7 +213,7 @@ useEffect(() => {
         return;
     }
 
-    await refetchLearningResources();
+    
 
     const learningItem =
         allLearningResources?.data?.find(
