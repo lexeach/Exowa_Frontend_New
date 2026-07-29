@@ -507,19 +507,150 @@ useEffect(() => {
                               learningData?.data ? (
                               <div className="space-y-4">
                                 {/* Explanation Section */}
-                                {learningData?.data && (
-                                  <div className="bg-gradient-to-br from-blue-50 to-indigo-50 p-4 rounded-lg border border-blue-200">
-                                    <h4 className="font-bold text-blue-900 text-base mb-3 flex items-center gap-2">
-                                      <BookOpen size={18} />
-                                      Detailed Explanation
-                                    </h4>
-                                    <div className="text-sm text-gray-800">
-                                      {parseExplanationContent(
-                                        learningData.data.learningContent
-                                      )}
-                                    </div>
-                                  </div>
-                                )}
+                                {/* Learning Resources */}
+
+{learningData?.data && (
+
+<div className="space-y-4">
+
+    {/* Topic */}
+
+    <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+
+        <h4 className="font-bold text-blue-700 mb-2">
+            📘 Topic
+        </h4>
+
+        <p className="text-gray-700">
+            {learningData.data.topic}
+        </p>
+
+    </div>
+
+    {/* Learning Objective */}
+
+    <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+
+        <h4 className="font-bold text-green-700 mb-2">
+            🎯 Learning Objective
+        </h4>
+
+        <p className="text-gray-700">
+            {learningData.data.learningObjective}
+        </p>
+
+    </div>
+
+    {/* Keywords */}
+
+    <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+
+        <h4 className="font-bold text-yellow-700 mb-3">
+            🏷 Keywords
+        </h4>
+
+        <div className="flex flex-wrap gap-2">
+
+            {(learningData.data.keywords || []).map(
+                (item, index) => (
+
+                    <span
+                        key={index}
+                        className="px-3 py-1 rounded-full bg-yellow-200 text-sm"
+                    >
+                        {item}
+                    </span>
+
+                )
+            )}
+
+        </div>
+
+    </div>
+
+    {/* YouTube */}
+
+    <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+
+        <h4 className="font-bold text-red-700 mb-3">
+            ▶ Learn from YouTube
+        </h4>
+
+        <ul className="space-y-2">
+
+            {(learningData.data.youtubeSearch || []).map(
+                (item, index) => (
+
+                    <li key={index}>
+
+                        <a
+
+                            href={`https://www.youtube.com/results?search_query=${encodeURIComponent(item)}`}
+
+                            target="_blank"
+
+                            rel="noreferrer"
+
+                            className="text-blue-600 hover:underline"
+
+                        >
+
+                            {item}
+
+                        </a>
+
+                    </li>
+
+                )
+            )}
+
+        </ul>
+
+    </div>
+
+    {/* PDF */}
+
+    <div className="bg-purple-50 border border-purple-200 rounded-lg p-4">
+
+        <h4 className="font-bold text-purple-700 mb-3">
+            📄 Learn from PDF Notes
+        </h4>
+
+        <ul className="space-y-2">
+
+            {(learningData.data.pdfSearch || []).map(
+                (item, index) => (
+
+                    <li key={index}>
+
+                        <a
+
+                            href={`https://www.google.com/search?q=${encodeURIComponent(item + " pdf")}`}
+
+                            target="_blank"
+
+                            rel="noreferrer"
+
+                            className="text-blue-600 hover:underline"
+
+                        >
+
+                            {item}
+
+                        </a>
+
+                    </li>
+
+                )
+            )}
+
+        </ul>
+
+    </div>
+
+</div>
+
+)}
                                 {/* Learning Verification Button */}
 
 <div className="flex justify-end">
