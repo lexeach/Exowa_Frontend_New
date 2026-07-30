@@ -638,7 +638,7 @@ className="cursor-pointer flex gap-3 border rounded-lg p-3 hover:bg-gray-50 tran
                 className="text-blue-600 hover:underline"
             >
                 {pdf.title}
-            </div>
+            </a>
         </li>
     ))}
 </ul>
