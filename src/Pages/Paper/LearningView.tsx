@@ -578,14 +578,14 @@ useEffect(() => {
 
         <ul className="space-y-2">
 
-            {(learningData.data.youtubeSearch || []).map(
-                (item, index) => (
+            (learningData.data.videos || []).map(
+                (video, index) => (
 
                     <li key={index}>
 
                         <a
 
-                            href={`https://www.youtube.com/results?search_query=${encodeURIComponent(item)}`}
+                            href={video.url}
 
                             target="_blank"
 
@@ -595,7 +595,7 @@ useEffect(() => {
 
                         >
 
-                            {item}
+                            {video.title}
 
                         </a>
 
@@ -618,14 +618,14 @@ useEffect(() => {
 
         <ul className="space-y-2">
 
-            {(learningData.data.pdfSearch || []).map(
-                (item, index) => (
+            (learningData.data.pdfs || []).map(
+                (pdf,index)=>
 
                     <li key={index}>
 
                         <a
 
-                            href={`https://www.google.com/search?q=${encodeURIComponent(item + " pdf")}`}
+                            href={pdf.url}
 
                             target="_blank"
 
@@ -635,7 +635,7 @@ useEffect(() => {
 
                         >
 
-                            {item}
+                            {pdf.title}
 
                         </a>
 
