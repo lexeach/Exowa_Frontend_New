@@ -576,20 +576,33 @@ useEffect(() => {
             ▶ Learn from YouTube
         </h4>
 
-        <ul className="space-y-2">
-    {(learningData.data.videos || []).map((video, index) => (
-        <li key={index}>
-            <a
-                href={video.url}
-                target="_blank"
-                rel="noreferrer"
-                className="text-blue-600 hover:underline"
-            >
-                {video.title}
-            </a>
-        </li>
-    ))}
-</ul>
+        <div className="grid gap-4">
+  {(learningData.data.videos || []).map((video, index) => (
+    <a
+      key={index}
+      href={video.url}
+      target="_blank"
+      rel="noreferrer"
+      className="flex gap-3 border rounded-lg p-3 hover:bg-gray-50 transition"
+    >
+      <img
+        src={video.thumbnail}
+        alt={video.title}
+        className="w-40 h-24 rounded object-cover flex-shrink-0"
+      />
+
+      <div className="flex-1">
+        <div className="font-semibold text-gray-800">
+          {video.title}
+        </div>
+
+        <div className="text-sm text-gray-500 mt-1">
+          {video.channel}
+        </div>
+      </div>
+    </a>
+  ))}
+</div>
 
     </div>
 
