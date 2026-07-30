@@ -70,6 +70,8 @@ useState<VerificationQuestionState | null>(null);
 
 const [completedQuestions, setCompletedQuestions] =
   useState<CompletedQuestions>({});
+  const [selectedVideo, setSelectedVideo] =
+  useState<string | null>(null);
   const [getVerificationStatus] =
   useLazyGetLearningVerificationQuery();
 
@@ -577,6 +579,19 @@ useEffect(() => {
         </h4>
 
         <div className="grid gap-4">
+          {selectedVideo && (
+  <div className="mb-5">
+    <iframe
+      src={`https://www.youtube.com/embed/${selectedVideo}?autoplay=1`}
+      title="Learning Video"
+      width="100%"
+      height="420"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowFullScreen
+      className="rounded-xl border"
+    />
+  </div>
+)}
   {(learningData.data.videos || []).map((video, index) => (
     <a
       key={index}
