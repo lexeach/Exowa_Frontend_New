@@ -577,34 +577,19 @@ useEffect(() => {
         </h4>
 
         <ul className="space-y-2">
-
-            (learningData.data.videos || []).map(
-                (video, index) => (
-
-                    <li key={index}>
-
-                        <a
-
-                            href={video.url}
-
-                            target="_blank"
-
-                            rel="noreferrer"
-
-                            className="text-blue-600 hover:underline"
-
-                        >
-
-                            {video.title}
-
-                        </a>
-
-                    </li>
-
-                )
-            )}
-
-        </ul>
+    {(learningData.data.videos || []).map((video, index) => (
+        <li key={index}>
+            <a
+                href={video.url}
+                target="_blank"
+                rel="noreferrer"
+                className="text-blue-600 hover:underline"
+            >
+                {video.title}
+            </a>
+        </li>
+    ))}
+</ul>
 
     </div>
 
@@ -617,35 +602,19 @@ useEffect(() => {
         </h4>
 
         <ul className="space-y-2">
-
-            (learningData.data.pdfs || []).map(
-                (pdf,index)=>
-
-                    <li key={index}>
-
-                        <a
-
-                            href={pdf.url}
-
-                            target="_blank"
-
-                            rel="noreferrer"
-
-                            className="text-blue-600 hover:underline"
-
-                        >
-
-                            {pdf.title}
-
-                        </a>
-
-                    </li>
-
-                )
-            )}
-
-        </ul>
-
+    {(learningData.data.pdfs || []).map((pdf, index) => (
+        <li key={index}>
+            <a
+                href={pdf.url}
+                target="_blank"
+                rel="noreferrer"
+                className="text-blue-600 hover:underline"
+            >
+                {pdf.title}
+            </a>
+        </li>
+    ))}
+</ul>
     </div>
 
 </div>
