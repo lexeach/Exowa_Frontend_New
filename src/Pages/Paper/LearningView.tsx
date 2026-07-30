@@ -596,7 +596,8 @@ useEffect(() => {
     <a
       key={index}
       
-      className="flex gap-3 border rounded-lg p-3 hover:bg-gray-50 transition"
+      onClick={() => setSelectedVideo(video.youtubeId)}
+className="cursor-pointer flex gap-3 border rounded-lg p-3 hover:bg-gray-50 transition"
     >
       <img
         src={video.thumbnail}
