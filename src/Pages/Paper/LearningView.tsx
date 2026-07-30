@@ -595,9 +595,7 @@ useEffect(() => {
   {(learningData.data.videos || []).map((video, index) => (
     <a
       key={index}
-      href={video.url}
-      target="_blank"
-      rel="noreferrer"
+      
       className="flex gap-3 border rounded-lg p-3 hover:bg-gray-50 transition"
     >
       <img
