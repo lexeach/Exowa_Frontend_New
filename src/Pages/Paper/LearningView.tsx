@@ -593,7 +593,7 @@ useEffect(() => {
   </div>
 )}
   {(learningData.data.videos || []).map((video, index) => (
-    <a
+    <div
       key={index}
       
       onClick={() => setSelectedVideo(video.youtubeId)}
