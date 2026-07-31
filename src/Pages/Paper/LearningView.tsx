@@ -70,6 +70,8 @@ useState<VerificationQuestionState | null>(null);
 
 const [completedQuestions, setCompletedQuestions] =
   useState<CompletedQuestions>({});
+  const [selectedPdf, setSelectedPdf] =
+  useState<string | null>(null);
   const [selectedVideo, setSelectedVideo] =
   useState<string | null>(null);
   const [getVerificationStatus] =
@@ -628,20 +630,31 @@ className="cursor-pointer flex gap-3 border rounded-lg p-3 hover:bg-gray-50 tran
             📄 Learn from PDF Notes
         </h4>
 
-        <ul className="space-y-2">
+      {selectedPdf && (
+    <div className="mb-5">
+        <iframe
+            src={selectedPdf}
+            width="100%"
+            height="700"
+            className="rounded-xl border"
+            title="PDF Viewer"
+        />
+    </div>
+)}
+
+        <div className="grid gap-3">
     {(learningData.data.pdfs || []).map((pdf, index) => (
-        <li key={index}>
-            <a
-                href={pdf.url}
-                target="_blank"
-                rel="noreferrer"
-                className="text-blue-600 hover:underline"
-            >
+        <div
+    key={index}
+    onClick={() => setSelectedPdf(pdf.url)}
+    className="cursor-pointer border rounded-lg p-3 hover:bg-purple-100 transition"
+>
+            <div className="font-medium text-blue-700">
                 {pdf.title}
-            </a>
-        </li>
+            </div>
+        </div>
     ))}
-</ul>
+</div>
     </div>
 
 </div>
