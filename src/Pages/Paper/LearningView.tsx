@@ -328,11 +328,23 @@ const loadBrowserResources = async () => {
 
         );
 
-        setBrowserVideos(
+        const videos = response.data.videos || [];
 
-            response.data.videos || []
+setBrowserVideos(videos);
 
-        );
+if (
+
+    videos.length > 0
+
+) {
+
+    setSelectedVideo(
+
+        videos[0].videoId
+
+    );
+
+}
 
     }
 
@@ -828,7 +840,7 @@ No PDF found.
 )
 
 }
-    browserPdfs.map(((pdf, index) => (
+    browserPdfs.map((pdf, index) => (
         <div
     key={index}
     onClick={() => setSelectedPdf(pdf.url)}
