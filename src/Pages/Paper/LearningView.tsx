@@ -794,7 +794,6 @@ if (videos.length > 0) {
 </div>
 
 ) : (
-  <>
   <div className="mb-5">
     {selectedVideo && (
 
