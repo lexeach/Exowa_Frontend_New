@@ -616,11 +616,10 @@ useEffect(() => {
 )}
   {(learningData.data.videos || []).map((video, index) => (
     <div
-      key={index}
-      
-      onClick={() => setSelectedVideo(video.youtubeId)}
-className="cursor-pointer flex gap-3 border rounded-lg p-3 hover:bg-gray-50 transition"
-    >
+    key={index}
+    onClick={() => setSelectedVideo(video.youtubeId)}
+    className="cursor-pointer flex gap-4 border border-red-200 rounded-xl p-4 bg-white hover:bg-red-50 hover:border-red-400 transition-all shadow-sm"
+>
       <img
         src={video.thumbnail}
         alt={video.title}
