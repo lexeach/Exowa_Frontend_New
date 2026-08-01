@@ -923,7 +923,7 @@ setPlayingVideo(videos[0]);
 </div>
 ))
 )}
-
+</div>
 </div>
   
     {/* PDF */}
