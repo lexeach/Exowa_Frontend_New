@@ -15,7 +15,8 @@ import UIButton from "@/UI/Elements/Button";
 
 import {  useParams } from "react-router-dom";
 import { CheckCircleIcon, XCircleIcon, BookOpen } from "lucide-react";
-import { useEffect, useState } from "react";
+
+import { useEffect, useState, useRef } from "react";
 //import axios from "axios";
 import {
   Accordion,
@@ -96,6 +97,10 @@ const [selectedPdf, setSelectedPdf] =
 
 const [selectedVideo, setSelectedVideo] =
   useState<string | null>(null);
+  const [playingVideo, setPlayingVideo] =
+  useState<any>(null);
+
+const videoPlayerRef = useRef<HTMLDivElement>(null);
   const [getVerificationStatus] =
   useLazyGetLearningVerificationQuery();
 
@@ -334,9 +339,8 @@ if (cached) {
 
     if (videos.length > 0) {
 
-        setSelectedVideo(
-            videos[0].videoId
-        );
+        setSelectedVideo(videos[0].videoId);
+setPlayingVideo(videos[0]);
 
     }
 
@@ -387,11 +391,8 @@ setBrowserVideos(videos);
 
 if (videos.length > 0) {
 
-    setSelectedVideo(
-
-        videos[0].videoId
-
-    );
+    setSelectedVideo(videos[0].videoId);
+setPlayingVideo(videos[0]);
 
 }
 
@@ -843,7 +844,21 @@ if (videos.length > 0) {
       
     <div
     key={index}
-    onClick={() => setSelectedVideo(video.videoId)}
+    onClick={() => {
+
+    setSelectedVideo(video.videoId);
+
+    setPlayingVideo(video);
+
+    videoPlayerRef.current?.scrollIntoView({
+
+        behavior: "smooth",
+
+        block: "start",
+
+    });
+
+}}
     className="cursor-pointer flex gap-4 border border-red-200 rounded-xl p-4 bg-white hover:bg-red-50 hover:border-red-400 transition-all shadow-sm"
 >
       <img
@@ -853,12 +868,38 @@ if (videos.length > 0) {
 />
 
       <div className="flex flex-col justify-between flex-1">
-        <div className="font-bold text-gray-900 text-base leading-6">
+        <div>
+
+    {playingVideo?.videoId === video.videoId && (
+
+        <span className="inline-block mb-2 px-3 py-1 rounded-full bg-green-600 text-white text-xs font-bold">
+
+            ▶ NOW PLAYING
+
+        </span>
+
+    )}
+
+    <div className="font-bold text-gray-900 text-base leading-6">
+
+        {video.title}
+
+    </div>
+
+</div>
     {video.title}
 </div>
 
         <div className="text-sm text-gray-500 mt-1">
+
     📺 {video.channelTitle}
+
+</div>
+
+<div className="text-sm text-blue-600 mt-1">
+
+    ⏱ {video.duration}
+
 </div>
 
 <div className="mt-3">
@@ -888,7 +929,10 @@ if (videos.length > 0) {
         </h4>
 
       {selectedPdf && (
-    <div className="mb-5">
+    <div
+    ref={videoPlayerRef}
+    className="mb-5"
+>
         <iframe
             src={selectedPdf}
             width="100%"
