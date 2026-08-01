@@ -289,6 +289,11 @@ setBrowserPdfs([]);
 setSelectedVideo(null);
 
 setSelectedPdf(null);
+   setTimeout(() => {
+
+    loadBrowserResources();
+
+}, 100);
 };
 
   
@@ -339,12 +344,13 @@ if (cached) {
 
         if (queries.length === 0) {
 
-            setBrowserVideos([]);
+    setBrowserVideos([]);
 
-            return;
+    setLoadingResources(false);
 
-        }
+    return;
 
+}
         //--------------------------------------------------
         // Search first query
         //--------------------------------------------------
@@ -367,13 +373,17 @@ if (cached) {
 
         const videos = response.data.videos || [];
 
+resourceCache.setItem(
+
+    cacheKey,
+
+    JSON.stringify(videos)
+
+);
+
 setBrowserVideos(videos);
 
-if (
-
-    videos.length > 0
-
-) {
+if (videos.length > 0) {
 
     setSelectedVideo(
 
@@ -898,7 +908,8 @@ browserPdfs.length===0 &&
 
 <div className="text-center py-6 text-gray-500">
 
-No PDF found.
+PDF Search Provider
+Coming Soon
 
 </div>
 
