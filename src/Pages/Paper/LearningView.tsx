@@ -268,13 +268,63 @@ useEffect(() => {
 
 const loadBrowserResources = async () => {
 
-    setLoadingResources(true);
+    if (!learningData?.data)
+        return;
 
     try {
 
-        // NEXT STEP:
-        // youtubeProvider.search()
-        // pdfProvider.search()
+        setLoadingResources(true);
+
+        const queries =
+            learningData.data.videoSearchQueries || [];
+
+        if (queries.length === 0) {
+
+            setBrowserVideos([]);
+
+            return;
+
+        }
+
+        //--------------------------------------------------
+        // Search first query
+        //--------------------------------------------------
+
+        const response = await axios.get(
+
+            `${import.meta.env.VITE_API_URL}/api/youtube/search`,
+
+            {
+
+                params: {
+
+                    q: queries[0]
+
+                }
+
+            }
+
+        );
+
+        setBrowserVideos(
+
+            response.data.videos || []
+
+        );
+
+    }
+
+    catch (error) {
+
+        console.error(
+
+            "Video Search Error",
+
+            error
+
+        );
+
+        setBrowserVideos([]);
 
     }
 
@@ -285,6 +335,7 @@ const loadBrowserResources = async () => {
     }
 
 };
+  
   const parseExplanationContent = (text) => {
     if (!text) return null;
 
