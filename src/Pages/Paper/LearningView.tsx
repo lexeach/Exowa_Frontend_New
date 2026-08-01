@@ -15,6 +15,7 @@ import UIButton from "@/UI/Elements/Button";
 import {  useParams } from "react-router-dom";
 import { CheckCircleIcon, XCircleIcon, BookOpen } from "lucide-react";
 import { useEffect, useState } from "react";
+import axios from "axios";
 import {
   Accordion,
   AccordionContent,
@@ -695,11 +696,17 @@ const loadBrowserResources = async () => {
 
 <div className="text-center py-10">
 
-Loading videos...
+    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-red-600 mx-auto"></div>
+
+    <p className="mt-3 text-gray-500">
+
+        Searching YouTube...
+
+    </p>
 
 </div>
 
-) : selectedVideo && (
+) : (
   <div className="mb-5">
     <iframe
       key={selectedVideo}
@@ -713,7 +720,15 @@ Loading videos...
     />
   </div>
 )}
-  browserVideos.map((video, index) => (
+  browserVideos.length === 0 ? (
+
+<div className="text-center py-8 text-gray-500">
+
+    No videos found.
+
+</div>
+
+) : browserVideos.map((video, index) => (
     <div
     key={index}
     onClick={() => setSelectedVideo(video.youtubeId)}
@@ -731,7 +746,7 @@ Loading videos...
 </div>
 
         <div className="text-sm text-gray-500 mt-1">
-    📺 {video.channel}
+    📺 {video.channelTitle}
 </div>
 
 <div className="mt-3">
@@ -746,7 +761,8 @@ Loading videos...
 </div>
       </div>
     </div>
-  ))}
+  ))
+    }
 </div>
 
     </div>
