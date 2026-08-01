@@ -916,7 +916,7 @@ Coming Soon
 )
 
 }
-    browserPdfs.map((pdf, index) => (
+    {browserPdfs.map((pdf, index) => (
         <div
     key={index}
     onClick={() => setSelectedPdf(pdf.url)}
