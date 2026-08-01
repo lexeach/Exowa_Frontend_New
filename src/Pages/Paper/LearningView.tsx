@@ -877,7 +877,7 @@ if (videos.length > 0) {
     )}
 </div>
 
-    </>
+    </div>
 
     {/* PDF */}
 
