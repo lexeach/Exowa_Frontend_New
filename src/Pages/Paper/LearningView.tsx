@@ -70,9 +70,24 @@ useState<VerificationQuestionState | null>(null);
 
 const [completedQuestions, setCompletedQuestions] =
   useState<CompletedQuestions>({});
-  const [selectedPdf, setSelectedPdf] =
+
+//====================================================
+// Browser Learning Resources
+//====================================================
+
+const [browserVideos, setBrowserVideos] =
+  useState<any[]>([]);
+
+const [browserPdfs, setBrowserPdfs] =
+  useState<any[]>([]);
+
+const [loadingResources, setLoadingResources] =
+  useState(false);
+
+const [selectedPdf, setSelectedPdf] =
   useState<string | null>(null);
-  const [selectedVideo, setSelectedVideo] =
+
+const [selectedVideo, setSelectedVideo] =
   useState<string | null>(null);
   const [getVerificationStatus] =
   useLazyGetLearningVerificationQuery();
@@ -246,6 +261,30 @@ useEffect(() => {
 
   
   // Function to parse and render markdown-like content
+
+  //====================================================
+// Provider Placeholder
+//====================================================
+
+const loadBrowserResources = async () => {
+
+    setLoadingResources(true);
+
+    try {
+
+        // NEXT STEP:
+        // youtubeProvider.search()
+        // pdfProvider.search()
+
+    }
+
+    finally {
+
+        setLoadingResources(false);
+
+    }
+
+};
   const parseExplanationContent = (text) => {
     if (!text) return null;
 
