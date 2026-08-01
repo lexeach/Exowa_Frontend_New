@@ -705,7 +705,7 @@ const loadBrowserResources = async () => {
     />
   </div>
 )}
-  {(learningData.data.videos || []).map((video, index) => (
+  browserVideos.map((video, index) => (
     <div
     key={index}
     onClick={() => setSelectedVideo(video.youtubeId)}
