@@ -356,6 +356,14 @@ if (cached) {
         // Search first query
         //--------------------------------------------------
 
+
+      console.log("API URL =", import.meta.env.VITE_API_URL);
+
+console.log(
+    "Calling =>",
+    `${import.meta.env.VITE_API_URL}/api/youtube/search`
+);
+      
         const response = await axios.get(
 
 `${import.meta.env.VITE_API_URL || ""}/api/youtube/search`,
