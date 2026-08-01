@@ -621,19 +621,30 @@ useEffect(() => {
     className="cursor-pointer flex gap-4 border border-red-200 rounded-xl p-4 bg-white hover:bg-red-50 hover:border-red-400 transition-all shadow-sm"
 >
       <img
-        src={video.thumbnail}
-        alt={video.title}
-        className="w-40 h-24 rounded object-cover flex-shrink-0"
-      />
+    src={video.thumbnail}
+    alt={video.title}
+    className="w-44 h-28 rounded-lg object-cover flex-shrink-0 shadow"
+/>
 
-      <div className="flex-1">
-        <div className="font-semibold text-gray-800">
-          {video.title}
-        </div>
+      <div className="flex flex-col justify-between flex-1">
+        <div className="font-bold text-gray-900 text-base leading-6">
+    {video.title}
+</div>
 
         <div className="text-sm text-gray-500 mt-1">
-          {video.channel}
-        </div>
+    📺 {video.channel}
+</div>
+
+<div className="mt-3">
+
+    <button
+        type="button"
+        className="px-4 py-2 rounded-lg bg-red-600 text-white text-sm font-semibold hover:bg-red-700 transition"
+    >
+        ▶ Play Video
+    </button>
+
+</div>
       </div>
     </div>
   ))}
