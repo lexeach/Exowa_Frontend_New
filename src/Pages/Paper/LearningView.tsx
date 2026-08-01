@@ -304,9 +304,9 @@ const loadBrowserResources = async () => {
 
         setLoadingResources(true);
 
-        const queries =
-    learningData.data.videoSearchQueries || [];
-      if (queries.length === 0) {
+       const query =
+    learningData.data.videoSearchQuery || "";
+      if (!query) {
 
     setBrowserVideos([]);
 
@@ -317,7 +317,7 @@ const loadBrowserResources = async () => {
 }
 
 const cacheKey =
-    `yt_${queries[0]}`;
+    `yt_${query[0]}`;
 
 const cached =
     resourceCache.getItem(cacheKey);
@@ -343,7 +343,7 @@ if (cached) {
 
 }
 
-        if (queries.length === 0) {
+        if (!query) {
 
     setBrowserVideos([]);
 
@@ -358,13 +358,13 @@ if (cached) {
 
         const response = await axios.get(
 
-            `${import.meta.env.VITE_API_URL}/api/youtube/search`,
+            `${import.meta.env.VITE_API_URL || ""}/api/youtube/search`
 
             {
 
                 params: {
 
-                    q: queries[0]
+                    q: query
 
                 }
 
