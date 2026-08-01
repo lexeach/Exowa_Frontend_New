@@ -82,6 +82,9 @@ const [browserVideos, setBrowserVideos] =
 const [browserPdfs, setBrowserPdfs] =
   useState<any[]>([]);
 
+const resourceCache =
+    sessionStorage;
+
 const [loadingResources, setLoadingResources] =
   useState(false);
 
@@ -279,6 +282,13 @@ useEffect(() => {
   });
 
   setOpenAccordion(accordionValue);
+   setBrowserVideos([]);
+
+setBrowserPdfs([]);
+
+setSelectedVideo(null);
+
+setSelectedPdf(null);
 };
 
   
@@ -298,7 +308,34 @@ const loadBrowserResources = async () => {
         setLoadingResources(true);
 
         const queries =
-            learningData.data.videoSearchQueries || [];
+    learningData.data.videoSearchQueries || [];
+
+const cacheKey =
+    `yt_${queries[0]}`;
+
+const cached =
+    resourceCache.getItem(cacheKey);
+
+if (cached) {
+
+    const videos =
+        JSON.parse(cached);
+
+    setBrowserVideos(videos);
+
+    if (videos.length > 0) {
+
+        setSelectedVideo(
+            videos[0].videoId
+        );
+
+    }
+
+    setLoadingResources(false);
+
+    return;
+
+}
 
         if (queries.length === 0) {
 
@@ -722,6 +759,12 @@ if (
 
         <h4 className="font-bold text-red-700 mb-3">
             ▶ Learn from YouTube
+
+<span className="ml-2 text-xs text-gray-500">
+
+({browserVideos.length})
+
+</span>
         </h4>
 
         <div className="grid gap-4">
@@ -760,7 +803,29 @@ if (
 
 <div className="text-center py-8 text-gray-500">
 
-    No videos found.
+    <div className="space-y-3">
+
+<p>
+
+No videos found.
+
+</p>
+
+<button
+
+    type="button"
+
+    onClick={loadBrowserResources}
+
+    className="px-4 py-2 rounded-lg bg-red-600 text-white"
+
+>
+
+Retry
+
+</button>
+
+</div>
 
 </div>
 
