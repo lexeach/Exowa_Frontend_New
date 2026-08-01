@@ -796,7 +796,10 @@ setPlayingVideo(videos[0]);
 </div>
 
 ) : (
-  <div className="mb-5">
+  <div
+    ref={videoPlayerRef}
+    className="mb-5"
+>
     {selectedVideo && (
 
 <iframe
