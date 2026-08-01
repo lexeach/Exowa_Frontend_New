@@ -317,7 +317,7 @@ const loadBrowserResources = async () => {
 }
 
 const cacheKey =
-    `yt_${query[0]}`;
+    `yt_${query}`;
 
 const cached =
     resourceCache.getItem(cacheKey);
@@ -358,19 +358,19 @@ if (cached) {
 
         const response = await axios.get(
 
-            `${import.meta.env.VITE_API_URL || ""}/api/youtube/search`
+`${import.meta.env.VITE_API_URL || ""}/api/youtube/search`,
 
-            {
+{
 
-                params: {
+params:{
 
-                    q: query
+q:query
 
-                }
+}
 
-            }
+}
 
-        );
+);
 
         const videos = response.data.videos || [];
 
@@ -826,7 +826,13 @@ No videos found.
 
     type="button"
 
-    onClick={loadBrowserResources}
+    onClick={() => {
+
+resourceCache.clear();
+
+loadBrowserResources();
+
+}}
 
     className="px-4 py-2 rounded-lg bg-red-600 text-white"
 
