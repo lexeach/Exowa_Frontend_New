@@ -691,7 +691,15 @@ const loadBrowserResources = async () => {
         </h4>
 
         <div className="grid gap-4">
-          {selectedVideo && (
+          {loadingResources ? (
+
+<div className="text-center py-10">
+
+Loading videos...
+
+</div>
+
+) : selectedVideo && (
   <div className="mb-5">
     <iframe
       key={selectedVideo}
