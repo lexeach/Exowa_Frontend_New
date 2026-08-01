@@ -227,15 +227,9 @@ useEffect(() => {
 
 useEffect(() => {
 
-    if (
+    if (learningData?.data?.videoSearchQuery) {
 
-        learningData?.data?.videoSearchQueries?.length
-
-    ) {
-
-        resourceCache.removeItem(cacheKey);
-
-loadBrowserResources();
+        loadBrowserResources();
 
     }
 
