@@ -604,10 +604,11 @@ useEffect(() => {
           {selectedVideo && (
   <div className="mb-5">
     <iframe
-      src={`https://www.youtube.com/embed/${selectedVideo}?autoplay=1`}
+      key={selectedVideo}
+      src={`https://www.youtube.com/embed/${selectedVideo}?autoplay=1&rel=0`}
       title="Learning Video"
       width="100%"
-      height="420"
+      height="500"
       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
       allowFullScreen
       className="rounded-xl border"
