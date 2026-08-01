@@ -918,7 +918,7 @@ setPlayingVideo(videos[0]);
     </div>
 
 </div>
-
+))
 ))
 )}
 
