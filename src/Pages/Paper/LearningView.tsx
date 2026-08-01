@@ -915,11 +915,7 @@ setPlayingVideo(videos[0]);
       </div>
     </div>
   ))
-    )}
-</div>
-
-    </div>
-
+    
     {/* PDF */}
 
     <div className="bg-purple-50 border border-purple-200 rounded-lg p-4">
