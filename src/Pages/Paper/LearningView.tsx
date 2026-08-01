@@ -289,11 +289,7 @@ setBrowserPdfs([]);
 setSelectedVideo(null);
 
 setSelectedPdf(null);
-   setTimeout(() => {
-
-    loadBrowserResources();
-
-}, 100);
+   
 };
 
   
@@ -314,6 +310,15 @@ const loadBrowserResources = async () => {
 
         const queries =
     learningData.data.videoSearchQueries || [];
+      if (queries.length === 0) {
+
+    setBrowserVideos([]);
+
+    setLoadingResources(false);
+
+    return;
+
+}
 
 const cacheKey =
     `yt_${queries[0]}`;
