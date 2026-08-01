@@ -7,6 +7,14 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 import { apiUrl } from "../config";
 
+
+import axios from "axios";
+
+export default axios.create({
+    baseURL: "https://exowa-backend.onrender.com",
+});
+
+
 export const apiSlice = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
