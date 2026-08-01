@@ -233,7 +233,9 @@ useEffect(() => {
 
     ) {
 
-        loadBrowserResources();
+        resourceCache.removeItem(cacheKey);
+
+loadBrowserResources();
 
     }
 
