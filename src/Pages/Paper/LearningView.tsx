@@ -810,43 +810,36 @@ if (videos.length > 0) {
     )}
   </div>
 )}
-  browserVideos.length === 0 ? (
+  {browserVideos.length === 0 ? (
 
-<div className="text-center py-8 text-gray-500">
+    <div className="text-center py-8 text-gray-500">
 
-    <div className="space-y-3">
+        <div className="space-y-3">
 
-<p>
+            <p>No videos found.</p>
 
-No videos found.
+            <button
+                type="button"
+                onClick={() => {
 
-</p>
+                    resourceCache.clear();
 
-<button
+                    loadBrowserResources();
 
-    type="button"
+                }}
+                className="px-4 py-2 rounded-lg bg-red-600 text-white"
+            >
+                Retry
+            </button>
 
-    onClick={() => {
+        </div>
 
-resourceCache.clear();
+    </div>
 
-loadBrowserResources();
+) : (
 
-}}
-
-    className="px-4 py-2 rounded-lg bg-red-600 text-white"
-
->
-
-Retry
-
-</button>
-
-</div>
-
-</div>
-
-) : browserVideos.map((video, index) => (
+    browserVideos.map((video, index) => (
+      
     <div
     key={index}
     onClick={() => setSelectedVideo(video.videoId)}
