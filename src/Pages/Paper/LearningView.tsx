@@ -873,7 +873,7 @@ if (videos.length > 0) {
       </div>
     </div>
   ))
-    }
+    )}
 </div>
 
     </div>
@@ -900,23 +900,17 @@ if (videos.length > 0) {
 
         <div className="grid gap-3">
 
-{
-
-browserPdfs.length===0 &&
-
-(
+{browserPdfs.length === 0 ? (
 
 <div className="text-center py-6 text-gray-500">
 
-PDF Search Provider
-Coming Soon
+PDF Search Provider Coming Soon
 
 </div>
 
-)
+) : (
 
-}
-    {browserPdfs.map((pdf, index) => (
+browserPdfs.map((pdf, index) => (
         <div
     key={index}
     onClick={() => setSelectedPdf(pdf.url)}
@@ -926,7 +920,8 @@ Coming Soon
                 {pdf.title}
             </div>
         </div>
-    ))}
+    ))
+  )}
 </div>
     </div>
 
