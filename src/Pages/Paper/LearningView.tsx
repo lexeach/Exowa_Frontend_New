@@ -16,7 +16,7 @@ import UIButton from "@/UI/Elements/Button";
 import {  useParams } from "react-router-dom";
 import { CheckCircleIcon, XCircleIcon, BookOpen } from "lucide-react";
 import { useEffect, useState } from "react";
-import axios from "axios";
+//import axios from "axios";
 import {
   Accordion,
   AccordionContent,
@@ -367,21 +367,11 @@ console.log(
     `${import.meta.env.VITE_API_URL}/api/youtube/search`
 );
       
-        const response = await axios.get(
-
-`${import.meta.env.VITE_API_URL || ""}/api/youtube/search`,
-
-{
-
-params:{
-
-q:query
-
-}
-
-}
-
-);
+       const response = await api.get("/api/youtube/search", {
+    params: {
+        q: query,
+    },
+});
 
         const videos = response.data.videos || [];
 
