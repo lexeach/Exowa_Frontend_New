@@ -23,15 +23,8 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-
-
 import api from "@/service/apiSlice";
 
-const response = await api.get("/api/youtube/search", {
-    params: {
-        q: query,
-    },
-});
 
 
 
