@@ -218,6 +218,27 @@ useEffect(() => {
   selectedQuestionForLearning,
   allLearningResources,
 ]);
+  //--------------------------------------------------
+// Auto Load Browser Resources
+//--------------------------------------------------
+
+useEffect(() => {
+
+    if (
+
+        learningData?.data?.videoSearchQueries?.length
+
+    ) {
+
+        loadBrowserResources();
+
+    }
+
+}, [
+
+    learningData
+
+]);
 
 
 
@@ -708,7 +729,9 @@ const loadBrowserResources = async () => {
 
 ) : (
   <div className="mb-5">
-    <iframe
+    {selectedVideo && (
+
+<iframe
       key={selectedVideo}
       src={`https://www.youtube.com/embed/${selectedVideo}?autoplay=1&rel=0`}
       title="Learning Video"
@@ -718,6 +741,7 @@ const loadBrowserResources = async () => {
       allowFullScreen
       className="rounded-xl border"
     />
+    )}
   </div>
 )}
   browserVideos.length === 0 ? (
@@ -731,7 +755,7 @@ const loadBrowserResources = async () => {
 ) : browserVideos.map((video, index) => (
     <div
     key={index}
-    onClick={() => setSelectedVideo(video.youtubeId)}
+    onClick={() => setSelectedVideo(video.videoId)}
     className="cursor-pointer flex gap-4 border border-red-200 rounded-xl p-4 bg-white hover:bg-red-50 hover:border-red-400 transition-all shadow-sm"
 >
       <img
@@ -788,7 +812,23 @@ const loadBrowserResources = async () => {
 )}
 
         <div className="grid gap-3">
-    {(learningData.data.pdfs || []).map((pdf, index) => (
+
+{
+
+browserPdfs.length===0 &&
+
+(
+
+<div className="text-center py-6 text-gray-500">
+
+No PDF found.
+
+</div>
+
+)
+
+}
+    browserPdfs.map(((pdf, index) => (
         <div
     key={index}
     onClick={() => setSelectedPdf(pdf.url)}
