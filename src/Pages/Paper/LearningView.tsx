@@ -160,30 +160,22 @@ const {
 
   useEffect(() => {
 
-    if (
-        waitingForExplanation &&
-        learningData?.data
-    ) {
+    if (!waitingForExplanation) return;
 
-        setWaitingForExplanation(false);
+    if (!learningData?.data) return;
 
-        if (pollingTimer.current) {
-            clearInterval(pollingTimer.current);
-        }
+    setWaitingForExplanation(false);
 
-        refetchAllLearningResources();
+    refetchAllLearningResources();
 
-        loadBrowserResources();
-
-        setOpenAccordion(
-            `question-${selectedQuestionForLearning?.questionNumber}`
-        );
-
-    }
+    setOpenAccordion(
+        `question-${selectedQuestionForLearning?.questionNumber}`
+    );
 
 }, [
     learningData,
-    waitingForExplanation
+    waitingForExplanation,
+    selectedQuestionForLearning,
 ]);
 
   const questions = singlePaper?.data?.questions ?? [];
@@ -292,18 +284,13 @@ useEffect(() => {
 
 useEffect(() => {
 
-    if (learningData?.data?.videoSearchQuery) {
+    if (!learningData?.data) return;
 
-        loadBrowserResources();
+    loadBrowserResources();
 
-    }
+    setWaitingForExplanation(false);
 
-}, [
-
-    learningData
-
-]);
-
+}, [learningData]);
 
 
  const handleLearning = async (
@@ -346,49 +333,17 @@ setSelectedQuestionForLearning(nextLearning);
 
 setOpenAccordion(accordionValue);
 
-// wait until state is updated
-setTimeout(() => {
-    refetchLearningResources();
-}, 200);
 
     if (pollingTimer.current) {
     clearInterval(pollingTimer.current);
     pollingTimer.current = null;
 }
 
-    pollingTimer.current = setInterval(async () => {
-
-        try {
-
-            const result: any =
-                await refetchLearningResources();
-
-            if (result?.data?.data) {
-
-                clearInterval(
-                    pollingTimer.current!
-                );
-
-                pollingTimer.current = null;
-
-                setWaitingForExplanation(false);
-
-                refetchAllLearningResources();
-
-                loadBrowserResources();
-
-            }
-
-        } catch (err) {
-
-            console.log(
-                "Waiting for explanation..."
-            );
-
-        }
-
-    }, 3000);
-
+    
+   
+   
+   
+   
 };
 
   
