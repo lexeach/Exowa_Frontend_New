@@ -266,26 +266,51 @@ const {
     learningData?.data?.updatedAt
 ]);
 
-  useEffect(() => {
+ useEffect(() => {
 
-    if (
-        !pendingLearningQuestion ||
-        !allLearningResources?.data?.length
-    ) {
-        return;
-    }
+    if (!pendingLearningQuestion) return;
 
-    console.log("🔄 Retrying pending question");
+    if (!allLearningResources?.data) return;
 
-    handleLearning(
-        pendingLearningQuestion,
+    if (allLearningResources.data.length === 0) return;
+
+    const learningItem = allLearningResources.data.find(
+        (item: any) =>
+            Number(item.questionIndex) ===
+            Number(pendingLearningQuestion.questionNumber)
+    );
+
+    if (!learningItem) return;
+
+    console.log("✅ Pending Learning Resource Found");
+
+    setBrowserVideos([]);
+    setBrowserPdfs([]);
+    setSelectedVideo(null);
+    setSelectedPdf(null);
+
+    setWaitingForExplanation(true);
+
+    const nextLearning = {
+        ...pendingLearningQuestion,
+        learningId: learningItem._id,
+    };
+
+    setSelectedQuestionForLearning(nextLearning);
+
+    setOpenAccordion(
         `question-${pendingLearningQuestion.questionNumber}`
+    );
+
+    pollLearningUntilReady(
+        learningItem._id,
+        pendingLearningQuestion.questionNumber
     );
 
     setPendingLearningQuestion(null);
 
 }, [
-    allLearningResources,
+    allLearningResources?.data,
     pendingLearningQuestion,
 ]);
   useEffect(() => {
