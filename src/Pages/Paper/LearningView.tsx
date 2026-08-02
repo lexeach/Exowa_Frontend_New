@@ -380,6 +380,11 @@ setSelectedQuestionForLearning(nextLearning);
 
 setOpenAccordion(accordionValue);
 
+pollLearningUntilReady(
+    learningItem._id,
+    question.questionNumber
+);
+
 
     if (pollingTimer.current) {
     clearInterval(pollingTimer.current);
