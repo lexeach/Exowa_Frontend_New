@@ -151,6 +151,8 @@ const pollLearningUntilReady = (
                 learningItem?.status === "Completed"
             ) {
 
+              console.log("✅ STATUS COMPLETED");
+
                 clearInterval(pollingTimer.current!);
 
 pollingTimer.current = null;
