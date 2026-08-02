@@ -70,11 +70,14 @@ overflow-hidden
 
             <div
 
-                className="
-                    whitespace-pre-wrap
-                    leading-8
-                    text-gray-700
-                "
+               className="
+whitespace-pre-wrap
+break-words
+leading-7
+text-sm
+sm:text-base
+text-gray-700
+"
 
             >
 
