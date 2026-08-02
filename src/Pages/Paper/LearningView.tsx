@@ -210,16 +210,15 @@ useEffect(() => {
 
     if (!id) return;
 
-    const timer = setInterval(() => {
+    const timer = setInterval(async () => {
 
-        if (
-            !allLearningResources?.data ||
-            allLearningResources.data.length === 0
-        ) {
+        const result: any = await refetchAllLearningResources();
 
-            console.log("🔄 Refetching all learning resources...");
+        if (result?.data?.data?.length > 0) {
 
-            refetchAllLearningResources();
+            console.log("✅ Learning Resources Loaded");
+
+            clearInterval(timer);
 
         }
 
@@ -229,10 +228,8 @@ useEffect(() => {
 
 }, [
     id,
-    allLearningResources,
     refetchAllLearningResources,
-]);
-  
+]);  
 const {
     data: learningData,
     error: learningError,
