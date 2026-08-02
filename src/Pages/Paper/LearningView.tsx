@@ -379,10 +379,12 @@ pollLearningUntilReady(
 );
 
 
-    if (pollingTimer.current) {
+   if (pollingTimer.current) {
     clearInterval(pollingTimer.current);
     pollingTimer.current = null;
 }
+
+setWaitingForExplanation(true);
 
     
    
