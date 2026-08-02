@@ -330,25 +330,31 @@ useEffect(() => {
         return;
     }
 
-    setSelectedQuestionForLearning({
-        ...question,
-        learningId: learningItem._id,
-    });
-
-    setOpenAccordion(accordionValue);
-
     setBrowserVideos([]);
-    setBrowserPdfs([]);
-    setSelectedVideo(null);
-    setSelectedPdf(null);
+setBrowserPdfs([]);
+setSelectedVideo(null);
+setSelectedPdf(null);
 
-    setWaitingForExplanation(true);
+setWaitingForExplanation(true);
 
+const nextLearning = {
+    ...question,
+    learningId: learningItem._id,
+};
+
+setSelectedQuestionForLearning(nextLearning);
+
+setOpenAccordion(accordionValue);
+
+// wait until state is updated
+setTimeout(() => {
     refetchLearningResources();
+}, 200);
 
     if (pollingTimer.current) {
-        clearInterval(pollingTimer.current);
-    }
+    clearInterval(pollingTimer.current);
+    pollingTimer.current = null;
+}
 
     pollingTimer.current = setInterval(async () => {
 
@@ -394,8 +400,10 @@ useEffect(() => {
 
 const loadBrowserResources = async () => {
 
-    if (!learningData?.data)
-        return;
+    if (!learningData?.data) {
+    setLoadingResources(false);
+    return;
+}
 
     try {
 
