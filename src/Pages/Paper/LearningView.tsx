@@ -377,15 +377,6 @@ pollLearningUntilReady(
     learningItem._id,
     question.questionNumber
 );
-
-
-   if (pollingTimer.current) {
-    clearInterval(pollingTimer.current);
-    pollingTimer.current = null;
-}
-
-setWaitingForExplanation(true);
-
     
    
    
