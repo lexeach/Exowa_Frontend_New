@@ -728,411 +728,55 @@ setPlayingVideo(videos[0]);
                     }
 
                     return (
-                      <Accordion
-                        type="single"
-                        collapsible
-                        value={openAccordion}
-                        onValueChange={() =>
-                          handleLearning(
-                            question,
-                            `question-${question.questionNumber}`
-                          )
-                        }
-                        className="mt-4"
-                      >
-                        <AccordionItem
-                          value={`question-${question.questionNumber}`}
-                          className="border-none"
-                        >
-                          <AccordionTrigger
-                            className="text-sm font-semibold text-blue-600 hover:text-blue-800 hover:no-underline py-2 justify-start gap-2"
-                            disabled={
-                              (loadingLearning || fetchingLearning) &&
-                              selectedQuestionForLearning?.questionNumber ===
-                                question.questionNumber
-                            }
-                          >
-                            {(loadingLearning || fetchingLearning) &&
-                            selectedQuestionForLearning?.questionNumber ===
-                              question.questionNumber ? (
-                              <>
-                                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600"></div>
-                                <span>Loading Learning Content...</span>
-                              </>
-                            ) : (
-                              <>
-                                <BookOpen size={16} />
-                                <span>Learning Content</span>
-                              </>
-                            )}
-                          </AccordionTrigger>
-                          <AccordionContent>
-                            {waitingForExplanation ? (
+                      <LearningAccordion
 
-    <div className="py-8 text-center">
+    question={question}
 
-        <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-blue-600 mx-auto"></div>
+    openAccordion={openAccordion}
 
-        <h3 className="mt-5 text-lg font-semibold text-blue-700">
+    setOpenAccordion={setOpenAccordion}
 
-            Explanation Loading...
+    handleLearning={handleLearning}
 
-        </h3>
+    loadingLearning={loadingLearning}
 
-        <p className="mt-2 text-gray-500">
+    fetchingLearning={fetchingLearning}
 
-            Please wait while AI is generating your learning content.
+    waitingForExplanation={waitingForExplanation}
 
-        </p>
+    learningData={learningData}
 
-        <p className="mt-2 text-xs text-gray-400">
+    browserVideos={browserVideos}
 
-            This usually takes 10–30 seconds.
+    browserPdfs={browserPdfs}
 
-        </p>
-
-    </div>
-
-) : (loadingLearning || fetchingLearning) &&
-selectedQuestionForLearning?.questionNumber ===
-question.questionNumber ? (
-
-    <div className="text-center py-5">
-
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto"></div>
-
-        <p className="text-gray-500 mt-3">
-
-            Loading Explanation...
-
-        </p>
-
-    </div>
-
-) : selectedQuestionForLearning?.questionNumber ===
-question.questionNumber &&
-learningData?.data ? (
-
-  
-                              <div className="space-y-4">
-                                {/* Explanation Section */}
-                                {/* Learning Resources */}
-
-{learningData?.data && (
-
-<div className="space-y-4">
-
-    {/* Topic */}
-
-    <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-
-        <h4 className="font-bold text-blue-700 mb-2">
-            📘 Topic
-        </h4>
-
-        <p className="text-gray-700">
-            {learningData.data.topic}
-        </p>
-
-    </div>
-
-    {/* Learning Objective */}
-
-    <div className="bg-green-50 border border-green-200 rounded-lg p-4">
-
-        <h4 className="font-bold text-green-700 mb-2">
-            🎯 Learning Objective
-        </h4>
-
-        <p className="text-gray-700">
-            {learningData.data.learningObjective}
-        </p>
-
-    </div>
-
-    {/* Keywords */}
-
-    <ExplanationSection
-    explanation={
-        learningData?.data?.explanation ?? ""
-    }
-    loading={explanationLoading}
-/>
-</div>
-  
-    <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
-
-        <h4 className="font-bold text-yellow-700 mb-3">
-            🏷 Keywords
-        </h4>
-
-        <div className="flex flex-wrap gap-2">
-
-            {(learningData.data.keywords || []).map(
-                (item, index) => (
-
-                    <span
-                        key={index}
-                        className="px-3 py-1 rounded-full bg-yellow-200 text-sm"
-                    >
-                        {item}
-                    </span>
-
-                )
-            )}
-
-        </div>
-
-    </div>
-
-    {/* YouTube */}
-
-    <div
-    className="
-        bg-red-50
-        border
-        border-red-200
-        rounded-xl
-        p-3
-        md:p-5
-    "
->
-
-        <h4
-    className="
-        font-bold
-        text-red-700
-        text-lg
-        mb-4
-        flex
-        items-center
-        justify-between
-        flex-wrap
-        gap-2
-    "
->
-            ▶ Learn from YouTube
-
-<span
-    className="
-        px-2
-        py-1
-        rounded-full
-        bg-white
-        text-xs
-        text-gray-500
-        border
-    "
->
-
-({browserVideos.length})
-
-</span>
-        </h4>
-
-        <div
-    className="
-        grid
-        gap-5
-    "
->
-          {loadingResources ? (
-
-<div className="text-center py-10">
-
-    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-red-600 mx-auto"></div>
-
-    <p className="mt-3 text-gray-500">
-
-        Searching YouTube...
-
-    </p>
-
-</div>
-
-) : (
-  <div
-    ref={videoPlayerRef}
-    className="
-        mb-6
-        sticky
-        top-2
-        z-10
-    "
->
-  <LearningVideoPlayer
-
-    selectedVideo={selectedVideo}
+    loadingResources={loadingResources}
 
     iframeReady={iframeReady}
 
     setIframeReady={setIframeReady}
 
-    videoPlayerRef={videoPlayerRef}
-
-/>  
-  </div>
-)}
-  {browserVideos.length === 0 ? (
-
-    <div className="text-center py-8 text-gray-500">
-
-        <div className="space-y-3">
-
-            <p>No videos found.</p>
-
-            <button
-                type="button"
-                onClick={() => {
-
-                    resourceCache.clear();
-
-                    loadBrowserResources();
-
-                }}
-                className="px-4 py-2 rounded-lg bg-red-600 text-white"
-            >
-                Retry
-            </button>
-
-        </div>
-
-    </div>
-
-) : (
-
-   <YoutubeSection
-
-    videos={browserVideos}
-
     selectedVideo={selectedVideo}
 
-    onPlay={(video) => {
+    setSelectedVideo={setSelectedVideo}
 
-        setIframeReady(false);
+    setPlayingVideo={setPlayingVideo}
 
-        setSelectedVideo(video.videoId);
+    videoPlayerRef={videoPlayerRef}
 
-        setPlayingVideo(video);
+    explanationLoading={explanationLoading}
 
-        setTimeout(() => {
+    completedQuestions={completedQuestions}
 
-            videoPlayerRef.current?.scrollIntoView({
+    verificationOpen={verificationOpen}
 
-                behavior: "smooth",
+    setVerificationQuestion={setVerificationQuestion}
 
-                block: "start",
+    resourceCache={resourceCache}
 
-            });
-
-        }, 150);
-
-    }}
+    loadBrowserResources={loadBrowserResources}
 
 />
-    <PdfViewer
-
-    pdfs={browserPdfs}
-
-/>
-                                {/* Learning Verification Button */}
-
-<div className="flex justify-end">
-  {completedQuestions[question.questionNumber] ? (
-    <UIButton
-      type="button"
-      disabled
-      className="bg-green-600 text-white cursor-default"
-    >
-      ✓ Learning Verified
-    </UIButton>
-  ) : (
-    <UIButton
-      type="button"
-      onClick={() => {
-        setVerificationQuestion(question);
-        setVerificationOpen(true);
-      }}
-    >
-      I Learnt
-    </UIButton>
-  )}
-</div>
-                                {/* References Section */}
-                                {/* {learningData.data?.references && (
-                                  <div className="bg-gradient-to-br from-purple-50 to-pink-50 p-4 rounded-lg border border-purple-200"> */}
-                                  {/* <h4 className="font-bold text-purple-900 text-base mb-3">
-                                    📚 Additional Learning Resources
-                                  </h4> */}
-                                  
-                                  {/* Videos */}
-                                  {/* {learningData.data.references.videos && learningData.data.references.videos.length > 0 && (
-                                    <div className="mb-4">
-                                      <h5 className="font-semibold text-purple-800 text-sm mb-2 flex items-center gap-2">
-                                        🎥 Recommended Videos
-                                      </h5>
-                                      <ul className="space-y-2">
-                                        {learningData.data.references.videos.map((video, index) => (
-                                          <li key={index} className="text-sm text-gray-700 pl-4 border-l-2 border-purple-300">
-                                            {video}
-                                          </li>
-                                        ))}
-                                      </ul>
-                                    </div>
-                                  )} */}
-                                  
-                                  {/* Articles */}
-                                  {/* {learningData.data.references.articles && learningData.data.references.articles.length > 0 && (
-                                    <div className="mb-4">
-                                      <h5 className="font-semibold text-purple-800 text-sm mb-2 flex items-center gap-2">
-                                        📄 Helpful Articles
-                                      </h5>
-                                      <ul className="space-y-2">
-                                        {learningData.data.references.articles.map((article, index) => (
-                                          <li key={index} className="text-sm text-gray-700 pl-4 border-l-2 border-purple-300">
-                                            {article}
-                                          </li>
-                                        ))}
-                                      </ul>
-                                    </div>
-                                  )} */}
-                                  
-                                  {/* Books */}
-                                  {/* {learningData.data.references.books && learningData.data.references.books.length > 0 && (
-                                    <div>
-                                      <h5 className="font-semibold text-purple-800 text-sm mb-2 flex items-center gap-2">
-                                        📖 Reference Books
-                                      </h5>
-                                      <ul className="space-y-2">
-                                        {learningData.data.references.books.map((book, index) => (
-                                          <li key={index} className="text-sm text-gray-700 pl-4 border-l-2 border-purple-300">
-                                            {book}
-                                          </li>
-                                        ))}
-                                      </ul>
-                                    </div>
-                                  )} */}
-                                {/* </div>
-                              )} */}
-                              </div>
-                            ) : selectedQuestionForLearning?.questionNumber ===
-                                question.questionNumber && !learningData ? (
-                              <div className="text-center py-4">
-                                <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600 mx-auto"></div>
-                                <p className="text-gray-500 text-sm mt-2">
-                                  Loading explanation...
-                                </p>
-                              </div>
-                            ) : (
-                              <div className="text-center text-gray-500 py-4">
-                                <p className="text-sm">
-                                  No learning content available
-                                </p>
-                              </div>
-                            )}
-                          </AccordionContent>
-                        </AccordionItem>
-                      </Accordion>
                     );
                   })()}
                 </div>
