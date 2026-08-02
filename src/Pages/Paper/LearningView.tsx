@@ -1131,9 +1131,13 @@ mx-auto
         
         setIframeReady(false);
 
-        setSelectedVideo(video.videoId);
+setSelectedVideo(video.videoId);
 
-        setPlayingVideo(video);
+setPlayingVideo(video);
+
+setTimeout(() => {
+    setIframeReady(true);
+}, 1200);
 
         setTimeout(() => {
 
