@@ -720,6 +720,7 @@ setPlayingVideo(videos[0]);
 
   </div>
 )}
+                            {!explanationLoading &&
                             {(loadingLearning || fetchingLearning) &&
                             selectedQuestionForLearning?.questionNumber ===
                               question.questionNumber ? (
