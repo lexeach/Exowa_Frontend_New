@@ -412,7 +412,10 @@ if (cached) {
 
     if (videos.length > 0) {
 
-        setSelectedVideo(videos[0].videoId);
+       setIframeReady(false);
+
+setSelectedVideo(videos[0].videoId);
+
 setPlayingVideo(videos[0]);
 
     }
@@ -464,7 +467,10 @@ setBrowserVideos(videos);
 
 if (videos.length > 0) {
 
-    setSelectedVideo(videos[0].videoId);
+   setIframeReady(false);
+
+setSelectedVideo(videos[0].videoId);
+
 setPlayingVideo(videos[0]);
 
 }
