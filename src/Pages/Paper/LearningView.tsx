@@ -364,7 +364,12 @@ useEffect(() => {
         setOpenAccordion("");
         return;
     }
+    console.log("Question No =", question.questionNumber);
 
+console.log(
+    "All Learning Resources =",
+    allLearningResources?.data
+);
     const learningItem =
         allLearningResources?.data?.find(
             (item: any) =>
