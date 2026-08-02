@@ -116,9 +116,10 @@ const { data: singlePaper, refetch: DetailRefetch } =
   });
 
 const {
-  data: allLearningResources,
-} = useGetAllLearningResourcesQuery(id, {
-  skip: !id,
+    data: allLearningResources,
+    refetch: refetchAllLearningResources,
+} = useGetAllLearningResourcesQuery(id,{
+    skip:!id,
 });
 
 const {
@@ -286,25 +287,38 @@ useEffect(() => {
     explanationTimer.current = setInterval(async () => {
 
       const response =
-        await refetchLearningResources();
+await refetchAllLearningResources();
 
-      const updated =
-        response?.data?.data?.find(
+const updated =
+response?.data?.data?.find(
+    (item:any)=>
+        Number(item.questionIndex)===
+        Number(question.questionNumber)
+);
           item =>
             Number(item.questionIndex) ===
             Number(question.questionNumber)
         );
 
-      if (updated) {
+      if(updated){
 
-        clearInterval(explanationTimer.current!);
+    clearInterval(explanationTimer.current!);
 
-        setExplanationLoading(false);
+    setExplanationLoading(false);
 
-        setSelectedQuestionForLearning({
-          ...question,
-          learningId: updated._id,
-        });
+    setSelectedQuestionForLearning({
+        ...question,
+        learningId:updated._id,
+    });
+        await refetchLearningResources();
+
+    setOpenAccordion(accordionValue);
+
+}
+
+    setOpenAccordion(accordionValue);
+
+}
 
       }
 
