@@ -286,10 +286,7 @@ response?.data?.data?.find(
         Number(item.questionIndex)===
         Number(question.questionNumber)
 );
-          item =>
-            Number(item.questionIndex) ===
-            Number(question.questionNumber)
-        );
+         
 
       if(updated){
 
