@@ -158,7 +158,11 @@ const pollLearningUntilReady = (
 pollingTimer.current = null;
 
 // 👇 sabse important line
+console.log("🔄 Calling refetchLearningResources");
+
 await refetchLearningResources();
+
+console.log("✅ Refetch Completed");
 
 setWaitingForExplanation(false);
 
