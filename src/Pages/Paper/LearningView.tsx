@@ -67,6 +67,9 @@ const PaperView = () => {
   const [selectedQuestionForLearning, setSelectedQuestionForLearning] =
   useState(null);
 
+const [pendingLearningQuestion, setPendingLearningQuestion] =
+  useState<any>(null);
+
 const [openAccordion, setOpenAccordion] =
   useState("");
 
