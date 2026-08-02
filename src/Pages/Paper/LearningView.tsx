@@ -18,12 +18,6 @@ import { CheckCircleIcon, XCircleIcon, BookOpen } from "lucide-react";
 
 import { useEffect, useState, useRef } from "react";
 //import axios from "axios";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
 import api from "@/service/apiSlice";
 import {
     useYoutubePlayer
