@@ -957,6 +957,26 @@ learningData?.data ? (
 >
     {selectedVideo && (
 
+<>
+
+{!iframeReady && (
+
+<div className="absolute inset-0 z-20 flex items-center justify-center bg-black/70 rounded-2xl">
+
+    <div className="text-center text-white">
+
+        <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-white mx-auto"></div>
+
+        <p className="mt-3">
+            Preparing Video...
+        </p>
+
+    </div>
+
+</div>
+
+)}
+
 <div
     className="
         relative
