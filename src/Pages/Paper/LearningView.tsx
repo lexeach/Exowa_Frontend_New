@@ -908,13 +908,24 @@ learningData?.data ? (
 >
     {selectedVideo && (
 
-<div className="relative w-full overflow-hidden rounded-xl border aspect-video">
+<div
+    className="
+        relative
+        w-full
+        overflow-hidden
+        rounded-2xl
+        border
+        shadow-lg
+        bg-black
+        aspect-video
+    "
+>
 
     <iframe
         key={selectedVideo}
         src={`https://www.youtube.com/embed/${selectedVideo}?autoplay=1&rel=0`}
         title="Learning Video"
-        className="absolute inset-0 h-full w-full"
+        className="absolute inset-0 w-full h-full"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         allowFullScreen
     />
