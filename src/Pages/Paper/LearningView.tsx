@@ -91,6 +91,11 @@ const resourceCache =
 
 const [loadingResources, setLoadingResources] =
   useState(false);
+  const [explanationLoading, setExplanationLoading] =
+  useState(false);
+
+const explanationTimer =
+  useRef<NodeJS.Timeout | null>(null);
 
 const [selectedPdf, setSelectedPdf] =
   useState<string | null>(null);
