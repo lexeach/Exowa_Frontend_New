@@ -33,8 +33,8 @@ export default function VideoCard({
                 bg-white
                 ${
                     active
-                        ? "border-red-500 shadow-lg"
-                        : "border-gray-200"
+    ? "border-blue-500 shadow-xl ring-2 ring-blue-200"
+    : "border-gray-200 hover:border-red-300"
                 }
             `}
 
