@@ -900,7 +900,17 @@ learningData?.data ? (
 >
             ▶ Learn from YouTube
 
-<span className="ml-2 text-xs text-gray-500">
+<span
+    className="
+        px-2
+        py-1
+        rounded-full
+        bg-white
+        text-xs
+        text-gray-500
+        border
+    "
+>
 
 ({browserVideos.length})
 
