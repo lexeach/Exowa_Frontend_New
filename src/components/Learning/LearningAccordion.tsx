@@ -445,11 +445,7 @@ Searching Videos & PDFs...
 )}
 
 
-{completedQuestions.includes(
-
-question.questionNumber
-
-)&&(
+{completedQuestions?.[question.questionNumber] && (
 
 <div
 
