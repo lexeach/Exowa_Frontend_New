@@ -37,6 +37,9 @@ from "@/components/Learning/PdfViewer";
 import ExplanationSection
 from "@/components/Learning/ExplanationSection";
 
+import LearningAccordion
+from "@/components/Learning/LearningAccordion";
+
 
 
 
