@@ -25,6 +25,11 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import api from "@/service/apiSlice";
+import {
+    useYoutubePlayer
+} from "@/components/Learning/hooks";
+import LearningVideoPlayer
+from "@/components/Learning/LearningVideoPlayer";
 
 
 
@@ -89,6 +94,21 @@ const [browserPdfs, setBrowserPdfs] =
 const resourceCache =
     sessionStorage;
 
+  const {
+
+    videoPlayerRef,
+
+    selectedVideo,
+    setSelectedVideo,
+
+    playingVideo,
+    setPlayingVideo,
+
+    iframeReady,
+    setIframeReady,
+
+} = useYoutubePlayer();
+
 const [loadingResources, setLoadingResources] =
   useState(false);
   const [explanationLoading, setExplanationLoading] =
@@ -106,12 +126,7 @@ useRef<NodeJS.Timeout | null>(null);
 const [selectedPdf, setSelectedPdf] =
   useState<string | null>(null);
 
-const [selectedVideo, setSelectedVideo] =
-  useState<string | null>(null);
-  const [playingVideo, setPlayingVideo] =
-  useState<any>(null);
 
-const videoPlayerRef = useRef<HTMLDivElement>(null);
   const [getVerificationStatus] =
   useLazyGetLearningVerificationQuery();
 
@@ -947,32 +962,7 @@ learningData?.data ? (
         z-10
     "
 >
-    {selectedVideo && (
-
-<div
-    className="
-        relative
-        w-full
-        overflow-hidden
-        rounded-2xl
-        border
-        shadow-lg
-        bg-black
-        aspect-video
-    "
->
-
-    <iframe
-        
-        src={`https://www.youtube-nocookie.com/embed/${selectedVideo}?autoplay=1&mute=1&playsinline=1&controls=1&rel=0&modestbranding=1`}
-        title="Learning Video"
-        className="absolute inset-0 w-full h-full"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        allowFullScreen
-    />
-
-</div>
-    )}
+    
   </div>
 )}
   {browserVideos.length === 0 ? (
