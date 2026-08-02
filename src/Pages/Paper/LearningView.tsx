@@ -964,7 +964,7 @@ learningData?.data ? (
 
     <iframe
         key={selectedVideo}
-        src={`https://www.youtube.com/embed/${selectedVideo}?autoplay=1&rel=0`}
+        src={`https://www.youtube.com/embed/${selectedVideo}?autoplay=1&playsinline=1&fs=1&rel=0&modestbranding=1`}
         title="Learning Video"
         className="absolute inset-0 w-full h-full"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
