@@ -475,7 +475,7 @@ Learning Completed
 
 </div>
 
-
+)}
     </div>
 
 )}
