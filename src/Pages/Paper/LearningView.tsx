@@ -874,7 +874,16 @@ learningData?.data ? (
 
     {/* YouTube */}
 
-    <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+    <div
+    className="
+        bg-red-50
+        border
+        border-red-200
+        rounded-xl
+        p-3
+        md:p-5
+    "
+>
 
         <h4 className="font-bold text-red-700 mb-3">
             ▶ Learn from YouTube
