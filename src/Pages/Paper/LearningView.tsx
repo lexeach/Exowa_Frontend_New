@@ -1007,8 +1007,6 @@ Preparing Video...
 />
     
 
-</div>
-    )}
   </div>
 )}
   {browserVideos.length === 0 ? (
