@@ -1003,6 +1003,7 @@ learningData?.data ? (
 />
 
 </div>
+  </>
     )}
   </div>
 )}
