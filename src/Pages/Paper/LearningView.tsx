@@ -34,6 +34,8 @@ import YoutubeSection
 from "@/components/Learning/YoutubeSection";
 import PdfViewer
 from "@/components/Learning/PdfViewer";
+import ExplanationSection
+from "@/components/Learning/ExplanationSection";
 
 
 
