@@ -995,7 +995,9 @@ learningData?.data ? (
 
             )}
 
-            <div className="font-bold text-gray-900 text-base">
+            <div 
+              className="font-bold text-gray-900 text-base break-words"
+              >
 
                 {video.title}
 
