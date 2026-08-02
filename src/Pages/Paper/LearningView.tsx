@@ -255,35 +255,64 @@ useEffect(() => {
 
 
  const handleLearning = async (
-    question,
-    accordionValue
+  question,
+  accordionValue
 ) => {
 
-    if (openAccordion === accordionValue) {
-
-        setOpenAccordion("");
-
-        return;
-    }
-
-    
-
-    const learningItem =
-        allLearningResources?.data?.find(
-            item =>
-                Number(item.questionIndex) ===
-                Number(question.questionNumber)
-        );
-
-  console.log("Learning Item:", learningItem);
-
-  if (!learningItem) {
-    console.error(
-      "No LearningVerification found for question:",
-      question.questionNumber
-    );
+  if (openAccordion === accordionValue) {
+    setOpenAccordion("");
     return;
   }
+
+  const learningItem =
+    allLearningResources?.data?.find(
+      item =>
+        Number(item.questionIndex) ===
+        Number(question.questionNumber)
+    );
+
+  // Background generation running
+  if (!learningItem) {
+
+    setExplanationLoading(true);
+
+    setOpenAccordion(accordionValue);
+
+    if (explanationTimer.current) {
+      clearInterval(explanationTimer.current);
+    }
+
+    explanationTimer.current = setInterval(async () => {
+
+      const response =
+        await refetchLearningResources();
+
+      const updated =
+        response?.data?.data?.find(
+          item =>
+            Number(item.questionIndex) ===
+            Number(question.questionNumber)
+        );
+
+      if (updated) {
+
+        clearInterval(explanationTimer.current!);
+
+        setExplanationLoading(false);
+
+        setSelectedQuestionForLearning({
+          ...question,
+          learningId: updated._id,
+        });
+
+      }
+
+    },3000);
+
+    return;
+  }
+
+  setExplanationLoading(false);
 
   setSelectedQuestionForLearning({
     ...question,
@@ -291,14 +320,14 @@ useEffect(() => {
   });
 
   setOpenAccordion(accordionValue);
-   setBrowserVideos([]);
 
-setBrowserPdfs([]);
+  setBrowserVideos([]);
+  setBrowserPdfs([]);
 
-setSelectedVideo(null);
+  setSelectedVideo(null);
 
-setSelectedPdf(null);
-   
+  setSelectedPdf(null);
+
 };
 
   
