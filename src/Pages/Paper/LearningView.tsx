@@ -32,6 +32,8 @@ import LearningVideoPlayer
 from "@/components/Learning/LearningVideoPlayer";
 import YoutubeSection
 from "@/components/Learning/YoutubeSection";
+import PdfViewer
+from "@/components/Learning/PdfViewer";
 
 
 
@@ -1035,59 +1037,11 @@ learningData?.data ? (
     }}
 
 />
-    {/* PDF */}
+    <PdfViewer
 
-    <div className="bg-purple-50 border border-purple-200 rounded-lg p-4">
+    pdfs={browserPdfs}
 
-        <h4 className="font-bold text-purple-700 mb-3">
-            📄 Learn from PDF Notes
-        </h4>
-
-      {selectedPdf && (
-    <div
-    ref={videoPlayerRef}
-    className="mb-5"
->
-        <iframe
-            src={selectedPdf}
-            width="100%"
-            height="700"
-            className="rounded-xl border"
-            title="PDF Viewer"
-        />
-    </div>
-)}
-
-        <div className="grid gap-3">
-
-{browserPdfs.length === 0 ? (
-
-<div className="text-center py-6 text-gray-500">
-
-PDF Search Provider Coming Soon
-
-</div>
-
-) : (
-
-browserPdfs.map((pdf, index) => (
-        <div
-    key={index}
-    onClick={() => setSelectedPdf(pdf.url)}
-    className="cursor-pointer border rounded-lg p-3 hover:bg-purple-100 transition"
->
-            <div className="font-medium text-blue-700">
-                {pdf.title}
-            </div>
-        </div>
-    ))
-  )}
-</div>
-    </div>
-
-</div>
-
-)}
+/>
                                 {/* Learning Verification Button */}
 
 <div className="flex justify-end">
