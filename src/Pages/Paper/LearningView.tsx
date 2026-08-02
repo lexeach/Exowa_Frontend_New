@@ -962,7 +962,17 @@ learningData?.data ? (
         z-10
     "
 >
-    
+  <LearningVideoPlayer
+
+    selectedVideo={selectedVideo}
+
+    iframeReady={iframeReady}
+
+    setIframeReady={setIframeReady}
+
+    videoPlayerRef={videoPlayerRef}
+
+/>  
   </div>
 )}
   {browserVideos.length === 0 ? (
