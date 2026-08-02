@@ -135,15 +135,18 @@ collapsible
 
 value={openAccordion}
 
-onValueChange={()=>{
+onValueChange={(value) => {
 
-handleLearning(
+    setOpenAccordion(value);
 
-question,
+    if (value) {
 
-`question-${question.questionNumber}`
+        handleLearning(
+            question,
+            value
+        );
 
-);
+    }
 
 }}
 
