@@ -474,7 +474,11 @@ console.log(
 
     setPendingLearningQuestion(question);
 
-    return;
+setWaitingForExplanation(true);
+
+refetchAllLearningResources();
+
+return;
 }
 
     setBrowserVideos([]);
