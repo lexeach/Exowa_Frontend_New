@@ -391,9 +391,19 @@ const VerificationDialog = ({
       onOpenChange={onClose}
     >
 
-      <DialogContent className="sm:max-w-3xl">
+      <DialogContent
+    className="
+        w-[95vw]
+        max-w-3xl
+        h-[92vh]
+        p-0
+        overflow-hidden
+        flex
+        flex-col
+    "
+>
 
-        <DialogHeader>
+        <DialogHeader className="px-6 pt-6 pb-3 border-b bg-white">
 
           <DialogTitle className="text-xl">
 
@@ -403,7 +413,14 @@ const VerificationDialog = ({
 
         </DialogHeader>
 
-        <div className="mt-4">
+        <div
+    className="
+        flex-1
+        overflow-y-auto
+        px-6
+        py-4
+    "
+>
 
           {questions.length >
             currentQuestion && (
