@@ -36,7 +36,14 @@ export default function PdfViewer({
 
     return (
 
-        <div className="space-y-4">
+        <div 
+            className="
+
+space-y-4
+
+pb-3
+
+"
 
             {pdfs.map((pdf, index) => (
 
@@ -46,9 +53,19 @@ export default function PdfViewer({
 
                     className="
 
-                        rounded-xl
+rounded-xl
 
-                        border
+border
+
+border-purple-200
+
+bg-purple-50
+
+p-4
+
+overflow-hidden
+
+"
 
                         border-purple-200
 
@@ -64,11 +81,14 @@ export default function PdfViewer({
 
                         className="
 
-                            flex
+flex
 
-                            items-start
+flex-col
 
-                            gap-3
+sm:flex-row
+
+gap-3
+
 
                         "
 
