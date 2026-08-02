@@ -218,9 +218,11 @@ const {
 
     setWaitingForExplanation(false);
 
-    setOpenAccordion(
-        `question-${selectedQuestionForLearning?.questionNumber}`
-    );
+loadBrowserResources();
+
+setOpenAccordion(
+    `question-${selectedQuestionForLearning?.questionNumber}`
+);
 
 }, [
     learningData,
