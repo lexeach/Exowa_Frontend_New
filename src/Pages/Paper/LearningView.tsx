@@ -752,6 +752,8 @@ setPlayingVideo(videos[0]);
 
     selectedVideo={selectedVideo}
 
+    setVerificationOpen={setVerificationOpen}                    
+
     setSelectedVideo={setSelectedVideo}
 
     setPlayingVideo={setPlayingVideo}
