@@ -289,50 +289,82 @@ useEffect(() => {
 
 
  const handleLearning = async (
-    question,
-    accordionValue
+    question: any,
+    accordionValue: string
 ) => {
 
     if (openAccordion === accordionValue) {
-
         setOpenAccordion("");
-
         return;
     }
 
-    
-
     const learningItem =
         allLearningResources?.data?.find(
-            item =>
+            (item: any) =>
                 Number(item.questionIndex) ===
                 Number(question.questionNumber)
         );
 
-  console.log("Learning Item:", learningItem);
+    if (!learningItem) {
+        console.error(
+            "Learning resource not found."
+        );
+        return;
+    }
 
-  if (!learningItem) {
-    console.error(
-      "No LearningVerification found for question:",
-      question.questionNumber
-    );
-    return;
-  }
+    setSelectedQuestionForLearning({
+        ...question,
+        learningId: learningItem._id,
+    });
 
-  setSelectedQuestionForLearning({
-    ...question,
-    learningId: learningItem._id,
-  });
+    setOpenAccordion(accordionValue);
 
-  setOpenAccordion(accordionValue);
-   setBrowserVideos([]);
+    setBrowserVideos([]);
+    setBrowserPdfs([]);
+    setSelectedVideo(null);
+    setSelectedPdf(null);
 
-setBrowserPdfs([]);
+    setWaitingForExplanation(true);
 
-setSelectedVideo(null);
+    refetchLearningResources();
 
-setSelectedPdf(null);
-   
+    if (pollingTimer.current) {
+        clearInterval(pollingTimer.current);
+    }
+
+    pollingTimer.current = setInterval(async () => {
+
+        try {
+
+            const result: any =
+                await refetchLearningResources();
+
+            if (result?.data?.data) {
+
+                clearInterval(
+                    pollingTimer.current!
+                );
+
+                pollingTimer.current = null;
+
+                setWaitingForExplanation(false);
+
+                refetchAllLearningResources();
+
+                loadBrowserResources();
+
+            }
+
+        } catch (err) {
+
+            console.log(
+                "Waiting for explanation..."
+            );
+
+        }
+
+    }, 3000);
+
 };
 
   
