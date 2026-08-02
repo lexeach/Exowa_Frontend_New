@@ -118,18 +118,24 @@ export default function VideoCard({
 
                 onClick={() => onPlay(video)}
 
-                className="
-                    mt-3
-                    w-full
-                    rounded-lg
-                    bg-red-600
-                    text-white
-                    py-2
-                    flex
-                    items-center
-                    justify-center
-                    gap-2
-                "
+                className={`
+    mt-3
+    w-full
+    rounded-lg
+    py-2
+    flex
+    items-center
+    justify-center
+    gap-2
+    font-medium
+    transition-all
+    duration-200
+    ${
+        active
+            ? "bg-blue-600 hover:bg-blue-700 text-white shadow-lg"
+            : "bg-red-600 hover:bg-red-700 text-white"
+    }
+`}
 
             >
 
