@@ -207,13 +207,9 @@ const {
 
   useEffect(() => {
 
-    if (!waitingForExplanation) return;
-
     if (!learningData?.data) return;
 
     setWaitingForExplanation(false);
-
-    refetchAllLearningResources();
 
     setOpenAccordion(
         `question-${selectedQuestionForLearning?.questionNumber}`
@@ -221,7 +217,6 @@ const {
 
 }, [
     learningData,
-    waitingForExplanation,
     selectedQuestionForLearning,
 ]);
 
