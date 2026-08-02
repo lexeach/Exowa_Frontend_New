@@ -784,6 +784,7 @@ setPlayingVideo(videos[0]);
 
         {parseExplanationContent(
             learningData.data.explanation
+  )
         )}
 
     </div>
