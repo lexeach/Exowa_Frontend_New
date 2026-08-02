@@ -705,6 +705,21 @@ setPlayingVideo(videos[0]);
                             )}
                           </AccordionTrigger>
                           <AccordionContent>
+                            {explanationLoading && (
+  <div className="py-8 text-center">
+
+    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto"></div>
+
+    <p className="mt-4 text-blue-700 font-semibold">
+      Explanation Loading...
+    </p>
+
+    <p className="text-sm text-gray-500">
+      Please wait while AI prepares learning content.
+    </p>
+
+  </div>
+)}
                             {(loadingLearning || fetchingLearning) &&
                             selectedQuestionForLearning?.questionNumber ===
                               question.questionNumber ? (
