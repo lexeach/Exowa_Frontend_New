@@ -126,6 +126,53 @@ useState(false);
 const pollingTimer =
 useRef<NodeJS.Timeout | null>(null);
 
+const pollLearningUntilReady = (
+    learningId: string,
+    questionNumber: number
+) => {
+
+    if (pollingTimer.current) {
+        clearInterval(pollingTimer.current);
+    }
+
+    pollingTimer.current = setInterval(async () => {
+
+        try {
+
+            const result: any =
+                await refetchAllLearningResources();
+
+            const learningItem =
+                result?.data?.data?.find(
+                    (x: any) => x._id === learningId
+                );
+
+            if (
+                learningItem?.status === "Completed"
+            ) {
+
+                clearInterval(pollingTimer.current!);
+
+                pollingTimer.current = null;
+
+                setSelectedQuestionForLearning((prev: any) => ({
+                    ...prev,
+                    learningId,
+                    questionNumber,
+                }));
+
+                setWaitingForExplanation(false);
+
+            }
+
+        } catch (e) {
+            console.log("Waiting...");
+        }
+
+    }, 3000);
+
+};
+
 const [selectedPdf, setSelectedPdf] =
   useState<string | null>(null);
 
