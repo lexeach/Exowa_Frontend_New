@@ -849,24 +849,12 @@ learningData?.data ? (
 
     {/* Keywords */}
 
-    {/* Explanation */}
-
-<div className="bg-white border border-blue-200 rounded-lg p-4">
-
-    <h4 className="font-bold text-blue-700 mb-3">
-
-        📖 Explanation
-
-    </h4>
-
-    <div className="prose prose-sm max-w-none text-gray-700 leading-7">
-
-        {parseExplanationContent(
-            learningData.data.explanation
-        )}
-
-    </div>
-
+    <ExplanationSection
+    explanation={
+        learningData?.data?.explanation ?? ""
+    }
+    loading={explanationLoading}
+/>
 </div>
   
     <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
