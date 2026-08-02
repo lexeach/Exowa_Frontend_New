@@ -202,6 +202,34 @@ const {
 } = useGetAllLearningResourcesQuery(id,{
     skip:!id,
 });
+
+useEffect(() => {
+
+    if (!id) return;
+
+    const timer = setInterval(() => {
+
+        if (
+            !allLearningResources?.data ||
+            allLearningResources.data.length === 0
+        ) {
+
+            console.log("🔄 Refetching all learning resources...");
+
+            refetchAllLearningResources();
+
+        }
+
+    }, 3000);
+
+    return () => clearInterval(timer);
+
+}, [
+    id,
+    allLearningResources,
+    refetchAllLearningResources,
+]);
+  
 const {
     data: learningData,
     error: learningError,
