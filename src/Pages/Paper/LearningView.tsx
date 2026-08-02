@@ -1003,7 +1003,9 @@ learningData?.data ? (
 
             </div>
 
-            <div className="text-sm text-gray-500 mt-2">
+            <div 
+              className="text-sm text-gray-500 mt-2 break-all"
+              >
 
                 📺 {video.channelTitle}
 
