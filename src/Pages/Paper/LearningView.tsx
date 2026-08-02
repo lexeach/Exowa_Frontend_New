@@ -904,7 +904,12 @@ learningData?.data ? (
 ) : (
   <div
     ref={videoPlayerRef}
-    className="mb-5"
+    className="
+        mb-6
+        sticky
+        top-2
+        z-10
+    "
 >
     {selectedVideo && (
 
