@@ -171,13 +171,23 @@ if (freshData?.data?.data) {
 
     setWaitingForExplanation(false);
 
-    // 👇 Accordion reopen after fresh data
-    setSelectedQuestionForLearning((prev: any) => ({
-        ...prev
-    }));
+    const updated = freshData.data.data;
 
-}
-            }
+    const current = updated.find(
+        (x: any) => x._id === learningId
+    );
+
+    if (current) {
+
+        setSelectedQuestionForLearning((prev: any) => ({
+            ...prev,
+            learningId: current._id,
+            updatedAt: Date.now()
+        }));
+
+    }
+
+}            }
 
         } catch (e) {
             console.log("Waiting...");
