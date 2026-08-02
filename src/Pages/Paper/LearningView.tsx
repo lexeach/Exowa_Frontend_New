@@ -220,6 +220,14 @@ setOpenAccordion(
     selectedQuestionForLearning,
 ]);
 
+  useEffect(() => {
+
+    console.log("========== LEARNING DATA ==========");
+
+    console.log(learningData);
+
+}, [learningData]);
+
   const questions = singlePaper?.data?.questions ?? [];
   const answers = singlePaper?.data?.answers ?? [];
 
