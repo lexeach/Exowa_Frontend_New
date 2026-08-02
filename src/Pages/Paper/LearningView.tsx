@@ -1123,21 +1123,42 @@ mx-auto
     </div>
 
     <button
-        type="button"
-        className="
-            mt-5
-            w-full
-            rounded-lg
-            bg-red-600
-            hover:bg-red-700
-            text-white
-            py-3
-            font-semibold
-            transition
-        "
-    >
-        ▶ Play Video
-    </button>
+    type="button"
+    onClick={(e) => {
+
+        e.preventDefault();
+        e.stopPropagation();
+
+        setSelectedVideo(video.videoId);
+        setPlayingVideo(video);
+
+        setTimeout(() => {
+
+            videoPlayerRef.current?.scrollIntoView({
+
+                behavior: "smooth",
+
+                block: "start",
+
+            });
+
+        }, 100);
+
+    }}
+    className="
+        mt-5
+        w-full
+        rounded-lg
+        bg-red-600
+        hover:bg-red-700
+        text-white
+        py-3
+        font-semibold
+        transition
+    "
+>
+    ▶ Play Video
+</button>
 
 </div>
 
