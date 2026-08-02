@@ -255,64 +255,35 @@ useEffect(() => {
 
 
  const handleLearning = async (
-  question,
-  accordionValue
+    question,
+    accordionValue
 ) => {
 
-  if (openAccordion === accordionValue) {
-    setOpenAccordion("");
-    return;
-  }
+    if (openAccordion === accordionValue) {
 
-  const learningItem =
-    allLearningResources?.data?.find(
-      item =>
-        Number(item.questionIndex) ===
-        Number(question.questionNumber)
-    );
+        setOpenAccordion("");
 
-  // Background generation running
-  if (!learningItem) {
-
-    setExplanationLoading(true);
-
-    setOpenAccordion(accordionValue);
-
-    if (explanationTimer.current) {
-      clearInterval(explanationTimer.current);
+        return;
     }
 
-    explanationTimer.current = setInterval(async () => {
+    
 
-      const response =
-        await refetchLearningResources();
-
-      const updated =
-        response?.data?.data?.find(
-          item =>
-            Number(item.questionIndex) ===
-            Number(question.questionNumber)
+    const learningItem =
+        allLearningResources?.data?.find(
+            item =>
+                Number(item.questionIndex) ===
+                Number(question.questionNumber)
         );
 
-      if (updated) {
+  console.log("Learning Item:", learningItem);
 
-        clearInterval(explanationTimer.current!);
-
-        setExplanationLoading(false);
-
-        setSelectedQuestionForLearning({
-          ...question,
-          learningId: updated._id,
-        });
-
-      }
-
-    },3000);
-
+  if (!learningItem) {
+    console.error(
+      "No LearningVerification found for question:",
+      question.questionNumber
+    );
     return;
   }
-
-  setExplanationLoading(false);
 
   setSelectedQuestionForLearning({
     ...question,
@@ -320,14 +291,14 @@ useEffect(() => {
   });
 
   setOpenAccordion(accordionValue);
+   setBrowserVideos([]);
 
-  setBrowserVideos([]);
-  setBrowserPdfs([]);
+setBrowserPdfs([]);
 
-  setSelectedVideo(null);
+setSelectedVideo(null);
 
-  setSelectedPdf(null);
-
+setSelectedPdf(null);
+   
 };
 
   
@@ -705,24 +676,9 @@ setPlayingVideo(videos[0]);
                             )}
                           </AccordionTrigger>
                           <AccordionContent>
-                            {explanationLoading && (
-  <div className="py-8 text-center">
-
-    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto"></div>
-
-    <p className="mt-4 text-blue-700 font-semibold">
-      Explanation Loading...
-    </p>
-
-    <p className="text-sm text-gray-500">
-      Please wait while AI prepares learning content.
-    </p>
-
-  </div>
-{!explanationLoading &&
-   (loadingLearning || fetchingLearning) &&
-   selectedQuestionForLearning?.questionNumber ===
-   question.questionNumber ? (
+                            {(loadingLearning || fetchingLearning) &&
+                            selectedQuestionForLearning?.questionNumber ===
+                              question.questionNumber ? (
                               <div className="text-center py-4">
                                 <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600 mx-auto"></div>
                                 <p className="text-gray-500 text-sm mt-2">
@@ -784,7 +740,6 @@ setPlayingVideo(videos[0]);
 
         {parseExplanationContent(
             learningData.data.explanation
-  )
         )}
 
     </div>
