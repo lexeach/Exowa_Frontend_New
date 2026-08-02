@@ -1007,21 +1007,23 @@ learningData?.data ? (
 
 <div
     key={index}
-    onClick={() => {
+    onClick={(e) => {
 
-        setSelectedVideo(video.videoId);
+    e.preventDefault();
+    e.stopPropagation();
 
-        setPlayingVideo(video);
+    setSelectedVideo(video.videoId);
 
+    setPlayingVideo(video);
+
+    setTimeout(() => {
         videoPlayerRef.current?.scrollIntoView({
-
             behavior: "smooth",
-
             block: "start",
-
         });
+    }, 100);
 
-    }}
+}}
     className="
 cursor-pointer
 flex
