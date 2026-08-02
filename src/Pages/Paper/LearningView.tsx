@@ -335,8 +335,6 @@ useEffect(() => {
 
     loadBrowserResources();
 
-    setWaitingForExplanation(false);
-
 }, [learningData]);
 
 
