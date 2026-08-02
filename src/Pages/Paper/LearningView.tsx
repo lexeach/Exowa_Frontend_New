@@ -993,7 +993,6 @@ Preparing Video...
     "
 >
 
-    <iframe
         
         <iframe
     key={selectedVideo}
@@ -1006,11 +1005,7 @@ Preparing Video...
         setIframeReady(true);
     }}
 />
-        title="Learning Video"
-        className="absolute inset-0 w-full h-full"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        allowFullScreen
-    />
+    
 
 </div>
     )}
