@@ -979,7 +979,9 @@ learningData?.data ? (
         className="w-full md:w-44 h-52 md:h-28 rounded-lg object-cover flex-shrink-0 shadow"
     />
 
-    <div className="flex-1 flex flex-col justify-between">
+    <div 
+      className="flex-1 flex flex-col justify-between min-w-0"
+      >
 
         <div>
 
