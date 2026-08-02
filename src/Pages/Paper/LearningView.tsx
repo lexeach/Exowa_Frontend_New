@@ -406,7 +406,8 @@ pollLearningUntilReady(
 //====================================================
 
 const loadBrowserResources = async () => {
-
+console.log("========== loadBrowserResources ==========");
+console.log("learningData =", learningData);
     if (!learningData?.data) {
     setLoadingResources(false);
     return;
