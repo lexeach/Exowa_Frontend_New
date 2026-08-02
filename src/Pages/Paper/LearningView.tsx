@@ -1023,7 +1023,7 @@ learningData?.data ? (
 
             <button
                 type="button"
-                className="px-4 py-2 rounded-lg bg-red-600 text-white font-semibold"
+                className="w-full md:w-auto px-4 py-2 rounded-lg bg-red-600 text-white font-semibold"
             >
 
                 ▶ Play Video
