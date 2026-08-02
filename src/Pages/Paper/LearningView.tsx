@@ -1186,7 +1186,7 @@ mx-auto
 </div>
 ))
 )}
-</div>
+
 </div>
   
     {/* PDF */}
