@@ -150,7 +150,7 @@ const {
     isError: learningIsError,
     isLoading: loadingLearning,
     isFetching: fetchingLearning,
-    refetch: refetchLearningResources,
+    //refetch: refetchLearningResources,
 } = useGetLearningResourcesQuery(
     selectedQuestionForLearning?.learningId,
     {
