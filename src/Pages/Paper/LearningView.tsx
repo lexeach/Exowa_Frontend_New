@@ -115,11 +115,11 @@ const { data: singlePaper, refetch: DetailRefetch } =
   });
 
 const {
-  data: allLearningResources,
-} = useGetAllLearningResourcesQuery(id, {
-  skip: !id,
+    data: allLearningResources,
+    refetch: refetchAllLearningResources,
+} = useGetAllLearningResourcesQuery(id,{
+    skip:!id,
 });
-
 const {
     data: learningData,
     error: learningError,
