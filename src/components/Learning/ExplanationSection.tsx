@@ -43,12 +43,14 @@ export default function ExplanationSection({
         <div
 
             className="
-                rounded-xl
-                border
-                bg-white
-                p-5
-                shadow-sm
-            "
+rounded-xl
+border
+bg-white
+p-4
+sm:p-6
+shadow-sm
+overflow-hidden
+"
 
         >
 
