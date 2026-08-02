@@ -1102,15 +1102,14 @@ mx-auto
 
 <button
     type="button"
-    disabled={!iframeReady}
+    disabled={false}
     onClick={(e) => {
 
         e.preventDefault();
 
         e.stopPropagation();
 
-        if(!iframeReady) return;
-
+        
         setIframeReady(false);
 
         setSelectedVideo(video.videoId);
