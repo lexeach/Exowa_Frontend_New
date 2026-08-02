@@ -112,8 +112,6 @@ const [selectedVideo, setSelectedVideo] =
   useState<any>(null);
 
 const videoPlayerRef = useRef<HTMLDivElement>(null);
-
-const [iframeReady, setIframeReady] = useState(false);
   const [getVerificationStatus] =
   useLazyGetLearningVerificationQuery();
 
@@ -412,10 +410,7 @@ if (cached) {
 
     if (videos.length > 0) {
 
-       setIframeReady(false);
-
-setSelectedVideo(videos[0].videoId);
-
+        setSelectedVideo(videos[0].videoId);
 setPlayingVideo(videos[0]);
 
     }
@@ -467,15 +462,8 @@ setBrowserVideos(videos);
 
 if (videos.length > 0) {
 
-   setIframeReady(false);
-
-setSelectedVideo(videos[0].videoId);
-
+    setSelectedVideo(videos[0].videoId);
 setPlayingVideo(videos[0]);
-
-setTimeout(() => {
-    setIframeReady(true);
-}, 1200);
 
 }
 
@@ -961,26 +949,6 @@ learningData?.data ? (
 >
     {selectedVideo && (
 
-<>
-
-{!iframeReady && (
-
-<div className="absolute inset-0 z-20 flex items-center justify-center bg-black/70 rounded-2xl">
-
-    <div className="text-center text-white">
-
-        <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-white mx-auto"></div>
-
-        <p className="mt-3">
-            Preparing Video...
-        </p>
-
-    </div>
-
-</div>
-
-)}
-
 <div
     className="
         relative
@@ -995,17 +963,15 @@ learningData?.data ? (
 >
 
     <iframe
-    key={selectedVideo}
-    src={`https://www.youtube-nocookie.com/embed/${selectedVideo}?autoplay=1&playsinline=1&controls=1&rel=0&modestbranding=1&enablejsapi=1`}
-    title="Learning Video"
-    className="absolute inset-0 w-full h-full"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-    allowFullScreen
-   onLoad={() => {}}
-/>
+        
+        src={`https://www.youtube-nocookie.com/embed/${selectedVideo}?autoplay=1&mute=1&playsinline=1&controls=1&rel=0&modestbranding=1`}
+        title="Learning Video"
+        className="absolute inset-0 w-full h-full"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowFullScreen
+    />
 
 </div>
-  </>
     )}
   </div>
 )}
@@ -1123,64 +1089,42 @@ mx-auto
 
     </div>
 
-<button
+    <button
     type="button"
-    disabled={false}
     onClick={(e) => {
 
         e.preventDefault();
-
         e.stopPropagation();
 
-        
-        setIframeReady(false);
-
-setSelectedVideo(video.videoId);
-
-setPlayingVideo(video);
-
-setTimeout(() => {
-    setIframeReady(true);
-}, 1200);
+        setSelectedVideo(video.videoId);
+        setPlayingVideo(video);
 
         setTimeout(() => {
 
             videoPlayerRef.current?.scrollIntoView({
 
-                behavior:"smooth",
+                behavior: "smooth",
 
-                block:"start",
+                block: "start",
 
             });
 
-        },150);
+        }, 100);
 
     }}
-    className={`
-
+    className="
         mt-5
-
         w-full
-
         rounded-lg
-
+        bg-red-600
+        hover:bg-red-700
+        text-white
         py-3
-
         font-semibold
-
         transition
-
-        ${
-            iframeReady
-                ? "bg-red-600 hover:bg-red-700 text-white"
-                : "bg-gray-300 text-gray-500 cursor-not-allowed"
-        }
-
-    `}
+    "
 >
-
-{iframeReady ? "▶ Play Video" : "Preparing Video..."}
-
+    ▶ Play Video
 </button>
 
 </div>
