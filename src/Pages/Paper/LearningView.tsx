@@ -946,7 +946,7 @@ learningData?.data ? (
 </div>
 
 ) : (
-  <div
+ <div
     ref={videoPlayerRef}
     className="
         mb-6
@@ -955,63 +955,46 @@ learningData?.data ? (
         z-10
     "
 >
-   {selectedVideo && (
+    {selectedVideo && (
+        <>
+            {!iframeReady && (
+                <div className="absolute inset-0 flex items-center justify-center bg-black/70 z-20 rounded-xl">
+                    <div className="text-white text-center">
+                        <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-white mx-auto"></div>
+                        <p className="mt-3">Preparing Video...</p>
+                    </div>
+                </div>
+            )}
 
-<>
-
-{!iframeReady && (
-
-<div className="absolute inset-0 flex items-center justify-center bg-black/70 z-20 rounded-xl">
-
-<div className="text-white text-center">
-
-<div className="animate-spin rounded-full h-10 w-10 border-b-2 border-white mx-auto"></div>
-
-<p className="mt-3">
-
-Preparing Video...
-
-</p>
-
+            <div
+                className="
+                    relative
+                    w-full
+                    overflow-hidden
+                    rounded-2xl
+                    border
+                    shadow-lg
+                    bg-black
+                    aspect-video
+                "
+            >
+                <iframe
+                    key={selectedVideo}
+                    src={`https://www.youtube-nocookie.com/embed/${selectedVideo}?autoplay=1&playsinline=1&controls=1&rel=0&modestbranding=1&enablejsapi=1`}
+                    title="Learning Video"
+                    className="absolute inset-0 w-full h-full"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
+                    onLoad={() => {
+                        setIframeReady(true);
+                    }}
+                />
+            </div>
+        </>
+    )}
 </div>
 
-</div>
-
-)}
-
-
-<div
-    className="
-        relative
-        w-full
-        overflow-hidden
-        rounded-2xl
-        border
-        shadow-lg
-        bg-black
-        aspect-video
-    "
->
-
-        
-        <iframe
-    key={selectedVideo}
-    src={`https://www.youtube-nocookie.com/embed/${selectedVideo}?autoplay=1&playsinline=1&controls=1&rel=0&modestbranding=1&enablejsapi=1`}
-    title="Learning Video"
-    className="absolute inset-0 w-full h-full"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-    allowFullScreen
-    onLoad={()=>{
-        setIframeReady(true);
-    }}
-/>
-    
-
-         </div>
-    </>
-)}
-    </div>
-  {browserVideos.length === 0 ? (
+{browserVideos.length === 0 ? (
 
     <div className="text-center py-8 text-gray-500">
 
