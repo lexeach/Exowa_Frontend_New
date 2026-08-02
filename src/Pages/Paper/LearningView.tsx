@@ -96,6 +96,12 @@ const [loadingResources, setLoadingResources] =
 
 const explanationTimer =
   useRef<NodeJS.Timeout | null>(null);
+  
+  const [waitingForExplanation, setWaitingForExplanation] =
+useState(false);
+
+const pollingTimer =
+useRef<NodeJS.Timeout | null>(null);
 
 const [selectedPdf, setSelectedPdf] =
   useState<string | null>(null);
