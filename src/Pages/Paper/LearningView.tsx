@@ -414,6 +414,14 @@ pollLearningUntilReady(
 //====================================================
 
 const loadBrowserResources = async () => {
+
+    if (!learningData?.data) {
+
+        console.log("Learning data not ready yet");
+
+        return;
+
+    }
 console.log("========== loadBrowserResources ==========");
 console.log("learningData =", learningData);
     if (!learningData?.data) {
