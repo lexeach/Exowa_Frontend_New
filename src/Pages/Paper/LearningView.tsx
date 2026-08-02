@@ -220,19 +220,20 @@ const {
 
     if (!learningData?.data) return;
 
+    console.log("✅ Fresh learning data received");
+
     setWaitingForExplanation(false);
 
-loadBrowserResources();
+    loadBrowserResources();
 
-setOpenAccordion(
-    `question-${selectedQuestionForLearning?.questionNumber}`
-);
+    setOpenAccordion(
+        `question-${selectedQuestionForLearning?.questionNumber}`
+    );
 
 }, [
-    learningData,
-    selectedQuestionForLearning,
+    learningData?.data?._id,
+    learningData?.data?.updatedAt
 ]);
-
   useEffect(() => {
 
     console.log("========== LEARNING DATA ==========");
