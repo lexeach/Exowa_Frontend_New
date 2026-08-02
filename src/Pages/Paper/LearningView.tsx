@@ -419,6 +419,7 @@ console.log("learningData =", learningData);
 
        const query =
     learningData.data.videoSearchQuery || "";
+      console.log("Video Query =", query);
       if (!query) {
 
     setBrowserVideos([]);
