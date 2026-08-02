@@ -997,9 +997,7 @@ learningData?.data ? (
     className="absolute inset-0 w-full h-full"
     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
     allowFullScreen
-    onLoad={()=>{
-        setIframeReady(true);
-    }}
+   onLoad={() => {}}
 />
 
 </div>
