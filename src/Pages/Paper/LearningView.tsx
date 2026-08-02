@@ -886,7 +886,12 @@ learningData?.data ? (
 </span>
         </h4>
 
-        <div className="grid gap-4">
+        <div
+    className="
+        grid
+        gap-5
+    "
+>
           {loadingResources ? (
 
 <div className="text-center py-10">
