@@ -955,7 +955,30 @@ learningData?.data ? (
         z-10
     "
 >
-    {selectedVideo && (
+   {selectedVideo && (
+
+<>
+
+{!iframeReady && (
+
+<div className="absolute inset-0 flex items-center justify-center bg-black/70 z-20 rounded-xl">
+
+<div className="text-white text-center">
+
+<div className="animate-spin rounded-full h-10 w-10 border-b-2 border-white mx-auto"></div>
+
+<p className="mt-3">
+
+Preparing Video...
+
+</p>
+
+</div>
+
+</div>
+
+)}
+
 
 <div
     className="
