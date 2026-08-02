@@ -92,6 +92,12 @@ const resourceCache =
 const [loadingResources, setLoadingResources] =
   useState(false);
 
+  const [explanationLoading, setExplanationLoading] =
+  useState(false);
+
+const explanationTimer =
+  useRef<NodeJS.Timeout | null>(null);
+
 const [selectedPdf, setSelectedPdf] =
   useState<string | null>(null);
 
@@ -250,35 +256,64 @@ useEffect(() => {
 
 
  const handleLearning = async (
-    question,
-    accordionValue
+  question,
+  accordionValue
 ) => {
 
-    if (openAccordion === accordionValue) {
-
-        setOpenAccordion("");
-
-        return;
-    }
-
-    
-
-    const learningItem =
-        allLearningResources?.data?.find(
-            item =>
-                Number(item.questionIndex) ===
-                Number(question.questionNumber)
-        );
-
-  console.log("Learning Item:", learningItem);
-
-  if (!learningItem) {
-    console.error(
-      "No LearningVerification found for question:",
-      question.questionNumber
-    );
+  if (openAccordion === accordionValue) {
+    setOpenAccordion("");
     return;
   }
+
+  const learningItem =
+    allLearningResources?.data?.find(
+      item =>
+        Number(item.questionIndex) ===
+        Number(question.questionNumber)
+    );
+
+  // Background generation running
+  if (!learningItem) {
+
+    setExplanationLoading(true);
+
+    setOpenAccordion(accordionValue);
+
+    if (explanationTimer.current) {
+      clearInterval(explanationTimer.current);
+    }
+
+    explanationTimer.current = setInterval(async () => {
+
+      const response =
+        await refetchLearningResources();
+
+      const updated =
+        response?.data?.data?.find(
+          item =>
+            Number(item.questionIndex) ===
+            Number(question.questionNumber)
+        );
+
+      if (updated) {
+
+        clearInterval(explanationTimer.current!);
+
+        setExplanationLoading(false);
+
+        setSelectedQuestionForLearning({
+          ...question,
+          learningId: updated._id,
+        });
+
+      }
+
+    },3000);
+
+    return;
+  }
+
+  setExplanationLoading(false);
 
   setSelectedQuestionForLearning({
     ...question,
@@ -286,16 +321,15 @@ useEffect(() => {
   });
 
   setOpenAccordion(accordionValue);
-   setBrowserVideos([]);
 
-setBrowserPdfs([]);
+  setBrowserVideos([]);
+  setBrowserPdfs([]);
 
-setSelectedVideo(null);
+  setSelectedVideo(null);
 
-setSelectedPdf(null);
-   
+  setSelectedPdf(null);
+
 };
-
   
   // Function to parse and render markdown-like content
 
@@ -671,6 +705,21 @@ setPlayingVideo(videos[0]);
                             )}
                           </AccordionTrigger>
                           <AccordionContent>
+                            {explanationLoading && (
+  <div className="py-8 text-center">
+
+    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto"></div>
+
+    <p className="mt-4 text-blue-700 font-semibold">
+      Explanation Loading...
+    </p>
+
+    <p className="text-sm text-gray-500">
+      Please wait while AI prepares learning content.
+    </p>
+
+  </div>
+)}
                             {(loadingLearning || fetchingLearning) &&
                             selectedQuestionForLearning?.questionNumber ===
                               question.questionNumber ? (
