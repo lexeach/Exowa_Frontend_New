@@ -163,6 +163,13 @@ const pollLearningUntilReady = (
 
                 setWaitingForExplanation(false);
 
+// force reload current learning
+setSelectedQuestionForLearning((prev:any)=>({
+
+    ...prev
+
+}));
+
             }
 
         } catch (e) {
