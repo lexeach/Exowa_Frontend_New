@@ -117,6 +117,8 @@ export default function LearningAccordion({
 
     completedQuestions,
 
+    setVerificationOpen,
+    
     setVerificationQuestion,
 
     resourceCache,
