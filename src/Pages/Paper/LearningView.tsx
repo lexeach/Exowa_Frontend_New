@@ -275,42 +275,35 @@ useEffect(() => {
       clearInterval(explanationTimer.current);
     }
 
-    explanationTimer.current = setInterval(async () => {
+   explanationTimer.current = setInterval(async () => {
 
-      const response =
-await refetchAllLearningResources();
+    const response = await refetchAllLearningResources();
 
-const updated =
-response?.data?.data?.find(
-    (item:any)=>
-        Number(item.questionIndex)===
-        Number(question.questionNumber)
-);
-         
+    const updated =
+        response?.data?.data?.find(
+            (item: any) =>
+                Number(item.questionIndex) ===
+                Number(question.questionNumber)
+        );
 
-      if(updated){
+    if (updated) {
 
-    clearInterval(explanationTimer.current!);
+        clearInterval(explanationTimer.current!);
 
-    setExplanationLoading(false);
+        setExplanationLoading(false);
 
-    setSelectedQuestionForLearning({
-        ...question,
-        learningId:updated._id,
-    });
+        setSelectedQuestionForLearning({
+            ...question,
+            learningId: updated._id,
+        });
+
         await refetchLearningResources();
 
-    setOpenAccordion(accordionValue);
+        setOpenAccordion(accordionValue);
 
-}
+    }
 
-    setOpenAccordion(accordionValue);
-
-}
-
-      }
-
-    },3000);
+}, 3000);
 
     return;
   }
