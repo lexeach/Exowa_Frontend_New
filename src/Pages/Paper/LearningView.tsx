@@ -425,6 +425,7 @@ if (cached) {
 
     if (videos.length > 0) {
 
+      setIframeReady(false);
         setSelectedVideo(videos[0].videoId);
 setPlayingVideo(videos[0]);
 
