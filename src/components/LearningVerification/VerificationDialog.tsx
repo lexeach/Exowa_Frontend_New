@@ -492,55 +492,55 @@ const VerificationDialog = ({
 
         {/* Footer */}
 
-        <div className="mt-8 flex justify-between">
+<div
+    className="
+        sticky
+        bottom-0
+        bg-white
+        border-t
+        px-6
+        py-4
+        flex
+        justify-between
+        items-center
+        gap-3
+        z-50
+        shadow-lg
+    "
+>
 
-          <UIButton
-            variant="secondary"
-            onClick={handlePrevious}
-            disabled={
-              currentQuestion === 0
-            }
-          >
+    <UIButton
+        variant="secondary"
+        onClick={handlePrevious}
+        disabled={currentQuestion === 0}
+    >
+        Previous
+    </UIButton>
 
-            Previous
+    {currentQuestion === questions.length - 1 ? (
 
-          </UIButton>
+        <UIButton
+            variant="success"
+            onClick={handleSubmit}
+            loading={submittingPaper}
+            disabled={!answers[currentQuestion]}
+        >
+            Submit
+        </UIButton>
 
-          {currentQuestion ===
-          questions.length - 1 ? (
+    ) : (
 
-            <UIButton
-              variant="success"
-              onClick={handleSubmit}
-              loading={
-                submittingPaper
-              }
-              disabled={
-                !answers[currentQuestion]
-              }
-            >
+        <UIButton
+            variant="primary"
+            onClick={handleNext}
+            disabled={!answers[currentQuestion]}
+        >
+            Next
+        </UIButton>
 
-              Submit
+    )}
 
-            </UIButton>
-
-          ) : (
-
-            <UIButton
-              variant="primary"
-              onClick={handleNext}
-              disabled={
-                !answers[currentQuestion]
-              }
-            >
-
-              Next
-
-            </UIButton>
-
-          )}
-
-        </div>
+</div>
 
       </DialogContent>
 
