@@ -447,9 +447,10 @@ const VerificationDialog = ({
 
         {/* Progress */}
 
-        <div className="mt-8">
+        <div className="mt-6 px-6">
 
-          <div className="flex justify-between text-sm text-gray-500 mb-2">
+          
+          <div className="flex justify-between items-center text-sm text-gray-500 mb-2">  
 
             <span>
 
@@ -467,10 +468,13 @@ const VerificationDialog = ({
 
           </div>
 
-          <div className="w-full bg-gray-200 rounded-full h-2">
+          
+            <div className="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
 
-            <div
-              className="bg-blue-600 h-2 rounded-full transition-all duration-300"
+              
+                <div
+    className="bg-blue-600 h-2 rounded-full transition-all duration-300 ease-in-out"
+                
               style={{
                 width: `${
                   questions.length
