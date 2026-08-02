@@ -478,6 +478,21 @@ Learning Completed
 
 </div>
 
+
+    </div>
+
+)}
+
+</AccordionContent>
+
+</AccordionItem>
+
+</Accordion>
+
+);
+
+}
+    
 )}
 
 
