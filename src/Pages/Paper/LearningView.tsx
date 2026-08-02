@@ -30,6 +30,8 @@ import {
 } from "@/components/Learning/hooks";
 import LearningVideoPlayer
 from "@/components/Learning/LearningVideoPlayer";
+import YoutubeSection
+from "@/components/Learning/YoutubeSection";
 
 
 
@@ -1004,7 +1006,35 @@ learningData?.data ? (
 
 ) : (
 
-   
+   <YoutubeSection
+
+    videos={browserVideos}
+
+    selectedVideo={selectedVideo}
+
+    onPlay={(video) => {
+
+        setIframeReady(false);
+
+        setSelectedVideo(video.videoId);
+
+        setPlayingVideo(video);
+
+        setTimeout(() => {
+
+            videoPlayerRef.current?.scrollIntoView({
+
+                behavior: "smooth",
+
+                block: "start",
+
+            });
+
+        }, 150);
+
+    }}
+
+/>
     {/* PDF */}
 
     <div className="bg-purple-50 border border-purple-200 rounded-lg p-4">
