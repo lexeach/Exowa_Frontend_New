@@ -473,6 +473,10 @@ setSelectedVideo(videos[0].videoId);
 
 setPlayingVideo(videos[0]);
 
+setTimeout(() => {
+    setIframeReady(true);
+}, 1200);
+
 }
 
     }
