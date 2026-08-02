@@ -378,12 +378,15 @@ Please wait...
     <div className="pt-3">
 
         <UIButton
-    text="Verification"
+    variant="sky"
+    className="w-full md:w-auto"
     onClick={() => {
         setVerificationQuestion(question);
         setVerificationOpen(true);
     }}
-/>
+>
+    I Learnt
+</UIButton>
 
     </div>
 
