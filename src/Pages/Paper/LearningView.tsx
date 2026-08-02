@@ -1004,77 +1004,88 @@ mx-auto
 "
     />
 
-    <div 
-      className="
-flex-1
-flex
-flex-col
-justify-between
-min-w-0
-text-center
-md:text-left
-"
-      >
+   <div
+    className="
+        flex-1
+        flex
+        flex-col
+        justify-between
+        text-center
+        md:text-left
+        w-full
+    "
+>
 
-        <div>
+    <div>
 
-            {playingVideo?.videoId === video.videoId && (
+        {playingVideo?.videoId === video.videoId && (
 
-                <span className="inline-block mb-2 px-3 py-1 rounded-full bg-green-600 text-white text-xs font-bold">
+            <div className="mb-3">
+
+                <span className="inline-flex items-center px-3 py-1 rounded-full bg-green-600 text-white text-xs font-bold">
 
                     ▶ NOW PLAYING
 
                 </span>
 
-            )}
-
-            <div 
-              className="font-bold text-gray-900 text-base break-words"
-              >
-
-                {video.title}
-
             </div>
 
-            <div 
-              className="text-sm text-gray-500 mt-2 break-all"
-              >
+        )}
 
-                📺 {video.channelTitle}
+        <h3
+            className="
+                text-lg
+                font-bold
+                text-gray-900
+                leading-6
+                break-words
+            "
+        >
+            {video.title}
+        </h3>
 
-            </div>
+        <p
+            className="
+                mt-2
+                text-sm
+                text-gray-500
+                break-words
+            "
+        >
+            📺 {video.channelTitle}
+        </p>
 
-            <div className="text-sm text-blue-600 mt-1">
-
-                ⏱ {video.duration}
-
-            </div>
-
-        </div>
-
-        <div className="mt-4">
-
-            <button
-                type="button"
-                className="
-w-full
-md:w-auto
-px-5
-py-3
-rounded-lg
-bg-red-600
-text-white
-font-semibold
-"
-            >
-
-                ▶ Play Video
-
-            </button>
-
-        </div>
+        <p
+            className="
+                mt-1
+                text-sm
+                font-medium
+                text-blue-600
+            "
+        >
+            ⏱ {video.duration}
+        </p>
 
     </div>
+
+    <button
+        type="button"
+        className="
+            mt-5
+            w-full
+            rounded-lg
+            bg-red-600
+            hover:bg-red-700
+            text-white
+            py-3
+            font-semibold
+            transition
+        "
+    >
+        ▶ Play Video
+    </button>
+
+</div>
 
 </div>
 ))
