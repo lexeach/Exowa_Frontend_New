@@ -1010,6 +1010,7 @@ Preparing Video...
          </div>
     </>
 )}
+    </div>
   {browserVideos.length === 0 ? (
 
     <div className="text-center py-8 text-gray-500">
@@ -1188,7 +1189,7 @@ mx-auto
 )}
 
 </div>
-  
+</div>  
     {/* PDF */}
 
     <div className="bg-purple-50 border border-purple-200 rounded-lg p-4">
