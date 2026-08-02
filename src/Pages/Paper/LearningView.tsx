@@ -160,13 +160,20 @@ pollingTimer.current = null;
 // 👇 sabse important line
 console.log("🔄 Calling refetchLearningResources");
 
-await refetchLearningResources();
+const freshData: any = await refetchLearningResources();
 
-console.log("✅ Refetch Completed");
+console.log("✅ Refetch Completed", freshData);
 
-setWaitingForExplanation(false);
+if (freshData?.data?.data) {
 
-loadBrowserResources();
+    setWaitingForExplanation(false);
+
+    // 👇 Accordion reopen after fresh data
+    setSelectedQuestionForLearning((prev: any) => ({
+        ...prev
+    }));
+
+}
             }
 
         } catch (e) {
