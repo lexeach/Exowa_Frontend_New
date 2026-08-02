@@ -92,12 +92,6 @@ const resourceCache =
 const [loadingResources, setLoadingResources] =
   useState(false);
 
-  const [explanationLoading, setExplanationLoading] =
-  useState(false);
-
-const explanationTimer =
-  useRef<NodeJS.Timeout | null>(null);
-
 const [selectedPdf, setSelectedPdf] =
   useState<string | null>(null);
 
@@ -116,10 +110,9 @@ const { data: singlePaper, refetch: DetailRefetch } =
   });
 
 const {
-    data: allLearningResources,
-    refetch: refetchAllLearningResources,
-} = useGetAllLearningResourcesQuery(id,{
-    skip:!id,
+  data: allLearningResources,
+} = useGetAllLearningResourcesQuery(id, {
+  skip: !id,
 });
 
 const {
@@ -242,73 +235,50 @@ useEffect(() => {
 
 useEffect(() => {
 
-    return () => {
+    if (learningData?.data?.videoSearchQuery) {
 
-        if (explanationTimer.current) {
-            clearInterval(explanationTimer.current);
-        }
+        loadBrowserResources();
 
-    };
-
-}, []);
-
-  if (openAccordion === accordionValue) {
-    setOpenAccordion("");
-    return;
-  }
-
-  const learningItem =
-    allLearningResources?.data?.find(
-      item =>
-        Number(item.questionIndex) ===
-        Number(question.questionNumber)
-    );
-
-  // Background generation running
-  if (!learningItem) {
-
-    setExplanationLoading(true);
-
-    setOpenAccordion(accordionValue);
-
-    if (explanationTimer.current) {
-      clearInterval(explanationTimer.current);
     }
 
-   explanationTimer.current = setInterval(async () => {
+}, [
 
-    const response = await refetchAllLearningResources();
+    learningData
 
-    const updated =
-        response?.data?.data?.find(
-            (item: any) =>
+]);
+
+
+
+ const handleLearning = async (
+    question,
+    accordionValue
+) => {
+
+    if (openAccordion === accordionValue) {
+
+        setOpenAccordion("");
+
+        return;
+    }
+
+    
+
+    const learningItem =
+        allLearningResources?.data?.find(
+            item =>
                 Number(item.questionIndex) ===
                 Number(question.questionNumber)
         );
 
-    if (updated) {
+  console.log("Learning Item:", learningItem);
 
-        clearInterval(explanationTimer.current!);
-
-        setExplanationLoading(false);
-
-        setSelectedQuestionForLearning({
-            ...question,
-            learningId: updated._id,
-        });
-
-        await refetchLearningResources();
-
-        setOpenAccordion(accordionValue);
-
-    }
-
-}, 3000);
-
+  if (!learningItem) {
+    console.error(
+      "No LearningVerification found for question:",
+      question.questionNumber
+    );
     return;
   }
-
-  setExplanationLoading(false);
 
   setSelectedQuestionForLearning({
     ...question,
@@ -316,15 +286,16 @@ useEffect(() => {
   });
 
   setOpenAccordion(accordionValue);
+   setBrowserVideos([]);
 
-  setBrowserVideos([]);
-  setBrowserPdfs([]);
+setBrowserPdfs([]);
 
-  setSelectedVideo(null);
+setSelectedVideo(null);
 
-  setSelectedPdf(null);
-
+setSelectedPdf(null);
+   
 };
+
   
   // Function to parse and render markdown-like content
 
@@ -700,34 +671,16 @@ setPlayingVideo(videos[0]);
                             )}
                           </AccordionTrigger>
                           <AccordionContent>
-                            {explanationLoading && (
-  <div className="py-8 text-center">
-
-    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto"></div>
-
-    <p className="mt-4 text-blue-700 font-semibold">
-      Explanation Loading...
-    </p>
-
-    <p className="text-sm text-gray-500">
-      Please wait while AI prepares learning content.
-    </p>
-
-  </div>
-)}
-                           {!explanationLoading && (
-    (loadingLearning || fetchingLearning) &&
-    selectedQuestionForLearning?.questionNumber ===
-        question.questionNumber ? (
-        <div className="text-center py-4">
-            <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600 mx-auto"></div>
-
-            <p className="text-gray-500 text-sm mt-2">
-                Loading explanation...
-            </p>
-        </div>
-    ) : ( 
-      selectedQuestionForLearning?.questionNumber ===
+                            {(loadingLearning || fetchingLearning) &&
+                            selectedQuestionForLearning?.questionNumber ===
+                              question.questionNumber ? (
+                              <div className="text-center py-4">
+                                <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600 mx-auto"></div>
+                                <p className="text-gray-500 text-sm mt-2">
+                                  Loading explanation...
+                                </p>
+                              </div>
+                            ) : selectedQuestionForLearning?.questionNumber ===
                                 question.questionNumber &&
                               learningData?.data ? (
                               <div className="space-y-4">
