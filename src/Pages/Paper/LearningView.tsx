@@ -742,18 +742,53 @@ setPlayingVideo(videos[0]);
                             )}
                           </AccordionTrigger>
                           <AccordionContent>
-                            {(loadingLearning || fetchingLearning) &&
-                            selectedQuestionForLearning?.questionNumber ===
-                              question.questionNumber ? (
-                              <div className="text-center py-4">
-                                <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600 mx-auto"></div>
-                                <p className="text-gray-500 text-sm mt-2">
-                                  Loading explanation...
-                                </p>
-                              </div>
-                            ) : selectedQuestionForLearning?.questionNumber ===
-                                question.questionNumber &&
-                              learningData?.data ? (
+                            {waitingForExplanation ? (
+
+    <div className="py-8 text-center">
+
+        <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-blue-600 mx-auto"></div>
+
+        <h3 className="mt-5 text-lg font-semibold text-blue-700">
+
+            Explanation Loading...
+
+        </h3>
+
+        <p className="mt-2 text-gray-500">
+
+            Please wait while AI is generating your learning content.
+
+        </p>
+
+        <p className="mt-2 text-xs text-gray-400">
+
+            This usually takes 10–30 seconds.
+
+        </p>
+
+    </div>
+
+) : (loadingLearning || fetchingLearning) &&
+selectedQuestionForLearning?.questionNumber ===
+question.questionNumber ? (
+
+    <div className="text-center py-5">
+
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto"></div>
+
+        <p className="text-gray-500 mt-3">
+
+            Loading Explanation...
+
+        </p>
+
+    </div>
+
+) : selectedQuestionForLearning?.questionNumber ===
+question.questionNumber &&
+learningData?.data ? (
+
+  
                               <div className="space-y-4">
                                 {/* Explanation Section */}
                                 {/* Learning Resources */}
