@@ -112,6 +112,8 @@ const [selectedVideo, setSelectedVideo] =
   useState<any>(null);
 
 const videoPlayerRef = useRef<HTMLDivElement>(null);
+
+const [iframeReady, setIframeReady] = useState(false);
   const [getVerificationStatus] =
   useLazyGetLearningVerificationQuery();
 
