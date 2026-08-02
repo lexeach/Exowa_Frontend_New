@@ -265,6 +265,29 @@ const {
     learningData?.data?._id,
     learningData?.data?.updatedAt
 ]);
+
+  useEffect(() => {
+
+    if (
+        !pendingLearningQuestion ||
+        !allLearningResources?.data?.length
+    ) {
+        return;
+    }
+
+    console.log("🔄 Retrying pending question");
+
+    handleLearning(
+        pendingLearningQuestion,
+        `question-${pendingLearningQuestion.questionNumber}`
+    );
+
+    setPendingLearningQuestion(null);
+
+}, [
+    allLearningResources,
+    pendingLearningQuestion,
+]);
   useEffect(() => {
 
     console.log("========== LEARNING DATA ==========");
