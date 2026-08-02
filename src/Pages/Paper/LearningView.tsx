@@ -391,7 +391,9 @@ const nextLearning = {
     learningId: learningItem._id,
 };
 
-setSelectedQuestionForLearning(nextLearning);
+setSelectedQuestionForLearning({
+    ...nextLearning
+});
 
 setOpenAccordion(accordionValue);
 
