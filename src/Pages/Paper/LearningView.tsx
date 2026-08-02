@@ -140,6 +140,34 @@ const {
     }
 );
 
+  useEffect(() => {
+
+    if (
+        waitingForExplanation &&
+        learningData?.data
+    ) {
+
+        setWaitingForExplanation(false);
+
+        if (pollingTimer.current) {
+            clearInterval(pollingTimer.current);
+        }
+
+        refetchAllLearningResources();
+
+        loadBrowserResources();
+
+        setOpenAccordion(
+            `question-${selectedQuestionForLearning?.questionNumber}`
+        );
+
+    }
+
+}, [
+    learningData,
+    waitingForExplanation
+]);
+
   const questions = singlePaper?.data?.questions ?? [];
   const answers = singlePaper?.data?.answers ?? [];
 
