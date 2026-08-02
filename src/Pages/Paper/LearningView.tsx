@@ -409,11 +409,13 @@ console.log(
         );
 
     if (!learningItem) {
-        console.error(
-            "Learning resource not found."
-        );
-        return;
-    }
+
+    console.error("Learning resource not found.");
+
+    setPendingLearningQuestion(question);
+
+    return;
+}
 
     setBrowserVideos([]);
 setBrowserPdfs([]);
