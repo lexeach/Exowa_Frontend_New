@@ -778,21 +778,11 @@ setPlayingVideo(videos[0]);
 
     </h4>
 
-    <div className="bg-white border border-blue-200 rounded-lg p-4">
-
-      <h4 className="font-bold text-blue-700 mb-3">
-
-        📖 Explanation
-
-      </h4>
-
-      <div className="prose prose-sm max-w-none text-gray-700 leading-7">
+    <div className="prose prose-sm max-w-none text-gray-700 leading-7">
 
         {parseExplanationContent(
             learningData.data.explanation
         )}
-
-      </div>
 
     </div>
 
