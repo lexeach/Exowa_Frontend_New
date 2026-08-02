@@ -226,11 +226,33 @@ useEffect(() => {
 
         if (result?.data?.data?.length > 0) {
 
-            console.log("✅ Learning Resources Loaded");
+    console.log("Resources arrived");
 
-            clearInterval(timer);
+    if (pendingLearningQuestion) {
+
+        const item = result.data.data.find(
+            (x:any)=>
+            Number(x.questionIndex)===
+            Number(pendingLearningQuestion.questionNumber)
+        );
+
+        if(item){
+
+            setSelectedQuestionForLearning({
+
+                ...pendingLearningQuestion,
+
+                learningId:item._id
+
+            });
 
         }
+
+    }
+
+    clearInterval(timer);
+
+}
 
     }, 3000);
 
