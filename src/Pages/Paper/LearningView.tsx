@@ -972,7 +972,17 @@ learningData?.data ? (
 
     <iframe
         
-        src={`https://www.youtube-nocookie.com/embed/${selectedVideo}?autoplay=1&mute=1&playsinline=1&controls=1&rel=0&modestbranding=1`}
+        <iframe
+    key={selectedVideo}
+    src={`https://www.youtube-nocookie.com/embed/${selectedVideo}?autoplay=1&playsinline=1&controls=1&rel=0&modestbranding=1&enablejsapi=1`}
+    title="Learning Video"
+    className="absolute inset-0 w-full h-full"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    allowFullScreen
+    onLoad={()=>{
+        setIframeReady(true);
+    }}
+/>
         title="Learning Video"
         className="absolute inset-0 w-full h-full"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
