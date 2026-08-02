@@ -1096,7 +1096,7 @@ mx-auto
 
         e.preventDefault();
         e.stopPropagation();
-
+        setIframeReady(false);
         setSelectedVideo(video.videoId);
         setPlayingVideo(video);
 
