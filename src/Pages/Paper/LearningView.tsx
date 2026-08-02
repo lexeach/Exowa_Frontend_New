@@ -885,7 +885,19 @@ learningData?.data ? (
     "
 >
 
-        <h4 className="font-bold text-red-700 mb-3">
+        <h4
+    className="
+        font-bold
+        text-red-700
+        text-lg
+        mb-4
+        flex
+        items-center
+        justify-between
+        flex-wrap
+        gap-2
+    "
+>
             ▶ Learn from YouTube
 
 <span className="ml-2 text-xs text-gray-500">
