@@ -139,9 +139,14 @@ export default function VideoCard({
 
             >
 
-                <PlayCircle size={18} />
+               <PlayCircle
+    size={18}
+    className={active ? "animate-pulse" : ""}
+/>
 
-                {active ? "Now Playing" : "Play Video"}
+<span>
+    {active ? "Now Playing" : "Play Video"}
+</span>
 
             </button>
 
