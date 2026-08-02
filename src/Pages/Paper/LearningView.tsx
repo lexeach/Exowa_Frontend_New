@@ -908,16 +908,18 @@ learningData?.data ? (
 >
     {selectedVideo && (
 
-<iframe
-      key={selectedVideo}
-      src={`https://www.youtube.com/embed/${selectedVideo}?autoplay=1&rel=0`}
-      title="Learning Video"
-      width="100%"
-      height="500"
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-      allowFullScreen
-      className="rounded-xl border"
+<div className="relative w-full overflow-hidden rounded-xl border aspect-video">
+
+    <iframe
+        key={selectedVideo}
+        src={`https://www.youtube.com/embed/${selectedVideo}?autoplay=1&rel=0`}
+        title="Learning Video"
+        className="absolute inset-0 h-full w-full"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowFullScreen
     />
+
+</div>
     )}
   </div>
 )}
