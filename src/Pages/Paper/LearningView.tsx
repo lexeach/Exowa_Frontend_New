@@ -991,7 +991,17 @@ shadow-sm
     <img
         src={video.thumbnail}
         alt={video.title}
-        className="w-full md:w-44 h-52 md:h-28 rounded-lg object-cover flex-shrink-0 shadow"
+        className="
+w-full
+md:w-44
+h-52
+md:h-28
+rounded-lg
+object-cover
+flex-shrink-0
+shadow
+mx-auto
+"
     />
 
     <div 
