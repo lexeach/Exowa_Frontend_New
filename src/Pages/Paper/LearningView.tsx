@@ -970,16 +970,16 @@ learningData?.data ? (
         });
 
     }}
-    className="cursor-pointer flex flex-col md:flex-row gap-4 border border-red-200 rounded-xl p-4 bg-white hover:bg-red-50 hover:border-red-400 transition-all shadow-sm"
+    className="cursor-pointer flex gap-4 border border-red-200 rounded-xl p-4 bg-white hover:bg-red-50 hover:border-red-400 transition-all shadow-sm"
 >
 
     <img
         src={video.thumbnail}
         alt={video.title}
-        className="w-full md:w-44 h-52 md:h-28 rounded-lg object-cover flex-shrink-0 shadow"
+        className="w-44 h-28 rounded-lg object-cover flex-shrink-0 shadow"
     />
 
-    className="flex-1 flex flex-col justify-between min-w-0"
+    <div className="flex-1 flex flex-col justify-between">
 
         <div>
 
