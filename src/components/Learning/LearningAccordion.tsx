@@ -66,7 +66,7 @@ interface Props {
 
     completedQuestions:any;
 
-    verificationOpen:any;
+    setVerificationOpen:any;
 
     setVerificationQuestion:any;
 
@@ -378,11 +378,12 @@ Please wait...
     <div className="pt-3">
 
         <UIButton
-            text="Verification"
-            onClick={() => {
-                setVerificationQuestion(question);
-            }}
-        />
+    text="Verification"
+    onClick={() => {
+        setVerificationQuestion(question);
+        setVerificationOpen(true);
+    }}
+/>
 
     </div>
 
