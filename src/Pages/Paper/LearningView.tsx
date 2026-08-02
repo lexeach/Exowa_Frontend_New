@@ -153,23 +153,14 @@ const pollLearningUntilReady = (
 
                 clearInterval(pollingTimer.current!);
 
-                pollingTimer.current = null;
+pollingTimer.current = null;
 
-                setSelectedQuestionForLearning((prev: any) => ({
-                    ...prev,
-                    learningId,
-                    questionNumber,
-                }));
+// 👇 sabse important line
+await refetchLearningResources();
 
-                setWaitingForExplanation(false);
+setWaitingForExplanation(false);
 
-// force reload current learning
-setSelectedQuestionForLearning((prev:any)=>({
-
-    ...prev
-
-}));
-
+loadBrowserResources();
             }
 
         } catch (e) {
