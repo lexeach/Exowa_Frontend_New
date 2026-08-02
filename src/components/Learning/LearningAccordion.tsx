@@ -373,19 +373,20 @@ Please wait...
     />
 
 
-<div className="pt-3">
+{!waitingForExplanation && (
 
-    {!waitingForExplanation && (
     <div className="pt-3">
+
         <UIButton
             text="Verification"
             onClick={() => {
                 setVerificationQuestion(question);
             }}
         />
-    </div>
-)}
 
+    </div>
+
+)}
 
 {loadingResources && (
 
