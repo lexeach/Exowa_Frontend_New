@@ -970,7 +970,7 @@ learningData?.data ? (
         });
 
     }}
-    className="cursor-pointer flex gap-4 border border-red-200 rounded-xl p-4 bg-white hover:bg-red-50 hover:border-red-400 transition-all shadow-sm"
+    className="cursor-pointer flex flex-col md:flex-row gap-4 border border-red-200 rounded-xl p-4 bg-white hover:bg-red-50 hover:border-red-400 transition-all shadow-sm"
 >
 
     <img
