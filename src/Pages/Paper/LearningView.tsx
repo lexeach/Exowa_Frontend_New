@@ -1109,40 +1109,59 @@ mx-auto
 
     <button
     type="button"
+    disabled={!iframeReady}
     onClick={(e) => {
 
         e.preventDefault();
+
         e.stopPropagation();
 
+        if(!iframeReady) return;
+
+        setIframeReady(false);
+
         setSelectedVideo(video.videoId);
+
         setPlayingVideo(video);
 
         setTimeout(() => {
 
             videoPlayerRef.current?.scrollIntoView({
 
-                behavior: "smooth",
+                behavior:"smooth",
 
-                block: "start",
+                block:"start",
 
             });
 
-        }, 100);
+        },150);
 
     }}
-    className="
+    className={`
+
         mt-5
+
         w-full
+
         rounded-lg
-        bg-red-600
-        hover:bg-red-700
-        text-white
+
         py-3
+
         font-semibold
+
         transition
-    "
+
+        ${
+            iframeReady
+                ? "bg-red-600 hover:bg-red-700 text-white"
+                : "bg-gray-300 text-gray-500 cursor-not-allowed"
+        }
+
+    `}
 >
-    ▶ Play Video
+
+{iframeReady ? "▶ Play Video" : "Preparing Video..."}
+
 </button>
 
 </div>
