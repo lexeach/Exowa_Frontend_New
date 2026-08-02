@@ -438,7 +438,12 @@ useEffect(() => {
 
     loadBrowserResources();
 
-}, [learningData]);
+}, [
+    learningData?.data?._id,
+    learningData?.data?.updatedAt,
+    learningData?.data?.videoSearchQuery,
+    learningData?.data?.pdfSearchQuery
+]);
 
 
  const handleLearning = async (
