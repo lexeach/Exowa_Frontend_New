@@ -719,10 +719,10 @@ setPlayingVideo(videos[0]);
     </p>
 
   </div>
-)}
-                            {(loadingLearning || fetchingLearning) &&
-                            selectedQuestionForLearning?.questionNumber ===
-                              question.questionNumber ? (
+{!explanationLoading &&
+   (loadingLearning || fetchingLearning) &&
+   selectedQuestionForLearning?.questionNumber ===
+   question.questionNumber ? (
                               <div className="text-center py-4">
                                 <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600 mx-auto"></div>
                                 <p className="text-gray-500 text-sm mt-2">
