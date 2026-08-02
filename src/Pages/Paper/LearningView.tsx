@@ -242,24 +242,15 @@ useEffect(() => {
 
 useEffect(() => {
 
-    if (learningData?.data?.videoSearchQuery) {
+    return () => {
 
-        loadBrowserResources();
+        if (explanationTimer.current) {
+            clearInterval(explanationTimer.current);
+        }
 
-    }
+    };
 
-}, [
-
-    learningData
-
-]);
-
-
-
- const handleLearning = async (
-  question,
-  accordionValue
-) => {
+}, []);
 
   if (openAccordion === accordionValue) {
     setOpenAccordion("");
