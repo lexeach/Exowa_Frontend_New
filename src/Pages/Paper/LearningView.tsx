@@ -1006,40 +1006,7 @@ learningData?.data ? (
     browserVideos.map((video, index) => (
 
 <div
-    key={index}
-    onClick={(e) => {
-
-    e.preventDefault();
-    e.stopPropagation();
-
-    setSelectedVideo(video.videoId);
-
-    setPlayingVideo(video);
-
-    setTimeout(() => {
-        videoPlayerRef.current?.scrollIntoView({
-            behavior: "smooth",
-            block: "start",
-        });
-    }, 100);
-
-}}
-    className="
-cursor-pointer
-flex
-flex-col
-md:flex-row
-gap-4
-border
-border-red-200
-rounded-xl
-p-4
-bg-white
-hover:bg-red-50
-hover:border-red-400
-transition-all
-shadow-sm
-"
+    className="..."
 >
 
     <img
