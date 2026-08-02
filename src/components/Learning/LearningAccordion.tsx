@@ -247,7 +247,8 @@ Learning Content
 <AccordionContent>
 
 
-{waitingForExplanation ? (
+{waitingForExplanation ||
+!learningData?.data ? (
 
 <div className="py-10 text-center">
 
