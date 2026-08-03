@@ -691,132 +691,202 @@ const loadBrowserResources = async () => {
 
     if (!learningData?.data) {
 
-        console.log("Learning data not ready yet");
+        setLoadingResources(false);
 
         return;
 
     }
-console.log("========== loadBrowserResources ==========");
-console.log("learningData =", learningData);
-    if (!learningData?.data) {
-    setLoadingResources(false);
-    return;
-}
+
+    //-------------------------------------------------
+    // Prevent duplicate loading while restoring cache
+    //-------------------------------------------------
+
+    if (isRestoringCacheRef.current) {
+
+        isRestoringCacheRef.current = false;
+
+        return;
+
+    }
+
+    //-------------------------------------------------
+    // Already Loaded
+    //-------------------------------------------------
+
+    if (
+
+        browserVideos.length > 0 &&
+
+        browserPdfs.length >= 0 &&
+
+        selectedVideo
+
+    ) {
+
+        console.log("✅ Browser resources already loaded");
+
+        setLoadingResources(false);
+
+        return;
+
+    }
 
     try {
 
         setLoadingResources(true);
 
-       const query =
-    learningData.data.videoSearchQuery || "";
-      // Already loaded? Don't reload.
-if (
-    browserVideos.length > 0 &&
-    selectedVideo
-) {
-    console.log("Using existing browser resources");
+        //-------------------------------------------------
+        // VIDEO
+        //-------------------------------------------------
 
-    setLoadingResources(false);
+        const query =
+            learningData.data.videoSearchQuery || "";
 
-    return;
-}
-      console.log("Video Query =", query);
-      if (!query) {
+        if (query) {
 
-    setBrowserVideos([]);
+            const cacheKey = `yt_${query}`;
 
-    setLoadingResources(false);
+            const cached =
+                resourceCache.getItem(cacheKey);
 
-    return;
+            if (cached) {
 
-}
+                const videos =
+                    JSON.parse(cached);
 
-const cacheKey =
-    `yt_${query}`;
+                setBrowserVideos(videos);
 
-const cached =
-    resourceCache.getItem(cacheKey);
+                if (videos.length > 0) {
 
-if (cached) {
+                    setIframeReady(false);
 
-    const videos =
-        JSON.parse(cached);
+                    setSelectedVideo(
+                        videos[0].videoId
+                    );
 
-    setBrowserVideos(videos);
+                    setPlayingVideo(
+                        videos[0]
+                    );
 
-    if (videos.length > 0) {
+                }
 
-      setIframeReady(false);
-        setSelectedVideo(videos[0].videoId);
-setPlayingVideo(videos[0]);
+            } else {
+
+                const response =
+                    await api.get(
+                        "/api/youtube/search",
+                        {
+                            params: {
+                                q: query,
+                            },
+                        }
+                    );
+
+                const videos =
+                    response.data.videos || [];
+
+                resourceCache.setItem(
+                    cacheKey,
+                    JSON.stringify(videos)
+                );
+
+                setBrowserVideos(videos);
+
+                if (videos.length > 0) {
+
+                    setIframeReady(false);
+
+                    setSelectedVideo(
+                        videos[0].videoId
+                    );
+
+                    setPlayingVideo(
+                        videos[0]
+                    );
+
+                }
+
+            }
+
+        } else {
+
+            setBrowserVideos([]);
+
+        }
+
+        //-------------------------------------------------
+        // PDF
+        //-------------------------------------------------
+
+        const pdfQuery =
+            learningData.data.pdfSearchQuery || "";
+
+        if (pdfQuery) {
+
+            const pdfKey =
+                `pdf_${pdfQuery}`;
+
+            const cachedPdf =
+                resourceCache.getItem(pdfKey);
+
+            if (cachedPdf) {
+
+                setBrowserPdfs(
+                    JSON.parse(cachedPdf)
+                );
+
+            } else {
+
+                const response =
+                    await api.get(
+                        "/api/pdf/search",
+                        {
+                            params: {
+                                q: pdfQuery,
+                            },
+                        }
+                    );
+
+                const pdfs =
+                    response.data.pdfs || [];
+
+                resourceCache.setItem(
+                    pdfKey,
+                    JSON.stringify(pdfs)
+                );
+
+                setBrowserPdfs(pdfs);
+
+            }
+
+        } else {
+
+            setBrowserPdfs([]);
+
+        }
+
+        //-------------------------------------------------
+        // Save Browser Cache
+        //-------------------------------------------------
+
+        if (
+            selectedQuestionForLearning?.questionNumber
+        ) {
+
+            saveBrowserCache(
+                selectedQuestionForLearning.questionNumber
+            );
+
+        }
 
     }
 
-    setLoadingResources(false);
-
-    return;
-
-}
-
-        if (!query) {
-
-    setBrowserVideos([]);
-
-    setLoadingResources(false);
-
-    return;
-
-}
-        //--------------------------------------------------
-        // Search first query
-        //--------------------------------------------------
-
-
-      console.log("API URL =", import.meta.env.VITE_API_URL);
-
-console.log(
-    "Calling =>",
-    `${import.meta.env.VITE_API_URL}/api/youtube/search`
-);
-      
-       const response = await api.get("/api/youtube/search", {
-    params: {
-        q: query,
-    },
-});
-
-        const videos = response.data.videos || [];
-
-resourceCache.setItem(
-
-    cacheKey,
-
-    JSON.stringify(videos)
-
-);
-
-setBrowserVideos(videos);
-
-if (videos.length > 0) {
-setIframeReady(false);
-    setSelectedVideo(videos[0].videoId);
-setPlayingVideo(videos[0]);
-
-}
-
-    }
-
-    catch (error) {
+    catch (err) {
 
         console.error(
-
-            "Video Search Error",
-
-            error
-
+            "Browser Resource Error",
+            err
         );
-
-        setBrowserVideos([]);
 
     }
 
@@ -826,8 +896,7 @@ setPlayingVideo(videos[0]);
 
     }
 
-};
-  
+};  
   const parseExplanationContent = (text) => {
     if (!text) return null;
 
