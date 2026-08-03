@@ -557,27 +557,6 @@ useEffect(() => {
     );
 
 };
-const nextLearning = {
-    ...question,
-    learningId: learningItem._id,
-};
-
-setSelectedQuestionForLearning({
-    ...nextLearning
-});
-
-setOpenAccordion(accordionValue);
-
-pollLearningUntilReady(
-    learningItem._id,
-    question.questionNumber
-);
-    
-   
-   
-   
-   
-};
 
   
   // Function to parse and render markdown-like content
@@ -1030,6 +1009,6 @@ DetailRefetch();
   </UILayout>
 );
 
-}
+
 
 export default PaperView
