@@ -977,9 +977,11 @@ browserLoadingRef.current = true;
 
     finally {
 
-        setLoadingResources(false);
+    browserLoadingRef.current = false;
 
-    }
+    setLoadingResources(false);
+
+}
 
 };  
   const parseExplanationContent = (text) => {
