@@ -169,6 +169,15 @@ const pollLearningUntilReady = (
         clearInterval(pollingTimer.current);
     }
 
+    if (pollingTimer.current) {
+
+    clearInterval(
+        pollingTimer.current
+    );
+
+    pollingTimer.current = null;
+
+}
     pollingTimer.current = setInterval(async () => {
 
         try {
