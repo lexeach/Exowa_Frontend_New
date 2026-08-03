@@ -969,7 +969,7 @@ setPlayingVideo(videos[0]);
   };
 
 
-  return (
+ return (
   <UILayout>
     <div className="p-4 md:p-6">
       <ViewHeader
@@ -987,28 +987,28 @@ setPlayingVideo(videos[0]);
     </div>
 
     {verificationQuestion && (
-  <VerificationDialog
-    open={verificationOpen}
-    onClose={() => {
-      setVerificationOpen(false);
-    }}
-    paperId={id as string}
-    questionNumber={verificationQuestion.questionNumber}
-    onCompleted={() => {
-      setCompletedQuestions((prev) => ({
-  ...prev,
-  [verificationQuestion.questionNumber]: true,
-}));
+      <VerificationDialog
+        open={verificationOpen}
+        onClose={() => {
+          setVerificationOpen(false);
+        }}
+        paperId={id as string}
+        questionNumber={verificationQuestion.questionNumber}
+        onCompleted={() => {
+          setCompletedQuestions((prev) => ({
+            ...prev,
+            [verificationQuestion.questionNumber]: true,
+          }));
 
-setVerificationOpen(false);
+          setVerificationOpen(false);
 
-DetailRefetch();
-    }}
-  />
-)}
+          DetailRefetch();
+        }}
+      />
+    )}
   </UILayout>
 );
 
+};
 
-
-export default PaperView
+export default PaperView;
