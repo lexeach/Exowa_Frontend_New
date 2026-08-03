@@ -1030,6 +1030,6 @@ DetailRefetch();
   </UILayout>
 );
 
-}
+
 
 export default PaperView
