@@ -684,6 +684,7 @@ if (
     });
 
 }
+  resourcesLoadedRef.current = true;
     return;
 
 }
