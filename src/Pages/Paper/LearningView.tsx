@@ -474,12 +474,26 @@ useEffect(() => {
 ) => {
 
     // Toggle accordion
-    if (openAccordion === accordionValue) {
-        setOpenAccordion("");
-        return;
-    }
+if (openAccordion === accordionValue) {
+    setOpenAccordion("");
+    return;
+}
+
+// Agar accordion sirf reopen ho raha hai
+if (
+    selectedQuestionForLearning?.questionNumber === question.questionNumber &&
+    learningData?.data
+) {
+    console.log("♻ Reopening existing learning content");
 
     setOpenAccordion(accordionValue);
+
+    setWaitingForExplanation(false);
+
+    return;
+}
+
+setOpenAccordion(accordionValue);
 
     // Already selected and already loaded
     if (
@@ -494,13 +508,17 @@ useEffect(() => {
         return;
     }
 
-    // Reset previous UI
+    // Sirf new question par reset karna
+if (
+    selectedQuestionForLearning?.questionNumber !== question.questionNumber
+) {
     setBrowserVideos([]);
     setBrowserPdfs([]);
     setSelectedVideo(null);
     setSelectedPdf(null);
 
     setWaitingForExplanation(true);
+}
 
     console.log("Question No =", question.questionNumber);
     console.log(
