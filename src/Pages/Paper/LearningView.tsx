@@ -657,6 +657,8 @@ if (
     }
 
     // Pending → Start Polling
+   activeQuestionRef.current =
+    question.questionNumber;
     pollLearningUntilReady(
         learningItem._id,
         question.questionNumber
