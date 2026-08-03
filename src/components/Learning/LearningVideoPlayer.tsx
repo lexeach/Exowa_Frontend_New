@@ -36,7 +36,7 @@ export default function LearningVideoPlayer({
 
         <div
             ref={videoPlayerRef}
-            className="mb-6 sticky top-2 z-10"
+            className="mb-6"
         >
 
             {!iframeReady && (
@@ -89,7 +89,7 @@ export default function LearningVideoPlayer({
                     src={`https://www.youtube.com/embed/${selectedVideo}?autoplay=1&controls=1&fs=1&playsinline=0&rel=0`}
                     className="absolute inset-0 w-full h-full"
 
-                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen; web-share"
 
                     allowFullScreen
 
