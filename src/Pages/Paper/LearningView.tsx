@@ -605,6 +605,17 @@ console.log("learningData =", learningData);
 
        const query =
     learningData.data.videoSearchQuery || "";
+      // Already loaded? Don't reload.
+if (
+    browserVideos.length > 0 &&
+    selectedVideo
+) {
+    console.log("Using existing browser resources");
+
+    setLoadingResources(false);
+
+    return;
+}
       console.log("Video Query =", query);
       if (!query) {
 
