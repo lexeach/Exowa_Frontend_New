@@ -624,7 +624,15 @@ useEffect(() => {
 useEffect(() => {
 
     if (!learningData?.data) return;
+     if (
+    resourcesLoadedRef.current
+) {
 
+    resourcesLoadedRef.current = false;
+
+    return;
+
+}
     loadBrowserResources();
 
 }, [
