@@ -981,22 +981,16 @@ browserLoadingRef.current = true;
         //-------------------------------------------------
 
         if (
-            selectedQuestionForLearning?.questionNumber
-        ) {
-
-            if (
     selectedQuestionForLearning?.questionNumber &&
     !isRestoringCacheRef.current
 ) {
 
-   if (
-    selectedQuestionForLearning?.questionNumber &&
-    !isRestoringCacheRef.current
-) {
     saveBrowserCache(
         selectedQuestionForLearning.questionNumber
     );
+
 }
+    
 
 }
 
