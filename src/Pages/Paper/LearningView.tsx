@@ -958,11 +958,25 @@ browserLoadingRef.current = true;
             selectedQuestionForLearning?.questionNumber
         ) {
 
-            saveBrowserCache(
-                selectedQuestionForLearning.questionNumber
-            );
+            if (
+    selectedQuestionForLearning?.questionNumber &&
+    !isRestoringCacheRef.current
+) {
 
-        }
+    saveBrowserCache(
+        if (
+    learningCacheRef.current[
+        question.questionNumber
+    ]
+) {
+
+    console.log(
+        "Learning already cached."
+    );
+
+}
+
+}
 
     }
 
