@@ -996,7 +996,7 @@ if (!learningData?.data) {
                 selectedQuestionForLearning.questionNumber
             );
 
-        }
+        
 
     } catch (err) {
 
