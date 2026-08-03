@@ -425,6 +425,16 @@ useEffect(() => {
 
     loadBrowserResources();
 
+    if (pollingTimer.current) {
+
+    clearInterval(
+        pollingTimer.current
+    );
+
+    pollingTimer.current = null;
+
+}
+
     setOpenAccordion(
         `question-${selectedQuestionForLearning?.questionNumber}`
     );
