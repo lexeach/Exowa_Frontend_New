@@ -681,51 +681,7 @@ console.log(
     },
 });
 
-      const videos = response.data.videos || [];
-
-//-------------------------------------
-// Sort by Shortest Duration First
-//-------------------------------------
-
-const durationToSeconds = (duration: string) => {
-
-    if (!duration) return Number.MAX_SAFE_INTEGER;
-
-    const parts = duration
-        .split(":")
-        .map(Number);
-
-    if (parts.length === 3) {
-
-        return (
-            parts[0] * 3600 +
-            parts[1] * 60 +
-            parts[2]
-        );
-
-    }
-
-    if (parts.length === 2) {
-
-        return (
-            parts[0] * 60 +
-            parts[1]
-        );
-
-    }
-
-    return parts[0];
-
-};
-
-videos.sort((a: any, b: any) => {
-
-    return (
-        durationToSeconds(a.duration) -
-        durationToSeconds(b.duration)
-    );
-
-});
+        const videos = response.data.videos || [];
 
 resourceCache.setItem(
 
