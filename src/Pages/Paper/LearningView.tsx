@@ -793,16 +793,20 @@ const loadBrowserResources = async () => {
 // Prevent Duplicate Loading
 //-------------------------------------------------
 
-  if (browserLoadingRef.current) {
+ if (browserLoadingRef.current) {
     return;
 }
 
 browserLoadingRef.current = true;
-    if (!learningData?.data) {
 
-        setLoadingResources(false);
+if (!learningData?.data) {
 
-        return;
+    browserLoadingRef.current = false;
+
+    setLoadingResources(false);
+
+    return;
+
 
     }
 
@@ -812,11 +816,13 @@ browserLoadingRef.current = true;
 
     if (isRestoringCacheRef.current) {
 
-        isRestoringCacheRef.current = false;
+    isRestoringCacheRef.current = false;
 
-        return;
+    browserLoadingRef.current = false;
 
-    }
+    return;
+
+}
 
     //-------------------------------------------------
     // Already Loaded
@@ -828,18 +834,17 @@ browserLoadingRef.current = true;
 
     selectedVideo
 
-)
-    
-    {
+) {
 
-        console.log("✅ Browser resources already loaded");
+    console.log("✅ Browser resources already loaded");
 
-        setLoadingResources(false);
+    browserLoadingRef.current = false;
 
-        return;
+    setLoadingResources(false);
 
-    }
+    return;
 
+}
     try {
 
         setLoadingResources(true);
