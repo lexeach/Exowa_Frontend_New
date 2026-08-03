@@ -156,61 +156,109 @@ const pollLearningUntilReady = (
 
         try {
 
+            //-------------------------------------------------
+            // Refresh All Learning Resources
+            //-------------------------------------------------
+
             const result: any =
                 await refetchAllLearningResources();
 
+            const resources =
+                result?.data?.data || [];
+
             const learningItem =
-                result?.data?.data?.find(
+                resources.find(
                     (x: any) => x._id === learningId
                 );
 
+            if (!learningItem) {
+
+                console.log("⌛ Waiting Resource");
+
+                return;
+
+            }
+
+            //-------------------------------------------------
+            // Still Processing
+            //-------------------------------------------------
+
             if (
-                learningItem?.status === "Completed"
+                learningItem.status !==
+                "Completed"
             ) {
 
-              console.log("✅ STATUS COMPLETED");
+                console.log(
+                    "⏳ AI Still Working..."
+                );
 
-                clearInterval(pollingTimer.current!);
+                return;
 
-pollingTimer.current = null;
+            }
 
-// 👇 sabse important line
-console.log("🔄 Calling refetchLearningResources");
+            //-------------------------------------------------
+            // Completed
+            //-------------------------------------------------
 
-const freshData: any = await refetchLearningResources();
+            console.log(
+                "✅ Learning Completed"
+            );
 
-console.log("✅ Refetch Completed", freshData);
+            clearInterval(
+                pollingTimer.current!
+            );
 
-if (freshData?.data?.data) {
+            pollingTimer.current = null;
 
-    setWaitingForExplanation(false);
+            //-------------------------------------------------
+            // Update Selected Question FIRST
+            //-------------------------------------------------
 
-    const updated = freshData.data.data;
+            setSelectedQuestionForLearning((prev: any) => ({
 
-    const current = updated.find(
-        (x: any) => x._id === learningId
-    );
+                ...prev,
 
-    if (current) {
+                learningId,
 
-        setSelectedQuestionForLearning((prev: any) => ({
-            ...prev,
-            learningId: current._id,
-            updatedAt: Date.now()
-        }));
+                updatedAt: Date.now(),
 
-    }
+            }));
 
-}            }
+            //-------------------------------------------------
+            // Wait React State
+            //-------------------------------------------------
 
-        } catch (e) {
-            console.log("Waiting...");
+            setTimeout(async () => {
+
+                try {
+
+                    await refetchLearningResources();
+
+                }
+
+                finally {
+
+                    setWaitingForExplanation(
+                        false
+                    );
+
+                }
+
+            }, 300);
+
+        }
+
+        catch (err) {
+
+            console.error(
+                err
+            );
+
         }
 
     }, 3000);
 
 };
-
 const [selectedPdf, setSelectedPdf] =
   useState<string | null>(null);
 
