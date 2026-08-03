@@ -138,6 +138,10 @@ const explanationTimer =
 useState(false);
   const activeQuestionRef = useRef<number | null>(null);
 
+  const browserLoadingRef = useRef(false);
+
+const resourcesLoadedRef = useRef(false);
+
 const isRestoringCacheRef = useRef(false);
 
 const pollingTimer =
