@@ -83,10 +83,10 @@ export default function LearningVideoPlayer({
                     key={selectedVideo}
 
                    // src={`https://www.youtube-nocookie.com/embed/${selectedVideo}?autoplay=1&playsinline=1&controls=1&rel=0&modestbranding=1`}
+                   //src={`https://www.youtube-nocookie.com/embed/${selectedVideo}?autoplay=1&playsinline=1&controls=1&fs=1&playsinline=0&rel=0&modestbranding=1`}
+                    //title="Learning Video"
 
-                    src={`https://www.youtube-nocookie.com/embed/${selectedVideo}?autoplay=1&playsinline=1&controls=1&fs=1&playsinline=0&rel=0&modestbranding=1`}
-                    title="Learning Video"
-
+                    src={`https://www.youtube.com/embed/${selectedVideo}?autoplay=1&controls=1&fs=1&playsinline=0&rel=0`}
                     className="absolute inset-0 w-full h-full"
 
                     allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; web-share"
