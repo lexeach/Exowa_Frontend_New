@@ -422,6 +422,15 @@ useEffect(() => {
     ] = learningData;
 
 }
+    if (
+    selectedQuestionForLearning?.questionNumber
+) {
+
+    learningCacheRef.current[
+        selectedQuestionForLearning.questionNumber
+    ] = learningData;
+
+}
 
     loadBrowserResources();
 
