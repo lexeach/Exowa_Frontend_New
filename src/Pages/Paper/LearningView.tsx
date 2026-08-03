@@ -169,9 +169,7 @@ const pollLearningUntilReady = (
     questionNumber: number
 ) => {
 
-    if (pollingTimer.current) {
-        clearInterval(pollingTimer.current);
-    }
+    
 
     if (pollingTimer.current) {
 
