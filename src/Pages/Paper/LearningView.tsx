@@ -473,43 +473,90 @@ useEffect(() => {
     accordionValue: string
 ) => {
 
+    // Toggle accordion
     if (openAccordion === accordionValue) {
         setOpenAccordion("");
         return;
     }
-    console.log("Question No =", question.questionNumber);
 
-console.log(
-    "All Learning Resources =",
-    allLearningResources?.data
-);
-    const learningItem =
+    setOpenAccordion(accordionValue);
+
+    // Already selected and already loaded
+    if (
+        selectedQuestionForLearning?.questionNumber === question.questionNumber &&
+        learningData?.data
+    ) {
+
+        console.log("✅ Already Loaded");
+
+        setWaitingForExplanation(false);
+
+        return;
+    }
+
+    // Reset previous UI
+    setBrowserVideos([]);
+    setBrowserPdfs([]);
+    setSelectedVideo(null);
+    setSelectedPdf(null);
+
+    setWaitingForExplanation(true);
+
+    console.log("Question No =", question.questionNumber);
+    console.log(
+        "All Learning Resources =",
+        allLearningResources?.data
+    );
+
+    let learningItem =
         allLearningResources?.data?.find(
             (item: any) =>
                 Number(item.questionIndex) ===
                 Number(question.questionNumber)
         );
 
+    // Resource not ready yet
     if (!learningItem) {
 
-    console.error("Learning resource not found.");
+        console.log("⏳ Waiting for learning resource...");
 
-    setPendingLearningQuestion(question);
+        setPendingLearningQuestion(question);
 
-setWaitingForExplanation(true);
+        await refetchAllLearningResources();
 
-refetchAllLearningResources();
+        return;
+    }
 
-return;
-}
+    console.log("✅ Learning Resource Found");
 
-    setBrowserVideos([]);
-setBrowserPdfs([]);
-setSelectedVideo(null);
-setSelectedPdf(null);
+    const nextLearning = {
+        ...question,
+        learningId: learningItem._id,
+    };
 
-setWaitingForExplanation(true);
+    setSelectedQuestionForLearning(nextLearning);
 
+    // Already completed
+    if (
+        learningItem.status === "Completed"
+    ) {
+
+        console.log("✅ Already Completed");
+
+        await refetchLearningResources();
+
+        setWaitingForExplanation(false);
+
+        return;
+    }
+
+    // Pending → Start Polling
+    pollLearningUntilReady(
+        learningItem._id,
+        question.questionNumber
+    );
+
+};
 const nextLearning = {
     ...question,
     learningId: learningItem._id,
