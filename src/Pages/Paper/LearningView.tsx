@@ -141,6 +141,23 @@ useState(false);
 const isRestoringCacheRef = useRef(false);
 
 const pollingTimer =
+
+  useEffect(() => {
+
+    return () => {
+
+        if (pollingTimer.current) {
+
+            clearInterval(
+                pollingTimer.current
+            );
+
+        }
+
+    };
+
+}, []);
+  
 useRef<NodeJS.Timeout | null>(null);
 
 const pollLearningUntilReady = (
