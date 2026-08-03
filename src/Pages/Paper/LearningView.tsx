@@ -491,8 +491,6 @@ const nextLearning = {
     learningId: learningItem._id,
 };
 
-activeQuestionRef.current =
-    pendingLearningQuestion.questionNumber;
 
 activeQuestionRef.current =
     pendingLearningQuestion.questionNumber;
