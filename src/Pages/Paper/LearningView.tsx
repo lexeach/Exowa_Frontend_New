@@ -762,14 +762,15 @@ console.log(
         learningItem.status === "Completed"
     ) {
 
-        console.log("✅ Already Completed");
+       console.log("✅ Already Completed");
 
-        await refetchLearningResources();
+await refetchLearningResources();
 
-        setWaitingForExplanation(false);
-      
+resourcesLoadedRef.current = false;
 
-        return;
+setWaitingForExplanation(false);
+
+return;
     }
 
     // Pending → Start Polling
