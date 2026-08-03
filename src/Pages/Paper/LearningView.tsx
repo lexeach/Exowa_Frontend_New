@@ -990,17 +990,13 @@ browserLoadingRef.current = true;
     !isRestoringCacheRef.current
 ) {
 
-    saveBrowserCache(
-        if (
-    learningCacheRef.current[
-        question.questionNumber
-    ]
+   if (
+    selectedQuestionForLearning?.questionNumber &&
+    !isRestoringCacheRef.current
 ) {
-
-    console.log(
-        "Learning already cached."
+    saveBrowserCache(
+        selectedQuestionForLearning.questionNumber
     );
-
 }
 
 }
