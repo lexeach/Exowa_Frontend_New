@@ -477,30 +477,32 @@ useEffect(() => {
     console.log("✅ Pending Learning Resource Found");
 
     setBrowserVideos([]);
-    setBrowserPdfs([]);
-    setSelectedVideo(null);
-    setSelectedPdf(null);
+setBrowserPdfs([]);
+setSelectedVideo(null);
+setSelectedPdf(null);
 
-    setWaitingForExplanation(true);
+setWaitingForExplanation(true);
 
-    const nextLearning = {
-        ...pendingLearningQuestion,
-        learningId: learningItem._id,
-    };
+const nextLearning = {
+    ...pendingLearningQuestion,
+    learningId: learningItem._id,
+};
 
-    setSelectedQuestionForLearning(nextLearning);
+activeQuestionRef.current =
+    pendingLearningQuestion.questionNumber;
 
-    setOpenAccordion(
-        `question-${pendingLearningQuestion.questionNumber}`
-    );
+setSelectedQuestionForLearning(nextLearning);
 
-    pollLearningUntilReady(
-        learningItem._id,
-        pendingLearningQuestion.questionNumber
-    );
+setOpenAccordion(
+    `question-${pendingLearningQuestion.questionNumber}`
+);
 
-    setPendingLearningQuestion(null);
+pollLearningUntilReady(
+    learningItem._id,
+    pendingLearningQuestion.questionNumber
+);
 
+setPendingLearningQuestion(null);
 }, [
     allLearningResources?.data,
     pendingLearningQuestion,
