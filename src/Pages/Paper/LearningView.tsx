@@ -435,9 +435,7 @@ useEffect(() => {
     ] = learningData;
 
 }
-    if (
-    selectedQuestionForLearning?.questionNumber
-) {
+    
 
     
 
