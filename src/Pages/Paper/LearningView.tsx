@@ -377,13 +377,16 @@ useEffect(() => {
 
         if(item){
 
-            setSelectedQuestionForLearning({
+            activeQuestionRef.current =
+    pendingLearningQuestion.questionNumber;
 
-                ...pendingLearningQuestion,
+setSelectedQuestionForLearning({
 
-                learningId:item._id
+    ...pendingLearningQuestion,
 
-            });
+    learningId: item._id
+
+});
 
         }
 
@@ -491,6 +494,9 @@ const nextLearning = {
 activeQuestionRef.current =
     pendingLearningQuestion.questionNumber;
 
+activeQuestionRef.current =
+    pendingLearningQuestion.questionNumber;
+
 setSelectedQuestionForLearning(nextLearning);
 
 setOpenAccordion(
@@ -502,8 +508,7 @@ pollLearningUntilReady(
     pendingLearningQuestion.questionNumber
 );
 
-setPendingLearningQuestion(null);
-}, [
+setPendingLearningQuestion(null);}, [
     allLearningResources?.data,
     pendingLearningQuestion,
 ]);
