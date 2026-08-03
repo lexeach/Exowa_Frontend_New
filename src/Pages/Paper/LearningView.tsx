@@ -799,8 +799,17 @@ if (browserLoadingRef.current) {
     return;
 }
 
-browserLoadingRef.current = true;
+try {
 
+    browserLoadingRef.current = true;
+
+    ...
+
+} finally {
+
+    browserLoadingRef.current = false;
+
+}
     if (!learningData?.data) {
 
         setLoadingResources(false);
