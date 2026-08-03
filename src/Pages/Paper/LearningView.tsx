@@ -795,21 +795,6 @@ const loadBrowserResources = async () => {
 // Prevent Duplicate Loading
 //-------------------------------------------------
 
-if (browserLoadingRef.current) {
-    return;
-}
-
-try {
-
-    browserLoadingRef.current = true;
-
-    ...
-
-} finally {
-
-    browserLoadingRef.current = false;
-
-}
     if (!learningData?.data) {
 
         setLoadingResources(false);
