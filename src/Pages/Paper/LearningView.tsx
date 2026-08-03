@@ -96,7 +96,18 @@ const [browserVideos, setBrowserVideos] =
 
 const [browserPdfs, setBrowserPdfs] =
   useState<any[]>([]);
+// ======================================
+// Production Cache
+// ======================================
 
+const learningCacheRef = useRef<Record<number, any>>({});
+
+const browserCacheRef = useRef<Record<number, {
+    videos: any[];
+    pdfs: any[];
+    selectedVideo?: string | null;
+    selectedPdf?: string | null;
+}>>({});
 const resourceCache =
     sessionStorage;
 
@@ -125,6 +136,9 @@ const explanationTimer =
   
   const [waitingForExplanation, setWaitingForExplanation] =
 useState(false);
+  const activeQuestionRef = useRef<number | null>(null);
+
+const isRestoringCacheRef = useRef(false);
 
 const pollingTimer =
 useRef<NodeJS.Timeout | null>(null);
@@ -199,6 +213,55 @@ if (freshData?.data?.data) {
 
 const [selectedPdf, setSelectedPdf] =
   useState<string | null>(null);
+
+  const saveBrowserCache = (
+    questionNumber: number
+) => {
+
+    browserCacheRef.current[questionNumber] = {
+
+        videos: browserVideos,
+
+        pdfs: browserPdfs,
+
+        selectedVideo,
+
+        selectedPdf,
+
+    };
+
+};
+
+const restoreBrowserCache = (
+    questionNumber: number
+) => {
+
+    const cache =
+        browserCacheRef.current[questionNumber];
+
+    if (!cache) return false;
+
+    isRestoringCacheRef.current = true;
+
+    setBrowserVideos(cache.videos);
+
+    setBrowserPdfs(cache.pdfs);
+
+    setSelectedVideo(
+        cache.selectedVideo || null
+    );
+
+    setSelectedPdf(
+        cache.selectedPdf || null
+    );
+
+    setLoadingResources(false);
+
+    setWaitingForExplanation(false);
+
+    return true;
+
+};
 
 
   const [getVerificationStatus] =
@@ -283,6 +346,15 @@ const {
     console.log("✅ Fresh learning data received");
 
     setWaitingForExplanation(false);
+    if (
+    selectedQuestionForLearning?.questionNumber
+) {
+
+    learningCacheRef.current[
+        selectedQuestionForLearning.questionNumber
+    ] = learningData;
+
+}
 
     loadBrowserResources();
 
@@ -473,41 +545,54 @@ useEffect(() => {
     accordionValue: string
 ) => {
 
-    // Toggle accordion
+   //=====================================
+// Accordion Toggle
+//=====================================
+
 if (openAccordion === accordionValue) {
+
     setOpenAccordion("");
-    return;
-}
-
-// Agar accordion sirf reopen ho raha hai
-if (
-    selectedQuestionForLearning?.questionNumber === question.questionNumber &&
-    learningData?.data
-) {
-    console.log("♻ Reopening existing learning content");
-
-    setOpenAccordion(accordionValue);
-
-    setWaitingForExplanation(false);
 
     return;
+
 }
 
 setOpenAccordion(accordionValue);
 
-    // Already selected and already loaded
-    if (
-        selectedQuestionForLearning?.questionNumber === question.questionNumber &&
-        learningData?.data
-    ) {
+//=====================================
+// Restore Cache
+//=====================================
 
-        console.log("✅ Already Loaded");
+if (
+    restoreBrowserCache(question.questionNumber)
+) {
 
-        setWaitingForExplanation(false);
+    console.log(
+        "✅ Browser cache restored"
+    );
 
-        return;
+    const cachedLearning =
+        learningCacheRef.current[
+            question.questionNumber
+        ];
+
+    if (cachedLearning) {
+
+        setSelectedQuestionForLearning((prev:any)=>({
+
+            ...prev,
+
+            ...question,
+
+        }));
+
     }
 
+    return;
+
+}
+
+    
     // Sirf new question par reset karna
 if (
     selectedQuestionForLearning?.questionNumber !== question.questionNumber
@@ -564,6 +649,9 @@ if (
         await refetchLearningResources();
 
         setWaitingForExplanation(false);
+      saveBrowserCache(
+    question.questionNumber
+);
 
         return;
     }
