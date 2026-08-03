@@ -767,11 +767,11 @@ console.log(
         learningItem.status === "Completed"
     ) {
 
-       console.log("✅ Already Completed");
-
-await refetchLearningResources();
+      console.log("✅ Already Completed");
 
 resourcesLoadedRef.current = false;
+
+await refetchLearningResources();
 
 setWaitingForExplanation(false);
 
