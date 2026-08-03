@@ -321,11 +321,13 @@ useEffect(() => {
 
     return () => clearInterval(timer);
 
-}, [
+},[
     id,
+    pendingLearningQuestion,
     refetchAllLearningResources,
-]);  
-const {
+]);
+  
+  const {
     data: learningData,
     error: learningError,
     isError: learningIsError,
@@ -578,16 +580,17 @@ if (
 
     if (cachedLearning) {
 
-        setSelectedQuestionForLearning((prev:any)=>({
+    setSelectedQuestionForLearning({
 
-            ...prev,
+        ...question,
 
-            ...question,
+        learningId:
+            cachedLearning?.data?._id ??
+            cachedLearning?._id,
 
-        }));
+    });
 
-    }
-
+}
     return;
 
 }
@@ -664,9 +667,7 @@ console.log(
         await refetchLearningResources();
 
         setWaitingForExplanation(false);
-      saveBrowserCache(
-    question.questionNumber
-);
+      
 
         return;
     }
@@ -715,13 +716,13 @@ const loadBrowserResources = async () => {
 
     if (
 
-        browserVideos.length > 0 &&
+    browserVideos.length > 0 &&
 
-        browserPdfs.length >= 0 &&
+    selectedVideo
 
-        selectedVideo
-
-    ) {
+)
+    
+    {
 
         console.log("✅ Browser resources already loaded");
 
