@@ -1333,6 +1333,5 @@ if (!learningData?.data) {
   </UILayout>
 );
 
-};
 
 export default PaperView;
