@@ -166,7 +166,7 @@ useRef<NodeJS.Timeout | null>(null);
 
 const pollLearningUntilReady = (
     learningId: string,
-    questionNumber: number
+    // questionNumber: number
 ) => {
 
     
