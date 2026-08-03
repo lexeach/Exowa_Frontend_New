@@ -985,37 +985,35 @@ if (!learningData?.data) {
 
         }
 
-        //-------------------------------------------------
+                //-------------------------------------------------
         // Save Browser Cache
         //-------------------------------------------------
 
         if (
-    selectedQuestionForLearning?.questionNumber &&
-    !isRestoringCacheRef.current
-) {
+            selectedQuestionForLearning?.questionNumber &&
+            !isRestoringCacheRef.current
+        ) {
 
-    saveBrowserCache(
-        selectedQuestionForLearning.questionNumber
-    );
+            saveBrowserCache(
+                selectedQuestionForLearning.questionNumber
+            );
 
-}
-    
+        }
 
-}
-
-    }
-
-    catch (err) {
+    } catch (err) {
 
         console.error(
             "Browser Resource Error",
             err
         );
 
+    } finally {
+
+        browserLoadingRef.current = false;
+
+        setLoadingResources(false);
+
     }
-
-    finally {
-
     browserLoadingRef.current = false;
 
     setLoadingResources(false);
