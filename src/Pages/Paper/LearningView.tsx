@@ -594,23 +594,38 @@ if (
 
     
     // Sirf new question par reset karna
-if (
-    selectedQuestionForLearning?.questionNumber !== question.questionNumber
-) {
+//=====================================
+// New Question Only
+//=====================================
+
+const isNewQuestion =
+    activeQuestionRef.current !==
+    question.questionNumber;
+
+if (isNewQuestion) {
+
+    activeQuestionRef.current =
+        question.questionNumber;
+
     setBrowserVideos([]);
     setBrowserPdfs([]);
+
     setSelectedVideo(null);
     setSelectedPdf(null);
 
     setWaitingForExplanation(true);
+
 }
 
-    console.log("Question No =", question.questionNumber);
-    console.log(
-        "All Learning Resources =",
-        allLearningResources?.data
-    );
+console.log(
+    "Question No =",
+    question.questionNumber
+);
 
+console.log(
+    "All Learning Resources =",
+    allLearningResources?.data
+);
     let learningItem =
         allLearningResources?.data?.find(
             (item: any) =>
@@ -657,8 +672,7 @@ if (
     }
 
     // Pending → Start Polling
-   activeQuestionRef.current =
-    question.questionNumber;
+   
     pollLearningUntilReady(
         learningItem._id,
         question.questionNumber
